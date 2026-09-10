@@ -1,54 +1,286 @@
+/* ------------------------------------------------------------------------
+   stil.css — Nachtblau, Gold, Serifen. Das Buch, nicht das Formular.
+   --------------------------------------------------------------------- */
 :root {
-  --grund: #06070c;
-  --schrift: #ece7dc;
-  --gedaempft: #8d8577;
-  --linie: rgba(236, 231, 220, 0.14);
+  --grund: #070810;
+  --kagit: #0e1020;
+  --kagit2: #141730;
+  --schrift: #ece5d6;
+  --gedaempft: #8b8471;
+  --linie: rgba(236, 229, 214, 0.13);
   --ton: #c9a227;
+  --ton-hell: #e7c65c;
+  --rot: #9c4a3c;
 }
 
 * { box-sizing: border-box; }
 
-html, body {
+html { scroll-behavior: smooth; }
+
+body {
   margin: 0;
   min-height: 100%;
-  background: var(--grund);
+  background:
+    radial-gradient(ellipse 70% 50% at 50% -10%, rgba(201,162,39,.10), transparent 70%),
+    var(--grund);
   color: var(--schrift);
   font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  font-size: 17px;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
 }
 
-main {
-  max-width: 44rem;
-  margin: 0 auto;
-  padding: 12vh 1.5rem 6rem;
+/* --------------------------------------------------------------- Kopf */
+#kopf {
+  text-align: center;
+  padding: 4.5rem 1.5rem 2rem;
+  border-bottom: 1px solid var(--linie);
 }
-
-/* ------------------------------------------------------------------- Kopf */
-#kopf { border-bottom: 1px solid var(--linie); padding-bottom: 1.4rem; }
-
-h1 {
-  margin: 0;
-  font-size: clamp(2.4rem, 8vw, 4rem);
-  font-weight: 400;
-  letter-spacing: .06em;
+.arapUst {
+  font-size: 2rem;
   color: var(--ton);
+  opacity: .75;
+  letter-spacing: .05em;
+  margin-bottom: .3rem;
 }
-
+#kopf h1 {
+  margin: 0;
+  font-size: clamp(2.3rem, 7vw, 3.6rem);
+  font-weight: 400;
+  letter-spacing: .09em;
+  color: var(--ton-hell);
+}
 .unterzeile {
-  margin: .5rem 0 0;
+  margin: .6rem 0 0;
   color: var(--gedaempft);
-  font-size: .95rem;
-  letter-spacing: .18em;
+  font-size: .82rem;
+  letter-spacing: .22em;
   text-transform: uppercase;
 }
 
-/* ------------------------------------------------------------------ Tafel */
-#tafel { margin-top: 2.4rem; line-height: 1.7; }
-#tafel p { margin: 0 0 1rem; }
-.gedaempft { color: var(--gedaempft); }
-
-code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: .9em;
-  color: var(--ton);
+/* ------------------------------------------------------------- Reiter */
+#reiter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .3rem;
+  padding: 1.2rem 1rem 0;
 }
+#reiter button {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  color: var(--gedaempft);
+  font: inherit;
+  font-size: .92rem;
+  letter-spacing: .04em;
+  padding: .45rem .95rem;
+  cursor: pointer;
+  transition: color .18s, border-color .18s;
+}
+#reiter button:hover { color: var(--schrift); }
+#reiter button.etkin {
+  color: var(--ton-hell);
+  border-color: var(--linie);
+  background: var(--kagit);
+}
+
+/* --------------------------------------------------------------- Rumpf */
+main { max-width: 50rem; margin: 0 auto; padding: 2rem 1.5rem 6rem; }
+
+.giriş { color: var(--gedaempft); font-style: italic; margin: 0 0 2rem; }
+
+h2 {
+  font-weight: 400; font-size: 1.9rem; color: var(--ton-hell);
+  margin: 2.5rem 0 .2rem; letter-spacing: .03em;
+}
+h3 {
+  font-weight: 400; font-size: 1.02rem; color: var(--ton);
+  letter-spacing: .12em; text-transform: uppercase;
+  margin: 2rem 0 .5rem;
+}
+p { margin: 0 0 1rem; }
+em { color: var(--ton-hell); font-style: italic; }
+b { color: var(--ton-hell); font-weight: 400; }
+
+.kucukNot {
+  color: var(--gedaempft);
+  font-size: .84rem;
+  line-height: 1.55;
+  border-left: 1px solid var(--linie);
+  padding-left: .9rem;
+  margin: 1.2rem 0;
+}
+
+/* -------------------------------------------------------------- Felder */
+.alanlar { display: flex; flex-direction: column; gap: .2rem; }
+.alan { display: block; margin-top: 1.1rem; }
+.alan > span {
+  display: block;
+  font-size: .74rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--gedaempft); margin-bottom: .4rem;
+}
+input[type=text], textarea {
+  width: 100%;
+  background: var(--kagit);
+  border: 1px solid var(--linie);
+  border-radius: 2px;
+  color: var(--schrift);
+  font: inherit;
+  padding: .6rem .8rem;
+  transition: border-color .18s;
+}
+input[type=text]:focus, textarea:focus {
+  outline: none; border-color: var(--ton);
+}
+textarea { resize: vertical; }
+
+.cinsiyet {
+  border: none; margin: 1.6rem 0 0; padding: 0;
+  display: flex; gap: 1.4rem; align-items: baseline; flex-wrap: wrap;
+}
+.cinsiyet legend {
+  padding: 0; font-size: .74rem; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--gedaempft); margin-bottom: .5rem;
+}
+.cinsiyet label { color: var(--gedaempft); cursor: pointer; font-size: .95rem; }
+.cinsiyet input { accent-color: var(--ton); margin-right: .35rem; }
+
+.buyukDugme {
+  margin-top: 1.8rem;
+  background: none;
+  border: 1px solid var(--ton);
+  border-radius: 2px;
+  color: var(--ton-hell);
+  font: inherit; font-size: .95rem; letter-spacing: .1em;
+  padding: .6rem 1.6rem; cursor: pointer;
+  transition: background .18s, color .18s;
+}
+.buyukDugme:hover { background: var(--ton); color: var(--grund); }
+
+/* ------------------------------------------------------ Korrekturzeile */
+.zincir {
+  display: flex; flex-wrap: wrap; gap: .35rem; align-items: center;
+  min-height: 2.2rem; margin-top: .5rem;
+}
+.cip {
+  display: inline-flex; align-items: center; gap: .1rem;
+  background: var(--kagit2);
+  border: 1px solid var(--linie);
+  border-radius: 2px;
+  padding: .1rem .15rem .1rem .3rem;
+}
+.cip select {
+  background: none; border: none; color: var(--schrift);
+  font-family: inherit; font-size: 1.15rem; padding: .1rem .1rem;
+  cursor: pointer; appearance: none; text-align: center;
+}
+.cip select:focus { outline: 1px solid var(--ton); }
+.cip .deger { color: var(--ton); font-size: .68rem; padding: 0 .1rem; }
+.cip .sil {
+  background: none; border: none; color: var(--gedaempft);
+  cursor: pointer; font-size: .85rem; line-height: 1; padding: .1rem .25rem;
+}
+.cip .sil:hover { color: var(--rot); }
+.zincir .ekle {
+  background: none; border: 1px dashed var(--linie); border-radius: 2px;
+  color: var(--gedaempft); cursor: pointer; font: inherit;
+  padding: .15rem .5rem;
+}
+.zincir .ekle:hover { color: var(--ton); border-color: var(--ton); }
+.satirToplam { color: var(--ton); font-size: .9rem; margin-inline-start: .4rem; direction: ltr; }
+
+/* ------------------------------------------------------------ Rechnung */
+.hesap {
+  margin-top: 3rem; padding: 2rem 1.5rem;
+  background: var(--kagit);
+  border: 1px solid var(--linie); border-radius: 2px;
+  text-align: center;
+}
+.buyukToplam {
+  font-size: clamp(3rem, 12vw, 5rem); line-height: 1;
+  color: var(--ton-hell); letter-spacing: .03em;
+}
+.hesapNot { color: var(--gedaempft); font-size: .85rem; margin-top: .4rem; }
+
+.kalanlar, .ikiBurc {
+  display: grid; gap: .6rem; margin-top: 1.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+}
+.kalanKutu {
+  background: var(--kagit2); border: 1px solid var(--linie);
+  border-radius: 2px; padding: .9rem .6rem;
+}
+.kalanBaslik { color: var(--gedaempft); font-size: .74rem; letter-spacing: .1em; }
+.kalanSayi { color: var(--ton); font-size: 1.5rem; line-height: 1.3; }
+.kalanAd {
+  color: var(--gedaempft); font-size: .68rem;
+  letter-spacing: .18em; text-transform: uppercase; margin-top: .3rem;
+}
+.kalanDeger { color: var(--schrift); font-size: .95rem; margin-top: .2rem; }
+.hesap .kucukNot { text-align: left; margin-top: 1.6rem; }
+
+/* ------------------------------------------------------------- Kapitel */
+.kapitel { margin-top: 3.5rem; }
+.kapitel h2 { text-align: center; margin-bottom: 0; }
+.arapBaslik {
+  text-align: center; color: var(--ton); opacity: .7;
+  font-size: 1.6rem; margin-bottom: 2rem;
+}
+
+.kunye {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0 2rem;
+  border-block: 1px solid var(--linie);
+  padding: 1rem 0; margin-bottom: 1rem;
+}
+.kunyeSatir {
+  display: flex; justify-content: space-between; gap: 1rem;
+  padding: .3rem 0; border-bottom: 1px dotted var(--linie);
+}
+.kunyeSatir:last-child { border-bottom: none; }
+.kunyeSatir dt {
+  color: var(--gedaempft); font-size: .74rem;
+  letter-spacing: .12em; text-transform: uppercase; padding-top: .25rem;
+}
+.kunyeSatir dd { margin: 0; text-align: right; font-size: .95rem; }
+
+/* --------------------------------------------------------------- Niyet */
+.hukum {
+  margin-top: 1.6rem; text-align: center;
+  font-size: clamp(2.2rem, 9vw, 3.4rem); color: var(--ton-hell);
+  letter-spacing: .04em;
+}
+.hukumDe {
+  text-align: center; color: var(--gedaempft);
+  font-size: .8rem; letter-spacing: .28em; text-transform: uppercase;
+  margin-bottom: 1.8rem;
+}
+.niyetMetin { font-size: 1.08rem; }
+
+/* --------------------------------------------------------- zwei Spalten */
+.ikiSutun { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+.ikiSutun h3 { margin-top: 0; }
+@media (max-width: 40rem) { .ikiSutun { grid-template-columns: 1fr; } }
+
+/* -------------------------------------------------------------- Tabelle */
+.tabloKutu { overflow-x: auto; margin: 1.5rem 0; border: 1px solid var(--linie); }
+table { border-collapse: collapse; width: 100%; font-size: .88rem; }
+th, td { padding: .5rem .7rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--linie); }
+th {
+  color: var(--ton); font-weight: 400; font-size: .72rem;
+  letter-spacing: .14em; text-transform: uppercase; white-space: nowrap;
+}
+tbody tr:hover { background: var(--kagit); }
+td.arap { font-size: 1.05rem; color: var(--ton-hell); white-space: nowrap; }
+.ebcedTablo td { text-align: center; color: var(--schrift); white-space: nowrap; }
+
+.teilungen { padding-left: 1.2rem; }
+.teilungen li { margin-bottom: .5rem; }
+
+/* --------------------------------------------------------------- Fuß */
+footer {
+  border-top: 1px solid var(--linie);
+  padding: 2rem 1.5rem 3rem; text-align: center;
+}
+footer p { color: var(--gedaempft); font-size: .78rem; letter-spacing: .06em; margin: 0; }

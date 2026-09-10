@@ -3,25 +3,181 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Oracle</title>
-<meta name="description" content="Oracle — Arbeitstitel. Das Gerüst steht, der Inhalt kommt.">
-<link rel="stylesheet" href="stil.css?v=1">
+<title>Yıldıznâme — das Sternbuch</title>
+<meta name="description" content="Ein Orakelrechner nach dem osmanischen Yıldıznâme: Name und Muttername im Ebced, geteilt durch zwölf, sieben, vier und achtundzwanzig.">
+<link rel="stylesheet" href="stil.css?v=2">
 </head>
 <body>
 
-<main>
-  <header id="kopf">
-    <h1>Oracle</h1>
-    <p class="unterzeile">Arbeitstitel</p>
-  </header>
+<header id="kopf">
+  <div class="arapUst">يلدزنامه</div>
+  <h1>Yıldıznâme</h1>
+  <p class="unterzeile">Das Sternbuch — ein Horoskop ohne Geburtsdatum</p>
+</header>
 
-  <section id="tafel">
-    <p>Das Gerüst steht: eine statische Seite, ohne Baukette, direkt aus
-       <code>main</code> veröffentlicht.</p>
-    <p class="gedaempft">Hier kommt hin, was das Orakel zu sagen hat.</p>
-  </section>
+<nav id="reiter" aria-label="Abschnitte">
+  <button class="etkin" data-bolum="bYildiz">Sternbild</button>
+  <button data-bolum="bNiyet">Niyet — die Frage</button>
+  <button data-bolum="bUyum">İsim uyumu</button>
+  <button data-bolum="bMenzil">Die 28 Herbergen</button>
+  <button data-bolum="bNasil">Wie es rechnet</button>
+</nav>
+
+<main>
+
+<!-- ------------------------------------------------------- I. Sternbild -->
+<section class="bolum" id="bYildiz">
+  <p class="giriş">Der eigene Name und der Name der Mutter — so fragen die
+  Handschriften, denn die Mutter ist zweifelsfrei. Beide werden arabisch
+  geschrieben, ihre Buchstaben im Ebced addiert, die Summe geteilt.</p>
+
+  <div class="alanlar">
+    <label class="alan">
+      <span>Dein Name</span>
+      <input id="ad" type="text" autocomplete="off" placeholder="z. B. Mehmet oder Michael">
+    </label>
+    <div class="zincir" id="zincirAd" dir="rtl"></div>
+
+    <label class="alan">
+      <span>Name deiner Mutter</span>
+      <input id="anne" type="text" autocomplete="off" placeholder="z. B. Fatma oder Gertrud">
+    </label>
+    <div class="zincir" id="zincirAnne" dir="rtl"></div>
+
+    <fieldset class="cinsiyet">
+      <legend>Die Bücher deuten getrennt</legend>
+      <label><input type="radio" name="cinsiyet" value="erkek" checked> für den Mann</label>
+      <label><input type="radio" name="cinsiyet" value="kadin"> für die Frau</label>
+    </fieldset>
+  </div>
+
+  <p class="kucukNot">Die arabische Schreibung ist ein Vorschlag. Jeder Buchstabe
+  lässt sich austauschen, streichen oder anfügen — bei arabischstämmigen Namen
+  entscheidet die Herkunft, nicht der türkische Klang.</p>
+
+  <div id="yildizCikti" hidden></div>
+</section>
+
+<!-- --------------------------------------------------------- II. Niyet -->
+<section class="bolum" id="bNiyet" hidden>
+  <p class="giriş">Die <em>niyet cetveli</em>, die Tafel der Absicht: nicht das
+  Wesen, sondern die eine Frage. Gerechnet wird aus den Buchstaben der Frage,
+  dem Namen des Fragenden und der Stunde, in der gefragt wird.</p>
+
+  <div class="alanlar">
+    <label class="alan">
+      <span>Dein Name</span>
+      <input id="niyetAd" type="text" autocomplete="off">
+    </label>
+    <div class="zincir" id="zincirNiyetAd" dir="rtl"></div>
+
+    <label class="alan">
+      <span>Deine Frage — in einem Satz</span>
+      <textarea id="soru" rows="2" placeholder="Soll ich das Haus nehmen?"></textarea>
+    </label>
+  </div>
+  <button id="niyetSor" class="buyukDugme">Die Tafel befragen</button>
+
+  <div id="niyetCikti" hidden></div>
+</section>
+
+<!-- ----------------------------------------------------- III. İsim uyumu -->
+<section class="bolum" id="bUyum" hidden>
+  <p class="giriş">Zwei Menschen, vier Namen. Die Handschriften rechnen beide
+  Summen gegeneinander und lesen dazu die alte Regel der Elemente.</p>
+
+  <div class="ikiSutun">
+    <div class="alanlar">
+      <h3>Der erste</h3>
+      <label class="alan"><span>Name</span><input id="u1ad" type="text" autocomplete="off"></label>
+      <div class="zincir" id="zincirU1ad" dir="rtl"></div>
+      <label class="alan"><span>Name der Mutter</span><input id="u1anne" type="text" autocomplete="off"></label>
+      <div class="zincir" id="zincirU1anne" dir="rtl"></div>
+    </div>
+    <div class="alanlar">
+      <h3>Der zweite</h3>
+      <label class="alan"><span>Name</span><input id="u2ad" type="text" autocomplete="off"></label>
+      <div class="zincir" id="zincirU2ad" dir="rtl"></div>
+      <label class="alan"><span>Name der Mutter</span><input id="u2anne" type="text" autocomplete="off"></label>
+      <div class="zincir" id="zincirU2anne" dir="rtl"></div>
+    </div>
+  </div>
+  <button id="uyumHesapla" class="buyukDugme">Gegeneinander rechnen</button>
+
+  <div id="uyumCikti" hidden></div>
+</section>
+
+<!-- ------------------------------------------------------ IV. Menziller -->
+<section class="bolum" id="bMenzil" hidden>
+  <p class="giriş">Die <em>menâzil-i kamer</em>: achtundzwanzig Herbergen, in
+  denen der Mond auf seinem Umlauf je eine Nacht wohnt — achtundzwanzig
+  Stationen für achtundzwanzig Buchstaben. In den Handschriften steht diese
+  Schicht selbstverständlich; die heutigen Rechner lassen sie fast alle weg.</p>
+
+  <div class="tabloKutu">
+    <table>
+      <thead><tr><th>#</th><th>Herberge</th><th>Arabisch</th><th>Hüküm</th><th>Günstig für</th><th>Meide</th></tr></thead>
+      <tbody id="menzilTablo"></tbody>
+    </table>
+  </div>
+  <p class="kucukNot">Diese Tafel dient dem Nachschlagen. In welcher Herberge
+  der Mond heute wirklich steht, sagt sie nicht — dafür braucht es den Stand
+  des Mondes, nicht die Buchstaben eines Namens.</p>
+</section>
+
+<!-- --------------------------------------------------------- V. Wie -->
+<section class="bolum" id="bNasil" hidden>
+  <h2>Wie es rechnet</h2>
+
+  <h3>Ebced-i kebîr</h3>
+  <p>Jeder der 28 arabischen Buchstaben trägt einen Zahlwert, gemerkt in acht
+  Kunstwörtern: <em>ebced · hevvez · huttî · kelemen · sa'fes · karaşet ·
+  sehaz · dazağ</em>.</p>
+  <div class="tabloKutu">
+    <table class="ebcedTablo">
+      <tr><td>ا 1</td><td>ب 2</td><td>ج 3</td><td>د 4</td><td>ه 5</td><td>و 6</td><td>ز 7</td></tr>
+      <tr><td>ح 8</td><td>ط 9</td><td>ي 10</td><td>ك 20</td><td>ل 30</td><td>م 40</td><td>ن 50</td></tr>
+      <tr><td>س 60</td><td>ع 70</td><td>ف 80</td><td>ص 90</td><td>ق 100</td><td>ر 200</td><td>ش 300</td></tr>
+      <tr><td>ت 400</td><td>ث 500</td><td>خ 600</td><td>ذ 700</td><td>ض 800</td><td>ظ 900</td><td>غ 1000</td></tr>
+    </table>
+  </div>
+  <p>Die persisch-osmanischen Zusatzbuchstaben zählen wie ihre Nachbarn:
+  پ = 2, چ = 3, ژ = 7, گ = 20. Das ة gilt hier als 400 — manche Handschriften
+  setzen 5.</p>
+
+  <h3>Die Teilungen</h3>
+  <ul class="teilungen">
+    <li><b>÷ 12</b> — das Zeichen (burç). Rest null zählt als das zwölfte.</li>
+    <li><b>÷ 7</b> — der Wandelstern, in der chaldäischen Ordnung von der Sonne abwärts:
+        Şems, Zühre, Utarit, Kamer, Zühal, Müşteri, Merih.</li>
+    <li><b>÷ 4</b> — das Element: Ateş, Toprak, Hava, Su.</li>
+    <li><b>÷ 28</b> — die Mondherberge.</li>
+  </ul>
+
+  <h3>Was hier ehrlich gesagt sein muss</h3>
+  <p>Es gibt kein kanonisches Yıldıznâme. Das Genre wird Cafer-i Sâdık
+  zugeschrieben — das ist eine Autoritätszuschreibung, keine Autorschaft; die
+  erhaltenen Handschriften sind osmanisch und weichen voneinander ab. Die
+  Deutungen auf dieser Seite sind im Ton der Vorlage neu gefasst, nicht aus
+  einer einzelnen Handschrift abgeschrieben.</p>
+  <p>Die größte Fehlerquelle ist die Umschrift: arabisch werden Vokale
+  weitgehend nicht geschrieben, und ein Name schreibt sich nach seiner Herkunft.
+  Deshalb steht unter jedem Feld die Korrekturzeile. Die verbreitete
+  Bequemlichkeitsvariante, lateinische Buchstaben unmittelbar in Ebced-Zahlen
+  zu setzen, ist gerade nicht die Tradition — sie umgeht den Schritt, an dem
+  die Tradition hängt.</p>
+  <p class="kucukNot">Zum Gebrauch: Dies ist ein Nachbau einer historischen
+  Praxis, kein Ratgeber. Ärztliche, rechtliche und geldliche Entscheidungen
+  gehören zu Menschen, nicht zu Tafeln.</p>
+</section>
+
 </main>
 
-<script src="oracle.js?v=1"></script>
+<footer>
+  <p>Yıldıznâme — يلدزنامه · Ebced-i kebîr · zwölf Zeichen, sieben Sterne,
+  vier Elemente, achtundzwanzig Herbergen</p>
+</footer>
+
+<script type="module" src="oracle.js?v=2"></script>
 </body>
 </html>
