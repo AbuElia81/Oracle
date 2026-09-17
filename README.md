@@ -1,5 +1,8 @@
 # Yıldıznâme
 
+### → **[Die Seite öffnen: abuelia81.github.io/Oracle](https://abuelia81.github.io/Oracle/)**
+
+
 Ein Orakelrechner nach dem osmanischen **Yıldıznâme** („Sternbuch") — dem
 Genre, das den Menschen ein Horoskop gab, als kaum jemand seinen Geburtstag
 kannte. Statt des Himmels zur Geburtsstunde befragt es den Namen: den eigenen
@@ -75,5 +78,7 @@ python3 -m http.server 8920 --directory ~/projects/oracle
 
 ## Veröffentlichen
 
-Jeder Push auf `main` erscheint über GitHub Pages.
+Live: **https://abuelia81.github.io/Oracle/** — klassische GitHub Pages,
+Quelle `main` / Root, kein CNAME. Jeder Push auf `main` erscheint dort
+automatisch. Der Pfad ist großgeschrieben, weil das Repo `Oracle` heißt.
 Nach Änderungen an CSS oder JS vorher `./bump.sh` laufen lassen.
