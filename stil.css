@@ -382,3 +382,14 @@ footer p { color: var(--gedaempft); font-size: .78rem; letter-spacing: .06em; ma
 .essenzKopf .buyukToplam { font-size:clamp(1.9rem,7vw,2.8rem); line-height:1.2; }
 .essenzKopf .kucukNot { border:none; padding:0; margin:.7rem 0 0; text-align:center; }
 #eCikti p { font-size:1.05rem; }
+
+/* Auf dem Handy nehmen Kopf und Reiterleiste sonst zwei Drittel des ersten
+   Schirms ein, ehe der erste Inhalt kommt. Also enger setzen. */
+@media (max-width: 34rem) {
+  #kopf { padding: 2.2rem 1rem 1.2rem; }
+  .arapUst { font-size: 1.4rem; }
+  .unterzeile { font-size: .68rem; letter-spacing: .16em; }
+  #reiter { gap: .25rem; padding: .8rem .6rem 0; }
+  #reiter button { font-size: .8rem; padding: .34rem .6rem; }
+  main { padding-top: 1.4rem; }
+}

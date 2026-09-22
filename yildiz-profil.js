@@ -3,7 +3,7 @@
    Abschnitten. Nach dem Vorbild von geist-profil.js: füllt nur deren
    eigene Felder vor und stößt die Rechnung an, rührt an ihr nichts.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung } from "./profil.js?v=8";
+import { leseProfil, aufProfilAenderung } from "./profil.js?v=10";
 
 const $ = s => document.querySelector(s);
 
