@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Oracle</title>
 <meta name="description" content="Oracle — Orakelrechner nach alten Büchern: das osmanische Yıldıznâme aus Name und Muttername, der Geist des 11. Hauses nach Agrippa, Primärdirektionen, Zodiacal Releasing und Antiszien.">
-<link rel="stylesheet" href="stil.css?v=20">
+<link rel="stylesheet" href="stil.css?v=23">
 </head>
 <body>
 
@@ -27,6 +27,8 @@
   <button data-bolum="bLebensbogen">Der Lebensbogen</button>
   <button data-bolum="bZR">Zodiacal Releasing</button>
   <button data-bolum="bAntiszien">Antiszien</button>
+  <button data-bolum="bDodekaoros">Dodekaoros</button>
+  <button data-bolum="bProfektionen">Profektionen</button>
   <button data-bolum="bEssenz">Die Essenz</button>
   <button data-bolum="bNasil">Wie es rechnet</button>
 </nav>
@@ -450,6 +452,71 @@
   geldliche Entscheidungen gehören zu Menschen, nicht zu Schatten.</p>
 </section>
 
+<!-- -------------------------------------------------------- Dodekaoros -->
+<section class="bolum" id="bDodekaoros" hidden>
+  <p class="giriş">Der <b>Dodekaoros</b> (δωδεκάωρος): ein
+  hellenistisch-ägyptisches Bildersystem, belegt beim Astrologen
+  <b>Teukros von Babylon</b>, verwendet in den griechischen Zauberpapyri und
+  auf magischen Gemmen. Zwölf Tiere — fest an die zwölf Tierkreiszeichen
+  gebunden, anders als ein Los, das irgendwo beginnen kann — stehen je für
+  eine Erscheinungsform der Sonne beim Eintritt in das jeweilige Zeichen.
+  <em>Nicht</em> zu verwechseln mit dem chinesischen Tierkreis (zufällige
+  Ähnlichkeit) oder den Dodekatemoria (ein anderes Verfahren).</p>
+
+  <div class="alanlar">
+    <label class="alan"><span>Datum</span><input id="dkDatum" type="date"></label>
+  </div>
+  <button id="dkBerechnen" class="buyukDugme">Tier finden</button>
+  <div id="dkCikti" hidden></div>
+
+  <h3>Wie dieser Teil rechnet</h3>
+  <p>Aus dem Datum die Sonnenlänge, daraus das Tierkreiszeichen, daraus das
+  zugeordnete Tier — reine Sonnenrechnung, kein Horoskop nötig.</p>
+  <p class="kucukNot"><b>Transparenz:</b> Die antiken Quellen überliefern
+  nicht eine einzige Tierreihe — Franz Boll (<em>Sphaera</em>, 1903)
+  dokumentiert mehrere voneinander abweichende Fassungen. Die hier
+  verwendete Reihe folgt der in der Sekundärliteratur meistzitierten,
+  Teukros zugeschriebenen Fassung mit ägyptischem Götterbezug — eine
+  plausible, aber nicht letztgültig gesicherte Rekonstruktion. Die
+  „Tag-/Nachthälfte" folgt der klassischen Wechselfolge maskuliner und
+  femininer Zeichen, nicht einer dodekaoros-eigenen Quelle. Wer die eigene
+  Quellenseite mit einer anderen Tierreihe vor sich hat, sollte dieser
+  folgen. Ein Nachbau, kein Ratgeber.</p>
+</section>
+
+<!-- ------------------------------------------------------ Profektionen -->
+<section class="bolum" id="bProfektionen" hidden>
+  <p class="giriş">Eine hellenistische Zeitherren-Technik neben Zodiacal
+  Releasing, überliefert u. a. bei <b>Vettius Valens</b>: Nicht die
+  Planeten wandern, sondern die <b>Häuser</b>. Mit jedem Lebensjahr rückt
+  die Zählung, in Ganzzeichen-Häusern, um ein Zeichen weiter — im
+  Geburtsjahr steht das Zeichen des Aszendenten selbst auf dem I. Haus, ein
+  Jahr später das nächste, und so fort. Der Herrscher des profizierten
+  I. Hauses ist der <b>Herr des Jahres</b>. Die zwölf Monate eines Jahres
+  profizieren auf dieselbe Weise weiter, beim Zeichen des Jahres beginnend.</p>
+
+  <div id="pfProfilAnzeige"></div>
+
+  <div class="alanlar">
+    <label class="alan" style="max-width:16rem;">
+      <span>Bis zu welchem Alter zeigen</span>
+      <input id="pfMaxAlter" type="number" min="10" max="120" step="5" value="90">
+    </label>
+  </div>
+  <button id="pfBerechnen" class="buyukDugme">Profektionen berechnen</button>
+  <div id="pfCikti" hidden></div>
+
+  <h3>Wie dieser Teil rechnet</h3>
+  <p>Profiziertes I. Haus im Alter N: Zeichen des Aszendenten + N Zeichen,
+  in Ganzzeichen gezählt. Die übrigen elf Häuser folgen in derselben
+  Reihenfolge wie natal. Der Herr des Jahres ist der Herrscher (Domizil)
+  dieses Zeichens. Für die Monate desselben Jahres läuft dieselbe Zählung
+  ein zweites Mal, beim Zeichen des Jahres beginnend statt beim Aszendenten.</p>
+  <p class="kucukNot">Ein Nachbau einer historischen Rechentechnik zum
+  eigenen Nachvollziehen — keine Vorhersage. Ärztliche, rechtliche und
+  geldliche Entscheidungen gehören zu Menschen, nicht zu Häusern.</p>
+</section>
+
 <!-- --------------------------------------------------------- V. Wie -->
 <section class="bolum" id="bNasil" hidden>
   <h2>Wie es rechnet</h2>
@@ -514,17 +581,20 @@
   vier Elemente, achtundzwanzig Herbergen</p>
 </footer>
 
-<script type="module" src="oracle.js?v=20"></script>
-<script type="module" src="profil.js?v=20"></script>
-<script type="module" src="profil-ui.js?v=20"></script>
-<script type="module" src="geist.js?v=20"></script>
-<script type="module" src="geist-profil.js?v=20"></script>
-<script type="module" src="yildiz-profil.js?v=20"></script>
-<script type="module" src="essenz.js?v=20"></script>
-<script type="module" src="auto-rechnen.js?v=20"></script>
-<script type="module" src="deutung.js?v=20"></script>
-<script type="module" src="lebensbogen.js?v=20"></script>
-<script type="module" src="zr.js?v=20"></script>
-<script type="module" src="antiszien.js?v=20"></script>
+<script type="module" src="oracle.js?v=23"></script>
+<script type="module" src="profil.js?v=23"></script>
+<script type="module" src="profil-ui.js?v=23"></script>
+<script type="module" src="geist.js?v=23"></script>
+<script type="module" src="geist-profil.js?v=23"></script>
+<script type="module" src="yildiz-profil.js?v=23"></script>
+<script type="module" src="essenz.js?v=23"></script>
+<script type="module" src="auto-rechnen.js?v=23"></script>
+<script type="module" src="deutung.js?v=23"></script>
+<script type="module" src="jahr.js?v=23"></script>
+<script type="module" src="lebensbogen.js?v=23"></script>
+<script type="module" src="zr.js?v=23"></script>
+<script type="module" src="antiszien.js?v=23"></script>
+<script type="module" src="dodekaoros.js?v=23"></script>
+<script type="module" src="profektionen.js?v=23"></script>
 </body>
 </html>

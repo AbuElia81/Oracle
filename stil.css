@@ -373,6 +373,18 @@ footer p { color: var(--gedaempft); font-size: .78rem; letter-spacing: .06em; ma
   .oerterTablo th:nth-child(4), .oerterTablo td:nth-child(4) { display:none; }
 }
 
+/* ---------------------------------- Monatsstreifen (Profektionen u. a.) */
+.harfStreifenTitel { font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--gedaempft); margin:1.8rem 0 .5rem; text-align:center; }
+.harfStreifen { display:flex; gap:.4rem; overflow-x:auto; padding:.3rem .2rem .8rem; }
+.harfZelle {
+  flex:0 0 auto; width:2.6rem; height:2.6rem; border:1px solid var(--linie); border-radius:2px;
+  background:var(--kagit2); color:var(--gedaempft);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:.65rem;
+}
+.harfZelle .g { font-size:1.1rem; color:var(--schrift); }
+.harfZelle.treffer { background:var(--ton); border-color:var(--ton); color:var(--grund); }
+.harfZelle.treffer .g { color:var(--grund); }
+
 /* ----------------------------------------------------------- Die Essenz */
 .essenzKopf {
   margin:2rem 0 .5rem; text-align:center; padding:1.6rem 1.2rem;
@@ -411,3 +423,13 @@ footer p { color: var(--gedaempft); font-size: .78rem; letter-spacing: .06em; ma
 .deutungListe { margin:0 0 1rem; padding-left:1.1rem; }
 .deutungListe li { margin-bottom:.6rem; }
 .deutungKasten .kucukNot { margin-bottom:0; }
+
+/* ----------------------------------------------------- Jahresüberblick */
+.jahrKasten {
+  margin-top:1.4rem; padding:1.3rem;
+  background:linear-gradient(180deg, rgba(201,162,39,.07), transparent);
+  border:1px solid var(--linie); border-left:2px solid var(--ton-hell); border-radius:2px;
+}
+.jahrKasten h3:first-child { margin-top:0; color:var(--ton-hell); }
+.jahrKasten p { margin-bottom:.8rem; }
+.jahrKasten .kucukNot { margin-bottom:0; }
