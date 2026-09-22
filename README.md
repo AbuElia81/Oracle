@@ -50,6 +50,42 @@ hebräische Alphabet um den Tierkreis bis zur Spitze des 11. Hauses
 nicht möchte, trägt Breite, Länge und UTC-Offset direkt ein — sonst bleibt
 alles im Browser.
 
+## Meine Daten — ein Profil für drei Rechner
+
+Der Geist des 11. Hauses, der Lebensbogen und Zodiacal Releasing brauchen
+alle denselben wirklichen Himmel zur Geburtsstunde. Der Reiter **Meine
+Daten** (`profil.js`/`profil-ui.js`) speichert Name, Geburtsdatum, -zeit,
+-ort, Breite/Länge und UTC-Offset einmal in `localStorage`; die drei Rechner
+lesen es automatisch und rechnen beim Öffnen des Reiters sofort — kein Feld
+wird zweimal verlangt.
+
+## Der Lebensbogen — Primärdirektionen
+
+Nach **Ptolemäus** (Tetrabiblos III) und **Martin Gansten** (*Primary
+Directions*, 2009): Nicht die Planeten bewegen sich, sondern der Himmel
+dreht sich um die Weltachse; ein Promissor "kommt zur Richtung", wenn diese
+Drehung ihn auf die Stelle eines Signifikators bringt. `astro.js` liefert
+dafür Sonne, Mond und die fünf Planeten aus niedrig-präzisen Bahnelementen
+(Kepler-Gleichung per Newton-Verfahren) sowie Aszendent/MC und die schiefe
+Auf-/Untergangsrektaszension; `direktionen.js` rechnet die Bögen — exakt zu
+den vier Achsen (Ptolemäus' eigenes, geschlossen lösbares Verfahren),
+vereinfacht "im Tierkreis" zwischen zwei Planeten (keine
+Häusertrisektion nach Regiomontanus oder Placidus). Das Ergebnis ist eine
+ziehbare Zeitleiste: der Schieber zeigt beim Ziehen Alter, ungefähres
+Datum und die nächstliegenden Richtungen live an.
+
+## Zodiacal Releasing
+
+Eine hellenistische Zeitherren-Technik, überliefert bei **Vettius Valens**,
+in der Neuzeit vor allem durch **Robert Hand** erschlossen (`zr.js`). Vom
+Los des Glücks oder vom Los des Geistes werden die zwölf Zeichen der Reihe
+nach freigesetzt, jedes für die "kleineren Jahre" seines Herrschers; jede
+Stufe (hier L1–L3) verschachtelt dieselbe Zählung anteilig in sich selbst,
+mit der Verdopplungsregel (Herrscher der Periode natal im eigenen Zeichen).
+Die "Lösung des Bandes" ist bewusst nicht umgesetzt — die genaue Bedingung
+ließ sich nicht mit Sicherheit rekonstruieren. Auch hier: eine ziehbare
+Zeitleiste, als verschachtelte Bänder je Stufe.
+
 ## Die Umschrift
 
 Der heikelste Schritt ist nicht die Rechnung, sondern die arabische Schreibung:
@@ -83,6 +119,12 @@ Statische Seite, keine Baukette:
 | `korpus.js` | das Buch: 12 Zeichen, 7 Sterne, 4 Elemente, 28 Herbergen, Tafeln |
 | `oracle.js` | Bedienung |
 | `geist.js` | Der Geist des 11. Hauses: Aszendentenrechnung, Würdetafeln, hebräisches Alphabet, Bedienung |
+| `profil.js` / `profil-ui.js` | das gemeinsame Geburtsprofil (Speicherung, Reiter "Meine Daten") |
+| `geist-profil.js` | füllt die Felder des Geist-Reiters aus dem gemeinsamen Profil |
+| `astro.js` | Himmelsmechanik: Julianisches Datum, Sternzeit, Planetenpositionen, Aszendent/MC |
+| `direktionen.js` | Der Lebensbogen: die Bogen-Mathematik der Primärdirektionen |
+| `lebensbogen.js` | Der Lebensbogen: Bedienung und die ziehbare Zeitleiste |
+| `zr.js` | Zodiacal Releasing: Lose, Perioden, Bedienung und die Bänder-Zeitleiste |
 | `bump.sh` | hebt `?v=` in HTML und in den Modul-Importen an |
 
 ## Lokal ansehen
