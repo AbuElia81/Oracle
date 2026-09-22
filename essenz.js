@@ -6,9 +6,10 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=23";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=23";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe } from "./profil.js?v=23";
+import { cevir, toplam, kalan } from "./ebced.js?v=30";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=30";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe } from "./profil.js?v=30";
+import { JAHR, profektionJetzt } from "./jahr.js?v=30";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -87,12 +88,52 @@ function naechsteDirektion(alter) {
   return beste;
 }
 
+/* Profektionen: das Jahreshaus und sein Herr — die Jahrestechnik schlechthin. */
+function profektion() {
+  anstossen("#pfBerechnen", "#pfCikti");      // Tafel im Abschnitt füllen
+  const pr = profektionJetzt();               // gerechnet, nicht abgelesen
+  if (!pr) return null;
+  return { text: `dein ${pr.haus}. Haus in ${pr.glyph} ${pr.name}, Herr des Jahres ${pr.herr}; ` +
+                 `Thema: ${pr.thema}` };
+}
+
+/* Dodekaoros: das Tier der Sonne. */
+function dodekaoros() {
+  const c = anstossen("#dkBerechnen", "#dkCikti");
+  if (!c || c.hidden) return null;
+  const kopf = c.querySelector(".buyukToplam, .almutenPlanet, h3");
+  const tier = kopf ? kopf.innerText.trim() : "";
+  const unter = c.querySelector(".kucukNot");
+  return tier ? { tier, dazu: unter ? unter.innerText.replace(/\s+/g, " ").trim() : "" } : null;
+}
+
 /* Antiszien: die verborgenen Verbindungen des Horoskops. */
 function antiszien() {
   const c = anstossen("#azHoroskopBerechnen", "#azHoroskopCikti");
   if (!c || c.hidden) return null;
   const funde = [...c.querySelectorAll(".naheDranItem")].map(x => x.innerText.trim());
   return { funde };
+}
+
+/* Die Jahreskästen der einzelnen Abschnitte — jahr.js hat sie schon
+   gefüllt; hier wird nur das Wichtigste daraus übernommen. */
+function jahresPunkte() {
+  const quellen = [
+    ["#yildizJahr", "Yıldıznâme"],
+    ["#lbJahr",     "Lebensbogen"],
+    ["#zrJahr",     "Zodiacal Releasing"],
+    ["#azJahr",     "Antiszien"]
+  ];
+  return quellen.map(([wahl, titel]) => {
+    const k = document.querySelector(wahl);
+    if (!k || k.hidden || !k.children.length) return null;
+    const saetze = [...k.querySelectorAll("p")]
+      .filter(x => !x.classList.contains("kucukNot"))
+      .map(x => x.textContent.trim());
+    const punkte = [...k.querySelectorAll(".deutungListe li")].map(x => x.textContent.trim());
+    if (!saetze.length && !punkte.length) return null;
+    return { titel, kern: saetze[0] || "", punkte: punkte.slice(0, 3) };
+  }).filter(Boolean);
 }
 
 /* ------------------------------------------------------------- der Text */
@@ -124,6 +165,8 @@ function schreibe() {
   const zr = alter != null ? zeitalter(alter) : null;
   const dir = alter != null ? naechsteDirektion(alter) : null;
   const anti = antiszien();
+  const prof = profektion();
+  const dodek = dodekaoros();
 
   cikti.appendChild(el("p", "kucukNot", "Für: " + profilBeschriftung(p) +
     (alter != null ? ` · heute ${alter.toFixed(0)} Jahre alt` : "")));
@@ -196,6 +239,13 @@ function schreibe() {
       `sondern Fälligkeiten — sie sagen, wann ein Thema an die Tür kommt, nicht, wer öffnet.`));
   }
 
+  if (dodek) {
+    cikti.appendChild(absatz("Dein Tier",
+      `Die ägyptische Zwölftierreihe, der Dodekaoros, ordnet jedem Tierkreiszeichen ein Tier zu. ` +
+      `Für den Stand deiner Sonne ist es: ${dodek.tier}. ` +
+      `Eine ältere Schicht als der Tierkreis selbst — dieselbe Einteilung, andere Bilder.`));
+  }
+
   if (anti) {
     if (anti.funde.length) {
       const namen = anti.funde.map(f => {
@@ -214,11 +264,47 @@ function schreibe() {
     }
   }
 
+  /* Die Jahreskästen der anderen Abschnitte entstehen erst, wenn deren
+     Rechner fertig sind. Deshalb wird dieser Block nachgezogen, bis alles
+     da ist — er ersetzt sich dabei selbst. */
+  const jahrFach = el("div", "jahrFach");
+  cikti.appendChild(jahrFach);
+
+  function zeichneJahr() {
+    const jahr = jahresPunkte();
+    const pf = profektion();
+    jahrFach.innerHTML = "";
+    if (!jahr.length && !pf) return 0;
+    jahrFach.appendChild(el("h3", null, `Dieses Jahr — ${JAHR}`));
+    jahrFach.appendChild(el("p", null,
+      `Was die einzelnen Techniken für ${JAHR} sagen, nebeneinandergelegt:`));
+    if (pf) {
+      const pp = el("p");
+      pp.innerHTML = `<b>Profektion:</b> ${pf.text} — in dieser Technik gibt das Jahreshaus ` +
+        `dem Jahr sein Thema, und sein Herrscher ist der Herr des Jahres.`;
+      jahrFach.appendChild(pp);
+    }
+    const liste = el("ul", "deutungListe");
+    jahr.forEach(j => {
+      const li = el("li");
+      li.innerHTML = `<b>${j.titel}:</b> ${j.kern}` +
+        (j.punkte.length ? `<br><span class="jahrPunkte">${j.punkte.join("<br>")}</span>` : "");
+      liste.appendChild(li);
+    });
+    jahrFach.appendChild(liste);
+    return jahr.length;
+  }
+
+  zeichneJahr();
+  [500, 1200, 2500].forEach(ms => setTimeout(() => {
+    if (document.body.contains(jahrFach)) zeichneJahr();
+  }, ms));
+
   if (sb) {
     cikti.appendChild(absatz("Der Rat", sb.burc.ogut));
   }
 
-  if (!sb && !geist && !zr && !dir && !anti) {
+  if (!sb && !geist && !zr && !dir && !anti && !prof && !dodek) {
     const w = el("p", "kucukNot", "Es fehlen noch Angaben. ");
     const b = el("button", "knopfKlein", "Zur Dateneingabe");
     b.addEventListener("click", zurDateneingabe);

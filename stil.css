@@ -433,3 +433,4 @@ footer p { color: var(--gedaempft); font-size: .78rem; letter-spacing: .06em; ma
 .jahrKasten h3:first-child { margin-top:0; color:var(--ton-hell); }
 .jahrKasten p { margin-bottom:.8rem; }
 .jahrKasten .kucukNot { margin-bottom:0; }
+.jahrPunkte { display:block; margin-top:.35rem; color:var(--gedaempft); font-size:.92rem; }

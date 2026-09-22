@@ -6,7 +6,7 @@
    fertigen Tafeln und setzt seinen Text in einen eigenen Kasten daneben.
    Deshalb überlebt die Deutung auch ein Neurechnen.
    --------------------------------------------------------------------- */
-import { leseProfilRoh } from "./profil.js?v=23";
+import { leseProfilRoh } from "./profil.js?v=30";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
