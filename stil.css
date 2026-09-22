@@ -330,6 +330,23 @@ td.arap { font-size: 1.05rem; color: var(--ton-hell); white-space: nowrap; }
   border:none; padding:0; margin:.9rem 0 0; text-align:center;
 }
 
+/* -------------------------------------------------- Zeitleiste, Schieber */
+.zeitleisteKutu {
+  background:var(--kagit); border:1px solid var(--linie); border-radius:2px;
+  padding:1.2rem 1rem 1.4rem; margin-top:1.6rem;
+}
+.zeitleisteKutu svg { width:100%; height:auto; display:block; cursor:pointer; }
+.zeitleisteAblesung {
+  text-align:center; margin-top:.7rem; color:var(--ton-hell); font-size:.95rem; line-height:1.5;
+}
+.naheDran { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.2rem; }
+.naheDranItem {
+  background:var(--kagit2); border:1px solid var(--linie); border-radius:2px;
+  padding:.4rem .7rem; font-size:.8rem; color:var(--gedaempft);
+}
+.naheDranItem b { color:var(--ton-hell); }
+tr.naeheAktiv td { background:rgba(201,162,39,.14); }
+
 /* --------------------------------------------------------------- Fuß */
 footer {
   border-top: 1px solid var(--linie);

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Yıldıznâme — das Sternbuch</title>
 <meta name="description" content="Ein Orakelrechner nach dem osmanischen Yıldıznâme: Name und Muttername im Ebced, geteilt durch zwölf, sieben, vier und achtundzwanzig. Dazu: der Geist des 11. Hauses nach Agrippa.">
-<link rel="stylesheet" href="stil.css?v=3">
+<link rel="stylesheet" href="stil.css?v=6">
 </head>
 <body>
 
@@ -20,7 +20,10 @@
   <button data-bolum="bNiyet">Niyet — die Frage</button>
   <button data-bolum="bUyum">İsim uyumu</button>
   <button data-bolum="bMenzil">Die 28 Herbergen</button>
+  <button data-bolum="bProfil">Meine Daten</button>
   <button data-bolum="bGeist">Der Geist des 11. Hauses</button>
+  <button data-bolum="bLebensbogen">Der Lebensbogen</button>
+  <button data-bolum="bZR">Zodiacal Releasing</button>
   <button data-bolum="bNasil">Wie es rechnet</button>
 </nav>
 
@@ -126,15 +129,63 @@
   des Mondes, nicht die Buchstaben eines Namens.</p>
 </section>
 
+<!-- --------------------------------------------------- V. Meine Daten -->
+<section class="bolum" id="bProfil" hidden>
+  <p class="giriş">Drei weitere Rechner — der Geist des 11. Hauses,
+  der Lebensbogen (Primärdirektionen) und Zodiacal Releasing — brauchen
+  denselben wirklichen Himmel zur Geburtsstunde. Einmal hier eingetragen,
+  steht er allen dreien zur Verfügung; keiner fragt noch einmal.</p>
+
+  <div class="alanlar">
+    <label class="alan">
+      <span>Name (nur für die Überschriften)</span>
+      <input id="pName" type="text" autocomplete="off" placeholder="optional">
+    </label>
+
+    <div class="geoZeile">
+      <label class="alan"><span>Geburtsdatum</span><input id="pDatum" type="date"></label>
+      <label class="alan"><span>Geburtszeit</span><input id="pZeit" type="time"></label>
+    </div>
+
+    <label class="alan">
+      <span>Geburtsort</span>
+      <input id="pOrt" type="text" autocomplete="off" placeholder="z. B. Palermo, Italien">
+    </label>
+    <div class="geoZeile">
+      <button type="button" id="pOrtSuchen" class="knopfKlein">Koordinaten suchen</button>
+      <span class="geoStatus" id="pGeoStatus"></span>
+    </div>
+
+    <div class="geoZeile">
+      <label class="alan"><span>Breite (°N, Süd negativ)</span><input id="pBreite" type="number" step="0.0001" placeholder="z. B. 38.1157"></label>
+      <label class="alan"><span>Länge (°O, West negativ)</span><input id="pLaenge" type="number" step="0.0001" placeholder="z. B. 13.3615"></label>
+      <label class="alan"><span>UTC-Offset zur Geburtszeit</span><input id="pUtc" type="number" step="0.25" placeholder="z. B. 1 oder 2 (Sommerzeit)"></label>
+    </div>
+  </div>
+
+  <div class="geoZeile" style="margin-top:1.8rem;">
+    <button id="pSpeichern" class="buyukDugme" style="margin-top:0;">Speichern</button>
+    <button type="button" id="pLoeschen" class="knopfKlein">Daten löschen</button>
+  </div>
+  <p class="geoStatus" id="pSpeicherStatus"></p>
+
+  <p class="kucukNot">Die Ortssuche fragt einmalig, auf Knopfdruck, den freien
+  Dienst <a href="https://nominatim.openstreetmap.org" target="_blank" rel="noopener">Nominatim (OpenStreetMap)</a>
+  — sonst bleibt alles hier im Browser (<code>localStorage</code>), nichts
+  wird an einen Server dieser Seite geschickt, es gibt keinen.</p>
+</section>
+
 <!-- ---------------------------------------- VI. Der Geist des 11. Hauses -->
 <section class="bolum" id="bGeist" hidden>
   <p class="giriş">Ein anderes Buch als das Yıldıznâme: <b>Cornelius Agrippas</b>
   <em>De Occulta Philosophia</em> (Buch III, Kap. 26). Statt des Namens fragt
-  dieses Verfahren den wirklichen Himmel zur Geburtsstunde — aus Geburtsdatum,
-  -zeit und -ort wird der Aszendent selbst berechnet, daraus der
-  <b>Almuten des 11. Hauses</b> (Regent des „guten Geistes"), und daraus,
-  gradweise am Aszendenten im hebräischen Alphabet gezählt, ein persönlicher
-  <b>Geistname</b>.</p>
+  dieses Verfahren den wirklichen Himmel zur Geburtsstunde. Aus Geburtsdatum,
+  -zeit und -ort werden die <b>fünf hylegischen Örter</b> berechnet —
+  Aszendent, Sonne, Mond, Glückspunkt und die Syzygie vor der Geburt. Über den
+  Tierkreis liegt der Kreis der hebräischen Buchstaben; jeder Ort fällt in
+  einen Sektor und gibt seinen Buchstaben her. Die fünf zusammen ergeben den
+  <b>Geistnamen</b>. Dazu, als eigene Aussage, der <b>Almuten des 11. Hauses</b>
+  — der Regent des Hauses des „guten Geistes".</p>
 
   <div class="alanlar">
     <label class="alan">
@@ -164,8 +215,8 @@
 
     <fieldset class="cinsiyet">
       <legend>Buchstaben-Kreis</legend>
-      <label><input type="radio" name="gModus" value="22" checked> 22 Buchstaben (Agrippas Verfahren)</label>
-      <label><input type="radio" name="gModus" value="27"> 27 Einheiten (Rekonstruktion, mit Schlussformen)</label>
+      <label><input type="radio" name="gModus" value="22" checked> 22 Buchstaben (je 16,36°)</label>
+      <label><input type="radio" name="gModus" value="27"> 27 Einheiten mit Schlussformen (je 13,33°)</label>
     </fieldset>
 
     <fieldset class="cinsiyet">
@@ -189,16 +240,137 @@
   <p>Aus Datum, Uhrzeit, UTC-Offset, Breite und Länge: julianisches Datum →
   Greenwich-Sternzeit → Ortssternzeit (RAMC) → Aszendent, mit der Schiefe der
   Ekliptik nach dem Datum und den Standardformeln der sphärischen Astronomie
-  (Meeus). Die Sonnenposition (niedrige Präzision, ausreichend hier) entscheidet
-  Tag- oder Nachtgeburt für die Trigon-Würde. Die Spitze des 11. Hauses folgt
-  der Ganzzeichen-Vereinfachung: zehn Zeichen nach dem Aszendenten, gleicher
-  Grad. Der 22-Buchstaben-Modus folgt Agrippas Originalverfahren; der
-  27-Einheiten-Modus (22 Buchstaben plus die fünf hebräischen Schlussformen)
-  ist eine plausible eigene Rekonstruktion, keine belegte historische Tabelle.</p>
+  (Meeus). Die Sonnenposition nach Meeus Kap. 25, die Mondlänge nach Kap. 47 in
+  gekürzter Reihe (rund eine Bogenminute genau — bei Sektoren von 16° reichlich).
+  Die Sonnenhöhe entscheidet Tag- oder Nachtgeburt und damit die Formel für den
+  Glückspunkt: bei Tag Asz + Mond − Sonne, bei Nacht Asz + Sonne − Mond. Die
+  Syzygie vor der Geburt wird gesucht, indem die Elongation der Lichter
+  rückwärts auf 0° oder 180° gebracht wird; bei einer Opposition wird die Länge
+  des Mondes genommen.</p>
+  <p>Der Buchstabenkreis teilt die vollen 360° in gleiche Sektoren, beginnend
+  bei 0° Widder mit Aleph. Der 22er-Modus ist Agrippas Zahl; der 27er-Modus
+  (22 Buchstaben plus die fünf Schlussformen) ist eine plausible eigene
+  Rekonstruktion, keine belegte historische Tabelle. Auch die Reihenfolge der
+  fünf Örter im Namen und die Endung <em>-El</em> oder <em>-Jah</em> weichen
+  von Handschrift zu Handschrift ab.</p>
+  <p>Die Spitze des 11. Hauses folgt der Ganzzeichen-Vereinfachung: zehn Zeichen
+  nach dem Aszendenten, gleicher Grad. Sie geht nur in den Almuten ein, nicht in
+  den Namen.</p>
   <p class="kucukNot">Auch dies: ein Nachbau einer historischen Denktechnik,
   kein Ratgeber und keine Aussage über tatsächliche geistige Entitäten.
   Ärztliche, rechtliche und geldliche Entscheidungen gehören zu Menschen, nicht
   zu Tafeln.</p>
+</section>
+
+<!-- ---------------------------------------------- VII. Der Lebensbogen -->
+<section class="bolum" id="bLebensbogen" hidden>
+  <p class="giriş">Die älteste Vorhersagetechnik der westlichen Astrologie,
+  systematisiert von <b>Ptolemäus</b> (Tetrabiblos III), in der Neuzeit
+  wiederentdeckt u. a. durch <b>Martin Gansten</b> (<em>Primary
+  Directions</em>, 2009). Nicht die Planeten bewegen sich — der ganze Himmel
+  dreht sich um die Weltachse, rund einen Grad pro vier Zeitminuten, im
+  Schlüssel des Ptolemäus also <b>ein Grad pro Lebensjahr</b>. Ein
+  Promissor "kommt zur Richtung", wenn diese Drehung ihn auf die Stelle
+  eines Signifikators bringt.</p>
+
+  <div id="lbProfilAnzeige"></div>
+
+  <div class="alanlar">
+    <fieldset class="cinsiyet">
+      <legend>Schlüssel</legend>
+      <label><input type="radio" name="lbSchluessel" value="ptolemaeus" checked> Ptolemäus (1° = 1 Jahr)</label>
+      <label><input type="radio" name="lbSchluessel" value="naibod"> Naibod (≈ 0°59′08″ = 1 Jahr)</label>
+    </fieldset>
+
+    <fieldset class="cinsiyet">
+      <legend>Umfang</legend>
+      <label><input type="checkbox" id="lbAchsen" checked> Zu den Achsen (ASC · MC · DESC · IC)</label>
+      <label><input type="checkbox" id="lbPlanetZuPlanet"> Planet zu Planet (vereinfacht, im Tierkreis)</label>
+      <label><input type="checkbox" id="lbKonvers"> auch konverse Richtungen</label>
+    </fieldset>
+
+    <fieldset class="cinsiyet" id="lbAspektFeld" hidden>
+      <legend>Aspekte bei Planet zu Planet</legend>
+      <label><input type="checkbox" id="lbAKon" checked> ☌ Konjunktion</label>
+      <label><input type="checkbox" id="lbAQua" checked> □ Quadrat</label>
+      <label><input type="checkbox" id="lbAOpp" checked> ☍ Opposition</label>
+      <label><input type="checkbox" id="lbASex"> ⚹ Sextil</label>
+      <label><input type="checkbox" id="lbATri"> △ Trigon</label>
+    </fieldset>
+
+    <label class="alan" style="max-width:16rem;">
+      <span>Bis zu welchem Alter zeigen</span>
+      <input id="lbMaxAlter" type="number" min="10" max="120" step="5" value="90">
+    </label>
+  </div>
+
+  <button id="lbBerechnen" class="buyukDugme">Lebensbogen berechnen</button>
+
+  <div id="lbCikti" hidden></div>
+
+  <h3>Wie dieser Teil rechnet</h3>
+  <p>Direktionen zu den vier Achsen sind geschlossen lösbar über die schiefe
+  Auf- bzw. Untergangsrektaszension jedes Promissors (Ptolemäus' eigenes
+  Verfahren, mit der wirklichen Deklination — schon die volle "mundane"
+  Fassung dieses Teils, kein Häusersystem nötig). Direktionen zwischen zwei
+  Planeten sind hier <b>vereinfacht "im Tierkreis"</b> gerechnet: der
+  Aspektpunkt als Punkt der Ekliptik mit Breite null, der Bogen als einfache
+  Differenz der Rektaszensionen — nicht die volle Häusertrisektion nach
+  Regiomontanus (geschlossen lösbar) oder Placidus (iterativ), die diese
+  Seite nicht umsetzt. Als konvers zeigt diese Seite 360° minus den direkten
+  Bogen — die gebräuchliche praktische Umsetzung, nicht in jeder Nuance jede
+  historische Definition.</p>
+  <p class="kucukNot">Ein Nachbau einer historischen Rechentechnik zum
+  eigenen Nachvollziehen — keine Vorhersage. Ärztliche, rechtliche und
+  geldliche Entscheidungen gehören zu Menschen, nicht zu Bögen.</p>
+</section>
+
+<!-- ------------------------------------------------ VIII. Zodiacal Releasing -->
+<section class="bolum" id="bZR" hidden>
+  <p class="giriş">Eine hellenistische Zeitherren-Technik, überliefert bei
+  <b>Vettius Valens</b> und in der Neuzeit vor allem durch <b>Robert Hand</b>
+  wieder zugänglich gemacht. Von einem Los — dem <b>Los des Glücks</b> (Körper,
+  Umstände) oder dem <b>Los des Geistes</b> (Handeln, Absicht) — werden die
+  zwölf Zeichen "freigesetzt", jedes so viele Jahre lang, wie sein Herrscher
+  an "kleineren Jahren" trägt; jede Stufe verschachtelt dieselbe Zählung fein
+  in sich selbst.</p>
+
+  <div id="zrProfilAnzeige"></div>
+
+  <div class="alanlar">
+    <fieldset class="cinsiyet">
+      <legend>Von welchem Los</legend>
+      <label><input type="radio" name="zrLos" value="fortuna" checked> Los des Glücks (Fortuna)</label>
+      <label><input type="radio" name="zrLos" value="geist"> Los des Geistes (Spiritus)</label>
+    </fieldset>
+    <label class="alan" style="max-width:16rem;">
+      <span>Bis zu welchem Alter zeigen</span>
+      <input id="zrMaxAlter" type="number" min="10" max="120" step="5" value="90">
+    </label>
+  </div>
+
+  <button id="zrBerechnen" class="buyukDugme">Zodiacal Releasing berechnen</button>
+
+  <div id="zrCikti" hidden></div>
+
+  <h3>Wie dieser Teil rechnet</h3>
+  <p><b>Los des Glücks</b>: bei Tag Asz + Mond − Sonne, bei Nacht Asz + Sonne
+  − Mond. <b>Los des Geistes</b>: bei Tag Asz + Sonne − Mond, bei Nacht
+  Asz + Mond − Sonne. Die erste Stufe (L1) durchläuft, beim Zeichen des Loses
+  beginnend, alle zwölf Zeichen der Reihe nach — jedes so viele Jahre lang,
+  wie die "kleineren Jahre" seines Herrschers zählen (Mond 25 · Sonne 19 ·
+  Merkur 20 · Venus 8 · Mars 15 · Jupiter 12 · Saturn 30). Jede weitere Stufe
+  (L2, L3, L4) durchläuft, beim selben Zeichen wie die Stufe darüber
+  beginnend, wieder alle zwölf Zeichen, ihre Längen anteilig aus der Länge
+  der übergeordneten Stufe berechnet (Summe der Zeichen-Jahre einer vollen
+  Runde: 214). Steht der Herrscher eines Zeichens bei der Geburt selbst in
+  einem seiner eigenen Zeichen, wird die Stufe verdoppelt.</p>
+  <p class="kucukNot">Nicht umgesetzt: die "Lösung des Bandes" (die
+  Umkehrregel bei bestimmten Spannungswinkeln zum Ausgangszeichen) — eine
+  weitere klassische Regel, hier bewusst ausgelassen, weil sich ihre genaue
+  Bedingung aus dem verfügbaren Material nicht mit Sicherheit rekonstruieren
+  ließ. Ein Nachbau einer historischen Rechentechnik zum eigenen
+  Nachvollziehen, keine Vorhersage.</p>
 </section>
 
 <!-- --------------------------------------------------------- V. Wie -->
@@ -254,7 +426,12 @@
   vier Elemente, achtundzwanzig Herbergen</p>
 </footer>
 
-<script type="module" src="oracle.js?v=3"></script>
-<script type="module" src="geist.js?v=3"></script>
+<script type="module" src="oracle.js?v=6"></script>
+<script type="module" src="profil.js?v=6"></script>
+<script type="module" src="profil-ui.js"></script>
+<script type="module" src="geist.js?v=6"></script>
+<script type="module" src="geist-profil.js"></script>
+<script type="module" src="lebensbogen.js?v=6"></script>
+<script type="module" src="zr.js?v=6"></script>
 </body>
 </html>
