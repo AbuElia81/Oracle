@@ -1,7 +1,7 @@
 /* ------------------------------------------------------------------------
    profil-ui.js — Bedienung des Reiters "Meine Daten".
    --------------------------------------------------------------------- */
-import { leseProfilRoh, schreibeProfil, loescheProfil } from "./profil.js?v=14";
+import { leseProfilRoh, schreibeProfil, loescheProfil } from "./profil.js?v=20";
 
 const $ = s => document.querySelector(s);
 
@@ -85,7 +85,7 @@ function speichern(still) {
   }
   const bereit = [], fehlt = [];
   (namenDa ? bereit : fehlt).push("Yıldıznâme, Niyet und İsim uyumu");
-  (geburtDa ? bereit : fehlt).push("Geist, Lebensbogen und Zodiacal Releasing");
+  (geburtDa ? bereit : fehlt).push("Spirit Name, Lebensbogen und Zodiacal Releasing");
   status.textContent = "Gespeichert. " + bereit.join(" sowie ") + " rechnen jetzt damit." +
     (fehlt.length ? ` Für ${fehlt.join(" und ")} fehlt noch etwas.` : "");
   status.classList.add(fehlt.length ? "warnung" : "ok");

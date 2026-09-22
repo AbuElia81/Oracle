@@ -8,8 +8,8 @@
    selbst in einem seiner eigenen Zeichen). NICHT umgesetzt: die "Lösung des
    Bandes" — siehe Transparenzabschnitt im HTML.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=14";
-import { berechneGeburt, norm360 } from "./astro.js?v=14";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=20";
+import { berechneGeburt, norm360 } from "./astro.js?v=20";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);

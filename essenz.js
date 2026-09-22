@@ -6,9 +6,9 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=14";
-import { BURCLAR, UNSURLAR, GEZEGENLER } from "./korpus.js?v=14";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe } from "./profil.js?v=14";
+import { cevir, toplam, kalan } from "./ebced.js?v=20";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=20";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe } from "./profil.js?v=20";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -43,6 +43,7 @@ function sternbild(p) {
     unsur: UNSURLAR[burc.unsur - 1],
     herr: gezegen(burc.gezegen),
     stern: GEZEGENLER[kalan(summe, 7) - 1],
+    menzil: MENZILLER[kalan(summe, 28) - 1],
     kadin: p.cinsiyet === "kadin"
   };
 }
@@ -86,6 +87,14 @@ function naechsteDirektion(alter) {
   return beste;
 }
 
+/* Antiszien: die verborgenen Verbindungen des Horoskops. */
+function antiszien() {
+  const c = anstossen("#azHoroskopBerechnen", "#azHoroskopCikti");
+  if (!c || c.hidden) return null;
+  const funde = [...c.querySelectorAll(".naheDranItem")].map(x => x.innerText.trim());
+  return { funde };
+}
+
 /* ------------------------------------------------------------- der Text */
 
 function absatz(titel, text) {
@@ -114,6 +123,7 @@ function schreibe() {
   const geist = geistname();
   const zr = alter != null ? zeitalter(alter) : null;
   const dir = alter != null ? naechsteDirektion(alter) : null;
+  const anti = antiszien();
 
   cikti.appendChild(el("p", "kucukNot", "Für: " + profilBeschriftung(p) +
     (alter != null ? ` · heute ${alter.toFixed(0)} Jahre alt` : "")));
@@ -134,6 +144,13 @@ function schreibe() {
         sb.unsur.de === "Erde" ? "die Erde" : sb.unsur.de === "Luft" ? "die Luft" : "das Wasser"}: ` +
       `${sb.unsur.metin}`));
 
+    if (sb.menzil) {
+      cikti.appendChild(absatz(`Deine Mondstation — ${sb.menzil.tr}`,
+        `Von den achtundzwanzig Herbergen des Mondes fällt deine Summe auf die ` +
+        `${sb.menzil.no}.: ${sb.menzil.hukum} Günstig für ${sb.menzil.iyi.toLowerCase()}; ` +
+        `meide ${sb.menzil.kacin.toLowerCase()}.`));
+    }
+
     cikti.appendChild(absatz(`Was ${sb.herr.tr} dir gibt und nimmt`,
       `Über deinem Zeichen steht ${sb.herr.tr}, ${sb.herr.de}. ` +
       `Er gibt: ${sb.herr.armagan}. Er nimmt: ${sb.herr.tehlike}. ` +
@@ -145,7 +162,7 @@ function schreibe() {
   if (geist) {
     const kasten = el("div", "essenzKopf");
     kasten.append(
-      el("div", "kalanBaslik", "Dein Geist des 11. Hauses"),
+      el("div", "kalanBaslik", "Dein Spirit Name"),
       el("div", "buyukToplam", geist.name),
       geist.herkunft ? el("div", "kucukNot", geist.herkunft) : el("span")
     );
@@ -179,11 +196,29 @@ function schreibe() {
       `sondern Fälligkeiten — sie sagen, wann ein Thema an die Tür kommt, nicht, wer öffnet.`));
   }
 
+  if (anti) {
+    if (anti.funde.length) {
+      const namen = anti.funde.map(f => {
+        const n = [...new Set((f.match(/(Sonne|Mond|Merkur|Venus|Mars|Jupiter|Saturn|Aszendent|ASC|MC)/g) || []))];
+        return n.slice(0, 2).join(" und ");
+      }).filter(Boolean);
+      cikti.appendChild(absatz("Was im Verborgenen mitläuft",
+        `Im Horoskop fallen ${namen.length === 1 ? "zwei Punkte" : "mehrere Punkte"} auf den ` +
+        `Schattenzwilling des jeweils anderen — gespiegelt an der Sonnenwendachse, gleiche Höhe, ` +
+        `gleicher Tagbogen, und doch kein sichtbarer Aspekt: ${namen.join("; ")}. ` +
+        `Solche Paare arbeiten miteinander, ohne dass man es von außen erkennt.`));
+    } else {
+      cikti.appendChild(absatz("Was im Verborgenen mitläuft",
+        "Kein Punkt deines Horoskops fällt auf den Schattenzwilling eines anderen. " +
+        "Bei dir läuft nichts im Verborgenen mit — was wirkt, ist sichtbar."));
+    }
+  }
+
   if (sb) {
     cikti.appendChild(absatz("Der Rat", sb.burc.ogut));
   }
 
-  if (!sb && !geist && !zr && !dir) {
+  if (!sb && !geist && !zr && !dir && !anti) {
     const w = el("p", "kucukNot", "Es fehlen noch Angaben. ");
     const b = el("button", "knopfKlein", "Zur Dateneingabe");
     b.addEventListener("click", zurDateneingabe);
