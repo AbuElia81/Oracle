@@ -1,10 +1,31 @@
-# Yıldıznâme
+# Oracle
 
 ### → **[Die Seite öffnen: abuelia81.github.io/Oracle](https://abuelia81.github.io/Oracle/)**
 
+Orakelrechner nach alten Büchern. Auf der Startseite **Meine Daten** trägt man
+einmal die beiden Namen und die Geburtsangaben ein; alle Abschnitte rechnen
+dann von selbst damit, ohne Knopfdruck und über das Neuladen hinweg.
 
-Ein Orakelrechner nach dem osmanischen **Yıldıznâme** („Sternbuch") — dem
-Genre, das den Menschen ein Horoskop gab, als kaum jemand seinen Geburtstag
+| Abschnitt | Woher |
+|---|---|
+| **Yıldıznâme** | osmanisches Sternbuch: Zeichen, Stern, Element und Mondstation aus Name und Muttername im Ebced |
+| **Niyet** | Tafel der Absicht: Frage, Name und Planetenstunde |
+| **İsim uyumu** | Verträglichkeit zweier Menschen aus beiden Namenssummen |
+| **Achtundzwanzig Mondstationen** | die *menâzil-i kamer* als Nachschlagetafel |
+| **Der Geist des 11. Hauses** | Agrippa, *De Occulta Philosophia* III.26: Geistname aus den fünf hylegischen Örtern |
+| **Der Lebensbogen** | Primärdirektionen |
+| **Zodiacal Releasing** | hellenistische Zeitalter aus dem Los des Glücks |
+| **Antiszien** | Schattenzwillinge |
+| **Die Essenz** | liest alles Gefundene zu einem Text zusammen |
+
+Alles rechnet im Browser; nichts geht an einen Server dieser Seite, es gibt keinen.
+Die Ortssuche fragt auf Knopfdruck einmalig Nominatim (OpenStreetMap).
+
+---
+
+## Das Yıldıznâme
+
+Das Genre, das den Menschen ein Horoskop gab, als kaum jemand seinen Geburtstag
 kannte. Statt des Himmels zur Geburtsstunde befragt es den Namen: den eigenen
 und den der Mutter, denn die Mutter ist zweifelsfrei.
 
@@ -113,18 +134,14 @@ Statische Seite, keine Baukette:
 
 | Datei | Inhalt |
 |---|---|
-| `index.html` | die Seite, fünf Abschnitte |
+| `index.html` | die Seite, alle Abschnitte |
 | `stil.css` | Gestaltung |
-| `ebced.js` | Buchstabenwerte, Umschrift, Teilungen |
-| `korpus.js` | das Buch: 12 Zeichen, 7 Sterne, 4 Elemente, 28 Herbergen, Tafeln |
-| `oracle.js` | Bedienung |
-| `geist.js` | Der Geist des 11. Hauses: Aszendentenrechnung, Würdetafeln, hebräisches Alphabet, Bedienung |
-| `profil.js` / `profil-ui.js` | das gemeinsame Geburtsprofil (Speicherung, Reiter "Meine Daten") |
-| `geist-profil.js` | füllt die Felder des Geist-Reiters aus dem gemeinsamen Profil |
-| `astro.js` | Himmelsmechanik: Julianisches Datum, Sternzeit, Planetenpositionen, Aszendent/MC |
-| `direktionen.js` | Der Lebensbogen: die Bogen-Mathematik der Primärdirektionen |
-| `lebensbogen.js` | Der Lebensbogen: Bedienung und die ziehbare Zeitleiste |
-| `zr.js` | Zodiacal Releasing: Lose, Perioden, Bedienung und die Bänder-Zeitleiste |
+| `profil.js` · `profil-ui.js` | das gemeinsame Profil (Startseite „Meine Daten") |
+| `yildiz-profil.js` · `geist-profil.js` | Brücken vom Profil in die einzelnen Abschnitte |
+| `ebced.js` · `korpus.js` · `oracle.js` | Yıldıznâme: Buchstabenwerte, Textkorpus, Bedienung |
+| `astro.js` · `direktionen.js` | gemeinsame Astronomie und Primärdirektionen |
+| `geist.js` · `lebensbogen.js` · `zr.js` · `antiszien.js` | die einzelnen Rechner |
+| `essenz.js` | die Zusammenschau |
 | `bump.sh` | hebt `?v=` in HTML und in den Modul-Importen an |
 
 ## Lokal ansehen

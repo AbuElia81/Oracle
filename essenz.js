@@ -6,9 +6,9 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=11";
-import { BURCLAR, UNSURLAR, GEZEGENLER } from "./korpus.js?v=11";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe } from "./profil.js?v=11";
+import { cevir, toplam, kalan } from "./ebced.js?v=14";
+import { BURCLAR, UNSURLAR, GEZEGENLER } from "./korpus.js?v=14";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe } from "./profil.js?v=14";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);

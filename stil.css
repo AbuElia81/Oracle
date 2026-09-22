@@ -393,3 +393,9 @@ footer p { color: var(--gedaempft); font-size: .78rem; letter-spacing: .06em; ma
   #reiter button { font-size: .8rem; padding: .34rem .6rem; }
   main { padding-top: 1.4rem; }
 }
+
+/* Kopfzeile einer einzelnen Anwendung innerhalb von Oracle. */
+.appKopf { text-align:center; border-bottom:1px solid var(--linie); padding-bottom:1.2rem; margin-bottom:2rem; }
+.appKopf h2 { margin:.1rem 0 0; font-size:clamp(1.8rem,6vw,2.6rem); letter-spacing:.06em; }
+.appKopf .arapUst { font-size:1.5rem; }
+.appKopf .unterzeile { margin-top:.5rem; }
