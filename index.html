@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Yıldıznâme — das Sternbuch</title>
-<meta name="description" content="Ein Orakelrechner nach dem osmanischen Yıldıznâme: Name und Muttername im Ebced, geteilt durch zwölf, sieben, vier und achtundzwanzig.">
-<link rel="stylesheet" href="stil.css?v=2">
+<meta name="description" content="Ein Orakelrechner nach dem osmanischen Yıldıznâme: Name und Muttername im Ebced, geteilt durch zwölf, sieben, vier und achtundzwanzig. Dazu: der Geist des 11. Hauses nach Agrippa.">
+<link rel="stylesheet" href="stil.css?v=3">
 </head>
 <body>
 
@@ -20,6 +20,7 @@
   <button data-bolum="bNiyet">Niyet — die Frage</button>
   <button data-bolum="bUyum">İsim uyumu</button>
   <button data-bolum="bMenzil">Die 28 Herbergen</button>
+  <button data-bolum="bGeist">Der Geist des 11. Hauses</button>
   <button data-bolum="bNasil">Wie es rechnet</button>
 </nav>
 
@@ -125,6 +126,81 @@
   des Mondes, nicht die Buchstaben eines Namens.</p>
 </section>
 
+<!-- ---------------------------------------- VI. Der Geist des 11. Hauses -->
+<section class="bolum" id="bGeist" hidden>
+  <p class="giriş">Ein anderes Buch als das Yıldıznâme: <b>Cornelius Agrippas</b>
+  <em>De Occulta Philosophia</em> (Buch III, Kap. 26). Statt des Namens fragt
+  dieses Verfahren den wirklichen Himmel zur Geburtsstunde — aus Geburtsdatum,
+  -zeit und -ort wird der Aszendent selbst berechnet, daraus der
+  <b>Almuten des 11. Hauses</b> (Regent des „guten Geistes"), und daraus,
+  gradweise am Aszendenten im hebräischen Alphabet gezählt, ein persönlicher
+  <b>Geistname</b>.</p>
+
+  <div class="alanlar">
+    <label class="alan">
+      <span>Name (nur für die Überschrift)</span>
+      <input id="gName" type="text" autocomplete="off" placeholder="optional">
+    </label>
+
+    <div class="geoZeile">
+      <label class="alan"><span>Geburtsdatum</span><input id="gDatum" type="date"></label>
+      <label class="alan"><span>Geburtszeit</span><input id="gZeit" type="time"></label>
+    </div>
+
+    <label class="alan">
+      <span>Geburtsort</span>
+      <input id="gOrt" type="text" autocomplete="off" placeholder="z. B. Palermo, Italien">
+    </label>
+    <div class="geoZeile">
+      <button type="button" id="gOrtSuchen" class="knopfKlein">Koordinaten suchen</button>
+      <span class="geoStatus" id="gGeoStatus"></span>
+    </div>
+
+    <div class="geoZeile">
+      <label class="alan"><span>Breite (°N, Süd negativ)</span><input id="gBreite" type="number" step="0.0001" placeholder="z. B. 38.1157"></label>
+      <label class="alan"><span>Länge (°O, West negativ)</span><input id="gLaenge" type="number" step="0.0001" placeholder="z. B. 13.3615"></label>
+      <label class="alan"><span>UTC-Offset zur Geburtszeit</span><input id="gUtc" type="number" step="0.25" placeholder="z. B. 1 oder 2 (Sommerzeit)"></label>
+    </div>
+
+    <fieldset class="cinsiyet">
+      <legend>Buchstaben-Kreis</legend>
+      <label><input type="radio" name="gModus" value="22" checked> 22 Buchstaben (Agrippas Verfahren)</label>
+      <label><input type="radio" name="gModus" value="27"> 27 Einheiten (Rekonstruktion, mit Schlussformen)</label>
+    </fieldset>
+
+    <fieldset class="cinsiyet">
+      <legend>Endung des Geistnamens</legend>
+      <label><input type="radio" name="gEndung" value="el" checked> -El</label>
+      <label><input type="radio" name="gEndung" value="jah"> -Jah</label>
+      <label><input type="radio" name="gEndung" value=""> ohne Endung</label>
+    </fieldset>
+  </div>
+
+  <button id="gBerechnen" class="buyukDugme">Geist berechnen</button>
+
+  <p class="kucukNot">Die Ortssuche fragt einmalig, auf Knopfdruck, den freien
+  Dienst <a href="https://nominatim.openstreetmap.org" target="_blank" rel="noopener">Nominatim (OpenStreetMap)</a>
+  — sonst verlässt nichts diesen Browser. Wer das nicht möchte, trägt Breite
+  und Länge direkt ein.</p>
+
+  <div id="gCikti" hidden></div>
+
+  <h3>Wie dieser Teil rechnet</h3>
+  <p>Aus Datum, Uhrzeit, UTC-Offset, Breite und Länge: julianisches Datum →
+  Greenwich-Sternzeit → Ortssternzeit (RAMC) → Aszendent, mit der Schiefe der
+  Ekliptik nach dem Datum und den Standardformeln der sphärischen Astronomie
+  (Meeus). Die Sonnenposition (niedrige Präzision, ausreichend hier) entscheidet
+  Tag- oder Nachtgeburt für die Trigon-Würde. Die Spitze des 11. Hauses folgt
+  der Ganzzeichen-Vereinfachung: zehn Zeichen nach dem Aszendenten, gleicher
+  Grad. Der 22-Buchstaben-Modus folgt Agrippas Originalverfahren; der
+  27-Einheiten-Modus (22 Buchstaben plus die fünf hebräischen Schlussformen)
+  ist eine plausible eigene Rekonstruktion, keine belegte historische Tabelle.</p>
+  <p class="kucukNot">Auch dies: ein Nachbau einer historischen Denktechnik,
+  kein Ratgeber und keine Aussage über tatsächliche geistige Entitäten.
+  Ärztliche, rechtliche und geldliche Entscheidungen gehören zu Menschen, nicht
+  zu Tafeln.</p>
+</section>
+
 <!-- --------------------------------------------------------- V. Wie -->
 <section class="bolum" id="bNasil" hidden>
   <h2>Wie es rechnet</h2>
@@ -178,6 +254,7 @@
   vier Elemente, achtundzwanzig Herbergen</p>
 </footer>
 
-<script type="module" src="oracle.js?v=2"></script>
+<script type="module" src="oracle.js?v=3"></script>
+<script type="module" src="geist.js?v=3"></script>
 </body>
 </html>

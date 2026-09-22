@@ -34,6 +34,22 @@ der Text, auf den er zeigt. Deshalb liegt das Gewicht in `korpus.js`.
   dazu die alte Regel der Elemente.
 - **Die 28 Herbergen** — die *menâzil-i kamer* als Nachschlagetafel.
 
+## Der Geist des 11. Hauses
+
+Ein zweites Buch neben dem Yıldıznâme: **Cornelius Agrippas** *De Occulta
+Philosophia* (Buch III, Kap. 26). Aus Geburtsdatum, -zeit und -ort berechnet
+`geist.js` den Aszendenten selbst (julianisches Datum → Greenwich-Sternzeit →
+Ortssternzeit → Aszendent, mit der Schiefe der Ekliptik und einer
+Sonnenposition niedriger Präzision nach Meeus — für diesen symbolischen
+Gebrauch reichlich genau), bestimmt daraus den **Almuten des 11. Hauses**
+(fünf Würdenarten, klassisch gewichtet), zählt vom Aszendenten gradweise das
+hebräische Alphabet um den Tierkreis bis zur Spitze des 11. Hauses
+(Ganzzeichen-Vereinfachung) und leitet daraus einen persönlichen
+**Geistnamen** ab. Die Ortssuche fragt auf Knopfdruck einmalig
+[Nominatim (OpenStreetMap)](https://nominatim.openstreetmap.org); wer das
+nicht möchte, trägt Breite, Länge und UTC-Offset direkt ein — sonst bleibt
+alles im Browser.
+
 ## Die Umschrift
 
 Der heikelste Schritt ist nicht die Rechnung, sondern die arabische Schreibung:
@@ -66,6 +82,7 @@ Statische Seite, keine Baukette:
 | `ebced.js` | Buchstabenwerte, Umschrift, Teilungen |
 | `korpus.js` | das Buch: 12 Zeichen, 7 Sterne, 4 Elemente, 28 Herbergen, Tafeln |
 | `oracle.js` | Bedienung |
+| `geist.js` | Der Geist des 11. Hauses: Aszendentenrechnung, Würdetafeln, hebräisches Alphabet, Bedienung |
 | `bump.sh` | hebt `?v=` in HTML und in den Modul-Importen an |
 
 ## Lokal ansehen

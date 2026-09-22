@@ -278,6 +278,58 @@ td.arap { font-size: 1.05rem; color: var(--ton-hell); white-space: nowrap; }
 .teilungen { padding-left: 1.2rem; }
 .teilungen li { margin-bottom: .5rem; }
 
+/* --------------------------------------------------- Geist des 11. Hauses */
+.geoZeile { display:flex; gap:.8rem; align-items:flex-end; flex-wrap:wrap; }
+.geoZeile .alan { flex:1 1 12rem; margin-top:1.1rem; }
+.knopfKlein {
+  background:none; border:1px solid var(--linie); border-radius:2px;
+  color:var(--gedaempft); font:inherit; font-size:.85rem; padding:.55rem .9rem;
+  cursor:pointer; white-space:nowrap; transition:border-color .18s, color .18s;
+}
+.knopfKlein:hover { border-color:var(--ton); color:var(--ton-hell); }
+.geoStatus { font-size:.8rem; color:var(--gedaempft); align-self:center; min-height:1.2em; }
+.geoStatus.fehler { color:var(--rot); }
+.geoStatus.ok { color:var(--ton); }
+
+.almutenKarte {
+  background:var(--kagit2); border:1px solid var(--linie); border-radius:2px;
+  padding:1.6rem 1.2rem; text-align:center; margin-top:.5rem;
+}
+.almutenPlanet {
+  font-size:clamp(2.1rem,7vw,2.8rem); color:var(--ton-hell); margin:.3rem 0 0; line-height:1.15;
+}
+.almutenPlanet .glyph { color:var(--ton); margin-right:.4rem; }
+
+.wuerdeTablo th, .wuerdeTablo td { text-align:center; }
+.wuerdeTablo td:first-child, .wuerdeTablo th:first-child { text-align:left; }
+.wuerdeTablo td.treffer { color:var(--ton-hell); }
+.wuerdeTablo td.summe { color:var(--ton-hell); }
+.wuerdeTablo tr.sieger td { background:rgba(201,162,39,.08); }
+
+.radKutu { text-align:center; margin-top:1.8rem; }
+.radKutu svg { width:100%; max-width:20rem; height:auto; }
+.radLegende { display:flex; justify-content:center; gap:1.3rem; flex-wrap:wrap; font-size:.78rem; color:var(--gedaempft); margin-top:.5rem; }
+.radLegende .punkt { display:inline-block; width:.55rem; height:.55rem; border-radius:50%; margin-right:.3rem; vertical-align:middle; }
+
+.harfStreifenTitel { font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--gedaempft); margin:1.8rem 0 .5rem; text-align:center; }
+.harfStreifen { display:flex; gap:.4rem; overflow-x:auto; padding:.3rem .2rem .8rem; }
+.harfZelle {
+  flex:0 0 auto; width:2.4rem; height:2.4rem; border:1px solid var(--linie); border-radius:2px;
+  background:var(--kagit2); color:var(--gedaempft);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:.65rem;
+}
+.harfZelle .g { font-size:1.05rem; color:var(--schrift); direction:rtl; }
+.harfZelle.treffer { background:var(--ton); border-color:var(--ton); color:var(--grund); }
+.harfZelle.treffer .g { color:var(--grund); }
+
+.geistName {
+  margin-top:1.8rem; text-align:center; padding:1.6rem 1.2rem;
+  background:linear-gradient(180deg, var(--kagit2), var(--kagit));
+  border:1px solid var(--ton); border-radius:2px;
+}
+.geistName .buyukToplam { font-size:clamp(2.1rem,8vw,2.9rem); }
+.geistName .buchstabe { font-size:1.3rem; color:var(--ton); direction:rtl; margin-left:.4rem; }
+
 /* --------------------------------------------------------------- Fuß */
 footer {
   border-top: 1px solid var(--linie);
