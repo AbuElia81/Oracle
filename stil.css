@@ -17,17 +17,31 @@
 
 html { scroll-behavior: smooth; }
 
+/* ------------------------------------------------------------ Hintergrund
+   Astrolabien und Girih-Muster, weit nach hinten gedämpft: das Bild trägt
+   die Stimmung, der Schleier hält den Text lesbar. */
+#himmel, #schleier { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+#himmel {
+  background: var(--grund) url("bilder/hintergrund.jpg?v=1") center / cover no-repeat;
+  opacity: .5;
+}
+#schleier {
+  background:
+    radial-gradient(ellipse 62% 55% at 50% 42%, rgba(7,8,16,.86) 0%, rgba(7,8,16,.55) 55%, rgba(7,8,16,.2) 100%),
+    linear-gradient(180deg, rgba(7,8,16,.72) 0%, rgba(7,8,16,.45) 30%, rgba(7,8,16,.72) 100%);
+}
+#kopf, nav#reiter, main, footer { position: relative; z-index: 1; }
+
 body {
   margin: 0;
   min-height: 100%;
-  background:
-    radial-gradient(ellipse 70% 50% at 50% -10%, rgba(201,162,39,.10), transparent 70%),
-    var(--grund);
+  background: var(--grund);
   color: var(--schrift);
   font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
   font-size: 17px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  font-variant-emoji: text;   /* Tierkreiszeichen als Schrift, nicht als Emoji */
 }
 
 /* --------------------------------------------------------------- Kopf */
@@ -290,6 +304,7 @@ td.arap { font-size: 1.05rem; color: var(--ton-hell); white-space: nowrap; }
 .geoStatus { font-size:.8rem; color:var(--gedaempft); align-self:center; min-height:1.2em; }
 .geoStatus.fehler { color:var(--rot); }
 .geoStatus.ok { color:var(--ton); }
+.geoStatus.warnung { color:var(--ton-hell); opacity:.85; }
 
 .almutenKarte {
   background:var(--kagit2); border:1px solid var(--linie); border-radius:2px;
@@ -311,9 +326,6 @@ td.arap { font-size: 1.05rem; color: var(--ton-hell); white-space: nowrap; }
 .radLegende { display:flex; justify-content:center; gap:1.3rem; flex-wrap:wrap; font-size:.78rem; color:var(--gedaempft); margin-top:.5rem; }
 .radLegende .punkt { display:inline-block; width:.55rem; height:.55rem; border-radius:50%; margin-right:.3rem; vertical-align:middle; }
 
-.wuerdeTablo, .radKutu svg text, .almutenPlanet, .radLegende {
-  font-variant-emoji: text;
-}
 .wuerdeTablo td .hebr { font-size:1.15rem; color:var(--ton-hell); direction:rtl; margin-right:.25rem; }
 
 .geistName {
@@ -353,3 +365,20 @@ footer {
   padding: 2rem 1.5rem 3rem; text-align: center;
 }
 footer p { color: var(--gedaempft); font-size: .78rem; letter-spacing: .06em; margin: 0; }
+
+/* Auf dem Handy weichen in der Örter-Tafel die beiden Herleitungsspalten —
+   Länge und Sektor —, damit der Buchstabe im Bild bleibt. */
+@media (max-width: 34rem) {
+  .oerterTablo th:nth-child(2), .oerterTablo td:nth-child(2),
+  .oerterTablo th:nth-child(4), .oerterTablo td:nth-child(4) { display:none; }
+}
+
+/* ----------------------------------------------------------- Die Essenz */
+.essenzKopf {
+  margin:2rem 0 .5rem; text-align:center; padding:1.6rem 1.2rem;
+  background:linear-gradient(180deg, var(--kagit2), var(--kagit));
+  border:1px solid var(--ton); border-radius:2px;
+}
+.essenzKopf .buyukToplam { font-size:clamp(1.9rem,7vw,2.8rem); line-height:1.2; }
+.essenzKopf .kucukNot { border:none; padding:0; margin:.7rem 0 0; text-align:center; }
+#eCikti p { font-size:1.05rem; }

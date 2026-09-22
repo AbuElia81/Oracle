@@ -449,7 +449,7 @@ $("#gBerechnen").addEventListener("click", () => {
   /* ------------------------------------------------- die fünf Örter */
   cikti.appendChild(el("h3", null, "Die fünf hylegischen Örter"));
   const tablo = el("div", "tabloKutu");
-  const tab = el("table", "wuerdeTablo");
+  const tab = el("table", "wuerdeTablo oerterTablo");
   tab.innerHTML = "<thead><tr><th>Ort</th><th>Länge</th><th>im Zeichen</th><th>Sektor</th><th>Buchstabe</th></tr></thead>";
   const tbody = el("tbody");
   oerter.forEach(o => {

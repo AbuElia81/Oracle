@@ -1,7 +1,7 @@
 /* ------------------------------------------------------------------------
    profil-ui.js — Bedienung des Reiters "Meine Daten".
    --------------------------------------------------------------------- */
-import { leseProfil, schreibeProfil, loescheProfil } from "./profil.js?v=6";
+import { leseProfil, schreibeProfil, loescheProfil } from "./profil.js?v=8";
 
 const $ = s => document.querySelector(s);
 
@@ -35,6 +35,9 @@ $("#pOrtSuchen").addEventListener("click", async () => {
 function fuelleFormular(p) {
   if (!p) return;
   $("#pName").value = p.name || "";
+  $("#pAnne").value = p.anne || "";
+  const r = document.querySelector(`input[name="pCinsiyet"][value="${p.cinsiyet || "erkek"}"]`);
+  if (r) r.checked = true;
   $("#pDatum").value = p.datum || "";
   $("#pZeit").value = p.zeit || "";
   $("#pOrt").value = p.ort || "";
@@ -49,6 +52,8 @@ $("#pSpeichern").addEventListener("click", () => {
   status.className = "geoStatus";
   const daten = {
     name: $("#pName").value.trim(),
+    anne: $("#pAnne").value.trim(),
+    cinsiyet: document.querySelector('input[name="pCinsiyet"]:checked').value,
     datum: $("#pDatum").value,
     zeit: $("#pZeit").value,
     ort: $("#pOrt").value.trim(),
@@ -56,19 +61,29 @@ $("#pSpeichern").addEventListener("click", () => {
     laenge: parseFloat($("#pLaenge").value),
     utc: parseFloat($("#pUtc").value)
   };
-  if (!daten.datum || !daten.zeit || isNaN(daten.breite) || isNaN(daten.laenge) || isNaN(daten.utc)) {
-    status.textContent = "Geburtsdatum, -zeit, Breite, Länge und UTC-Offset werden alle gebraucht.";
+  const namenDa = daten.name && daten.anne;
+  const geburtDa = daten.datum && daten.zeit &&
+                   !isNaN(daten.breite) && !isNaN(daten.laenge) && !isNaN(daten.utc);
+
+  if (!namenDa && !geburtDa) {
+    status.textContent = "Trag entweder beide Namen ein oder die vollständigen Geburtsangaben — " +
+                         "sonst hat kein Abschnitt etwas zu rechnen.";
     status.classList.add("fehler");
     return;
   }
+
   schreibeProfil(daten);
-  status.textContent = "Gespeichert — der Geist, der Lebensbogen und Zodiacal Releasing verwenden diese Angaben jetzt.";
-  status.classList.add("ok");
+  const bereit = [], fehlt = [];
+  (namenDa ? bereit : fehlt).push("Sternbild, Niyet und İsim uyumu");
+  (geburtDa ? bereit : fehlt).push("Geist, Lebensbogen und Zodiacal Releasing");
+  status.textContent = "Gespeichert. " + bereit.join(" sowie ") + " rechnen jetzt damit." +
+    (fehlt.length ? ` Für ${fehlt.join(" und ")} fehlt noch etwas.` : "");
+  status.classList.add(fehlt.length ? "warnung" : "ok");
 });
 
 $("#pLoeschen").addEventListener("click", () => {
   loescheProfil();
-  ["pName","pDatum","pZeit","pOrt","pBreite","pLaenge","pUtc"].forEach(id => $("#" + id).value = "");
+  ["pName","pAnne","pDatum","pZeit","pOrt","pBreite","pLaenge","pUtc"].forEach(id => $("#" + id).value = "");
   const status = $("#pSpeicherStatus");
   status.className = "geoStatus";
   status.textContent = "Gelöscht.";

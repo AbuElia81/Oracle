@@ -5,9 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Yıldıznâme — das Sternbuch</title>
 <meta name="description" content="Ein Orakelrechner nach dem osmanischen Yıldıznâme: Name und Muttername im Ebced, geteilt durch zwölf, sieben, vier und achtundzwanzig. Dazu: der Geist des 11. Hauses nach Agrippa.">
-<link rel="stylesheet" href="stil.css?v=6">
+<link rel="stylesheet" href="stil.css?v=8">
 </head>
 <body>
+
+<div id="himmel"></div>
+<div id="schleier"></div>
 
 <header id="kopf">
   <div class="arapUst">يلدزنامه</div>
@@ -16,21 +19,22 @@
 </header>
 
 <nav id="reiter" aria-label="Abschnitte">
-  <button class="etkin" data-bolum="bYildiz">Sternbild</button>
+  <button class="etkin" data-bolum="bProfil">Meine Daten</button>
+  <button data-bolum="bYildiz">Sternbild</button>
   <button data-bolum="bNiyet">Niyet — die Frage</button>
   <button data-bolum="bUyum">İsim uyumu</button>
-  <button data-bolum="bMenzil">Die 28 Herbergen</button>
-  <button data-bolum="bProfil">Meine Daten</button>
+  <button data-bolum="bMenzil">Achtundzwanzig Mondstationen</button>
   <button data-bolum="bGeist">Der Geist des 11. Hauses</button>
   <button data-bolum="bLebensbogen">Der Lebensbogen</button>
   <button data-bolum="bZR">Zodiacal Releasing</button>
   <button data-bolum="bNasil">Wie es rechnet</button>
+  <button data-bolum="bEssenz">Die Essenz</button>
 </nav>
 
 <main>
 
 <!-- ------------------------------------------------------- I. Sternbild -->
-<section class="bolum" id="bYildiz">
+<section class="bolum" id="bYildiz" hidden>
   <p class="giriş">Der eigene Name und der Name der Mutter — so fragen die
   Handschriften, denn die Mutter ist zweifelsfrei. Beide werden arabisch
   geschrieben, ihre Buchstaben im Ebced addiert, die Summe geteilt.</p>
@@ -130,18 +134,33 @@
 </section>
 
 <!-- --------------------------------------------------- V. Meine Daten -->
-<section class="bolum" id="bProfil" hidden>
-  <p class="giriş">Drei weitere Rechner — der Geist des 11. Hauses,
-  der Lebensbogen (Primärdirektionen) und Zodiacal Releasing — brauchen
-  denselben wirklichen Himmel zur Geburtsstunde. Einmal hier eingetragen,
-  steht er allen dreien zur Verfügung; keiner fragt noch einmal.</p>
+<section class="bolum" id="bProfil">
+  <p class="giriş">Hier stehen deine Angaben — einmal eingetragen, rechnen alle
+  Abschnitte damit, und keiner fragt noch einmal. Die beiden Namen gehen an das
+  Yıldıznâme, die Geburtsangaben an die astronomischen Rechner. Du brauchst
+  nicht beides: trag ein, was du hast, und geh dann auf den Abschnitt, der dich
+  interessiert — das Ergebnis steht schon da.</p>
 
+  <h3>Die Namen — fürs Yıldıznâme</h3>
   <div class="alanlar">
     <label class="alan">
-      <span>Name (nur für die Überschriften)</span>
-      <input id="pName" type="text" autocomplete="off" placeholder="optional">
+      <span>Dein Name</span>
+      <input id="pName" type="text" autocomplete="off" placeholder="z. B. Mehmet oder Michael">
+    </label>
+    <label class="alan">
+      <span>Name deiner Mutter</span>
+      <input id="pAnne" type="text" autocomplete="off" placeholder="z. B. Fatma oder Gertrud">
     </label>
 
+    <fieldset class="cinsiyet">
+      <legend>Die Bücher deuten getrennt</legend>
+      <label><input type="radio" name="pCinsiyet" value="erkek" checked> für den Mann</label>
+      <label><input type="radio" name="pCinsiyet" value="kadin"> für die Frau</label>
+    </fieldset>
+  </div>
+
+  <h3>Die Geburt — für Geist, Lebensbogen und Zodiacal Releasing</h3>
+  <div class="alanlar">
     <div class="geoZeile">
       <label class="alan"><span>Geburtsdatum</span><input id="pDatum" type="date"></label>
       <label class="alan"><span>Geburtszeit</span><input id="pZeit" type="time"></label>
@@ -419,6 +438,17 @@
   gehören zu Menschen, nicht zu Tafeln.</p>
 </section>
 
+<!-- ------------------------------------------------------ Die Essenz -->
+<section class="bolum" id="bEssenz" hidden>
+  <p class="giriş">Alles, was die einzelnen Abschnitte gefunden haben, in
+  einem Stück gelesen — das Wesen aus dem Namen, der Geist aus dem Himmel der
+  Geburtsstunde, und wo du gerade in der Zeit stehst.</p>
+
+  <button id="eLesen" class="buyukDugme">Die Essenz lesen</button>
+
+  <div id="eCikti" hidden></div>
+</section>
+
 </main>
 
 <footer>
@@ -426,12 +456,14 @@
   vier Elemente, achtundzwanzig Herbergen</p>
 </footer>
 
-<script type="module" src="oracle.js?v=6"></script>
-<script type="module" src="profil.js?v=6"></script>
+<script type="module" src="oracle.js?v=8"></script>
+<script type="module" src="profil.js?v=8"></script>
 <script type="module" src="profil-ui.js"></script>
-<script type="module" src="geist.js?v=6"></script>
+<script type="module" src="geist.js?v=8"></script>
 <script type="module" src="geist-profil.js"></script>
-<script type="module" src="lebensbogen.js?v=6"></script>
-<script type="module" src="zr.js?v=6"></script>
+<script type="module" src="yildiz-profil.js"></script>
+<script type="module" src="essenz.js?v=8"></script>
+<script type="module" src="lebensbogen.js?v=8"></script>
+<script type="module" src="zr.js?v=8"></script>
 </body>
 </html>
