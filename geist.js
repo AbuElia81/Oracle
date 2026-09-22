@@ -55,6 +55,66 @@ function sonnenPosition(jd) {
   };
 }
 
+/* Mondlaenge, Meeus Kap. 47, gekuerzte Reihe (~0,02 Grad) — fuer einen
+   Buchstabensektor von gut 16 Grad ueberreichlich genau. */
+function mondLaenge(jd) {
+  const T = (jd - 2451545.0) / 36525.0;
+  const Ls = norm360(218.3164477 + 481267.88123421 * T - 0.0015786 * T * T
+            + T * T * T / 538841 - T * T * T * T / 65194000);
+  const D  = rad(norm360(297.8501921 + 445267.1114034 * T - 0.0018819 * T * T
+            + T * T * T / 545868 - T * T * T * T / 113065000));
+  const M  = rad(norm360(357.5291092 + 35999.0502909 * T - 0.0001536 * T * T
+            + T * T * T / 24490000));
+  const Ms = rad(norm360(134.9633964 + 477198.8675055 * T + 0.0087414 * T * T
+            + T * T * T / 69699 - T * T * T * T / 14712000));
+  const F  = rad(norm360(93.2720950 + 483202.0175233 * T - 0.0036539 * T * T
+            - T * T * T / 3526000 + T * T * T * T / 863310000));
+
+  const s = [
+    [6.288774, Ms], [1.274027, 2*D - Ms], [0.658314, 2*D], [0.213618, 2*Ms],
+    [-0.185116, M], [-0.114332, 2*F], [0.058793, 2*D - 2*Ms],
+    [0.057066, 2*D - M - Ms], [0.053322, 2*D + Ms], [0.045758, 2*D - M],
+    [-0.040923, M - Ms], [-0.034720, D], [-0.030383, M + Ms],
+    [0.015327, 2*D - 2*F], [-0.012528, Ms + 2*F], [0.010980, Ms - 2*F],
+    [0.010675, 4*D - Ms], [0.010034, 3*Ms], [0.008548, 4*D - 2*Ms]
+  ].reduce((a, [k, arg]) => a + k * Math.sin(arg), 0);
+
+  return norm360(Ls + s);
+}
+
+/* Die Syzygie vor der Geburt: der letzte Neumond oder Vollmond davor.
+   Agrippa nimmt den Grad der vorangehenden Konjunktion oder Opposition
+   der Lichter. Gesucht wird ueber die Elongation — sie waechst um rund
+   12,19 Grad am Tag, das traegt die Naeherung in wenigen Schritten. */
+const SYN_RATE = 12.190749;
+function letzteSyzygie(jd) {
+  const psi = j => norm360(mondLaenge(j) - sonnenPosition(j).laenge);
+  const feilen = j => {
+    for (let i = 0; i < 12; i++) {
+      let d = psi(j) % 180;
+      if (d > 90) d -= 180;
+      j -= d / SYN_RATE;
+    }
+    return j;
+  };
+  let j = feilen(jd - (psi(jd) % 180) / SYN_RATE);
+  if (j > jd) j = feilen(j - 14.765294);   // versehentlich die naechste erwischt
+  const p = psi(j);
+  const konjunktion = p < 90 || p > 270;
+  return {
+    jd: j,
+    art: konjunktion ? "Konjunktion" : "Opposition",
+    glyph: konjunktion ? "☌" : "☍",
+    laenge: mondLaenge(j)
+  };
+}
+
+/* Glueckspunkt (pars fortunae): bei Tag Asz + Mond - Sonne,
+   bei Nacht Asz + Sonne - Mond. */
+function glueckspunkt(asc, sonne, mond, tagGeburt) {
+  return norm360(tagGeburt ? asc + mond - sonne : asc + sonne - mond);
+}
+
 function aszendentAusRamc(ramcGrad, breiteGrad, schiefeGrad) {
   const R = rad(ramcGrad), phi = rad(breiteGrad), eps = rad(schiefeGrad);
   const y = Math.cos(R);
@@ -77,18 +137,23 @@ function berechneGeburt(jahr, monat, tag, stunde, minute, utcOffset, breite, lae
   const eps = schiefeDerEkliptik(jd);
   const asc = aszendentAusRamc(ramc, breite, eps);
   const sonne = sonnenPosition(jd);
+  const mond = mondLaenge(jd);
   const hoehe = sonnenHoehe(ramc, breite, sonne.rektaszension, sonne.deklination);
-  return { asc, ramc, eps, sonne, sonnenhoehe: hoehe, tagGeburt: hoehe > 0 };
+  const tagGeburt = hoehe > 0;
+  const fortuna = glueckspunkt(asc, sonne.laenge, mond, tagGeburt);
+  const syzygie = letzteSyzygie(jd);
+  return { jd, asc, ramc, eps, sonne, mond, fortuna, syzygie,
+           sonnenhoehe: hoehe, tagGeburt };
 }
 
 /* -------------------------------------------------------- Tierkreis, Würden */
 const ZEICHEN = [
-  { name:"Widder", glyph:"♈", el:0 }, { name:"Stier", glyph:"♉", el:1 },
-  { name:"Zwillinge", glyph:"♊", el:2 }, { name:"Krebs", glyph:"♋", el:3 },
-  { name:"Löwe", glyph:"♌", el:0 }, { name:"Jungfrau", glyph:"♍", el:1 },
-  { name:"Waage", glyph:"♎", el:2 }, { name:"Skorpion", glyph:"♏", el:3 },
-  { name:"Schütze", glyph:"♐", el:0 }, { name:"Steinbock", glyph:"♑", el:1 },
-  { name:"Wassermann", glyph:"♒", el:2 }, { name:"Fische", glyph:"♓", el:3 }
+  { name:"Widder", glyph:"♈\ufe0e", el:0 }, { name:"Stier", glyph:"♉\ufe0e", el:1 },
+  { name:"Zwillinge", glyph:"♊\ufe0e", el:2 }, { name:"Krebs", glyph:"♋\ufe0e", el:3 },
+  { name:"Löwe", glyph:"♌\ufe0e", el:0 }, { name:"Jungfrau", glyph:"♍\ufe0e", el:1 },
+  { name:"Waage", glyph:"♎\ufe0e", el:2 }, { name:"Skorpion", glyph:"♏\ufe0e", el:3 },
+  { name:"Schütze", glyph:"♐\ufe0e", el:0 }, { name:"Steinbock", glyph:"♑\ufe0e", el:1 },
+  { name:"Wassermann", glyph:"♒\ufe0e", el:2 }, { name:"Fische", glyph:"♓\ufe0e", el:3 }
 ];
 
 const PLANETEN = {
@@ -124,19 +189,60 @@ const GESICHTER = [
   ["jupiter","mars","sonne"], ["venus","merkur","mond"], ["saturn","jupiter","mars"]
 ];
 
+/* Die 22 Buchstaben, jeder mit seiner Lautung. `vok` kennzeichnet die
+   Lesemuetter — sie treten im Namen als Vokal auf, nicht als Mitlaut. */
 const HEBR22 = [
-  {g:"א",n:"Aleph"},{g:"ב",n:"Bet"},{g:"ג",n:"Gimel"},{g:"ד",n:"Dalet"},{g:"ה",n:"He"},
-  {g:"ו",n:"Vav"},{g:"ז",n:"Zajin"},{g:"ח",n:"Chet"},{g:"ט",n:"Tet"},{g:"י",n:"Jod"},
-  {g:"כ",n:"Kaf"},{g:"ל",n:"Lamed"},{g:"מ",n:"Mem"},{g:"נ",n:"Nun"},{g:"ס",n:"Samech"},
-  {g:"ע",n:"Ajin"},{g:"פ",n:"Pe"},{g:"צ",n:"Tzade"},{g:"ק",n:"Qof"},{g:"ר",n:"Resch"},
-  {g:"ש",n:"Schin"},{g:"ת",n:"Taw"}
+  {g:"א",n:"Aleph", lat:"",   vok:"a"}, {g:"ב",n:"Bet",   lat:"B"},
+  {g:"ג",n:"Gimel", lat:"G"},           {g:"ד",n:"Dalet", lat:"D"},
+  {g:"ה",n:"He",    lat:"H"},           {g:"ו",n:"Vav",   lat:"",  vok:"u"},
+  {g:"ז",n:"Zajin", lat:"Z"},           {g:"ח",n:"Chet",  lat:"Ch"},
+  {g:"ט",n:"Tet",   lat:"T"},           {g:"י",n:"Jod",   lat:"",  vok:"i"},
+  {g:"כ",n:"Kaf",   lat:"K"},           {g:"ל",n:"Lamed", lat:"L"},
+  {g:"מ",n:"Mem",   lat:"M"},           {g:"נ",n:"Nun",   lat:"N"},
+  {g:"ס",n:"Samech",lat:"S"},           {g:"ע",n:"Ajin",  lat:"",  vok:"a"},
+  {g:"פ",n:"Pe",    lat:"P"},           {g:"צ",n:"Tzade", lat:"Tz"},
+  {g:"ק",n:"Qof",   lat:"Q"},           {g:"ר",n:"Resch", lat:"R"},
+  {g:"ש",n:"Schin", lat:"Sch"},         {g:"ת",n:"Taw",   lat:"Th"}
 ];
 const HEBR27 = (function () {
   const sofit = { Kaf:"ך", Mem:"ם", Nun:"ן", Pe:"ף", Tzade:"ץ" };
   const out = [];
-  HEBR22.forEach(l => { out.push(l); if (sofit[l.n]) out.push({ g: sofit[l.n], n: l.n + "-Sofit" }); });
+  HEBR22.forEach(l => {
+    out.push(l);
+    if (sofit[l.n]) out.push({ ...l, g: sofit[l.n], n: l.n + "-Sofit" });
+  });
   return out;
 })();
+
+/* Agrippa legt die Buchstaben ueber den ganzen Tierkreis: der Kreis wird in
+   so viele gleiche Sektoren geteilt, wie es Buchstaben gibt, beginnend bei
+   0 Grad Widder. Der Ort faellt in einen Sektor, und der gibt den Buchstaben. */
+function buchstabeFuerLaenge(laenge, alphabet) {
+  const breite = 360 / alphabet.length;
+  const idx = Math.floor(norm360(laenge) / breite) % alphabet.length;
+  return { idx, breite, buchstabe: alphabet[idx], sektorStart: idx * breite };
+}
+
+/* Aus den abgelesenen Buchstaben einen sprechbaren Namen fuegen: die
+   Lesemuetter geben ihren Vokal, zwischen zwei Mitlaute tritt ein a, und
+   am Ende steht die Endung. */
+function bildeNamen(buchstaben, endung) {
+  let s = "";
+  const endetVokal = () => /[aeiou]$/i.test(s);
+  buchstaben.forEach(l => {
+    if (l.vok) {
+      if (!endetVokal() || s.slice(-1).toLowerCase() !== l.vok) s += l.vok;
+    } else {
+      if (s && !endetVokal()) s += "a";
+      s += l.lat.toLowerCase();
+    }
+  });
+  if (!s) s = "A";
+  if (!endetVokal() && endung) s += "i";
+  if (endung === "el") s += "el";
+  else if (endung === "jah") s += "jah";
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
 
 function wuerden(signIdx, gradImZeichen, tagGeburt) {
   const s = {};
@@ -189,37 +295,58 @@ function polar(deg, r, cx, cy) {
   return { x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) };
 }
 
-function baueRad(ascAbs, cuspAbs) {
-  const cx = 130, cy = 130, rAussen = 120, rInnen = 95, rArc = 84, rLabel = 107;
-  const offset = norm360(cuspAbs - ascAbs);
-  const teile = ['<svg viewBox="0 0 260 260" role="img" aria-label="Tierkreisrad, schematisch">'];
+/* Das Rad: aussen der Buchstabenkreis, innen der Tierkreis, darin die
+   fuenf hylegischen Oerter als Zeiger. */
+function baueRad(oerter, alphabet, cuspAbs) {
+  const cx = 150, cy = 150;
+  const rBuchAussen = 142, rBuchInnen = 120, rBuchText = 131;
+  const rZeichInnen = 100, rZeichText = 110;
+  const zahl = alphabet.length, sektor = 360 / zahl;
+  const t = ['<svg viewBox="0 0 300 300" role="img" aria-label="Tierkreis mit Buchstabenkreis und den fünf Örtern">'];
 
-  teile.push(`<circle cx="${cx}" cy="${cy}" r="${rAussen}" fill="none" stroke="var(--linie)" stroke-width="1"/>`);
-  teile.push(`<circle cx="${cx}" cy="${cy}" r="${rInnen}" fill="none" stroke="var(--linie)" stroke-width="1"/>`);
+  [rBuchAussen, rBuchInnen, rZeichInnen].forEach(r =>
+    t.push(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--linie)" stroke-width="1"/>`));
 
-  for (let i = 0; i < 12; i++) {
-    const p1 = polar(i * 30, rInnen, cx, cy), p2 = polar(i * 30, rAussen, cx, cy);
-    teile.push(`<line x1="${p1.x}" y1="${p1.y}" x2="${p2.x}" y2="${p2.y}" stroke="var(--linie)" stroke-width="1"/>`);
-    const lp = polar(i * 30 + 15, rLabel, cx, cy);
-    teile.push(`<text x="${lp.x}" y="${lp.y}" text-anchor="middle" dominant-baseline="middle" font-size="12" fill="var(--gedaempft)">${ZEICHEN[i].glyph}</text>`);
+  /* Buchstabenkreis */
+  for (let i = 0; i < zahl; i++) {
+    const p1 = polar(i * sektor, rBuchInnen, cx, cy), p2 = polar(i * sektor, rBuchAussen, cx, cy);
+    t.push(`<line x1="${p1.x.toFixed(2)}" y1="${p1.y.toFixed(2)}" x2="${p2.x.toFixed(2)}" y2="${p2.y.toFixed(2)}" stroke="var(--linie)" stroke-width="1"/>`);
+    const lp = polar(i * sektor + sektor / 2, rBuchText, cx, cy);
+    t.push(`<text x="${lp.x.toFixed(2)}" y="${lp.y.toFixed(2)}" text-anchor="middle" dominant-baseline="central" font-size="${zahl > 22 ? 10 : 12}" fill="var(--ton)" opacity=".85">${alphabet[i].g}</text>`);
   }
 
-  const a1 = polar(ascAbs, rArc, cx, cy), a2 = polar(cuspAbs, rArc, cx, cy);
-  const grossBogen = offset > 180 ? 1 : 0;
-  teile.push(`<path d="M ${a1.x} ${a1.y} A ${rArc} ${rArc} 0 ${grossBogen} 1 ${a2.x} ${a2.y}" fill="none" stroke="var(--ton)" stroke-width="5" stroke-linecap="round" opacity="0.55"/>`);
+  /* Tierkreis */
+  for (let i = 0; i < 12; i++) {
+    const p1 = polar(i * 30, rZeichInnen, cx, cy), p2 = polar(i * 30, rBuchInnen, cx, cy);
+    t.push(`<line x1="${p1.x.toFixed(2)}" y1="${p1.y.toFixed(2)}" x2="${p2.x.toFixed(2)}" y2="${p2.y.toFixed(2)}" stroke="var(--linie)" stroke-width="1"/>`);
+    const lp = polar(i * 30 + 15, rZeichText, cx, cy);
+    t.push(`<text x="${lp.x.toFixed(2)}" y="${lp.y.toFixed(2)}" text-anchor="middle" dominant-baseline="central" font-size="11" fill="var(--gedaempft)">${ZEICHEN[i].glyph}</text>`);
+  }
 
-  const ascP1 = polar(ascAbs, rInnen - 12, cx, cy), ascP2 = polar(ascAbs, rAussen + 5, cx, cy);
-  teile.push(`<line x1="${ascP1.x}" y1="${ascP1.y}" x2="${ascP2.x}" y2="${ascP2.y}" stroke="var(--ton-hell)" stroke-width="2.2"/>`);
-  const ascLbl = polar(ascAbs, rInnen - 23, cx, cy);
-  teile.push(`<text x="${ascLbl.x}" y="${ascLbl.y}" text-anchor="middle" dominant-baseline="middle" font-size="10" fill="var(--ton-hell)">ASC</text>`);
+  /* Spitze des 11. Hauses, gestrichelt */
+  const c1 = polar(cuspAbs, rZeichInnen - 14, cx, cy), c2 = polar(cuspAbs, rBuchInnen, cx, cy);
+  t.push(`<line x1="${c1.x.toFixed(2)}" y1="${c1.y.toFixed(2)}" x2="${c2.x.toFixed(2)}" y2="${c2.y.toFixed(2)}" stroke="var(--rot)" stroke-width="1.6" stroke-dasharray="4 3" opacity=".8"/>`);
+  const cl = polar(cuspAbs, rZeichInnen - 24, cx, cy);
+  t.push(`<text x="${cl.x.toFixed(2)}" y="${cl.y.toFixed(2)}" text-anchor="middle" dominant-baseline="central" font-size="9" fill="var(--rot)">XI</text>`);
 
-  const cP1 = polar(cuspAbs, rInnen - 12, cx, cy), cP2 = polar(cuspAbs, rAussen + 5, cx, cy);
-  teile.push(`<line x1="${cP1.x}" y1="${cP1.y}" x2="${cP2.x}" y2="${cP2.y}" stroke="var(--rot)" stroke-width="2.2"/>`);
-  const cLbl = polar(cuspAbs, rInnen - 23, cx, cy);
-  teile.push(`<text x="${cLbl.x}" y="${cLbl.y}" text-anchor="middle" dominant-baseline="middle" font-size="10" fill="var(--rot)">XI</text>`);
+  /* Die fuenf Oerter. Liegen zwei dicht beieinander, rueckt das Zeichen
+     eine Stufe nach innen, damit sich die Beschriftungen nicht decken. */
+  const belegt = [];
+  oerter.forEach(o => {
+    const a = norm360(o.laenge);
+    let stufe = 0;
+    const naheBei = b => Math.abs(((b.a - a + 540) % 360) - 180) < 12;
+    while (belegt.some(b => b.stufe === stufe && naheBei(b)) && stufe < 3) stufe++;
+    belegt.push({ a, stufe });
+    const rEnd = rZeichInnen - 4 - stufe * 17;
+    const p1 = polar(a, rEnd, cx, cy), p2 = polar(a, rBuchInnen, cx, cy);
+    t.push(`<line x1="${p1.x.toFixed(2)}" y1="${p1.y.toFixed(2)}" x2="${p2.x.toFixed(2)}" y2="${p2.y.toFixed(2)}" stroke="${o.farbe}" stroke-width="2"/>`);
+    const lp = polar(a, rEnd - 11, cx, cy);
+    t.push(`<text x="${lp.x.toFixed(2)}" y="${lp.y.toFixed(2)}" text-anchor="middle" dominant-baseline="central" font-size="12" fill="${o.farbe}">${o.glyph}</text>`);
+  });
 
-  teile.push("</svg>");
-  return teile.join("");
+  t.push("</svg>");
+  return t.join("");
 }
 
 /* ------------------------------------------------------------ Ortssuche */
@@ -251,6 +378,11 @@ $("#gOrtSuchen").addEventListener("click", async () => {
 });
 
 /* ------------------------------------------------------------- Rechnung */
+const ZEICHEN_GRAD = l => {
+  const i = Math.floor(norm360(l) / 30);
+  return `${ZEICHEN[i].glyph} ${(norm360(l) - i * 30).toFixed(1)}°`;
+};
+
 $("#gBerechnen").addEventListener("click", () => {
   const cikti = $("#gCikti");
   const datumStr = $("#gDatum").value, zeitStr = $("#gZeit").value;
@@ -261,6 +393,7 @@ $("#gBerechnen").addEventListener("click", () => {
     cikti.hidden = false;
     cikti.innerHTML = "";
     cikti.appendChild(el("p", "kucukNot", "Geburtsdatum, -zeit, Breite, Länge und UTC-Offset werden alle gebraucht."));
+    cikti.scrollIntoView({ block: "center", behavior: "smooth" });
     return;
   }
 
@@ -269,48 +402,100 @@ $("#gBerechnen").addEventListener("click", () => {
   const name = $("#gName").value.trim();
   const modus27 = document.querySelector('input[name="gModus"]:checked').value === "27";
   const endung = document.querySelector('input[name="gEndung"]:checked').value;
+  const alphabet = modus27 ? HEBR27 : HEBR22;
 
   const geburt = berechneGeburt(jahr, monat, tag, stunde, minute, utc, breite, laenge);
   const ascSign = Math.floor(geburt.asc / 30), ascGrad = geburt.asc - ascSign * 30;
-  const c11Sign = (ascSign + 10) % 12, c11Grad = ascGrad;
-  const cuspAbs = c11Sign * 30 + c11Grad;
+  const c11Sign = (ascSign + 10) % 12;
+  const cuspAbs = c11Sign * 30 + ascGrad;
 
-  const scores = wuerden(c11Sign, c11Grad, geburt.tagGeburt);
+  /* Die fünf hylegischen Örter, in Agrippas Reihenfolge. */
+  const oerter = [
+    { kuerzel:"Aszendent",   glyph:"ASC", farbe:"var(--ton-hell)", laenge: geburt.asc },
+    { kuerzel:"Sonne",       glyph:"☉",  farbe:"#e7c65c",          laenge: geburt.sonne.laenge },
+    { kuerzel:"Mond",        glyph:"☽",  farbe:"#cfd6e6",          laenge: geburt.mond },
+    { kuerzel:"Glückspunkt", glyph:"⊗",  farbe:"#7fb08a",          laenge: geburt.fortuna },
+    { kuerzel:`Syzygie (${geburt.syzygie.art})`, glyph: geburt.syzygie.glyph,
+      farbe:"#9c4a3c", laenge: geburt.syzygie.laenge }
+  ];
+  oerter.forEach(o => Object.assign(o, buchstabeFuerLaenge(o.laenge, alphabet)));
+
+  const geistname = bildeNamen(oerter.map(o => o.buchstabe), endung);
+  const hebr = oerter.map(o => o.buchstabe.g).join("");
+
+  /* Der Almuten bleibt als zweite, eigene Aussage: der Regent des Hauses. */
+  const scores = wuerden(c11Sign, ascGrad, geburt.tagGeburt);
   const almutenKey = ermittleAlmuten(scores);
   const almuten = PLANETEN[almutenKey];
-
-  const offset = norm360(cuspAbs - geburt.asc);
-  const gradZahl = Math.floor(offset);
-  const alphabet = modus27 ? HEBR27 : HEBR22;
-  const zyklus = alphabet.length;
-  const buchstabe = alphabet[gradZahl % zyklus];
-  const endungText = endung === "el" ? "-El" : (endung === "jah" ? "-Jah" : "");
-  const geistname = buchstabe.n + endungText;
 
   cikti.hidden = false;
   cikti.innerHTML = "";
 
-  if (name) cikti.appendChild(el("h2", null, `Der Geist von ${name}`));
+  /* ------------------------------------------------ zuerst die Antwort */
+  const nameBox = el("div", "geistName");
+  nameBox.append(
+    el("div", "kalanBaslik", name ? `Der Geist von ${name}` : "Abgeleiteter Geistname"),
+    (() => { const d = el("div", "buyukToplam");
+      d.innerHTML = `${geistname}<span class="buchstabe">${hebr}</span>`; return d; })(),
+    el("div", "kucukNot", `aus den Buchstaben ${oerter.map(o => o.buchstabe.n).join(" · ")}`)
+  );
+  cikti.appendChild(nameBox);
 
-  const kopfNot = el("p", "kucukNot",
+  cikti.appendChild(el("p", "kucukNot",
     `Aszendent ${ZEICHEN[ascSign].glyph} ${ZEICHEN[ascSign].name} ${ascGrad.toFixed(1)}° · ` +
-    `Spitze XI ${ZEICHEN[c11Sign].glyph} ${ZEICHEN[c11Sign].name} ${c11Grad.toFixed(1)}° (Ganzzeichen) · ` +
-    `${geburt.tagGeburt ? "Taggeburt" : "Nachtgeburt"} (Sonnenhöhe ${geburt.sonnenhoehe.toFixed(1)}°)`);
-  cikti.appendChild(kopfNot);
+    `${geburt.tagGeburt ? "Taggeburt" : "Nachtgeburt"} (Sonnenhöhe ${geburt.sonnenhoehe.toFixed(1)}°) · ` +
+    `Buchstabenkreis mit ${alphabet.length} Sektoren zu je ${(360 / alphabet.length).toFixed(2)}°`));
+
+  /* ------------------------------------------------- die fünf Örter */
+  cikti.appendChild(el("h3", null, "Die fünf hylegischen Örter"));
+  const tablo = el("div", "tabloKutu");
+  const tab = el("table", "wuerdeTablo");
+  tab.innerHTML = "<thead><tr><th>Ort</th><th>Länge</th><th>im Zeichen</th><th>Sektor</th><th>Buchstabe</th></tr></thead>";
+  const tbody = el("tbody");
+  oerter.forEach(o => {
+    const tr = el("tr");
+    tr.appendChild(el("td", null, `${o.glyph}  ${o.kuerzel}`));
+    tr.appendChild(el("td", null, `${norm360(o.laenge).toFixed(2)}°`));
+    tr.appendChild(el("td", null, ZEICHEN_GRAD(o.laenge)));
+    tr.appendChild(el("td", null, `${o.idx + 1}. (ab ${o.sektorStart.toFixed(1)}°)`));
+    const td = el("td", "treffer");
+    td.innerHTML = `<span class="hebr">${o.buchstabe.g}</span> ${o.buchstabe.n}`;
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+  });
+  tab.appendChild(tbody);
+  tablo.appendChild(tab);
+  cikti.appendChild(tablo);
+
+  /* ------------------------------------------------------------ das Rad */
+  const radKutu = el("div", "radKutu");
+  radKutu.innerHTML = baueRad(oerter, alphabet, cuspAbs);
+  const legende = el("div", "radLegende");
+  legende.innerHTML = oerter.map(o =>
+    `<span><span class="punkt" style="background:${o.farbe}"></span>${o.glyph} ${o.kuerzel}</span>`).join("") +
+    `<span><span class="punkt" style="background:var(--rot)"></span>XI Spitze</span>`;
+  radKutu.appendChild(legende);
+  cikti.appendChild(radKutu);
+
+  /* -------------------------------------------- der Regent des Hauses */
+  cikti.appendChild(el("h3", null, "Der Regent des 11. Hauses"));
+  cikti.appendChild(el("p", "kucukNot",
+    "Eine zweite, vom Namen unabhängige Aussage: wer über das Haus des guten Geistes gebietet. " +
+    `Spitze XI nach Ganzzeichen: ${ZEICHEN[c11Sign].glyph} ${ZEICHEN[c11Sign].name} ${ascGrad.toFixed(1)}°.`));
 
   const karte = el("div", "almutenKarte");
   karte.append(
     el("div", "kalanBaslik", "Almuten des 11. Hauses"),
     (() => { const d = el("div", "almutenPlanet");
       d.innerHTML = `<span class="glyph">${almuten.g}</span>${almuten.name}`; return d; })(),
-    el("div", "kucukNot", `${scores[almutenKey].total} Würdepunkte auf ${ZEICHEN[c11Sign].glyph} ${ZEICHEN[c11Sign].name} ${c11Grad.toFixed(1)}°`)
+    el("div", "kucukNot", `${scores[almutenKey].total} Würdepunkte auf ${ZEICHEN[c11Sign].glyph} ${ZEICHEN[c11Sign].name} ${ascGrad.toFixed(1)}°`)
   );
   cikti.appendChild(karte);
 
-  const tablo = el("div", "tabloKutu");
-  const tab = el("table", "wuerdeTablo");
-  tab.innerHTML = "<thead><tr><th>Planet</th><th>Dom.</th><th>Ex.</th><th>Trigon</th><th>Term</th><th>Gesicht</th><th>Summe</th></tr></thead>";
-  const tbody = el("tbody");
+  const wTablo = el("div", "tabloKutu");
+  const wTab = el("table", "wuerdeTablo");
+  wTab.innerHTML = "<thead><tr><th>Planet</th><th>Dom.</th><th>Ex.</th><th>Trigon</th><th>Term</th><th>Gesicht</th><th>Summe</th></tr></thead>";
+  const wBody = el("tbody");
   PLANETEN_REIHE.forEach(p => {
     const s = scores[p];
     const tr = el("tr", p === almutenKey ? "sieger" : null);
@@ -319,41 +504,12 @@ $("#gBerechnen").addEventListener("click", () => {
       tr.appendChild(el("td", s[k] ? "treffer" : null, s[k] ? String(pkt) : "–"));
     });
     tr.appendChild(el("td", "summe", String(s.total)));
-    tbody.appendChild(tr);
+    wBody.appendChild(tr);
   });
-  tab.appendChild(tbody);
-  tablo.appendChild(tab);
-  cikti.appendChild(tablo);
+  wTab.appendChild(wBody);
+  wTablo.appendChild(wTab);
+  cikti.appendChild(wTablo);
 
-  const radKutu = el("div", "radKutu");
-  radKutu.innerHTML = baueRad(geburt.asc, cuspAbs);
-  const legende = el("div", "radLegende");
-  legende.innerHTML =
-    `<span><span class="punkt" style="background:var(--ton-hell)"></span>Aszendent</span>` +
-    `<span><span class="punkt" style="background:var(--rot)"></span>Spitze XI</span>` +
-    `<span><span class="punkt" style="background:var(--ton);opacity:.55"></span>gezählter Bogen (${gradZahl}°)</span>`;
-  radKutu.appendChild(legende);
-  cikti.appendChild(radKutu);
-
-  cikti.appendChild(el("div", "harfStreifenTitel", `Buchstaben-Kreis (${zyklus}-Modus) — die letzten Schritte der Zählung`));
-  const streifen = el("div", "harfStreifen");
-  const anzahl = Math.min(gradZahl + 1, zyklus);
-  for (let k = anzahl - 1; k >= 0; k--) {
-    const idx = ((gradZahl - k) % zyklus + zyklus) % zyklus;
-    const l = alphabet[idx];
-    const zelle = el("div", "harfZelle" + (k === 0 ? " treffer" : ""));
-    zelle.append(el("div", "g", l.g), el("div", null, l.n));
-    streifen.appendChild(zelle);
-  }
-  cikti.appendChild(streifen);
-  const treffer = streifen.querySelector(".treffer");
-  if (treffer) treffer.scrollIntoView({ inline: "end", block: "nearest" });
-
-  const nameBox = el("div", "geistName");
-  nameBox.append(
-    el("div", "kalanBaslik", "Abgeleiteter Geistname"),
-    (() => { const d = el("div", "buyukToplam");
-      d.innerHTML = `${geistname}<span class="buchstabe">${buchstabe.g}</span>`; return d; })()
-  );
-  cikti.appendChild(nameBox);
+  /* Zum Ergebnis führen — und nicht irgendwohin mittendrin. */
+  nameBox.scrollIntoView({ block: "center", behavior: "smooth" });
 });

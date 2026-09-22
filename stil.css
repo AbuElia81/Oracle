@@ -311,24 +311,24 @@ td.arap { font-size: 1.05rem; color: var(--ton-hell); white-space: nowrap; }
 .radLegende { display:flex; justify-content:center; gap:1.3rem; flex-wrap:wrap; font-size:.78rem; color:var(--gedaempft); margin-top:.5rem; }
 .radLegende .punkt { display:inline-block; width:.55rem; height:.55rem; border-radius:50%; margin-right:.3rem; vertical-align:middle; }
 
-.harfStreifenTitel { font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--gedaempft); margin:1.8rem 0 .5rem; text-align:center; }
-.harfStreifen { display:flex; gap:.4rem; overflow-x:auto; padding:.3rem .2rem .8rem; }
-.harfZelle {
-  flex:0 0 auto; width:2.4rem; height:2.4rem; border:1px solid var(--linie); border-radius:2px;
-  background:var(--kagit2); color:var(--gedaempft);
-  display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:.65rem;
+.wuerdeTablo, .radKutu svg text, .almutenPlanet, .radLegende {
+  font-variant-emoji: text;
 }
-.harfZelle .g { font-size:1.05rem; color:var(--schrift); direction:rtl; }
-.harfZelle.treffer { background:var(--ton); border-color:var(--ton); color:var(--grund); }
-.harfZelle.treffer .g { color:var(--grund); }
+.wuerdeTablo td .hebr { font-size:1.15rem; color:var(--ton-hell); direction:rtl; margin-right:.25rem; }
 
 .geistName {
-  margin-top:1.8rem; text-align:center; padding:1.6rem 1.2rem;
+  margin-top:2.2rem; text-align:center; padding:2rem 1.2rem;
   background:linear-gradient(180deg, var(--kagit2), var(--kagit));
   border:1px solid var(--ton); border-radius:2px;
 }
-.geistName .buyukToplam { font-size:clamp(2.1rem,8vw,2.9rem); }
-.geistName .buchstabe { font-size:1.3rem; color:var(--ton); direction:rtl; margin-left:.4rem; }
+.geistName .buyukToplam { font-size:clamp(2.2rem,9vw,3.4rem); line-height:1.15; }
+.geistName .buchstabe {
+  display:block; font-size:1.6rem; color:var(--ton); direction:rtl;
+  letter-spacing:.22em; margin-top:.5rem;
+}
+.geistName .kucukNot, .almutenKarte .kucukNot {
+  border:none; padding:0; margin:.9rem 0 0; text-align:center;
+}
 
 /* --------------------------------------------------------------- Fuß */
 footer {
