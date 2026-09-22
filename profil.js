@@ -16,6 +16,17 @@ export function leseProfil() {
   } catch (e) { return null; }
 }
 
+/* Wie leseProfil, aber ohne die Geburtsangaben zu verlangen: fürs Formular
+   selbst und für die Abschnitte, denen die beiden Namen genügen. leseProfil
+   bleibt streng — Geist, Lebensbogen und Zodiacal Releasing verlassen sich
+   darauf, dass sie nur einen vollständigen Himmel bekommen. */
+export function leseProfilRoh() {
+  try {
+    const raw = localStorage.getItem(SCHLUESSEL);
+    return raw ? JSON.parse(raw) : null;
+  } catch (e) { return null; }
+}
+
 export function schreibeProfil(daten) {
   try { localStorage.setItem(SCHLUESSEL, JSON.stringify(daten)); } catch (e) {}
   window.dispatchEvent(new CustomEvent("profil-geaendert", { detail: daten }));

@@ -3,7 +3,7 @@
    Abschnitten. Nach dem Vorbild von geist-profil.js: füllt nur deren
    eigene Felder vor und stößt die Rechnung an, rührt an ihr nichts.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung } from "./profil.js?v=10";
+import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=11";
 
 const $ = s => document.querySelector(s);
 
@@ -33,5 +33,5 @@ function uebernehmen(p) {
   setze("#u1anne", p.anne);
 }
 
-uebernehmen(leseProfil());
+uebernehmen(leseProfilRoh());
 aufProfilAenderung(uebernehmen);
