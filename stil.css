@@ -509,3 +509,7 @@ h4 {
   background:rgba(156,74,60,.14); border-left:2px solid var(--rot); border-radius:2px;
 }
 tr.gipfel td { background:rgba(201,162,39,.10); }
+
+/* Die Essenz auf der Hauptseite. */
+#eStart { margin-top: 3.5rem; border-top: 1px solid var(--linie); padding-top: 2.5rem; }
+.startEssenzKopf { border-bottom: none; margin-bottom: 1rem; padding-bottom: 0; }

@@ -6,11 +6,12 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=56";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=56";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe } from "./profil.js?v=56";
-import { JAHR, profektionJetzt } from "./jahr.js?v=56";
-import { radix, transite, progression, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=56";
+import { cevir, toplam, kalan } from "./ebced.js?v=59";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=59";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=59";
+import { JAHR, profektionJetzt } from "./jahr.js?v=59";
+import { radix, transite, progression, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=59";
+import { mondHeute } from "./elektion.js?v=59";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -89,6 +90,20 @@ function naechsteDirektion(alter) {
   return beste;
 }
 
+/* Die Gipfel und Bandlösungen, die der ZR-Abschnitt schon aufgelistet hat. */
+function zrGipfel() {
+  const c = anstossen("#zrBerechnen", "#zrCikti");
+  if (!c || c.hidden) return null;
+  const hole = titel => {
+    const h = [...c.querySelectorAll("h3")].find(x => x.innerText.includes(titel));
+    if (!h) return [];
+    let n = h.nextElementSibling;
+    while (n && n.tagName !== "UL") n = n.nextElementSibling;
+    return n ? [...n.querySelectorAll("li")].map(li => li.innerText.replace(/\s+/g, " ").trim()) : [];
+  };
+  return { gipfel: hole("Höhepunkte"), loesungen: hole("Lösung des Bandes") };
+}
+
 /* Profektionen: das Jahreshaus und sein Herr — die Jahrestechnik schlechthin. */
 function profektion() {
   anstossen("#pfBerechnen", "#pfCikti");      // Tafel im Abschnitt füllen
@@ -135,8 +150,9 @@ function absatz(titel, text) {
   return f;
 }
 
-function schreibe() {
-  const cikti = $("#eCikti");
+function schreibe(zielWahl) {
+  const cikti = $(typeof zielWahl === "string" ? zielWahl : "#eCikti");
+  if (!cikti) return;
   const p = leseProfilRoh();
   cikti.hidden = false;
   cikti.innerHTML = "";
@@ -159,6 +175,9 @@ function schreibe() {
   const r = radix();
   const tr = transite();
   const prg = progression();
+  const zrg = zrGipfel();
+  let mond = null;
+  try { mond = mondHeute(); } catch (e) { mond = null; }
   const prof = profektion();
 
   cikti.appendChild(el("p", "kucukNot", "Für: " + profilBeschriftung(p) +
@@ -240,6 +259,37 @@ function schreibe() {
       `in welcher Tonart es gerade gespielt wird.`));
   }
 
+  if (zrg && alter != null) {
+    const laufend = zrg.gipfel.find(g => {
+      const m = g.match(/^([\d.]+)\s*–\s*([\d.]+)/);
+      return m && alter >= parseFloat(m[1]) && alter < parseFloat(m[2]);
+    });
+    const kommend = zrg.gipfel.find(g => {
+      const m = g.match(/^([\d.]+)/);
+      return m && parseFloat(m[1]) > alter;
+    });
+    if (laufend || kommend || zrg.loesungen.length) {
+      cikti.appendChild(absatz("Gipfel und Wendepunkte",
+        (laufend
+          ? `Du stehst gerade in einem Gipfel deines Kapitels: ${laufend} Das sind die tätigen, sichtbaren Strecken. `
+          : "Du stehst gerade nicht in einem Gipfel — eine der stillen Strecken, in denen mehr vorbereitet als entschieden wird. ") +
+        (kommend ? `Der nächste beginnt bei ${kommend} ` : "") +
+        (() => {
+          const kuenftig = zrg.loesungen.filter(l => {
+            const m = l.match(/([\d.]+)\s*Jahren/);
+            return m && parseFloat(m[1]) > alter;
+          });
+          if (kuenftig.length) return `Und einmal löst sich das Band: ${kuenftig[0]} Dann setzt das Leben an anderer Stelle neu an.`;
+          const vergangen = zrg.loesungen.filter(l => {
+            const m = l.match(/([\d.]+)\s*Jahren/);
+            return m && parseFloat(m[1]) <= alter;
+          });
+          if (vergangen.length) return `Die letzte Lösung des Bandes liegt hinter dir: ${vergangen[vergangen.length - 1]}`;
+          return "";
+        })()));
+    }
+  }
+
   if (dir) {
     const jahre = dir.alter - alter;
     const wann = jahre < 1
@@ -283,6 +333,15 @@ function schreibe() {
     jahrFach.appendChild(el("h3", null, `Dieses Jahr — ${JAHR}`));
     jahrFach.appendChild(el("p", null,
       `Was die einzelnen Techniken für ${JAHR} sagen, nebeneinandergelegt:`));
+    if (mond) {
+      const mp = el("p");
+      mp.innerHTML = `<b>Heute:</b> Der Mond steht in ${ZEICHEN[mond.zeichen].glyph} ` +
+        `${ZEICHEN[mond.zeichen].name}, in der ${mond.menzilNr}. Station — ${mond.menzil.tr}, ` +
+        `${mond.menzil.hukum.replace(/\.$/, "")} — und ${mond.zunehmend ? "nimmt zu" : "nimmt ab"}. ` +
+        `Günstig für: ${mond.menzil.iyi}. Meide: ${mond.menzil.kacin}.` +
+        (mond.verbrannt ? " Er steht dabei in der verbrannten Bahn — heute nichts anfangen, was halten soll." : "");
+      jahrFach.appendChild(mp);
+    }
     if (tr && tr.treffer.length) {
       const t = tr.treffer[0];
       const tp = el("p");
@@ -333,6 +392,10 @@ function schreibe() {
     ["Niyet — die Frage", "eine Frage in einem Satz; die Antwort hängt auch an der Stunde, in der du fragst"]);
   if (document.querySelector("#u2ad")) offen.push(
     ["İsim uyumu", "den Namen eines zweiten Menschen und den seiner Mutter"]);
+  if (document.querySelector("#rmFrage")) offen.push(
+    ["ʿIlm al-Raml", "eine Frage — der Sand antwortet auf den Augenblick, nicht auf das Leben"]);
+  if (document.querySelector("#ekVorhaben")) offen.push(
+    ["Der rechte Zeitpunkt", "ein Vorhaben, das du beginnen willst; dann prüft er den Mondstand darauf"]);
   if (offen.length) {
     const kasten = el("div", "offeneListe");
     kasten.append(el("h3", null, "Was hier noch fehlt"));
@@ -357,8 +420,32 @@ function schreibe() {
   }
 }
 
-$("#eLesen").addEventListener("click", schreibe);
+$("#eLesen")?.addEventListener("click", () => schreibe("#eCikti"));
 
 /* Beim Öffnen des Reiters von selbst lesen. */
 const reiter = document.querySelector('nav#reiter button[data-bolum="bEssenz"]');
-if (reiter) reiter.addEventListener("click", () => setTimeout(schreibe, 0));
+if (reiter) reiter.addEventListener("click", () => setTimeout(() => schreibe("#eCikti"), 0));
+
+/* ------------------------------------------------ Essenz auf der Hauptseite
+   Wer seine Angaben eingetragen hat, soll nicht erst einen Reiter suchen:
+   Die Zusammenschau steht gleich darunter, und von dort geht man in die
+   einzelnen Abschnitte, um zu vertiefen. */
+function startEssenz() {
+  const ziel = $("#eStartCikti");
+  const rahmen = $("#eStart");
+  if (!ziel || !rahmen) return;
+  const p = leseProfilRoh();
+  const etwasDa = p && ((p.name && p.anne) || (p.datum && p.zeit && !isNaN(parseFloat(p.breite))));
+  rahmen.hidden = !etwasDa;
+  if (etwasDa) schreibe("#eStartCikti");
+}
+
+let startUhr = null;
+function startNachziehen() {
+  clearTimeout(startUhr);
+  startUhr = setTimeout(startEssenz, 600);
+  [1500, 3000].forEach(ms => setTimeout(startEssenz, ms));
+}
+aufProfilAenderung(startNachziehen);
+if (document.readyState === "complete") startNachziehen();
+else window.addEventListener("load", startNachziehen);

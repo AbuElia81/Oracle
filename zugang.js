@@ -6,7 +6,7 @@
    keine Sperre, sondern eine Reihenfolge: Ohne Daten hätte keiner von
    ihnen etwas zu zeigen.
    --------------------------------------------------------------------- */
-import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=56";
+import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=59";
 
 const HEIM = "bProfil";
 

@@ -8,9 +8,9 @@
    taugt und wovor sie warnt. Dazu treten die klassischen Elektionsregeln —
    zunehmender oder abnehmender Mond, die verbrannte Bahn, die Stunde.
    --------------------------------------------------------------------- */
-import { MENZILLER } from "./korpus.js?v=56";
-import { planetenPositionen, julianischesDatum, norm360, sonnenLaenge } from "./astro.js?v=56";
-import { ZEICHEN, PLANET } from "./horoskop.js?v=56";
+import { MENZILLER } from "./korpus.js?v=59";
+import { planetenPositionen, julianischesDatum, norm360, sonnenLaenge } from "./astro.js?v=59";
+import { ZEICHEN, PLANET } from "./horoskop.js?v=59";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -73,7 +73,7 @@ function erkenneVorhaben(text) {
 }
 
 /* ----------------------------------------------------------- Mondstand */
-function mondStand(datum) {
+export function mondStand(datum) {
   const jd = julianischesDatum(datum.getFullYear(), datum.getMonth() + 1, datum.getDate(),
                                datum.getHours() + datum.getMinutes() / 60);
   const pos = planetenPositionen(jd);
@@ -247,3 +247,12 @@ function raten() {
 
 $("#ekFragen")?.addEventListener("click", raten);
 $("#ekVorhaben")?.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); raten(); } });
+
+/* Für die Essenz: wo der Mond heute steht, ohne dass etwas gefragt wurde. */
+export function mondHeute() {
+  const st = mondStand(new Date());
+  return {
+    menzilNr: st.menzilNr, menzil: st.menzil, zeichen: st.zeichen,
+    zunehmend: st.zunehmend, verbrannt: st.verbrannt
+  };
+}
