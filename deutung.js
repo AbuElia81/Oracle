@@ -6,8 +6,8 @@
    fertigen Tafeln und setzt seinen Text in einen eigenen Kasten daneben.
    Deshalb überlebt die Deutung auch ein Neurechnen.
    --------------------------------------------------------------------- */
-import { leseProfilRoh } from "./profil.js?v=35";
-import { profektionJetzt } from "./jahr.js?v=35";
+import { leseProfilRoh } from "./profil.js?v=36";
+import { profektionJetzt } from "./jahr.js?v=36";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);

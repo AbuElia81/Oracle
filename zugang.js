@@ -6,7 +6,7 @@
    keine Sperre, sondern eine Reihenfolge: Ohne Daten hätte keiner von
    ihnen etwas zu zeigen.
    --------------------------------------------------------------------- */
-import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=35";
+import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=36";
 
 const HEIM = "bProfil";
 
@@ -26,6 +26,11 @@ function schalte() {
     if (b.dataset.bolum === HEIM) return;
     b.hidden = !offen;
   });
+
+  /* Mit nur einem sichtbaren Reiter sieht die Leiste verloren aus —
+     solange es nichts zu wechseln gibt, verschwindet sie ganz. */
+  const leiste = document.querySelector("nav#reiter");
+  if (leiste) leiste.hidden = !offen;
 
   const hinweis = document.querySelector("#torHinweis");
   if (hinweis) hinweis.hidden = offen;
