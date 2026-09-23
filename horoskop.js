@@ -9,10 +9,10 @@
 
    Häuser im Ganzzeichen, wie überall auf dieser Seite.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=45";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=46";
 import { berechneGeburt, planetenPositionen, julianischesDatum,
          aszendent, medium, schiefeDerEkliptik, siderischeZeitGreenwich,
-         norm360 } from "./astro.js?v=45";
+         norm360 } from "./astro.js?v=46";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -37,6 +37,17 @@ export const PLANET = {
   saturn:  { name:"Saturn",  g:"♄", was:"dein Ernst und deine Grenze" }
 };
 export const REIHE = ["sonne","mond","merkur","venus","mars","jupiter","saturn"];
+
+/* Sonne und Mond brauchen den Artikel, die übrigen nicht. */
+const ARTIKEL = { sonne:"die Sonne", mond:"der Mond" };
+export function mitArtikel(name) {
+  const k = String(name).toLowerCase();
+  return ARTIKEL[k] || (PLANET[k] ? PLANET[k].name : name);
+}
+export function grossMitArtikel(name) {
+  const t = mitArtikel(name);
+  return t.charAt(0).toUpperCase() + t.slice(1);
+}
 
 const ART = [
   "geradeheraus und schnell", "beharrlich und sinnlich", "beweglich und neugierig",
@@ -281,7 +292,7 @@ function zeichneRadix(ziel) {
 
   if (herrsch) {
     const h = el("p");
-    h.innerHTML = `<b>Herr des Horoskops</b> ist ${PLANET[r.herrscher].name}, Herrscher deines ` +
+    h.innerHTML = `<b>Herr des Horoskops</b> ist ${mitArtikel(r.herrscher)}, Herrscher deines ` +
       `Aszendenten, und steht in ${ZEICHEN[herrsch.zeichen].glyph} ${ZEICHEN[herrsch.zeichen].name} ` +
       `im ${herrsch.haus}. Haus, ${herrsch.wuerde.text}. Wohin dein Leben zieht, zeigt zuerst dieser Planet: ` +
       `${HAUS[herrsch.haus - 1]}.`;

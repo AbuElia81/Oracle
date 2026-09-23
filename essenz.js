@@ -6,11 +6,11 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=45";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=45";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe } from "./profil.js?v=45";
-import { JAHR, profektionJetzt } from "./jahr.js?v=45";
-import { radix, transite, progression, ZEICHEN, PLANET, HAUS } from "./horoskop.js?v=45";
+import { cevir, toplam, kalan } from "./ebced.js?v=46";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=46";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe } from "./profil.js?v=46";
+import { JAHR, profektionJetzt } from "./jahr.js?v=46";
+import { radix, transite, progression, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=46";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -181,7 +181,7 @@ function schreibe() {
       `${ZEICHEN[r.ascZeichen].glyph} ${ZEICHEN[r.ascZeichen].name} stieg auf, als du geboren wurdest, ` +
       `das MC steht in ${ZEICHEN[r.mcZeichen].glyph} ${ZEICHEN[r.mcZeichen].name}; es war eine ` +
       `${r.tagGeburt ? "Taggeburt" : "Nachtgeburt"}. ` +
-      (h ? `Herr des Horoskops ist damit ${PLANET[r.herrscher].name}, und er steht in ` +
+      (h ? `Herr des Horoskops ist damit ${mitArtikel(r.herrscher)}, und er steht in ` +
            `${ZEICHEN[h.zeichen].glyph} ${ZEICHEN[h.zeichen].name} im ${h.haus}. Haus — ` +
            `${HAUS[h.haus - 1]}. Dorthin zieht dein Leben, noch ehe irgendeine Zeittechnik etwas dazu sagt.` : "")));
 

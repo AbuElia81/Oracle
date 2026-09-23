@@ -6,9 +6,9 @@
    fertigen Tafeln und setzt seinen Text in einen eigenen Kasten daneben.
    Deshalb überlebt die Deutung auch ein Neurechnen.
    --------------------------------------------------------------------- */
-import { leseProfilRoh } from "./profil.js?v=45";
-import { profektionJetzt } from "./jahr.js?v=45";
-import { zustandVon, radix, HAUS } from "./horoskop.js?v=45";
+import { leseProfilRoh } from "./profil.js?v=46";
+import { profektionJetzt } from "./jahr.js?v=46";
+import { zustandVon, radix, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=46";
 
 /* Ein Satz, der eine Zeitherrscher-Aussage am Geburtshoroskop festmacht.
    Genau darum geht es: Die Technik sagt wann, das Horoskop sagt was. */
@@ -122,7 +122,7 @@ function lebensbogenDeutung(kasten) {
   kasten.append(liste);
 
   const erster = kommend[0];
-  const festP = erster && konkret(erster.promissor, `${erster.promissor}, der die nächste Direktion bringt,`);
+  const festP = erster && konkret(erster.promissor, `${grossMitArtikel(erster.promissor)} bringt die nächste Direktion und`);
   if (festP) {
     kasten.append(el("h3", null, "Was da genau anklopft"));
     kasten.append(el("p", null, festP));
@@ -195,12 +195,12 @@ function zrDeutung(kasten) {
     kasten.append(p2);
   }
 
-  const festL1 = l1 && konkret(l1.herrscher, `${l1.herrscher}, der Herr des großen Kapitels,`);
+  const festL1 = l1 && konkret(l1.herrscher, `${grossMitArtikel(l1.herrscher)} führt das große Kapitel und`);
   if (festL1) {
     kasten.append(el("h3", null, "Woran du es merkst"));
     kasten.append(el("p", null, festL1));
     const festL2 = l2 && l2.herrscher !== l1.herrscher &&
-                   konkret(l2.herrscher, `${l2.herrscher}, Herr der kleineren Periode,`);
+                   konkret(l2.herrscher, `${grossMitArtikel(l2.herrscher)} führt die kleinere Periode und`);
     if (festL2) kasten.append(el("p", null, festL2));
   }
 
@@ -326,7 +326,7 @@ function profektionenDeutung(kasten) {
   kasten.append(p1);
   if (HERR_IM_JAHR[pr.herr]) kasten.append(el("p", null, HERR_IM_JAHR[pr.herr]));
 
-  const fest = konkret(pr.herr, `Der Herr des Jahres, ${pr.herr},`);
+  const fest = konkret(pr.herr, `Herr des Jahres ist ${mitArtikel(pr.herr)}; er`);
   if (fest) {
     kasten.append(el("h3", null, "Wo das Jahr dich trifft"));
     kasten.append(el("p", null, fest));
@@ -335,7 +335,7 @@ function profektionenDeutung(kasten) {
       const hp = r.planeten[pr.herr.toLowerCase()];
       kasten.append(el("p", "kucukNot",
         `Lies das zusammen: Das Thema des Jahres ist ${pr.thema}; ausgetragen wird es dort, ` +
-        `wo ${pr.herr} in deinem Horoskop steht — ${HAUS[hp.haus - 1]}.`));
+        `wo ${mitArtikel(pr.herr)} in deinem Horoskop steht — ${HAUS[hp.haus - 1]}.`));
     }
   }
   kasten.append(el("p", "kucukNot",
