@@ -196,10 +196,93 @@ function figurKachel(f, rolle, gross) {
 }
 
 let letzterWurf = null;
+let laeuft = null;
+
+/* ------------------------------------------------------------ der Sand
+   Erster Akt: Die sechzehn Reihen werden in den Sand geschlagen, eine nach
+   der anderen. Nach je vier Reihen tritt die Figur hervor, die sie ergeben
+   haben. Wer nicht warten will, überspringt. */
+function inszeniere(w, cikti, danach) {
+  const buehne = el("div", "ramlBuehne");
+  const sand = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  sand.setAttribute("viewBox", "0 0 320 190");
+  sand.setAttribute("class", "ramlSand");
+  buehne.appendChild(sand);
+
+  const figuren = el("div", "ramlWerden");
+  buehne.appendChild(figuren);
+
+  const ueber = el("button", "knopfKlein ramlUeberspringen", "Überspringen");
+  buehne.appendChild(ueber);
+  cikti.appendChild(buehne);
+
+  const NS = "http://www.w3.org/2000/svg";
+
+  /* Eine eigene Sandfläche: Das Bild dahinter wird je nach Breite anders
+     beschnitten — die Punkte sollen trotzdem immer auf einer Fläche liegen. */
+  const flaeche = document.createElementNS(NS, "rect");
+  flaeche.setAttribute("x", 112); flaeche.setAttribute("y", 24);
+  flaeche.setAttribute("width", 196); flaeche.setAttribute("height", 144);
+  flaeche.setAttribute("rx", 3);
+  flaeche.setAttribute("class", "sandFlaeche");
+  sand.appendChild(flaeche);
+
+  const punkt = (x, y) => {
+    const c = document.createElementNS(NS, "circle");
+    c.setAttribute("cx", x.toFixed(1)); c.setAttribute("cy", y.toFixed(1));
+    c.setAttribute("r", 2.3);
+    c.setAttribute("class", "sandPunkt");
+    sand.appendChild(c);
+    return c;
+  };
+
+  let reihe = 0, spalte = 0, uhr = null;
+  const sparsam = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function fertig() {
+    clearTimeout(uhr);
+    laeuft = null;
+    buehne.classList.add("still");
+    ueber.remove();
+    danach();
+  }
+  ueber.addEventListener("click", fertig);
+  laeuft = fertig;
+
+  if (sparsam) { fertig(); return; }
+
+  function schritt() {
+    if (reihe >= 16) { setTimeout(fertig, 700); return; }
+    const anzahl = w.reihen[reihe];
+    const y = 52 + (reihe % 4) * 30;
+    if (spalte === 0) sand.dataset.gruppe = Math.floor(reihe / 4);
+    const x = 128 + spalte * 11 + (Math.random() - 0.5) * 2.5;
+    punkt(x, y + (Math.random() - 0.5) * 3.5);
+    spalte++;
+
+    if (spalte >= anzahl) {
+      spalte = 0; reihe++;
+      /* Vier Reihen voll: die Mutter tritt hervor. */
+      if (reihe % 4 === 0) {
+        const m = w.muetter[reihe / 4 - 1];
+        const k = figurKachel(m, `${reihe / 4}. Mutter`);
+        k.classList.add("kommtHervor");
+        figuren.appendChild(k);
+        uhr = setTimeout(() => { [...sand.querySelectorAll("circle")].forEach(c => c.remove()); schritt(); }, 620);
+        return;
+      }
+      uhr = setTimeout(schritt, 190);
+      return;
+    }
+    uhr = setTimeout(schritt, 42);
+  }
+  schritt();
+}
 
 function werfen() {
   const frage = $("#rmFrage").value.trim();
   const cikti = $("#rmCikti");
+  if (laeuft) laeuft();
   cikti.hidden = false;
   cikti.innerHTML = "";
 
@@ -210,7 +293,10 @@ function werfen() {
 
   const w = schlageSand();
   letzterWurf = w;
+  inszeniere(w, cikti, () => zeigeErgebnis(w, frage, cikti));
+}
 
+function zeigeErgebnis(w, frage, cikti) {
   /* Der Richter zuerst: er ist die Antwort. */
   const kasten = el("div", "geistName");
   kasten.innerHTML =

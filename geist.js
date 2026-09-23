@@ -460,6 +460,32 @@ $("#gBerechnen").addEventListener("click", () => {
       d.innerHTML = `${geistname}<span class="buchstabe">${hebr}</span>`; return d; })(),
     el("div", "kucukNot", `aus den Buchstaben ${oerter.map(o => o.buchstabe.n).join(" · ")}`)
   );
+
+  /* Den Namen hören. Ein Geistname will gesprochen werden — die Bücher
+     verlangen ihn laut, nicht gelesen. Der Browser spricht ihn selbst;
+     nichts davon verlässt das Gerät. */
+  if (window.speechSynthesis) {
+    const knopf = el("button", "hoerKnopf");
+    knopf.innerHTML = `<span class="hoerZeichen">▶</span> Anhören`;
+    knopf.title = "Den Namen sprechen lassen";
+    knopf.addEventListener("click", () => {
+      const sprech = window.speechSynthesis;
+      sprech.cancel();
+      const spruch = new SpeechSynthesisUtterance(geistname);
+      spruch.lang = "de-DE";
+      spruch.rate = 0.75;
+      spruch.pitch = 0.9;
+      const stimmen = sprech.getVoices();
+      const deutsch = stimmen.find(v => /^de/i.test(v.lang));
+      if (deutsch) spruch.voice = deutsch;
+      knopf.classList.add("spricht");
+      spruch.onend = () => knopf.classList.remove("spricht");
+      spruch.onerror = () => knopf.classList.remove("spricht");
+      sprech.speak(spruch);
+    });
+    nameBox.appendChild(knopf);
+  }
+
   cikti.appendChild(nameBox);
 
   cikti.appendChild(el("p", "kucukNot",

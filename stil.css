@@ -513,3 +513,79 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 /* Die Essenz auf der Hauptseite. */
 #eStart { margin-top: 3.5rem; border-top: 1px solid var(--linie); padding-top: 2.5rem; }
 .startEssenzKopf { border-bottom: none; margin-bottom: 1rem; padding-bottom: 0; }
+
+/* ------------------------------------------------- Der Sand, inszeniert */
+.ramlBuehne {
+  position: relative; margin-top: 1.6rem; border: 1px solid var(--linie);
+  border-radius: 2px; overflow: hidden;
+  background: #0a0b12 url("bilder/ramel.jpg?v=1") center / cover no-repeat;
+  min-height: 15rem;
+}
+.ramlBuehne::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg, rgba(7,8,16,.15) 0%, rgba(7,8,16,.55) 55%, rgba(7,8,16,.8) 100%);
+}
+.ramlSand { position: relative; z-index: 1; width: 100%; height: auto; display: block; }
+.sandFlaeche {
+  fill: rgba(236,225,196,.10);
+  stroke: rgba(236,225,196,.16);
+  stroke-width: .6;
+}
+.sandPunkt {
+  fill: #f0e4c8; opacity: 0;
+  animation: sandTreffer .5s ease-out forwards;
+}
+@keyframes sandTreffer {
+  0%   { opacity: 0; transform: translateY(-3px) scale(.4); }
+  35%  { opacity: 1; transform: translateY(0) scale(1.5); }
+  100% { opacity: .92; transform: translateY(0) scale(1); }
+}
+.ramlWerden {
+  position: absolute; z-index: 2; left: 0; right: 0; bottom: 0;
+  display: flex; gap: .4rem; justify-content: center; padding: .5rem;
+  min-height: 1px;
+}
+.ramlWerden .ramlKachel { background: rgba(10,11,18,.82); backdrop-filter: blur(2px); }
+.kommtHervor { animation: hervor .55s ease-out both; }
+.ramlWerden .ramlKachel { padding:.4rem .35rem; }
+@keyframes hervor {
+  from { opacity: 0; transform: translateY(14px) scale(.9); }
+  to   { opacity: 1; transform: none; }
+}
+.ramlUeberspringen {
+  position: absolute; z-index: 3; right: .7rem; top: .7rem;
+  background: rgba(10,11,18,.8);
+}
+.ramlBuehne.still .ramlWerden { position: static; flex-direction: row; flex-wrap: wrap;
+  justify-content: center; padding: .8rem; }
+.ramlBuehne.still .ramlSand { display: none; }
+.ramlBuehne.still { min-height: 0; }
+@media (max-width: 34rem) {
+  .ramlWerden { position: static; flex-direction: row; justify-content: center;
+    flex-wrap: wrap; padding: .6rem; }
+  .ramlBuehne { min-height: 11rem; }
+}
+
+/* ------------------------------------------------------ Spendenknopf */
+.spende { margin-bottom: 1.6rem; }
+.spendeKnopf {
+  display: inline-block; text-decoration: none;
+  border: 1px solid var(--ton); border-radius: 2px;
+  color: var(--ton-hell); font-size: .92rem; letter-spacing: .08em;
+  padding: .55rem 1.5rem; transition: background .18s, color .18s;
+}
+.spendeKnopf:hover { background: var(--ton); color: var(--grund); }
+.spende .kucukNot { border: none; padding: 0; margin: .8rem auto 0; max-width: 28rem; text-align: center; }
+
+/* Den Geistnamen hören. */
+.hoerKnopf {
+  margin-top: 1.1rem; background: none; cursor: pointer;
+  border: 1px solid var(--linie); border-radius: 2px;
+  color: var(--gedaempft); font: inherit; font-size: .85rem; letter-spacing: .06em;
+  padding: .4rem 1rem; transition: color .18s, border-color .18s;
+}
+.hoerKnopf:hover { color: var(--ton-hell); border-color: var(--ton); }
+.hoerZeichen { color: var(--ton); margin-right: .35rem; font-size: .8em; }
+.hoerKnopf.spricht { color: var(--ton-hell); border-color: var(--ton); }
+.hoerKnopf.spricht .hoerZeichen { animation: pulsen 1s ease-in-out infinite; }
+@keyframes pulsen { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
