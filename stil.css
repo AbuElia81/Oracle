@@ -567,25 +567,20 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 }
 
 /* ------------------------------------------------------ Spendenknopf */
-.spende { margin-bottom: 1.6rem; }
+.spende { margin-bottom: 2rem; }
+.spende .kalanBaslik { margin-bottom: .8rem; }
+.spendeReihe { display: flex; gap: .5rem; justify-content: center; flex-wrap: wrap; }
 .spendeKnopf {
   display: inline-block; text-decoration: none;
   border: 1px solid var(--ton); border-radius: 2px;
-  color: var(--ton-hell); font-size: .92rem; letter-spacing: .08em;
-  padding: .55rem 1.5rem; transition: background .18s, color .18s;
+  color: var(--ton-hell); font-size: 1rem; letter-spacing: .06em;
+  padding: .5rem 1.4rem; transition: background .18s, color .18s;
 }
 .spendeKnopf:hover { background: var(--ton); color: var(--grund); }
-.spende .kucukNot { border: none; padding: 0; margin: .8rem auto 0; max-width: 28rem; text-align: center; }
-
-/* Den Geistnamen hören. */
-.hoerKnopf {
-  margin-top: 1.1rem; background: none; cursor: pointer;
-  border: 1px solid var(--linie); border-radius: 2px;
-  color: var(--gedaempft); font: inherit; font-size: .85rem; letter-spacing: .06em;
-  padding: .4rem 1rem; transition: color .18s, border-color .18s;
+.spendeKnopf.frei {
+  border-color: var(--linie); color: var(--gedaempft); font-size: .88rem;
 }
-.hoerKnopf:hover { color: var(--ton-hell); border-color: var(--ton); }
-.hoerZeichen { color: var(--ton); margin-right: .35rem; font-size: .8em; }
-.hoerKnopf.spricht { color: var(--ton-hell); border-color: var(--ton); }
-.hoerKnopf.spricht .hoerZeichen { animation: pulsen 1s ease-in-out infinite; }
-@keyframes pulsen { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+.spendeKnopf.frei:hover { border-color: var(--ton); background: none; color: var(--ton-hell); }
+.spende .kucukNot {
+  border: none; padding: 0; margin: 1rem auto 0; max-width: 30rem; text-align: center;
+}

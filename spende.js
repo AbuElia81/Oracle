@@ -1,17 +1,19 @@
 /* ------------------------------------------------------------------------
-   spende.js — der Spendenknopf.
+   spende.js — der Spendenknopf im Fuß der Seite.
 
-   Hier die PayPal-Adresse eintragen, dann erscheint der Knopf im Fuß der
-   Seite. Solange das Feld leer ist, zeigt die Seite nichts davon — lieber
-   kein Knopf als einer, der ins Leere führt.
-
-   Möglich sind:
-     "https://paypal.me/DEINNAME"        — der übliche PayPal.Me-Link
-     "mailto:..."                        — irgendein anderer Weg
+   PayPal.Me nimmt den Betrag im Pfad entgegen: .../7EUR führt direkt auf
+   sieben Euro. Der letzte Knopf lässt den Betrag offen.
+   Ist PAYPAL leer, zeigt die Seite nichts davon.
    --------------------------------------------------------------------- */
-const PAYPAL = "";     // <— hier eintragen
+const PAYPAL = "https://paypal.me/scholaastronomica";
 
-const TEXT = "Diese Seite kostet nichts und sammelt nichts. Wer mag, wirft etwas in den Hut.";
+const BETRAEGE = [
+  { summe: "7EUR",  schrift: "7 €",  titel: "Sieben Euro — die Zahl der Wandelsterne" },
+  { summe: "14EUR", schrift: "14 €", titel: "Vierzehn Euro — doppelt so viel" }
+];
+
+const TEXT = "Diese Seite kostet nichts, zeigt keine Werbung und sammelt keine Daten. " +
+             "Wer mag, wirft etwas in den Hut — für den Erhalt oder einfach als Dank.";
 
 (function spendenknopf() {
   if (!PAYPAL) return;
@@ -21,17 +23,40 @@ const TEXT = "Diese Seite kostet nichts und sammelt nichts. Wer mag, wirft etwas
   const kasten = document.createElement("div");
   kasten.className = "spende";
 
+  const titel = document.createElement("div");
+  titel.className = "kalanBaslik";
+  titel.textContent = "Etwas dalassen";
+  kasten.appendChild(titel);
+
+  const reihe = document.createElement("div");
+  reihe.className = "spendeReihe";
+
+  BETRAEGE.forEach(b => {
+    const a = document.createElement("a");
+    a.className = "spendeKnopf";
+    a.href = `${PAYPAL}/${b.summe}`;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    a.title = b.titel;
+    a.textContent = b.schrift;
+    reihe.appendChild(a);
+  });
+
+  const frei = document.createElement("a");
+  frei.className = "spendeKnopf frei";
+  frei.href = PAYPAL;
+  frei.target = "_blank";
+  frei.rel = "noopener noreferrer";
+  frei.title = "Betrag selbst wählen";
+  frei.textContent = "anderer Betrag";
+  reihe.appendChild(frei);
+
+  kasten.appendChild(reihe);
+
   const p = document.createElement("p");
   p.className = "kucukNot";
   p.textContent = TEXT;
+  kasten.appendChild(p);
 
-  const a = document.createElement("a");
-  a.className = "spendeKnopf";
-  a.href = PAYPAL;
-  a.target = "_blank";
-  a.rel = "noopener noreferrer";
-  a.textContent = "Etwas dalassen";
-
-  kasten.append(a, p);
   fuss.prepend(kasten);
 })();
