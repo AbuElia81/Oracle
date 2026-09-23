@@ -5,11 +5,14 @@
    Stufe verschachtelt dieselbe Zählung anteilig in sich selbst.
 
    Umgesetzt: L1–L3, die Verdopplungsregel (Herrscher der Periode steht
-   selbst in einem seiner eigenen Zeichen). NICHT umgesetzt: die "Lösung des
-   Bandes" — siehe Transparenzabschnitt im HTML.
+   selbst in einem seiner eigenen Zeichen) und die "Lösung des Bandes"
+   (lysis ton desmon): Hat eine Reihe alle zwölf Zeichen durchlaufen und ist
+   noch Zeit übrig, kehrt sie nicht zum Anfang zurück, sondern springt in
+   das gegenüberliegende Zeichen und läuft von dort weiter. Valens hält
+   diesen Sprung für einen der wichtigsten Augenblicke einer Biographie.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=50";
-import { berechneGeburt, norm360 } from "./astro.js?v=50";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=56";
+import { berechneGeburt, norm360 } from "./astro.js?v=56";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -56,18 +59,39 @@ function ermittleVerdopplung(geburt) {
    Anzeigefenster [0, kappe] Jahre. */
 function erzeugePerioden(startSign, laengeElternperiode, startAlter, level, pfad, verdoppelt, maxLevel, kappe, out) {
   let cursor = startAlter;
-  for (let k = 0; k < 12; k++) {
-    if (cursor >= kappe) break;
-    const signIdx = (startSign + k) % 12;
+  let signIdx = startSign;
+  let reihenAnfang = startSign;     // wo der laufende Umlauf begonnen hat
+  let imUmlauf = 0;                 // wie viele Zeichen davon schon durch sind
+  let istLoesung = false;           // diese Periode entsteht aus einem Sprung
+  let schutz = 0;
+
+  while (cursor < kappe && schutz++ < 60) {
     let laenge = level === 1 ? SIGN_JAHRE[signIdx] : laengeElternperiode * SIGN_JAHRE[signIdx] / GESAMT_JAHRE;
     const istVerdoppelt = verdoppelt[signIdx];
     if (istVerdoppelt) laenge *= 2;
-    const periode = { signIdx, level, startAlter: cursor, endAlter: cursor + laenge, laenge, verdoppelt: istVerdoppelt, pfad: [...pfad, signIdx] };
+
+    const periode = { signIdx, level, startAlter: cursor, endAlter: cursor + laenge, laenge,
+                      verdoppelt: istVerdoppelt, loesung: istLoesung, pfad: [...pfad, signIdx] };
     out.push(periode);
     if (level < maxLevel && cursor < kappe) {
-      erzeugePerioden(signIdx, laenge, cursor, level + 1, periode.pfad, verdoppelt, maxLevel, Math.min(kappe, periode.endAlter), out);
+      erzeugePerioden(signIdx, laenge, cursor, level + 1, periode.pfad, verdoppelt, maxLevel,
+                      Math.min(kappe, periode.endAlter), out);
     }
     cursor += laenge;
+    imUmlauf++;
+    istLoesung = false;
+
+    /* Lösung des Bandes: Ist der Umlauf durch alle zwölf Zeichen vollendet
+       und noch Zeit übrig, geht es nicht beim Anfang weiter, sondern im
+       gegenüberliegenden Zeichen. */
+    if (imUmlauf >= 12) {
+      signIdx = (reihenAnfang + 6) % 12;
+      reihenAnfang = signIdx;
+      imUmlauf = 0;
+      istLoesung = true;
+    } else {
+      signIdx = (signIdx + 1) % 12;
+    }
   }
 }
 
@@ -149,12 +173,25 @@ function berechneUndZeige() {
     : losDesGeist(geburt.asc, geburt.planeten.sonne.laenge, geburt.planeten.mond.laenge, geburt.tagGeburt);
   const losSign = Math.floor(los / 30);
 
+  /* Höhepunkte: Valens misst die Gipfel eines Kapitels daran, ob das
+     freigesetzte Zeichen zum Los des Glücks winkelhaft steht — also im
+     ersten, vierten, siebten oder zehnten Zeichen von ihm aus gezählt.
+     Solche Perioden gelten als die sichtbaren, tätigen, oft die der
+     Laufbahn; Zeichen in Abwendung zum Los sind die stillen. */
+  const fortuna = losDesGlueck(geburt.asc, geburt.planeten.sonne.laenge,
+                               geburt.planeten.mond.laenge, geburt.tagGeburt);
+  const fortunaSign = Math.floor(fortuna / 30);
+  const winkelhaft = idx => [0, 3, 6, 9].includes(((idx - fortunaSign) % 12 + 12) % 12);
+  const HAUSNAME_VOM_LOS = { 0:"auf dem Los selbst", 3:"im vierten Zeichen vom Los",
+                             6:"im siebten Zeichen vom Los", 9:"im zehnten Zeichen vom Los" };
+
   const maxAlter = Math.max(10, parseInt($("#zrMaxAlter").value, 10) || 90);
   const verdoppelt = ermittleVerdopplung(geburt);
   const maxLevel = 3;
 
   const perioden = [];
   erzeugePerioden(losSign, GESAMT_JAHRE, 0, 1, [], verdoppelt, maxLevel, maxAlter, perioden);
+  perioden.forEach(pr => { pr.hoehepunkt = winkelhaft(pr.signIdx); });
 
   cikti.hidden = false;
   cikti.innerHTML = "";
@@ -162,7 +199,8 @@ function berechneUndZeige() {
   cikti.appendChild(el("p", "kucukNot",
     `${losArt === "fortuna" ? "Los des Glücks" : "Los des Geistes"} auf ${ZEICHEN[losSign].glyph} ${ZEICHEN[losSign].name} ` +
     `${(los - losSign * 30).toFixed(1)}° · ${geburt.tagGeburt ? "Taggeburt" : "Nachtgeburt"} · ` +
-    `natal in eigenem Zeichen (Verdopplung): ${DOMIZIL.filter((_, i) => verdoppelt[i]).length ? [...new Set(DOMIZIL.filter((_, i) => verdoppelt[i]))].map(k => PLANETEN[k].name).join(", ") : "keiner"}`));
+    `natal in eigenem Zeichen (Verdopplung): ${DOMIZIL.filter((_, i) => verdoppelt[i]).length ? [...new Set(DOMIZIL.filter((_, i) => verdoppelt[i]))].map(k => PLANETEN[k].name).join(", ") : "keiner"} · ` +
+    `Höhepunkte gemessen am Los des Glücks in ${ZEICHEN[fortunaSign].glyph} ${ZEICHEN[fortunaSign].name}`));
 
   const baenderKutu = el("div", "zeitleisteKutu");
   const baenderDiv = el("div"); baenderDiv.id = "zrBaender";
@@ -173,7 +211,7 @@ function berechneUndZeige() {
   function zeigeStand(alter) {
     const aktive = [1, 2, 3].map(lvl => perioden.find(pr => pr.level === lvl && alter >= pr.startAlter && alter < pr.endAlter));
     ablesung.innerHTML = `<b>Alter ${alter.toFixed(1)} Jahre</b><br>` + aktive.filter(Boolean).map(pr =>
-      `L${pr.level}: ${ZEICHEN[pr.signIdx].glyph} ${ZEICHEN[pr.signIdx].name} (${PLANETEN[DOMIZIL[pr.signIdx]].g} ${pr.startAlter.toFixed(1)}–${pr.endAlter.toFixed(1)} J.${pr.verdoppelt ? ", verdoppelt" : ""})`
+      `L${pr.level}: ${ZEICHEN[pr.signIdx].glyph} ${ZEICHEN[pr.signIdx].name} (${PLANETEN[DOMIZIL[pr.signIdx]].g} ${pr.startAlter.toFixed(1)}–${pr.endAlter.toFixed(1)} J.${pr.verdoppelt ? ", verdoppelt" : ""}${pr.hoehepunkt ? ", Höhepunkt" : ""}${pr.loesung ? ", Lösung des Bandes" : ""})`
     ).join(" · ");
   }
 
@@ -182,7 +220,7 @@ function berechneUndZeige() {
 
   const tablo = el("div", "tabloKutu");
   const tab = el("table");
-  tab.innerHTML = "<thead><tr><th>Stufe</th><th>Zeichen</th><th>Herrscher</th><th>Von</th><th>Bis</th><th>Jahre</th></tr></thead>";
+  tab.innerHTML = "<thead><tr><th>Stufe</th><th>Zeichen</th><th>Herrscher</th><th>Von</th><th>Bis</th><th>Jahre</th><th>Besonderes</th></tr></thead>";
   const tbody = el("tbody");
   perioden.filter(pr => pr.level <= 2).sort((a, b) => a.startAlter - b.startAlter || a.level - b.level).forEach(pr => {
     const tr = el("tr", pr.level === 1 ? "sieger" : null);
@@ -192,12 +230,64 @@ function berechneUndZeige() {
     tr.appendChild(el("td", null, pr.startAlter.toFixed(1)));
     tr.appendChild(el("td", null, pr.endAlter.toFixed(1)));
     tr.appendChild(el("td", null, pr.laenge.toFixed(2) + (pr.verdoppelt ? " (×2)" : "")));
+    const bes = [];
+    if (pr.hoehepunkt) bes.push("▲ Höhepunkt");
+    if (pr.loesung) bes.push("⟲ Lösung des Bandes");
+    const tdBes = el("td", bes.length ? "treffer" : null, bes.join(" · ") || "—");
+    tr.appendChild(tdBes);
+    if (pr.hoehepunkt || pr.loesung) tr.classList.add("gipfel");
     tbody.appendChild(tr);
   });
   tab.appendChild(tbody);
   tablo.appendChild(tab);
   cikti.appendChild(tablo);
   cikti.appendChild(el("p", "kucukNot", "Die Tafel zeigt L1 und L2; L3 ist in der Zeitleiste sichtbar, aber hier aus Platzgründen nicht aufgeführt."));
+
+  /* ----------------------------------------- Gipfel und Bandlösungen */
+  const gipfel = perioden.filter(pr => pr.level === 2 && pr.hoehepunkt && pr.startAlter < maxAlter);
+  const loesungen = perioden.filter(pr => pr.loesung && pr.startAlter < maxAlter);
+
+  cikti.appendChild(el("h3", null, "Höhepunkte der Lebenskapitel"));
+  cikti.appendChild(el("p", null,
+    `Ein Kapitel läuft nicht gleichmäßig. Seine Gipfel sind die Perioden, deren Zeichen ` +
+    `zum Los des Glücks winkelhaft steht — auf ihm selbst, im vierten, siebten oder zehnten ` +
+    `Zeichen von ihm aus. Das sind die tätigen, sichtbaren Strecken, in denen sich Laufbahn ` +
+    `und Ansehen entscheiden; die übrigen Zeichen stehen in Abwendung und sind die stillen.`));
+  if (!gipfel.length) {
+    cikti.appendChild(el("p", "kucukNot", "Im gewählten Altersfenster liegt keine solche Periode."));
+  } else {
+    const ul = el("ul", "deutungListe");
+    gipfel.forEach(pr => {
+      const stellung = ((pr.signIdx - fortunaSign) % 12 + 12) % 12;
+      const li = el("li");
+      li.innerHTML = `<b>${pr.startAlter.toFixed(1)} – ${pr.endAlter.toFixed(1)} Jahre</b>: ` +
+        `${ZEICHEN[pr.signIdx].glyph} ${ZEICHEN[pr.signIdx].name} unter ` +
+        `${PLANETEN[DOMIZIL[pr.signIdx]].name} — ${HAUSNAME_VOM_LOS[stellung]}.`;
+      ul.appendChild(li);
+    });
+    cikti.appendChild(ul);
+  }
+
+  cikti.appendChild(el("h3", null, "Lösung des Bandes"));
+  cikti.appendChild(el("p", null,
+    `Hat eine Reihe alle zwölf Zeichen durchlaufen und ist noch Zeit übrig, kehrt sie nicht ` +
+    `zum Anfang zurück: Sie springt in das gegenüberliegende Zeichen und läuft von dort weiter. ` +
+    `Valens hält diesen Sprung — die <em>lysis tōn desmōn</em> — für einen der wichtigsten ` +
+    `Augenblicke einer Biographie: Das Band, das bis dahin trug, löst sich, und das Leben ` +
+    `setzt an anderer Stelle neu an.`));
+  if (!loesungen.length) {
+    cikti.appendChild(el("p", "kucukNot",
+      "Im gewählten Altersfenster kommt keine vor — die Umläufe sind dafür zu lang."));
+  } else {
+    const ul2 = el("ul", "deutungListe");
+    loesungen.sort((a, b) => a.startAlter - b.startAlter).forEach(pr => {
+      const li = el("li");
+      li.innerHTML = `<b>mit ${pr.startAlter.toFixed(1)} Jahren</b> auf Stufe L${pr.level}: ` +
+        `Sprung nach ${ZEICHEN[pr.signIdx].glyph} ${ZEICHEN[pr.signIdx].name}.`;
+      ul2.appendChild(li);
+    });
+    cikti.appendChild(ul2);
+  }
 }
 
 $("#zrBerechnen").addEventListener("click", berechneUndZeige);

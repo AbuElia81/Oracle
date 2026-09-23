@@ -6,11 +6,11 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=50";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=50";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe } from "./profil.js?v=50";
-import { JAHR, profektionJetzt } from "./jahr.js?v=50";
-import { radix, transite, progression, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=50";
+import { cevir, toplam, kalan } from "./ebced.js?v=56";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=56";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe } from "./profil.js?v=56";
+import { JAHR, profektionJetzt } from "./jahr.js?v=56";
+import { radix, transite, progression, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=56";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -98,16 +98,6 @@ function profektion() {
                  `Thema: ${pr.thema}` };
 }
 
-/* Dodekaoros: das Tier der Sonne. */
-function dodekaoros() {
-  const c = anstossen("#dkBerechnen", "#dkCikti");
-  if (!c || c.hidden) return null;
-  const kopf = c.querySelector(".buyukToplam, .almutenPlanet, h3");
-  const tier = kopf ? kopf.innerText.trim() : "";
-  const unter = c.querySelector(".kucukNot");
-  return tier ? { tier, dazu: unter ? unter.innerText.replace(/\s+/g, " ").trim() : "" } : null;
-}
-
 /* Antiszien: die verborgenen Verbindungen des Horoskops. */
 function antiszien() {
   const c = anstossen("#azHoroskopBerechnen", "#azHoroskopCikti");
@@ -170,7 +160,6 @@ function schreibe() {
   const tr = transite();
   const prg = progression();
   const prof = profektion();
-  const dodek = dodekaoros();
 
   cikti.appendChild(el("p", "kucukNot", "Für: " + profilBeschriftung(p) +
     (alter != null ? ` · heute ${alter.toFixed(0)} Jahre alt` : "")));
@@ -260,13 +249,6 @@ function schreibe() {
       `Der Lebensbogen zeigt die nächste Direktion ${wann}, mit ${dir.alter.toFixed(1)} Jahren: ` +
       `${dir.promissor} ${dir.aspekt} ${dir.signifikator}. Primärdirektionen sind keine Ereignisse, ` +
       `sondern Fälligkeiten — sie sagen, wann ein Thema an die Tür kommt, nicht, wer öffnet.`));
-  }
-
-  if (dodek) {
-    cikti.appendChild(absatz("Dein Tier",
-      `Die ägyptische Zwölftierreihe, der Dodekaoros, ordnet jedem Tierkreiszeichen ein Tier zu. ` +
-      `Für den Stand deiner Sonne ist es: ${dodek.tier}. ` +
-      `Eine ältere Schicht als der Tierkreis selbst — dieselbe Einteilung, andere Bilder.`));
   }
 
   if (anti) {
@@ -366,7 +348,7 @@ function schreibe() {
     cikti.appendChild(kasten);
   }
 
-  if (!sb && !geist && !zr && !dir && !anti && !prof && !dodek && !r) {
+  if (!sb && !geist && !zr && !dir && !anti && !prof && !r) {
     const w = el("p", "kucukNot", "Es fehlen noch Angaben. ");
     const b = el("button", "knopfKlein", "Zur Dateneingabe");
     b.addEventListener("click", zurDateneingabe);

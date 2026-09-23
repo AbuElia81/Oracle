@@ -6,9 +6,9 @@
    fertigen Tafeln und setzt seinen Text in einen eigenen Kasten daneben.
    Deshalb überlebt die Deutung auch ein Neurechnen.
    --------------------------------------------------------------------- */
-import { leseProfilRoh } from "./profil.js?v=50";
-import { profektionJetzt } from "./jahr.js?v=50";
-import { zustandVon, radix, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=50";
+import { leseProfilRoh } from "./profil.js?v=56";
+import { profektionJetzt } from "./jahr.js?v=56";
+import { zustandVon, radix, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=56";
 
 /* Ein Satz, der eine Zeitherrscher-Aussage am Geburtshoroskop festmacht.
    Genau darum geht es: Die Technik sagt wann, das Horoskop sagt was. */
@@ -344,59 +344,6 @@ function profektionenDeutung(kasten) {
     "wie leicht das Thema sich einlöst."));
 }
 
-/* ----------------------------------------------- Dodekaoros: Bedeutung */
-
-const TIERE = {
-  "Katze":      "wachsam und eigenwillig; sie kommt, wenn sie will, und geht, ehe man sie hält",
-  "Hund":       "treu und laut; er verteidigt, was ihm anvertraut ist, auch gegen bessere Argumente",
-  "Schlange":   "verwandelnd und verschwiegen; sie häutet sich, statt zu sterben, und weiß mehr, als sie zeigt",
-  "Skarabäus":  "beharrlich und schöpferisch; er rollt seine Last vor sich her und macht daraus Leben",
-  "Esel":       "geduldig und stur; er trägt, was keiner tragen will, und bleibt stehen, wo es zu viel wird",
-  "Löwe":       "herrschaftlich und großmütig; er braucht Raum und gibt ihn zurück, wenn man ihn achtet",
-  "Ziegenbock": "kletternd und zäh; er findet Halt, wo andere keinen Tritt sehen",
-  "Stier":      "stark und langsam; er hält den Boden, aber wenn er losgeht, hält ihn nichts",
-  "Falke":      "weitsichtig und schnell; er sieht das Ganze von oben und stößt aus der Höhe zu",
-  "Affe":       "beweglich und findig; er löst mit einem Griff, woran andere planen",
-  "Ibis":       "wissend und maßvoll; der Vogel des Thot, der schreibt, statt zu reden",
-  "Krokodil":   "geduldig und abgründig; es wartet reglos und ist im entscheidenden Augenblick ganz da"
-};
-
-function dodekaorosDeutung(kasten) {
-  const tafel = $("#dkCikti");
-  if (!tafel || tafel.hidden || !tafel.children.length) { kasten.hidden = true; return; }
-
-  kasten.hidden = false;
-  kasten.innerHTML = "";
-  kasten.append(el("h3", null, "Was das heißt"));
-  kasten.append(el("p", null,
-    "Der Dodekaoros ist die ägyptische Zwölftierreihe: dieselbe Zwölfteilung wie der " +
-    "Tierkreis, aber mit anderen Bildern — Katze, Hund, Schlange, Skarabäus und so fort. " +
-    "Sie ist älter als die griechischen Tierkreiszeichen und geht auf die Einteilung der " +
-    "Nacht in zwölf Stunden zurück, über die jeweils ein Tier wacht."));
-  kasten.append(el("p", null,
-    "Gelesen wird sie wie ein zweiter Name desselben Ortes am Himmel: Wo der Tierkreis " +
-    "eine Eigenschaft nennt, nennt der Dodekaoros ein Verhalten. Das Tier sagt weniger, " +
-    "wie du bist, als wie du vorgehst."));
-
-  /* Nur die Ergebniskarte lesen — die Tafel darunter listet alle zwölf Tiere,
-     wer dort sucht, findet immer das erste. */
-  const karte = tafel.querySelector(".almutenKarte");
-  const text = karte ? karte.innerText : "";
-  const tier = Object.keys(TIERE).find(t => text.includes(t));
-  if (tier) {
-    kasten.append(el("h3", null, `Dein Tier — ${tier}`));
-    const p1 = el("p");
-    p1.innerHTML = `Die ${tier === "Skarabäus" || tier === "Löwe" || tier === "Hund" ||
-      tier === "Esel" || tier === "Ziegenbock" || tier === "Stier" || tier === "Falke" ||
-      tier === "Affe" || tier === "Ibis" ? "Art des" : "Art der"} ${tier}: ${TIERE[tier]}. ` +
-      `Wo dein Zeichen dir sagt, worum es geht, sagt dir das Tier, wie du dabei vorgehst.`;
-    kasten.append(p1);
-  }
-  kasten.append(el("p", "kucukNot",
-    "Die Tierreihe kennt außerdem eine Tag- und eine Nachthälfte; welcher du angehörst, " +
-    "steht in der Tafel oben. Die Nachttiere gelten als die verborgener wirkenden."));
-}
-
 /* ------------------------------------------------------------ Verdrahtung */
 
 function haenge(ciktiWahl, kastenId, zeichner) {
@@ -418,4 +365,3 @@ haenge("#lbCikti", "lbDeutung", lebensbogenDeutung);
 haenge("#zrCikti", "zrDeutung", zrDeutung);
 haenge("#azHoroskopCikti", "azDeutung", antiszienDeutung);
 haenge("#pfCikti", "pfDeutung", profektionenDeutung);
-haenge("#dkCikti", "dkDeutung", dodekaorosDeutung);

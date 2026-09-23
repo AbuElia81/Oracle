@@ -1,7 +1,7 @@
 /* ------------------------------------------------------------------------
    profil-ui.js — Bedienung des Reiters "Meine Daten".
    --------------------------------------------------------------------- */
-import { leseProfilRoh, schreibeProfil, loescheProfil } from "./profil.js?v=50";
+import { leseProfilRoh, schreibeProfil, loescheProfil } from "./profil.js?v=56";
 
 const $ = s => document.querySelector(s);
 
@@ -24,7 +24,16 @@ $("#pOrtSuchen").addEventListener("click", async () => {
     const treffer = await ortSuchen(ort);
     $("#pBreite").value = treffer.breite.toFixed(4);
     $("#pLaenge").value = treffer.laenge.toFixed(4);
-    status.textContent = "Gefunden: " + treffer.anzeige;
+
+    /* Der UTC-Offset lässt sich aus der Länge schätzen — auf die Sommerzeit
+       kann das nicht Rücksicht nehmen, darum steht es als Vorschlag da. */
+    let zusatz = "";
+    if (!$("#pUtc").value) {
+      $("#pUtc").value = Math.round(treffer.laenge / 15);
+      zusatz = ` · UTC-Offset auf ${Math.round(treffer.laenge / 15)} geschätzt — bei Sommerzeit eins mehr`;
+    }
+    $("#pBreite").dispatchEvent(new Event("input", { bubbles: true }));
+    status.textContent = "Gefunden: " + treffer.anzeige + zusatz;
     status.classList.add("ok");
   } catch (e) {
     status.textContent = e.message || "Die Suche ist fehlgeschlagen.";
@@ -78,6 +87,18 @@ function speichern(still) {
   }
 
   schreibeProfil(daten);
+
+  const ortOhneKoordinaten = daten.ort && (isNaN(daten.breite) || isNaN(daten.laenge));
+  const warnung = $("#pKoordWarnung");
+  if (warnung) {
+    warnung.hidden = !ortOhneKoordinaten;
+    warnung.innerHTML = ortOhneKoordinaten
+      ? `Du hast <b>${daten.ort}</b> eingetragen, aber noch keine Koordinaten. ` +
+        `Spirit Name, Horoskop, Lebensbogen, Zodiacal Releasing, Antiszien und Profektionen ` +
+        `rechnen erst damit — drück einmal auf „Koordinaten suchen“.`
+      : "";
+  }
+
   if (still) {
     status.textContent = "Übernommen — die anderen Abschnitte rechnen mit.";
     status.classList.add("ok");

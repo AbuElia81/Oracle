@@ -142,7 +142,7 @@ Statische Seite, keine Baukette:
 | `ebced.js` · `korpus.js` · `oracle.js` | Yıldıznâme: Buchstabenwerte, Textkorpus, Bedienung |
 | `astro.js` · `direktionen.js` | gemeinsame Astronomie und Primärdirektionen |
 | `horoskop.js` | Radix, Transite, Progression — und die Auskunft, die andere Abschnitte abfragen |
-| `geist.js` · `lebensbogen.js` · `zr.js` · `antiszien.js` · `dodekaoros.js` · `profektionen.js` | die einzelnen Rechner |
+| `geist.js` · `lebensbogen.js` · `zr.js` · `antiszien.js` · `profektionen.js` | die einzelnen Rechner |
 | `deutung.js` · `jahr.js` | Deutungskästen und Jahresüberblick neben den Tafeln |
 | `auto-rechnen.js` · `zugang.js` | alles rechnet von selbst; die Hauptseite ist das Tor |
 | `elektion.js` | die Wahlastrologie zum rechten Zeitpunkt |

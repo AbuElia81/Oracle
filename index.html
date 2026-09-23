@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Oracle</title>
 <meta name="description" content="Oracle — Orakelrechner nach alten Büchern: das osmanische Yıldıznâme aus Name und Muttername, der Geist des 11. Hauses nach Agrippa, Primärdirektionen, Zodiacal Releasing und Antiszien.">
-<link rel="stylesheet" href="stil.css?v=50">
+<link rel="stylesheet" href="stil.css?v=56">
 </head>
 <body>
 
@@ -24,11 +24,11 @@
   <button data-bolum="bNiyet">Niyet — die Frage</button>
   <button data-bolum="bUyum">İsim uyumu</button>
   <button data-bolum="bMenzil">Der rechte Zeitpunkt</button>
+  <button data-bolum="bRamel">ʿIlm al-Raml</button>
   <button data-bolum="bGeist">Spirit Name</button>
   <button data-bolum="bLebensbogen">Der Lebensbogen</button>
   <button data-bolum="bZR">Zodiacal Releasing</button>
   <button data-bolum="bAntiszien">Antiszien</button>
-  <button data-bolum="bDodekaoros">Dodekaoros</button>
   <button data-bolum="bProfektionen">Profektionen</button>
   <button data-bolum="bEssenz">Die Essenz</button>
   <button data-bolum="bNasil">Die Idee dahinter</button>
@@ -184,8 +184,71 @@
   braucht es den Mond, nicht die Buchstaben eines Namens.</p>
 </section>
 
+<!-- ------------------------------------------------------ ʿIlm al-Raml -->
+<section class="bolum" id="bRamel" hidden>
+  <div class="appKopf">
+    <div class="arapUst">علم الرمل</div>
+    <h2>ʿIlm al-Raml</h2>
+    <p class="unterzeile">Die Sandkunst — Punkte, Figuren, ein Richter</p>
+  </div>
+
+  <p class="giriş">Man zieht mit dem Finger Reihen von Punkten in den Sand,
+  ohne sie zu zählen, und liest nur, ob ihre Zahl gerade oder ungerade war.
+  Vier Reihen ergeben eine Figur, vier Figuren die <em>Mütter</em>. Aus ihnen
+  wächst nach festen Regeln ein ganzer Schild: Töchter, Nichten, zwei Zeugen —
+  und zuletzt der <em>Richter</em>, der antwortet. Über Nordafrika kam das
+  Verfahren als <em>geomantia</em> nach Europa; die sechzehn Figuren tragen
+  dort lateinische Namen.</p>
+
+  <div class="alanlar">
+    <label class="alan">
+      <span>Deine Frage — in einem Satz</span>
+      <input id="rmFrage" type="text" autocomplete="off"
+             placeholder="z. B. Soll ich die Stelle annehmen?">
+    </label>
+  </div>
+  <button id="rmWerfen" class="buyukDugme">In den Sand schlagen</button>
+
+  <div id="rmCikti" hidden></div>
+
+  <h3>Die sechzehn Figuren</h3>
+  <div class="tabloKutu">
+    <table class="ramlTafel">
+      <thead><tr><th>Figur</th><th>Arabisch</th><th>Umschrift</th><th>Name</th><th>Element, Stern</th><th>Bedeutung</th></tr></thead>
+      <tbody id="rmTafel"></tbody>
+    </table>
+  </div>
+  <p class="kucukNot">Die vier Reihen jeder Figur stehen für Feuer, Luft,
+  Wasser und Erde. Je zwei Figuren sind Umkehrungen voneinander — Puer und
+  Puella, Albus und Rubeus, Fortuna maior und minor, Acquisitio und Amissio,
+  Laetitia und Tristitia, Caput und Cauda. Nur Via, Populus, Carcer und
+  Coniunctio spiegeln sich selbst. Die Zuordnung arabischer und lateinischer
+  Namen schwankt zwischen den Überlieferungen; hier steht die verbreitete.</p>
+</section>
+
 <!-- --------------------------------------------------- V. Meine Daten -->
 <section class="bolum" id="bProfil">
+  <div class="gedanke">
+    <p><b>Oracle</b> sammelt Wahrsagekünste aus der ganzen Welt — solche, die
+    mit dem Himmel zu tun haben und mit dem Kosmos, in dem wir leben. Mit
+    Zyklen und Rhythmen: dem Umlauf der Planeten, den Herbergen des Mondes,
+    den Jahren, die von Geburtstag zu Geburtstag weiterrücken, dem Atemzug und
+    dem Herzschlag.</p>
+
+    <p>Und mit <b>Sprache und Klang</b>. Denn nicht alle diese Künste befragen
+    den Himmel über die Zeit. Das Yıldıznâme befragt ihn über den <em>Namen</em>:
+    Buchstaben sind dort Zahlen, ein Name ist eine Summe, und diese Summe fällt
+    in ein Fach des Himmels. Agrippas Geistname kommt aus dem hebräischen
+    Alphabet, das über den Tierkreis gelegt wird. Die Sandkunst liest gerade
+    und ungerade. Zahl, Laut und Umlauf sind in diesen Büchern dasselbe in
+    verschiedener Gestalt.</p>
+
+    <p>Sie widersprechen einander in vielem — hellenistisch, arabisch-osmanisch,
+    ägyptisch, lateinisch. Was sie teilen, ist eine Annahme: Ein Zeitpunkt oder
+    ein Name ist kein leerer Behälter, sondern hat eine Gestalt, und diese
+    Gestalt lässt sich abzählen.</p>
+  </div>
+
   <p class="giriş">Hier stehen deine Angaben — einmal eingetragen, rechnen alle
   Abschnitte damit, und keiner fragt noch einmal. Die beiden Namen gehen an das
   Yıldıznâme, die Geburtsangaben an die astronomischen Rechner. Du brauchst
@@ -225,6 +288,7 @@
       <button type="button" id="pOrtSuchen" class="knopfKlein">Koordinaten suchen</button>
       <span class="geoStatus" id="pGeoStatus"></span>
     </div>
+    <p class="koordWarnung" id="pKoordWarnung" hidden></p>
 
     <div class="geoZeile">
       <label class="alan"><span>Breite (°N, Süd negativ)</span><input id="pBreite" type="number" step="0.0001" placeholder="z. B. 38.1157"></label>
@@ -507,37 +571,7 @@
   geldliche Entscheidungen gehören zu Menschen, nicht zu Schatten.</p>
 </section>
 
-<!-- -------------------------------------------------------- Dodekaoros -->
-<section class="bolum" id="bDodekaoros" hidden>
-  <p class="giriş">Der <b>Dodekaoros</b> (δωδεκάωρος): ein
-  hellenistisch-ägyptisches Bildersystem, belegt beim Astrologen
-  <b>Teukros von Babylon</b>, verwendet in den griechischen Zauberpapyri und
-  auf magischen Gemmen. Zwölf Tiere — fest an die zwölf Tierkreiszeichen
-  gebunden, anders als ein Los, das irgendwo beginnen kann — stehen je für
-  eine Erscheinungsform der Sonne beim Eintritt in das jeweilige Zeichen.
-  <em>Nicht</em> zu verwechseln mit dem chinesischen Tierkreis (zufällige
-  Ähnlichkeit) oder den Dodekatemoria (ein anderes Verfahren).</p>
 
-  <div class="alanlar">
-    <label class="alan"><span>Datum</span><input id="dkDatum" type="date"></label>
-  </div>
-  <button id="dkBerechnen" class="buyukDugme">Tier finden</button>
-  <div id="dkCikti" hidden></div>
-
-  <h3>Wie dieser Teil rechnet</h3>
-  <p>Aus dem Datum die Sonnenlänge, daraus das Tierkreiszeichen, daraus das
-  zugeordnete Tier — reine Sonnenrechnung, kein Horoskop nötig.</p>
-  <p class="kucukNot"><b>Transparenz:</b> Die antiken Quellen überliefern
-  nicht eine einzige Tierreihe — Franz Boll (<em>Sphaera</em>, 1903)
-  dokumentiert mehrere voneinander abweichende Fassungen. Die hier
-  verwendete Reihe folgt der in der Sekundärliteratur meistzitierten,
-  Teukros zugeschriebenen Fassung mit ägyptischem Götterbezug — eine
-  plausible, aber nicht letztgültig gesicherte Rekonstruktion. Die
-  „Tag-/Nachthälfte" folgt der klassischen Wechselfolge maskuliner und
-  femininer Zeichen, nicht einer dodekaoros-eigenen Quelle. Wer die eigene
-  Quellenseite mit einer anderen Tierreihe vor sich hat, sollte dieser
-  folgen. Ein Nachbau, kein Ratgeber.</p>
-</section>
 
 <!-- ------------------------------------------------------ Profektionen -->
 <section class="bolum" id="bProfektionen" hidden>
@@ -722,13 +756,6 @@
   Gegnerschaft. Klassisch sieht man hier nach, wenn eine Deutung nicht aufgeht:
   eine Anziehung ohne Aspekt, eine Hemmung ohne Grund.</p>
 
-  <h3>Dodekaoros — die ägyptische Tierreihe</h3>
-  <p>Dieselbe Zwölfteilung wie der Tierkreis, aber mit anderen Bildern: Katze,
-  Hund, Schlange, Skarabäus, Esel, Löwe, Ziegenbock, Stier, Falke, Affe, Ibis,
-  Krokodil. Sie geht auf die Einteilung der Nacht in zwölf Stunden zurück, über
-  die jeweils ein Tier wacht, und ist älter als die griechischen Zeichen. Wo der
-  Tierkreis eine Eigenschaft nennt, nennt der Dodekaoros ein Verhalten.</p>
-
   <h3>Profektionen</h3>
   <p><em>Profectio</em> heißt Vorrücken. Mit jedem Geburtstag wandert der
   Aszendent ein ganzes Zeichen weiter — <b>ein Jahr, ein Haus</b>. Das Haus gibt
@@ -776,23 +803,23 @@
   vier Elemente, achtundzwanzig Herbergen</p>
 </footer>
 
-<script type="module" src="oracle.js?v=50"></script>
-<script type="module" src="profil.js?v=50"></script>
-<script type="module" src="profil-ui.js?v=50"></script>
-<script type="module" src="zugang.js?v=50"></script>
-<script type="module" src="horoskop.js?v=50"></script>
-<script type="module" src="elektion.js?v=50"></script>
-<script type="module" src="geist.js?v=50"></script>
-<script type="module" src="geist-profil.js?v=50"></script>
-<script type="module" src="yildiz-profil.js?v=50"></script>
-<script type="module" src="essenz.js?v=50"></script>
-<script type="module" src="auto-rechnen.js?v=50"></script>
-<script type="module" src="deutung.js?v=50"></script>
-<script type="module" src="jahr.js?v=50"></script>
-<script type="module" src="lebensbogen.js?v=50"></script>
-<script type="module" src="zr.js?v=50"></script>
-<script type="module" src="antiszien.js?v=50"></script>
-<script type="module" src="dodekaoros.js?v=50"></script>
-<script type="module" src="profektionen.js?v=50"></script>
+<script type="module" src="oracle.js?v=56"></script>
+<script type="module" src="profil.js?v=56"></script>
+<script type="module" src="profil-ui.js?v=56"></script>
+<script type="module" src="zugang.js?v=56"></script>
+<script type="module" src="horoskop.js?v=56"></script>
+<script type="module" src="elektion.js?v=56"></script>
+<script type="module" src="ramel.js?v=56"></script>
+<script type="module" src="geist.js?v=56"></script>
+<script type="module" src="geist-profil.js?v=56"></script>
+<script type="module" src="yildiz-profil.js?v=56"></script>
+<script type="module" src="essenz.js?v=56"></script>
+<script type="module" src="auto-rechnen.js?v=56"></script>
+<script type="module" src="deutung.js?v=56"></script>
+<script type="module" src="jahr.js?v=56"></script>
+<script type="module" src="lebensbogen.js?v=56"></script>
+<script type="module" src="zr.js?v=56"></script>
+<script type="module" src="antiszien.js?v=56"></script>
+<script type="module" src="profektionen.js?v=56"></script>
 </body>
 </html>

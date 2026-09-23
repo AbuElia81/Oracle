@@ -467,3 +467,45 @@ h4 {
 .deutungListe li.dagegen { color:var(--gedaempft); }
 .deutungListe li.dagegen::marker { color:var(--rot); }
 #ekCikti .geistName .buyukToplam { font-size:clamp(1.8rem,7vw,2.6rem); }
+
+/* --------------------------------------------------------- ʿIlm al-Raml */
+.ramlFigur { color:var(--ton-hell); display:block; margin:0 auto; }
+.ramlKachel {
+  background:var(--kagit2); border:1px solid var(--linie); border-radius:2px;
+  padding:.6rem .4rem; text-align:center;
+}
+.ramlKachel.gross { padding:1rem .6rem; }
+.ramlRolle { font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:var(--gedaempft); margin-bottom:.4rem; }
+.ramlName { font-size:.82rem; color:var(--schrift); margin-top:.35rem; }
+.ramlAr { font-size:.85rem; color:var(--ton); direction:rtl; }
+.ramlSchild { display:grid; grid-template-columns:repeat(4,1fr); gap:.5rem; margin-top:1rem; }
+.ramlReihe { display:grid; grid-template-columns:1fr 1fr; gap:.7rem; margin-top:1rem; }
+.ramlRichter { margin:.6rem 0 .2rem; color:var(--ton-hell); }
+.ramlRichter .ramlFigur { width:64px; }
+.ramlUrteil { font-size:1.15rem; color:var(--ton-hell); margin-top:1.4rem; }
+.ramlTafel td:last-child { min-width:16rem; }
+.ramlTafel .ramlFigur { width:30px; }
+@media (max-width: 34rem) {
+  .ramlSchild { grid-template-columns:repeat(2,1fr); }
+}
+
+/* Der Gedanke auf der Startseite. */
+.gedanke {
+  margin: 0 0 2.5rem; padding: 1.5rem 1.4rem;
+  border-top: 1px solid var(--linie); border-bottom: 1px solid var(--linie);
+}
+.gedanke p { margin: 0 0 1rem; }
+.gedanke p:last-child { margin-bottom: 0; color: var(--gedaempft); }
+
+/* Fehlt etwas, dann deutlich — nicht als graue Randnotiz. */
+.mangelKasten {
+  margin-top:1.6rem; padding:1.4rem 1.3rem; text-align:center;
+  background:var(--kagit2); border:1px solid var(--rot); border-radius:2px;
+}
+.mangelKasten p { margin:.6rem 0; }
+.mangelKasten .kucukNot { border:none; padding:0; text-align:center; }
+.koordWarnung {
+  margin:.7rem 0 0; padding:.7rem .9rem; font-size:.85rem; color:var(--schrift);
+  background:rgba(156,74,60,.14); border-left:2px solid var(--rot); border-radius:2px;
+}
+tr.gipfel td { background:rgba(201,162,39,.10); }

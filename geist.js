@@ -390,9 +390,30 @@ $("#gBerechnen").addEventListener("click", () => {
   const utc = parseFloat($("#gUtc").value);
 
   if (!datumStr || !zeitStr || isNaN(breite) || isNaN(laenge) || isNaN(utc)) {
+    const fehlt = [];
+    if (!datumStr) fehlt.push("das Geburtsdatum");
+    if (!zeitStr) fehlt.push("die Geburtszeit");
+    if (isNaN(breite) || isNaN(laenge)) fehlt.push("die Koordinaten des Geburtsorts");
+    if (isNaN(utc)) fehlt.push("der UTC-Offset");
+
     cikti.hidden = false;
     cikti.innerHTML = "";
-    cikti.appendChild(el("p", "kucukNot", "Geburtsdatum, -zeit, Breite, Länge und UTC-Offset werden alle gebraucht."));
+    const kasten = el("div", "mangelKasten");
+    kasten.append(
+      el("div", "kalanBaslik", "Es fehlt noch etwas"),
+      el("p", null, "Für den Geistnamen braucht es den wirklichen Himmel deiner Geburtsstunde. " +
+                    "Dafür fehlt " + (fehlt.length > 1
+                      ? fehlt.slice(0, -1).join(", ") + " und " + fehlt[fehlt.length - 1]
+                      : fehlt[0]) + "."),
+      el("p", "kucukNot", "Den Ort allein genügt nicht — die Koordinaten findest du auf der " +
+                          "Hauptseite mit dem Knopf „Koordinaten suchen“; den UTC-Offset trägst " +
+                          "du daneben ein (Mitteleuropa: 1, im Sommer 2).")
+    );
+    const b = el("button", "knopfKlein", "Zur Dateneingabe");
+    b.addEventListener("click", () =>
+      document.querySelector('nav#reiter button[data-bolum="bProfil"]')?.click());
+    kasten.appendChild(b);
+    cikti.appendChild(kasten);
     cikti.scrollIntoView({ block: "center", behavior: "smooth" });
     return;
   }
