@@ -9,10 +9,10 @@
 
    Häuser im Ganzzeichen, wie überall auf dieser Seite.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=46";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=50";
 import { berechneGeburt, planetenPositionen, julianischesDatum,
          aszendent, medium, schiefeDerEkliptik, siderischeZeitGreenwich,
-         norm360 } from "./astro.js?v=46";
+         norm360 } from "./astro.js?v=50";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -254,8 +254,12 @@ const SEKT_TEXT = {
 };
 
 function planetSatz(pl) {
-  return `${pl.was.charAt(0).toUpperCase() + pl.was.slice(1)} zeigt sich ${ART[pl.zeichen]}, ` +
-         `${HAUS[pl.haus - 1]}. Der Planet steht ${pl.wuerde.text}.`;
+  /* Alle sieben "was"-Angaben sind Paare — der Satz steht im Plural.
+     Die Würde wird nur genannt, wenn es eine gibt; sonst stünde bei fünf
+     von sieben Planeten derselbe Satz. */
+  const kern = `${pl.was.charAt(0).toUpperCase() + pl.was.slice(1)} zeigen sich ${ART[pl.zeichen]}, ` +
+               `${HAUS[pl.haus - 1]}.`;
+  return pl.wuerde.stufe === "—" ? kern : `${kern} Der Planet steht ${pl.wuerde.text}.`;
 }
 
 function zeichneRadix(ziel) {

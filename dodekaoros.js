@@ -16,8 +16,8 @@
    aber nicht letztgültig gesicherte Rekonstruktion. Wer die eigene
    Quellenseite mit einer anderen Reihe vor sich hat, sollte dieser folgen.
    --------------------------------------------------------------------- */
-import { julianischesDatum, sonnenLaenge, norm360 } from "./astro.js?v=46";
-import { leseProfil, aufProfilAenderung, zurDateneingabe } from "./profil.js?v=46";
+import { julianischesDatum, sonnenLaenge, norm360 } from "./astro.js?v=50";
+import { leseProfil, aufProfilAenderung, zurDateneingabe } from "./profil.js?v=50";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);

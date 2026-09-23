@@ -12,7 +12,7 @@ dann von selbst damit, ohne Knopfdruck und über das Neuladen hinweg.
 | **Yıldıznâme** | osmanisches Sternbuch: Zeichen, Stern, Element und Mondstation aus Name und Muttername im Ebced |
 | **Niyet** | Tafel der Absicht: Frage, Name und Planetenstunde |
 | **İsim uyumu** | Verträglichkeit zweier Menschen aus beiden Namenssummen |
-| **Achtundzwanzig Mondstationen** | die *menâzil-i kamer* als Nachschlagetafel |
+| **Der rechte Zeitpunkt** | Elektion: Vorhaben eintragen, Urteil aus dem heutigen Mondstand nach den 28 Stationen, zu- oder abnehmendem Mond und der verbrannten Bahn — samt besseren Tagen |
 | **Spirit Name** | Agrippa, *De Occulta Philosophia* III.26: Geistname aus den fünf hylegischen Örtern |
 | **Der Lebensbogen** | Primärdirektionen |
 | **Zodiacal Releasing** | hellenistische Zeitalter aus dem Los des Glücks |
@@ -145,6 +145,7 @@ Statische Seite, keine Baukette:
 | `geist.js` · `lebensbogen.js` · `zr.js` · `antiszien.js` · `dodekaoros.js` · `profektionen.js` | die einzelnen Rechner |
 | `deutung.js` · `jahr.js` | Deutungskästen und Jahresüberblick neben den Tafeln |
 | `auto-rechnen.js` · `zugang.js` | alles rechnet von selbst; die Hauptseite ist das Tor |
+| `elektion.js` | die Wahlastrologie zum rechten Zeitpunkt |
 | `essenz.js` | die Zusammenschau |
 | `bump.sh` | hebt `?v=` in HTML und in den Modul-Importen an |
 

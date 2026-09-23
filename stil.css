@@ -460,3 +460,10 @@ h4 {
 .planetKopf .glyph { color:var(--ton); font-size:1.15rem; margin-right:.2rem; }
 .planetBlock p { margin:0; color:var(--gedaempft); }
 #hkZeit { margin-top:2.5rem; }
+
+/* ------------------------------------------------------------ Elektion */
+.deutungListe li.dafuer  { color:var(--schrift); }
+.deutungListe li.dafuer::marker  { color:var(--ton); }
+.deutungListe li.dagegen { color:var(--gedaempft); }
+.deutungListe li.dagegen::marker { color:var(--rot); }
+#ekCikti .geistName .buyukToplam { font-size:clamp(1.8rem,7vw,2.6rem); }

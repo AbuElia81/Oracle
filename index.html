@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Oracle</title>
 <meta name="description" content="Oracle — Orakelrechner nach alten Büchern: das osmanische Yıldıznâme aus Name und Muttername, der Geist des 11. Hauses nach Agrippa, Primärdirektionen, Zodiacal Releasing und Antiszien.">
-<link rel="stylesheet" href="stil.css?v=46">
+<link rel="stylesheet" href="stil.css?v=50">
 </head>
 <body>
 
@@ -23,7 +23,7 @@
   <button data-bolum="bYildiz">Yıldıznâme</button>
   <button data-bolum="bNiyet">Niyet — die Frage</button>
   <button data-bolum="bUyum">İsim uyumu</button>
-  <button data-bolum="bMenzil">Achtundzwanzig Mondstationen</button>
+  <button data-bolum="bMenzil">Der rechte Zeitpunkt</button>
   <button data-bolum="bGeist">Spirit Name</button>
   <button data-bolum="bLebensbogen">Der Lebensbogen</button>
   <button data-bolum="bZR">Zodiacal Releasing</button>
@@ -149,20 +149,39 @@
 
 <!-- ------------------------------------------------------ IV. Menziller -->
 <section class="bolum" id="bMenzil" hidden>
-  <p class="giriş">Die <em>menâzil-i kamer</em>: achtundzwanzig Herbergen, in
-  denen der Mond auf seinem Umlauf je eine Nacht wohnt — achtundzwanzig
-  Stationen für achtundzwanzig Buchstaben. In den Handschriften steht diese
-  Schicht selbstverständlich; die heutigen Rechner lassen sie fast alle weg.</p>
+  <div class="appKopf">
+    <h2>Der rechte Zeitpunkt</h2>
+    <p class="unterzeile">Elektion nach den achtundzwanzig Mondstationen</p>
+  </div>
 
+  <p class="giriş">Die Wahlastrologie fragt nicht, wer du bist, sondern wann
+  etwas beginnen soll. Ihr ältestes Werkzeug sind die <em>menâzil-i kamer</em>,
+  die achtundzwanzig Herbergen des Mondes: Er zieht in gut siebenundzwanzig
+  Tagen hindurch und wechselt fast täglich die Station — und jede hat, wofür
+  sie taugt und wovor sie warnt.</p>
+
+  <div class="alanlar">
+    <label class="alan">
+      <span>Was möchtest du beginnen?</span>
+      <input id="ekVorhaben" type="text" autocomplete="off"
+             placeholder="z. B. einen Vertrag unterschreiben, eine Reise antreten, kündigen">
+    </label>
+  </div>
+  <button id="ekFragen" class="buyukDugme">Den Zeitpunkt prüfen</button>
+
+  <div id="ekCikti" hidden></div>
+
+  <h3>Die achtundzwanzig Stationen</h3>
+  <p class="kucukNot">Zum Nachschlagen — die Tafel, aus der oben geurteilt wird.</p>
   <div class="tabloKutu">
     <table>
       <thead><tr><th>#</th><th>Herberge</th><th>Arabisch</th><th>Hüküm</th><th>Günstig für</th><th>Meide</th></tr></thead>
       <tbody id="menzilTablo"></tbody>
     </table>
   </div>
-  <p class="kucukNot">Diese Tafel dient dem Nachschlagen. In welcher Herberge
-  der Mond heute wirklich steht, sagt sie nicht — dafür braucht es den Stand
-  des Mondes, nicht die Buchstaben eines Namens.</p>
+  <p class="kucukNot">In welcher Herberge der Mond steht, rechnet der Abschnitt
+  oben aus dem wirklichen Mondstand. Die Tafel selbst sagt das nicht — dafür
+  braucht es den Mond, nicht die Buchstaben eines Namens.</p>
 </section>
 
 <!-- --------------------------------------------------- V. Meine Daten -->
@@ -643,12 +662,20 @@
   einander. Eine Verträglichkeitsrechnung, wie sie im Ehe-Kapitel der
   Handschriften steht.</p>
 
-  <h3>Achtundzwanzig Mondstationen</h3>
+  <h3>Der rechte Zeitpunkt — Elektion</h3>
   <p>Die <em>menâzil-i kamer</em>: Herbergen, in denen der Mond auf seinem Umlauf
   je eine Nacht wohnt. Achtundzwanzig Stationen für achtundzwanzig Buchstaben —
-  in den Handschriften ist das kein Zufall, sondern der Grund. Benutzt werden sie
-  zur Wahl des rechten Zeitpunkts: Jede Herberge hat, wofür sie taugt und wovor
-  sie warnt.</p>
+  in den Handschriften ist das kein Zufall, sondern der Grund.</p>
+  <p>Benutzt werden sie in der <b>Wahlastrologie</b>, die nicht fragt, wer du
+  bist, sondern wann etwas beginnen soll. Der Abschnitt nimmt dein Vorhaben,
+  ordnet es einer von zehn Arten zu und prüft den wirklichen Mondstand gegen
+  drei Regeln: was die heutige Station empfiehlt und wovor sie warnt, ob der
+  Mond <b>zunimmt</b> (für Aufbauendes) oder <b>abnimmt</b> (für Abtragendes),
+  und ob er in der <b>verbrannten Bahn</b> steht — der Strecke zwischen 15°
+  Waage und 15° Skorpion, die für alles gemieden wird, was halten soll.
+  Anschließend sucht er die nächsten vier Wochen nach besseren Tagen ab.</p>
+  <p class="kucukNot">Die alte Warnung gilt: Eine gute Stunde macht kein
+  schlechtes Vorhaben gut.</p>
 
   <h3>Spirit Name — der Geist des 11. Hauses</h3>
   <p>Aus Agrippas <em>De Occulta Philosophia</em> (Buch III, Kap. 26). Hier wird
@@ -749,22 +776,23 @@
   vier Elemente, achtundzwanzig Herbergen</p>
 </footer>
 
-<script type="module" src="oracle.js?v=46"></script>
-<script type="module" src="profil.js?v=46"></script>
-<script type="module" src="profil-ui.js?v=46"></script>
-<script type="module" src="zugang.js?v=46"></script>
-<script type="module" src="horoskop.js?v=46"></script>
-<script type="module" src="geist.js?v=46"></script>
-<script type="module" src="geist-profil.js?v=46"></script>
-<script type="module" src="yildiz-profil.js?v=46"></script>
-<script type="module" src="essenz.js?v=46"></script>
-<script type="module" src="auto-rechnen.js?v=46"></script>
-<script type="module" src="deutung.js?v=46"></script>
-<script type="module" src="jahr.js?v=46"></script>
-<script type="module" src="lebensbogen.js?v=46"></script>
-<script type="module" src="zr.js?v=46"></script>
-<script type="module" src="antiszien.js?v=46"></script>
-<script type="module" src="dodekaoros.js?v=46"></script>
-<script type="module" src="profektionen.js?v=46"></script>
+<script type="module" src="oracle.js?v=50"></script>
+<script type="module" src="profil.js?v=50"></script>
+<script type="module" src="profil-ui.js?v=50"></script>
+<script type="module" src="zugang.js?v=50"></script>
+<script type="module" src="horoskop.js?v=50"></script>
+<script type="module" src="elektion.js?v=50"></script>
+<script type="module" src="geist.js?v=50"></script>
+<script type="module" src="geist-profil.js?v=50"></script>
+<script type="module" src="yildiz-profil.js?v=50"></script>
+<script type="module" src="essenz.js?v=50"></script>
+<script type="module" src="auto-rechnen.js?v=50"></script>
+<script type="module" src="deutung.js?v=50"></script>
+<script type="module" src="jahr.js?v=50"></script>
+<script type="module" src="lebensbogen.js?v=50"></script>
+<script type="module" src="zr.js?v=50"></script>
+<script type="module" src="antiszien.js?v=50"></script>
+<script type="module" src="dodekaoros.js?v=50"></script>
+<script type="module" src="profektionen.js?v=50"></script>
 </body>
 </html>
