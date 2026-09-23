@@ -6,7 +6,8 @@
    fertigen Tafeln und setzt seinen Text in einen eigenen Kasten daneben.
    Deshalb überlebt die Deutung auch ein Neurechnen.
    --------------------------------------------------------------------- */
-import { leseProfilRoh } from "./profil.js?v=30";
+import { leseProfilRoh } from "./profil.js?v=35";
+import { profektionJetzt } from "./jahr.js?v=35";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -229,6 +230,122 @@ function antiszienDeutung(kasten) {
   kasten.append(liste);
   kasten.append(el("p", "kucukNot",
     "Je enger der Gradabstand, desto deutlicher. Unter einem Grad gilt die Verbindung als eng."));
+
+  kasten.append(el("h3", null, "Wie man damit umgeht"));
+  kasten.append(el("p", null,
+    "Antiszien erklären das Unerklärliche im Horoskop: eine Anziehung ohne Aspekt, " +
+    "eine Hemmung, für die sich kein Grund findet, zwei Lebensbereiche, die immer " +
+    "gemeinsam auftreten, obwohl sie nichts miteinander zu tun haben. Wer die Deutung " +
+    "eines Horoskops nicht rundbekommt, sieht klassisch als Erstes hier nach."));
+  kasten.append(el("p", null,
+    "Die Spiegelachse ist die der Sonnenwenden: 0° Krebs und 0° Steinbock, die längste " +
+    "und die kürzeste Nacht. Zwei gespiegelte Grade teilen sich denselben Tagbogen — " +
+    "deshalb heißt es in den alten Texten, sie hörten einander, ohne sich zu sehen. " +
+    "Das Kontra-Antiszion spiegelt stattdessen an 0° Widder und 0° Waage, der Achse " +
+    "der Tagundnachtgleiche; es gilt als die ungünstigere der beiden Spiegelungen."));
+  kasten.append(el("p", "kucukNot",
+    "Praktisch: Ein Planet auf dem Antiszion eines anderen wirkt wie eine stille " +
+    "Konjunktion — man merkt sie an den Folgen, nicht an der Konstellation."));
+}
+
+/* --------------------------------------------- Profektionen: Bedeutung */
+
+const HERR_IM_JAHR = {
+  "Sonne":   "Es geht ums Gesehenwerden. Was du tust, geschieht dieses Jahr vor Zeugen — such dir die Zeugen aus.",
+  "Mond":    "Ein Jahr der Wechsel und des Gemüts. Wohnung, Familie, Stimmungen; wenig bleibt, wo es war.",
+  "Merkur":  "Ein Jahr der Verhandlungen. Papier, Wege, Gespräche; wer dieses Jahr schweigt, verliert.",
+  "Venus":   "Ein Jahr der Bindung und der Form. Beziehungen, Kunst, Geld, das über Menschen kommt.",
+  "Mars":    "Ein Jahr des Schnitts. Es wird entschieden, gestritten, gearbeitet; halbe Sachen halten nicht.",
+  "Jupiter": "Ein Jahr der Erweiterung. Gönner, Recht, Reise, Zuwachs — und die Versuchung, zu viel zu nehmen.",
+  "Saturn":  "Ein Jahr der Prüfung. Es geht langsam, es kostet, und was dabei entsteht, hält lange."
+};
+
+function profektionenDeutung(kasten) {
+  const tafel = $("#pfCikti");
+  if (!tafel || tafel.hidden) { kasten.hidden = true; return; }
+
+  kasten.hidden = false;
+  kasten.innerHTML = "";
+  kasten.append(el("h3", null, "Was das heißt"));
+  kasten.append(el("p", null,
+    "Profektion heißt Vorrücken. Mit jedem Geburtstag wandert der Aszendent ein ganzes " +
+    "Zeichen weiter — ein Jahr, ein Haus. Das Haus, auf das er fällt, gibt dem Jahr sein " +
+    "Thema; der Herrscher dieses Zeichens wird zum Herrn des Jahres. Nach zwölf Jahren ist " +
+    "der Kreis geschlossen und beginnt von vorn, eine Etage höher."));
+  kasten.append(el("p", null,
+    "Es ist die sparsamste Jahrestechnik, die es gibt: Sie braucht nur den Aszendenten und " +
+    "dein Alter. Gerade deshalb ist sie robust — sie irrt nicht an einer ungenauen Geburtszeit, " +
+    "solange das Zeichen des Aszendenten stimmt."));
+
+  const pr = profektionJetzt();
+  if (!pr) {
+    kasten.append(el("p", "kucukNot", "Ohne vollständige Geburtsangaben lässt sich das Jahreshaus nicht bestimmen."));
+    return;
+  }
+  kasten.append(el("h3", null, "Dein laufendes Jahr"));
+  const p1 = el("p");
+  p1.innerHTML = `Mit ${pr.alter} Jahren steht dein <b>${pr.haus}. Haus</b> im Jahr, ` +
+    `${pr.glyph} ${pr.name}, und Herr des Jahres ist <b>${pr.herr}</b>. ` +
+    `Das Thema: ${pr.thema}.`;
+  kasten.append(p1);
+  if (HERR_IM_JAHR[pr.herr]) kasten.append(el("p", null, HERR_IM_JAHR[pr.herr]));
+  kasten.append(el("p", "kucukNot",
+    "Das Profektionsjahr läuft von Geburtstag zu Geburtstag. Wo der Herr des Jahres im " +
+    "Geburtshoroskop steht — gut oder schlecht gestellt, in welchem Haus —, entscheidet, " +
+    "wie leicht das Thema sich einlöst."));
+}
+
+/* ----------------------------------------------- Dodekaoros: Bedeutung */
+
+const TIERE = {
+  "Katze":      "wachsam und eigenwillig; sie kommt, wenn sie will, und geht, ehe man sie hält",
+  "Hund":       "treu und laut; er verteidigt, was ihm anvertraut ist, auch gegen bessere Argumente",
+  "Schlange":   "verwandelnd und verschwiegen; sie häutet sich, statt zu sterben, und weiß mehr, als sie zeigt",
+  "Skarabäus":  "beharrlich und schöpferisch; er rollt seine Last vor sich her und macht daraus Leben",
+  "Esel":       "geduldig und stur; er trägt, was keiner tragen will, und bleibt stehen, wo es zu viel wird",
+  "Löwe":       "herrschaftlich und großmütig; er braucht Raum und gibt ihn zurück, wenn man ihn achtet",
+  "Ziegenbock": "kletternd und zäh; er findet Halt, wo andere keinen Tritt sehen",
+  "Stier":      "stark und langsam; er hält den Boden, aber wenn er losgeht, hält ihn nichts",
+  "Falke":      "weitsichtig und schnell; er sieht das Ganze von oben und stößt aus der Höhe zu",
+  "Affe":       "beweglich und findig; er löst mit einem Griff, woran andere planen",
+  "Ibis":       "wissend und maßvoll; der Vogel des Thot, der schreibt, statt zu reden",
+  "Krokodil":   "geduldig und abgründig; es wartet reglos und ist im entscheidenden Augenblick ganz da"
+};
+
+function dodekaorosDeutung(kasten) {
+  const tafel = $("#dkCikti");
+  if (!tafel || tafel.hidden || !tafel.children.length) { kasten.hidden = true; return; }
+
+  kasten.hidden = false;
+  kasten.innerHTML = "";
+  kasten.append(el("h3", null, "Was das heißt"));
+  kasten.append(el("p", null,
+    "Der Dodekaoros ist die ägyptische Zwölftierreihe: dieselbe Zwölfteilung wie der " +
+    "Tierkreis, aber mit anderen Bildern — Katze, Hund, Schlange, Skarabäus und so fort. " +
+    "Sie ist älter als die griechischen Tierkreiszeichen und geht auf die Einteilung der " +
+    "Nacht in zwölf Stunden zurück, über die jeweils ein Tier wacht."));
+  kasten.append(el("p", null,
+    "Gelesen wird sie wie ein zweiter Name desselben Ortes am Himmel: Wo der Tierkreis " +
+    "eine Eigenschaft nennt, nennt der Dodekaoros ein Verhalten. Das Tier sagt weniger, " +
+    "wie du bist, als wie du vorgehst."));
+
+  /* Nur die Ergebniskarte lesen — die Tafel darunter listet alle zwölf Tiere,
+     wer dort sucht, findet immer das erste. */
+  const karte = tafel.querySelector(".almutenKarte");
+  const text = karte ? karte.innerText : "";
+  const tier = Object.keys(TIERE).find(t => text.includes(t));
+  if (tier) {
+    kasten.append(el("h3", null, `Dein Tier — ${tier}`));
+    const p1 = el("p");
+    p1.innerHTML = `Die ${tier === "Skarabäus" || tier === "Löwe" || tier === "Hund" ||
+      tier === "Esel" || tier === "Ziegenbock" || tier === "Stier" || tier === "Falke" ||
+      tier === "Affe" || tier === "Ibis" ? "Art des" : "Art der"} ${tier}: ${TIERE[tier]}. ` +
+      `Wo dein Zeichen dir sagt, worum es geht, sagt dir das Tier, wie du dabei vorgehst.`;
+    kasten.append(p1);
+  }
+  kasten.append(el("p", "kucukNot",
+    "Die Tierreihe kennt außerdem eine Tag- und eine Nachthälfte; welcher du angehörst, " +
+    "steht in der Tafel oben. Die Nachttiere gelten als die verborgener wirkenden."));
 }
 
 /* ------------------------------------------------------------ Verdrahtung */
@@ -251,3 +368,5 @@ function haenge(ciktiWahl, kastenId, zeichner) {
 haenge("#lbCikti", "lbDeutung", lebensbogenDeutung);
 haenge("#zrCikti", "zrDeutung", zrDeutung);
 haenge("#azHoroskopCikti", "azDeutung", antiszienDeutung);
+haenge("#pfCikti", "pfDeutung", profektionenDeutung);
+haenge("#dkCikti", "dkDeutung", dodekaorosDeutung);

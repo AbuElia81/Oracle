@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Oracle</title>
 <meta name="description" content="Oracle — Orakelrechner nach alten Büchern: das osmanische Yıldıznâme aus Name und Muttername, der Geist des 11. Hauses nach Agrippa, Primärdirektionen, Zodiacal Releasing und Antiszien.">
-<link rel="stylesheet" href="stil.css?v=30">
+<link rel="stylesheet" href="stil.css?v=35">
 </head>
 <body>
 
@@ -18,7 +18,7 @@
 </header>
 
 <nav id="reiter" aria-label="Abschnitte">
-  <button class="etkin" data-bolum="bProfil">Meine Daten</button>
+  <button class="etkin" data-bolum="bProfil">Oracle</button>
   <button data-bolum="bYildiz">Yıldıznâme</button>
   <button data-bolum="bNiyet">Niyet — die Frage</button>
   <button data-bolum="bUyum">İsim uyumu</button>
@@ -30,7 +30,7 @@
   <button data-bolum="bDodekaoros">Dodekaoros</button>
   <button data-bolum="bProfektionen">Profektionen</button>
   <button data-bolum="bEssenz">Die Essenz</button>
-  <button data-bolum="bNasil">Wie es rechnet</button>
+  <button data-bolum="bNasil">Die Idee dahinter</button>
 </nav>
 
 <main>
@@ -196,6 +196,12 @@
   </div>
   <p class="geoStatus" id="pSpeicherStatus"></p>
 
+  <div id="torHinweis" class="torHinweis">
+    <p>Sobald hier etwas steht, öffnen sich die übrigen Abschnitte oben —
+    elf Rechner, die alle mit diesen Angaben arbeiten. Zwei Namen genügen fürs
+    Yıldıznâme; für den Himmel braucht es Datum, Uhrzeit und Ort.</p>
+  </div>
+
   <p class="kucukNot">Die Ortssuche fragt einmalig, auf Knopfdruck, den freien
   Dienst <a href="https://nominatim.openstreetmap.org" target="_blank" rel="noopener">Nominatim (OpenStreetMap)</a>
   — sonst bleibt alles hier im Browser (<code>localStorage</code>), nichts
@@ -260,6 +266,12 @@
   </div>
 
   <button id="gBerechnen" class="buyukDugme">Geist berechnen</button>
+
+  <div id="torHinweis" class="torHinweis">
+    <p>Sobald hier etwas steht, öffnen sich die übrigen Abschnitte oben —
+    elf Rechner, die alle mit diesen Angaben arbeiten. Zwei Namen genügen fürs
+    Yıldıznâme; für den Himmel braucht es Datum, Uhrzeit und Ort.</p>
+  </div>
 
   <p class="kucukNot">Die Ortssuche fragt einmalig, auf Knopfdruck, den freien
   Dienst <a href="https://nominatim.openstreetmap.org" target="_blank" rel="noopener">Nominatim (OpenStreetMap)</a>
@@ -519,9 +531,35 @@
 
 <!-- --------------------------------------------------------- V. Wie -->
 <section class="bolum" id="bNasil" hidden>
-  <h2>Wie es rechnet</h2>
+  <div class="appKopf">
+    <h2>Die Idee dahinter</h2>
+    <p class="unterzeile">Woher die Verfahren kommen und was sie behaupten</p>
+  </div>
 
-  <h3>Ebced-i kebîr</h3>
+  <p class="giriş">Oracle versammelt Techniken, die über zweitausend Jahre und
+  drei Kulturkreise verteilt entstanden sind — hellenistisch, arabisch-osmanisch,
+  ägyptisch, lateinisch-europäisch. Sie widersprechen einander in vielem. Was sie
+  teilen, ist eine Annahme: Ein Zeitpunkt oder ein Name ist kein leerer Behälter,
+  sondern hat eine Gestalt, und diese Gestalt lässt sich abzählen.</p>
+
+  <p>Keine dieser Techniken sagt die Zukunft voraus, und keine wird hier so
+  benutzt. Sie geben Themen, Fälligkeiten und Tonarten. Was daraus wird, steht
+  in keiner Tafel.</p>
+
+  <h2>Die Techniken</h2>
+
+  <h3>Yıldıznâme — das osmanische Sternbuch</h3>
+  <p>Ein Horoskop ohne Geburtsdatum. Die meisten Menschen kannten ihren
+  Geburtstag nicht, geschweige denn die Stunde — also wird der Himmel nicht
+  über die Zeit befragt, sondern über den <b>Namen</b>: den eigenen und den der
+  Mutter, denn die Mutter ist zweifelsfrei. Beide werden arabisch geschrieben,
+  ihre Buchstaben im Ebced addiert, die Summe geteilt.</p>
+  <p>Das Genre wird Cafer-i Sâdık zugeschrieben — eine Autoritätszuschreibung,
+  keine Autorschaft. Die erhaltenen Handschriften sind osmanisch (Süleymaniye,
+  Millet Yazma Eser, Milli Kütüphane Ankara) und weichen voneinander ab; ein
+  kanonisches Yıldıznâme gibt es nicht.</p>
+
+  <h4>Ebced-i kebîr</h4>
   <p>Jeder der 28 arabischen Buchstaben trägt einen Zahlwert, gemerkt in acht
   Kunstwörtern: <em>ebced · hevvez · huttî · kelemen · sa'fes · karaşet ·
   sehaz · dazağ</em>.</p>
@@ -536,31 +574,118 @@
   <p>Die persisch-osmanischen Zusatzbuchstaben zählen wie ihre Nachbarn:
   پ = 2, چ = 3, ژ = 7, گ = 20. Das ة gilt hier als 400 — manche Handschriften
   setzen 5.</p>
-
-  <h3>Die Teilungen</h3>
   <ul class="teilungen">
     <li><b>÷ 12</b> — das Zeichen (burç). Rest null zählt als das zwölfte.</li>
-    <li><b>÷ 7</b> — der Wandelstern, in der chaldäischen Ordnung von der Sonne abwärts:
+    <li><b>÷ 7</b> — der Wandelstern, chaldäisch von der Sonne abwärts:
         Şems, Zühre, Utarit, Kamer, Zühal, Müşteri, Merih.</li>
     <li><b>÷ 4</b> — das Element: Ateş, Toprak, Hava, Su.</li>
     <li><b>÷ 28</b> — die Mondherberge.</li>
   </ul>
+  <p class="kucukNot">Dass Zeichen und Element dasselbe Element nennen, ist kein
+  Zufall: zwölf ist durch vier teilbar. Der <b>Jahresregent</b> im Jahreskasten
+  verbindet die Namenssumme mit der Jahreszahl — eine Falnâme-Praxis, nicht aus
+  einer einzelnen Handschrift belegt.</p>
 
-  <h3>Was hier ehrlich gesagt sein muss</h3>
-  <p>Es gibt kein kanonisches Yıldıznâme. Das Genre wird Cafer-i Sâdık
-  zugeschrieben — das ist eine Autoritätszuschreibung, keine Autorschaft; die
-  erhaltenen Handschriften sind osmanisch und weichen voneinander ab. Die
-  Deutungen auf dieser Seite sind im Ton der Vorlage neu gefasst, nicht aus
-  einer einzelnen Handschrift abgeschrieben.</p>
-  <p>Die größte Fehlerquelle ist die Umschrift: arabisch werden Vokale
-  weitgehend nicht geschrieben, und ein Name schreibt sich nach seiner Herkunft.
-  Deshalb steht unter jedem Feld die Korrekturzeile. Die verbreitete
-  Bequemlichkeitsvariante, lateinische Buchstaben unmittelbar in Ebced-Zahlen
-  zu setzen, ist gerade nicht die Tradition — sie umgeht den Schritt, an dem
-  die Tradition hängt.</p>
-  <p class="kucukNot">Zum Gebrauch: Dies ist ein Nachbau einer historischen
-  Praxis, kein Ratgeber. Ärztliche, rechtliche und geldliche Entscheidungen
-  gehören zu Menschen, nicht zu Tafeln.</p>
+  <h3>Niyet — die Tafel der Absicht</h3>
+  <p>Nicht das Wesen, sondern die eine Frage. Gerechnet wird aus den Buchstaben
+  der Frage, dem Namen des Fragenden und der <b>Planetenstunde</b>: Die erste
+  Stunde nach Sonnenaufgang gehört dem Herrn des Wochentages, danach läuft die
+  chaldäische Ordnung weiter. Dieselbe Frage bekommt zu anderer Stunde eine
+  andere Antwort — das ist keine Schwäche, sondern der Sinn: Gefragt wird nicht
+  die Sache, sondern der Augenblick.</p>
+
+  <h3>İsim uyumu — zwei Namen gegeneinander</h3>
+  <p>Beide Namenssummen werden addiert und der Rest gelesen; dazu tritt die alte
+  Regel der Elemente — Feuer und Luft nähren einander, Erde und Wasser tragen
+  einander. Eine Verträglichkeitsrechnung, wie sie im Ehe-Kapitel der
+  Handschriften steht.</p>
+
+  <h3>Achtundzwanzig Mondstationen</h3>
+  <p>Die <em>menâzil-i kamer</em>: Herbergen, in denen der Mond auf seinem Umlauf
+  je eine Nacht wohnt. Achtundzwanzig Stationen für achtundzwanzig Buchstaben —
+  in den Handschriften ist das kein Zufall, sondern der Grund. Benutzt werden sie
+  zur Wahl des rechten Zeitpunkts: Jede Herberge hat, wofür sie taugt und wovor
+  sie warnt.</p>
+
+  <h3>Spirit Name — der Geist des 11. Hauses</h3>
+  <p>Aus Agrippas <em>De Occulta Philosophia</em> (Buch III, Kap. 26). Hier wird
+  der wirkliche Himmel der Geburtsstunde befragt. Über den Tierkreis legt Agrippa
+  den Kreis der 22 hebräischen Buchstaben; an den <b>fünf hylegischen Örtern</b> —
+  Aszendent, Sonne, Mond, Glückspunkt und der Syzygie vor der Geburt — wird je ein
+  Buchstabe abgelesen, und die fünf ergeben den Namen, mit <em>-El</em> oder
+  <em>-Jah</em> am Ende.</p>
+  <p>Das elfte Haus heißt in der alten Häuserlehre <em>bonus daemon</em>, das Haus
+  des guten Geistes. Der Name ist nicht der eines Fremden, der über einen wacht,
+  sondern der Name dessen, was in einem selbst für einen ist.</p>
+  <p class="kucukNot">Gerechnet mit den Standardformeln der sphärischen Astronomie
+  nach Meeus: julianisches Datum, Greenwich-Sternzeit, Ortssternzeit, Aszendent;
+  Sonne nach Kap. 25, Mond nach Kap. 47 in gekürzter Reihe (gegen Meeus' eigenes
+  Beispiel 47.a auf 19 Bogensekunden geprüft). Die Syzygie wird gesucht, indem die
+  Elongation der Lichter rückwärts auf 0° oder 180° gebracht wird.</p>
+
+  <h3>Der Lebensbogen — Primärdirektionen</h3>
+  <p>Die älteste Prognosetechnik überhaupt und die einzige, die mit der
+  tatsächlichen Erddrehung rechnet. Der Himmel dreht sich nach der Geburt weiter;
+  <b>ein Grad dieser Drehung gilt für ein Lebensjahr</b> (Ptolemäus' Schlüssel).
+  Wo dabei ein Planet auf eine Achse trifft, wird sein Thema fällig.</p>
+  <p>Primärdirektionen sagen <em>wann</em>, nicht <em>was</em>. Sie reagieren
+  empfindlich auf die Geburtszeit — vier Minuten Fehler verschieben ein Ereignis
+  um ein Jahr. Deshalb stehen die Daten hier bewusst als Fenster von Wochen.</p>
+
+  <h3>Zodiacal Releasing</h3>
+  <p>Aus Vettius Valens' <em>Anthologien</em> (2. Jh.). Vom <b>Los des Glücks</b>
+  aus werden Zeichen für Zeichen Perioden abgezählt, jede so lang wie die Jahre
+  ihres Herrschers (Mars 15, Venus 8, Merkur 20, Mond 25, Sonne 19, Jupiter 12,
+  Saturn 30). So entstehen ineinandergeschachtelte Kapitel: L1 gibt die großen
+  Abschnitte, L2 die Jahre darin, L3 die Monate.</p>
+  <p>Die Technik ist wiederentdeckt worden, nicht überliefert — sie lag bis ins
+  20. Jahrhundert unbenutzt in den Handschriften. Ihre Stärke sind die
+  <b>Übergänge</b>: Wo eine Periode endet, ändert sich der Ton oft binnen Wochen.</p>
+
+  <h3>Antiszien — die Schattenzwillinge</h3>
+  <p>Spiegelt man einen Grad an der Achse der Sonnenwenden (0° Krebs gegenüber
+  0° Steinbock), so hat der gespiegelte Punkt <b>dieselbe Deklination und
+  denselben Tagbogen</b>: Die Sonne stünde dort gleich hoch und gleich lang am
+  Himmel. Zwei solche Punkte sind verbunden, ohne einander zu sehen.</p>
+  <p>Das <b>Antiszion</b> gilt als verborgene Freundschaft, das
+  <b>Kontra-Antiszion</b> — gespiegelt an der Tagundnachtgleiche — als verdeckte
+  Gegnerschaft. Klassisch sieht man hier nach, wenn eine Deutung nicht aufgeht:
+  eine Anziehung ohne Aspekt, eine Hemmung ohne Grund.</p>
+
+  <h3>Dodekaoros — die ägyptische Tierreihe</h3>
+  <p>Dieselbe Zwölfteilung wie der Tierkreis, aber mit anderen Bildern: Katze,
+  Hund, Schlange, Skarabäus, Esel, Löwe, Ziegenbock, Stier, Falke, Affe, Ibis,
+  Krokodil. Sie geht auf die Einteilung der Nacht in zwölf Stunden zurück, über
+  die jeweils ein Tier wacht, und ist älter als die griechischen Zeichen. Wo der
+  Tierkreis eine Eigenschaft nennt, nennt der Dodekaoros ein Verhalten.</p>
+
+  <h3>Profektionen</h3>
+  <p><em>Profectio</em> heißt Vorrücken. Mit jedem Geburtstag wandert der
+  Aszendent ein ganzes Zeichen weiter — <b>ein Jahr, ein Haus</b>. Das Haus gibt
+  dem Jahr sein Thema, sein Herrscher wird zum Herrn des Jahres. Nach zwölf
+  Jahren ist der Kreis geschlossen.</p>
+  <p>Die sparsamste Jahrestechnik, die es gibt: Sie braucht nur den Aszendenten
+  und das Alter. Gerade deshalb ist sie robust — sie irrt nicht an einer
+  ungenauen Geburtszeit, solange das Zeichen des Aszendenten stimmt.</p>
+
+  <h3>Die Essenz</h3>
+  <p>Rechnet nichts Eigenes. Sie liest zusammen, was die anderen Abschnitte
+  gefunden haben, und fügt es zu einem Text — das Wesen aus den Namen, den
+  Geistnamen aus der Geburtsstunde, das laufende Kapitel, die nächste
+  Fälligkeit, das Verborgene und das laufende Jahr.</p>
+
+  <h2>Was hier ehrlich gesagt sein muss</h2>
+  <p>Die Deutungen sind im Ton der Vorlagen neu gefasst, nicht aus einzelnen
+  Handschriften abgeschrieben. Wo eine Rekonstruktion vorliegt und keine
+  belegte Tabelle — der 27-Einheiten-Modus beim Spirit Name, der Jahresregent
+  im Yıldıznâme —, steht es an Ort und Stelle dabei.</p>
+  <p>Alles rechnet in deinem Browser. Nichts geht an einen Server dieser Seite,
+  es gibt keinen; die Angaben liegen im <code>localStorage</code> und bleiben
+  dort. Nur die Ortssuche fragt auf Knopfdruck einmalig Nominatim
+  (OpenStreetMap).</p>
+  <p class="kucukNot">Zum Gebrauch: Dies ist ein Nachbau historischer
+  Denktechniken, kein Ratgeber. Ärztliche, rechtliche und geldliche
+  Entscheidungen gehören zu Menschen, nicht zu Tafeln.</p>
 </section>
 
 <!-- ------------------------------------------------------ Die Essenz -->
@@ -581,20 +706,21 @@
   vier Elemente, achtundzwanzig Herbergen</p>
 </footer>
 
-<script type="module" src="oracle.js?v=30"></script>
-<script type="module" src="profil.js?v=30"></script>
-<script type="module" src="profil-ui.js?v=30"></script>
-<script type="module" src="geist.js?v=30"></script>
-<script type="module" src="geist-profil.js?v=30"></script>
-<script type="module" src="yildiz-profil.js?v=30"></script>
-<script type="module" src="essenz.js?v=30"></script>
-<script type="module" src="auto-rechnen.js?v=30"></script>
-<script type="module" src="deutung.js?v=30"></script>
-<script type="module" src="jahr.js?v=30"></script>
-<script type="module" src="lebensbogen.js?v=30"></script>
-<script type="module" src="zr.js?v=30"></script>
-<script type="module" src="antiszien.js?v=30"></script>
-<script type="module" src="dodekaoros.js?v=30"></script>
-<script type="module" src="profektionen.js?v=30"></script>
+<script type="module" src="oracle.js?v=35"></script>
+<script type="module" src="profil.js?v=35"></script>
+<script type="module" src="profil-ui.js?v=35"></script>
+<script type="module" src="zugang.js?v=35"></script>
+<script type="module" src="geist.js?v=35"></script>
+<script type="module" src="geist-profil.js?v=35"></script>
+<script type="module" src="yildiz-profil.js?v=35"></script>
+<script type="module" src="essenz.js?v=35"></script>
+<script type="module" src="auto-rechnen.js?v=35"></script>
+<script type="module" src="deutung.js?v=35"></script>
+<script type="module" src="jahr.js?v=35"></script>
+<script type="module" src="lebensbogen.js?v=35"></script>
+<script type="module" src="zr.js?v=35"></script>
+<script type="module" src="antiszien.js?v=35"></script>
+<script type="module" src="dodekaoros.js?v=35"></script>
+<script type="module" src="profektionen.js?v=35"></script>
 </body>
 </html>

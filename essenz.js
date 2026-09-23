@@ -6,10 +6,10 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=30";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=30";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe } from "./profil.js?v=30";
-import { JAHR, profektionJetzt } from "./jahr.js?v=30";
+import { cevir, toplam, kalan } from "./ebced.js?v=35";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=35";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe } from "./profil.js?v=35";
+import { JAHR, profektionJetzt } from "./jahr.js?v=35";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -302,6 +302,28 @@ function schreibe() {
 
   if (sb) {
     cikti.appendChild(absatz("Der Rat", sb.burc.ogut));
+  }
+
+  /* Zwei Abschnitte kann die Essenz nicht von sich aus füllen — sie brauchen
+     etwas, das nur du beisteuern kannst. */
+  const offen = [];
+  if (document.querySelector("#soru")) offen.push(
+    ["Niyet — die Frage", "eine Frage in einem Satz; die Antwort hängt auch an der Stunde, in der du fragst"]);
+  if (document.querySelector("#u2ad")) offen.push(
+    ["İsim uyumu", "den Namen eines zweiten Menschen und den seiner Mutter"]);
+  if (offen.length) {
+    const kasten = el("div", "offeneListe");
+    kasten.append(el("h3", null, "Was hier noch fehlt"));
+    kasten.append(el("p", null,
+      "Zwei Abschnitte stehen bereit, brauchen aber etwas von dir:"));
+    const ul = el("ul", "deutungListe");
+    offen.forEach(([titel, was]) => {
+      const li = el("li");
+      li.innerHTML = `<b>${titel}</b> — ${was}.`;
+      ul.appendChild(li);
+    });
+    kasten.append(ul);
+    cikti.appendChild(kasten);
   }
 
   if (!sb && !geist && !zr && !dir && !anti && !prof && !dodek) {

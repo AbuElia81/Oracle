@@ -434,3 +434,15 @@ footer p { color: var(--gedaempft); font-size: .78rem; letter-spacing: .06em; ma
 .jahrKasten p { margin-bottom:.8rem; }
 .jahrKasten .kucukNot { margin-bottom:0; }
 .jahrPunkte { display:block; margin-top:.35rem; color:var(--gedaempft); font-size:.92rem; }
+
+/* Der Hinweis auf der Hauptseite, solange nichts eingetragen ist. */
+.torHinweis {
+  margin-top:2rem; padding:1.2rem 1.3rem;
+  border:1px dashed var(--linie); border-radius:2px;
+  background:rgba(201,162,39,.05);
+}
+.torHinweis p { margin:0; color:var(--gedaempft); }
+h4 {
+  font-weight:400; font-size:.92rem; color:var(--gedaempft);
+  letter-spacing:.1em; text-transform:uppercase; margin:1.4rem 0 .4rem;
+}
