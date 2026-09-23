@@ -15,6 +15,11 @@
 
 * { box-sizing: border-box; }
 
+/* Ein eigenes display: flex oder grid sticht sonst das hidden-Attribut aus —
+   das Element bleibt sichtbar, obwohl es versteckt ist. Gilt für die ganze
+   Seite, damit die Falle nirgends mehr zuschnappt. */
+[hidden] { display: none !important; }
+
 html { scroll-behavior: smooth; }
 
 /* ------------------------------------------------------------ Hintergrund
