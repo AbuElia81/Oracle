@@ -252,7 +252,7 @@ function inszeniere(w, cikti, danach) {
   if (sparsam) { fertig(); return; }
 
   function schritt() {
-    if (reihe >= 16) { setTimeout(fertig, 700); return; }
+    if (reihe >= 16) { setTimeout(fertig, 550); return; }
     const anzahl = w.reihen[reihe];
     const y = 52 + (reihe % 4) * 30;
     if (spalte === 0) sand.dataset.gruppe = Math.floor(reihe / 4);
@@ -268,13 +268,13 @@ function inszeniere(w, cikti, danach) {
         const k = figurKachel(m, `${reihe / 4}. Mutter`);
         k.classList.add("kommtHervor");
         figuren.appendChild(k);
-        uhr = setTimeout(() => { [...sand.querySelectorAll("circle")].forEach(c => c.remove()); schritt(); }, 620);
+        uhr = setTimeout(() => { [...sand.querySelectorAll("circle")].forEach(c => c.remove()); schritt(); }, 430);
         return;
       }
-      uhr = setTimeout(schritt, 190);
+      uhr = setTimeout(schritt, 95);
       return;
     }
-    uhr = setTimeout(schritt, 42);
+    uhr = setTimeout(schritt, 23);
   }
   schritt();
 }
