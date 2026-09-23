@@ -570,6 +570,9 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 .spende { margin-bottom: 2rem; }
 .spende .kalanBaslik { margin-bottom: .8rem; }
 .spendeReihe { display: flex; gap: .5rem; justify-content: center; flex-wrap: wrap; }
+/* Zwingt den Umbruch vor dem freien Betrag, ohne ihn über die ganze
+   Zeilenbreite anklickbar zu machen. */
+.spendeReihe::after { content: ""; flex-basis: 100%; height: 0; order: 2; }
 .spendeKnopf {
   display: inline-block; text-decoration: none;
   border: 1px solid var(--ton); border-radius: 2px;
@@ -577,10 +580,19 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
   padding: .5rem 1.4rem; transition: background .18s, color .18s;
 }
 .spendeKnopf:hover { background: var(--ton); color: var(--grund); }
+/* Der freie Betrag ist die Nebentür — er bekommt eine eigene Zeile und
+   nicht dasselbe Gewicht wie die beiden Summen. */
 .spendeKnopf.frei {
-  border-color: var(--linie); color: var(--gedaempft); font-size: .88rem;
+  order: 3; margin: .2rem 0 0;
+  border: none; padding: .2rem .4rem;
+  color: var(--gedaempft); font-size: .85rem;
+  text-decoration: underline; text-decoration-color: var(--linie);
+  text-underline-offset: .3em;
 }
-.spendeKnopf.frei:hover { border-color: var(--ton); background: none; color: var(--ton-hell); }
+.spendeKnopf.frei:hover {
+  background: none; color: var(--ton-hell); text-decoration-color: var(--ton);
+}
+.spendeReihe .spendeKnopf:not(.frei) { min-width: 6rem; text-align: center; }
 .spende .kucukNot {
   border: none; padding: 0; margin: 1rem auto 0; max-width: 30rem; text-align: center;
 }

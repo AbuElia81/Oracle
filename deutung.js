@@ -6,9 +6,9 @@
    fertigen Tafeln und setzt seinen Text in einen eigenen Kasten daneben.
    Deshalb überlebt die Deutung auch ein Neurechnen.
    --------------------------------------------------------------------- */
-import { leseProfilRoh } from "./profil.js?v=67";
-import { profektionJetzt } from "./jahr.js?v=67";
-import { zustandVon, radix, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=67";
+import { leseProfilRoh } from "./profil.js?v=70";
+import { profektionJetzt } from "./jahr.js?v=70";
+import { zustandVon, radix, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=70";
 
 /* Ein Satz, der eine Zeitherrscher-Aussage am Geburtshoroskop festmacht.
    Genau darum geht es: Die Technik sagt wann, das Horoskop sagt was. */
