@@ -451,3 +451,12 @@ h4 {
   font-weight:400; font-size:.92rem; color:var(--gedaempft);
   letter-spacing:.1em; text-transform:uppercase; margin:1.4rem 0 .4rem;
 }
+
+/* ------------------------------------------------------- Das Horoskop */
+.planetBlock {
+  border-left:1px solid var(--linie); padding:.2rem 0 .2rem 1rem; margin-bottom:1.1rem;
+}
+.planetKopf { color:var(--schrift); margin-bottom:.25rem; }
+.planetKopf .glyph { color:var(--ton); font-size:1.15rem; margin-right:.2rem; }
+.planetBlock p { margin:0; color:var(--gedaempft); }
+#hkZeit { margin-top:2.5rem; }

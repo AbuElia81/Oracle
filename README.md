@@ -8,11 +8,12 @@ dann von selbst damit, ohne Knopfdruck und über das Neuladen hinweg.
 
 | Abschnitt | Woher |
 |---|---|
+| **Das Horoskop** | Radix in Ganzzeichen-Häusern: Planeten, Würden, Aspekte, Sekte — dazu Transite und sekundäre Progressionen. Grundlage der Zeittechniken |
 | **Yıldıznâme** | osmanisches Sternbuch: Zeichen, Stern, Element und Mondstation aus Name und Muttername im Ebced |
 | **Niyet** | Tafel der Absicht: Frage, Name und Planetenstunde |
 | **İsim uyumu** | Verträglichkeit zweier Menschen aus beiden Namenssummen |
 | **Achtundzwanzig Mondstationen** | die *menâzil-i kamer* als Nachschlagetafel |
-| **Der Geist des 11. Hauses** | Agrippa, *De Occulta Philosophia* III.26: Geistname aus den fünf hylegischen Örtern |
+| **Spirit Name** | Agrippa, *De Occulta Philosophia* III.26: Geistname aus den fünf hylegischen Örtern |
 | **Der Lebensbogen** | Primärdirektionen |
 | **Zodiacal Releasing** | hellenistische Zeitalter aus dem Los des Glücks |
 | **Antiszien** | Schattenzwillinge |
@@ -140,7 +141,10 @@ Statische Seite, keine Baukette:
 | `yildiz-profil.js` · `geist-profil.js` | Brücken vom Profil in die einzelnen Abschnitte |
 | `ebced.js` · `korpus.js` · `oracle.js` | Yıldıznâme: Buchstabenwerte, Textkorpus, Bedienung |
 | `astro.js` · `direktionen.js` | gemeinsame Astronomie und Primärdirektionen |
-| `geist.js` · `lebensbogen.js` · `zr.js` · `antiszien.js` | die einzelnen Rechner |
+| `horoskop.js` | Radix, Transite, Progression — und die Auskunft, die andere Abschnitte abfragen |
+| `geist.js` · `lebensbogen.js` · `zr.js` · `antiszien.js` · `dodekaoros.js` · `profektionen.js` | die einzelnen Rechner |
+| `deutung.js` · `jahr.js` | Deutungskästen und Jahresüberblick neben den Tafeln |
+| `auto-rechnen.js` · `zugang.js` | alles rechnet von selbst; die Hauptseite ist das Tor |
 | `essenz.js` | die Zusammenschau |
 | `bump.sh` | hebt `?v=` in HTML und in den Modul-Importen an |
 

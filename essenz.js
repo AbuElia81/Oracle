@@ -6,10 +6,11 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=38";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=38";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe } from "./profil.js?v=38";
-import { JAHR, profektionJetzt } from "./jahr.js?v=38";
+import { cevir, toplam, kalan } from "./ebced.js?v=45";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=45";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe } from "./profil.js?v=45";
+import { JAHR, profektionJetzt } from "./jahr.js?v=45";
+import { radix, transite, progression, ZEICHEN, PLANET, HAUS } from "./horoskop.js?v=45";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -165,11 +166,33 @@ function schreibe() {
   const zr = alter != null ? zeitalter(alter) : null;
   const dir = alter != null ? naechsteDirektion(alter) : null;
   const anti = antiszien();
+  const r = radix();
+  const tr = transite();
+  const prg = progression();
   const prof = profektion();
   const dodek = dodekaoros();
 
   cikti.appendChild(el("p", "kucukNot", "Für: " + profilBeschriftung(p) +
     (alter != null ? ` · heute ${alter.toFixed(0)} Jahre alt` : "")));
+
+  if (r) {
+    const h = r.planeten[r.herrscher];
+    cikti.appendChild(absatz("Dein Horoskop",
+      `${ZEICHEN[r.ascZeichen].glyph} ${ZEICHEN[r.ascZeichen].name} stieg auf, als du geboren wurdest, ` +
+      `das MC steht in ${ZEICHEN[r.mcZeichen].glyph} ${ZEICHEN[r.mcZeichen].name}; es war eine ` +
+      `${r.tagGeburt ? "Taggeburt" : "Nachtgeburt"}. ` +
+      (h ? `Herr des Horoskops ist damit ${PLANET[r.herrscher].name}, und er steht in ` +
+           `${ZEICHEN[h.zeichen].glyph} ${ZEICHEN[h.zeichen].name} im ${h.haus}. Haus — ` +
+           `${HAUS[h.haus - 1]}. Dorthin zieht dein Leben, noch ehe irgendeine Zeittechnik etwas dazu sagt.` : "")));
+
+    if (r.aspekte.length) {
+      const a = r.aspekte[0];
+      cikti.appendChild(absatz("Der lauteste Aspekt",
+        `Am engsten stehen ${a.a.name} und ${a.b.name} zueinander (${a.name}, ${a.orbis.toFixed(1)}°): ` +
+        `${a.a.was} und ${a.b.was} treten bei dir ${a.ton} auf. Das ist der Zug, der sich durch ` +
+        `alles zieht, was dir begegnet.`));
+    }
+  }
 
   if (sb) {
     const kopf = el("div", "essenzKopf");
@@ -278,6 +301,23 @@ function schreibe() {
     jahrFach.appendChild(el("h3", null, `Dieses Jahr — ${JAHR}`));
     jahrFach.appendChild(el("p", null,
       `Was die einzelnen Techniken für ${JAHR} sagen, nebeneinandergelegt:`));
+    if (tr && tr.treffer.length) {
+      const t = tr.treffer[0];
+      const tp = el("p");
+      tp.innerHTML = `<b>Transit:</b> ${t.transit.name} steht gerade ${t.name.toLowerCase()} zu ` +
+        `deinem ${t.natal.name} (${t.orbis.toFixed(1)}°) — ` +
+        (t.natal.achse ? "die Achse selbst wird angesprochen" : `${t.natal.was} — berührt`) +
+        `, ${t.ton}.`;
+      jahrFach.appendChild(tp);
+    }
+    if (prg) {
+      const gp = el("p");
+      gp.innerHTML = `<b>Progression:</b> deine progressierte Sonne steht in ` +
+        `${ZEICHEN[prg.sonne.zeichen].glyph} ${ZEICHEN[prg.sonne.zeichen].name}, ` +
+        `der progressierte Mond in ${ZEICHEN[prg.mond.zeichen].glyph} ${ZEICHEN[prg.mond.zeichen].name} ` +
+        `(${prg.mond.haus}. Haus) — ${prg.phaseText}.`;
+      jahrFach.appendChild(gp);
+    }
     if (pf) {
       const pp = el("p");
       pp.innerHTML = `<b>Profektion:</b> ${pf.text} — in dieser Technik gibt das Jahreshaus ` +
@@ -326,7 +366,7 @@ function schreibe() {
     cikti.appendChild(kasten);
   }
 
-  if (!sb && !geist && !zr && !dir && !anti && !prof && !dodek) {
+  if (!sb && !geist && !zr && !dir && !anti && !prof && !dodek && !r) {
     const w = el("p", "kucukNot", "Es fehlen noch Angaben. ");
     const b = el("button", "knopfKlein", "Zur Dateneingabe");
     b.addEventListener("click", zurDateneingabe);

@@ -6,7 +6,7 @@
    Geburtsprofil vorliegt, drückt dieses Modul den Knopf — nichts anderes.
    An ihrer Rechnung wird nichts geändert.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung } from "./profil.js?v=38";
+import { leseProfil, aufProfilAenderung } from "./profil.js?v=45";
 
 const RECHNER = [
   { knopf:"#lbBerechnen",        cikti:"#lbCikti",          reiter:"bLebensbogen" },
@@ -47,8 +47,12 @@ RECHNER.forEach(r => {
 function ersterDurchgang() {
   anstossen({ nurWennLeer: true });
 }
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", () => setTimeout(ersterDurchgang, 0));
-} else {
+/* Auf "load" warten, nicht auf DOMContentLoaded: Moduldateien laufen in der
+   Reihenfolge des HTML, und dieses Modul steht vor den Rechnern. Ein
+   setTimeout(0) kann noch zwischen zwei Modulen feuern — dann trifft der
+   Klick einen Knopf, der seinen Zuhörer noch nicht hat. */
+if (document.readyState === "complete") {
   setTimeout(ersterDurchgang, 0);
+} else {
+  window.addEventListener("load", () => setTimeout(ersterDurchgang, 0));
 }

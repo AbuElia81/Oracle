@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Oracle</title>
 <meta name="description" content="Oracle — Orakelrechner nach alten Büchern: das osmanische Yıldıznâme aus Name und Muttername, der Geist des 11. Hauses nach Agrippa, Primärdirektionen, Zodiacal Releasing und Antiszien.">
-<link rel="stylesheet" href="stil.css?v=38">
+<link rel="stylesheet" href="stil.css?v=45">
 </head>
 <body>
 
@@ -19,6 +19,7 @@
 
 <nav id="reiter" aria-label="Abschnitte">
   <button class="etkin" data-bolum="bProfil">Oracle</button>
+  <button data-bolum="bHoroskop">Das Horoskop</button>
   <button data-bolum="bYildiz">Yıldıznâme</button>
   <button data-bolum="bNiyet">Niyet — die Frage</button>
   <button data-bolum="bUyum">İsim uyumu</button>
@@ -36,6 +37,29 @@
 <main>
 
 <!-- ------------------------------------------------------- I. Sternbild -->
+<!-- ----------------------------------------------------- Das Horoskop -->
+<section class="bolum" id="bHoroskop" hidden>
+  <div class="appKopf">
+    <h2>Das Horoskop</h2>
+    <p class="unterzeile">Die Radix, ihre Transite und ihre Progression</p>
+  </div>
+
+  <p class="giriş">Die Zeitherrscher-Techniken dieser Seite — Profektionen,
+  Zodiacal Releasing, der Lebensbogen — sagen, <em>wann</em> etwas fällig wird.
+  Was fällig wird, steht hier. Ohne die Deutung des Geburtshoroskops bleiben
+  jene Techniken ein Kalender ohne Inhalt; mit ihr werden sie konkret.</p>
+
+  <button id="hkBerechnen" class="buyukDugme">Neu rechnen</button>
+
+  <div id="hkCikti" hidden></div>
+  <div id="hkZeit" hidden></div>
+
+  <p class="kucukNot">Häuser im Ganzzeichen — dasselbe Verfahren wie bei
+  Profektionen und Zodiacal Releasing, damit die Abschnitte zueinander passen.
+  Planetenpositionen aus der gemeinsamen Astronomie dieser Seite; für die
+  Deutung genau genug, für nautische Zwecke nicht.</p>
+</section>
+
 <section class="bolum" id="bYildiz" hidden>
   <div class="appKopf">
     <div class="arapUst">يلدزنامه</div>
@@ -548,6 +572,25 @@
 
   <h2>Die Techniken</h2>
 
+  <h3>Das Horoskop — Radix, Transite, Progression</h3>
+  <p>Die Grundlage aller Zeittechniken auf dieser Seite. Gerechnet werden
+  Aszendent, MC, die sieben klassischen Planeten in Zeichen und Häusern
+  (Ganzzeichen), die <b>essentiellen Würden</b> — Domizil, Erhöhung, Exil,
+  Fall — und die Aspekte untereinander. Dazu die <b>Sekte</b>: ob die Sonne
+  bei der Geburt über oder unter dem Horizont stand, was darüber entscheidet,
+  welche Planeten gefälliger und welche fordernder auftreten.</p>
+  <p><b>Transite</b> zeigen, wo die langsamen Läufer — Mars, Jupiter, Saturn —
+  heute stehen und was sie im Geburtshoroskop berühren. Die schnellen bleiben
+  außen vor; sie sind in Tagen vorbei. <b>Sekundäre Progressionen</b> rechnen
+  einen Tag nach der Geburt für ein Lebensjahr: Die progressierte Sonne rückt
+  etwa ein Grad im Jahr, der progressierte Mond braucht achtundzwanzig Jahre
+  für den Kreis. Sie beschreiben kein Ereignis, sondern das innere Wetter.</p>
+  <p>Warum das hier steht: Profektionen, Zodiacal Releasing und der Lebensbogen
+  nennen einen <em>Herrn der Zeit</em> — aber ein Herr des Jahres sagt für sich
+  genommen wenig. Erst wo er im Geburtshoroskop steht, in welchem Zeichen, in
+  welchem Haus, mit welcher Würde, wird daraus eine Aussage. Deshalb greifen
+  die Deutungen jener Abschnitte auf diese Rechnung zurück.</p>
+
   <h3>Yıldıznâme — das osmanische Sternbuch</h3>
   <p>Ein Horoskop ohne Geburtsdatum. Die meisten Menschen kannten ihren
   Geburtstag nicht, geschweige denn die Stunde — also wird der Himmel nicht
@@ -706,21 +749,22 @@
   vier Elemente, achtundzwanzig Herbergen</p>
 </footer>
 
-<script type="module" src="oracle.js?v=38"></script>
-<script type="module" src="profil.js?v=38"></script>
-<script type="module" src="profil-ui.js?v=38"></script>
-<script type="module" src="zugang.js?v=38"></script>
-<script type="module" src="geist.js?v=38"></script>
-<script type="module" src="geist-profil.js?v=38"></script>
-<script type="module" src="yildiz-profil.js?v=38"></script>
-<script type="module" src="essenz.js?v=38"></script>
-<script type="module" src="auto-rechnen.js?v=38"></script>
-<script type="module" src="deutung.js?v=38"></script>
-<script type="module" src="jahr.js?v=38"></script>
-<script type="module" src="lebensbogen.js?v=38"></script>
-<script type="module" src="zr.js?v=38"></script>
-<script type="module" src="antiszien.js?v=38"></script>
-<script type="module" src="dodekaoros.js?v=38"></script>
-<script type="module" src="profektionen.js?v=38"></script>
+<script type="module" src="oracle.js?v=45"></script>
+<script type="module" src="profil.js?v=45"></script>
+<script type="module" src="profil-ui.js?v=45"></script>
+<script type="module" src="zugang.js?v=45"></script>
+<script type="module" src="horoskop.js?v=45"></script>
+<script type="module" src="geist.js?v=45"></script>
+<script type="module" src="geist-profil.js?v=45"></script>
+<script type="module" src="yildiz-profil.js?v=45"></script>
+<script type="module" src="essenz.js?v=45"></script>
+<script type="module" src="auto-rechnen.js?v=45"></script>
+<script type="module" src="deutung.js?v=45"></script>
+<script type="module" src="jahr.js?v=45"></script>
+<script type="module" src="lebensbogen.js?v=45"></script>
+<script type="module" src="zr.js?v=45"></script>
+<script type="module" src="antiszien.js?v=45"></script>
+<script type="module" src="dodekaoros.js?v=45"></script>
+<script type="module" src="profektionen.js?v=45"></script>
 </body>
 </html>
