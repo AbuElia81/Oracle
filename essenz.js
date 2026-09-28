@@ -6,13 +6,14 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=80";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=80";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=80";
-import { JAHR, profektionJetzt } from "./jahr.js?v=80";
-import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=80";
-import { mondHeute } from "./elektion.js?v=80";
-import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=80";
+import { cevir, toplam, kalan } from "./ebced.js?v=82";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=82";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=82";
+import { JAHR, profektionJetzt } from "./jahr.js?v=82";
+import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=82";
+import { mondHeute } from "./elektion.js?v=82";
+import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=82";
+import { zrStand } from "./zr.js?v=82";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -65,7 +66,21 @@ function geistname() {
 /* Zodiacal Releasing: die Zeile, in deren Spanne das heutige Alter fällt. */
 function zeitalter(alter) {
   const c = anstossen("#zrBerechnen", "#zrCikti");
-  if (!c || alter == null) return null;
+  if (alter == null) return null;
+
+  /* Der kurze Weg: zr.js gibt seine Rechnung heraus, samt dritter Ebene,
+     die in der Tafel gar nicht steht. Nur wenn das fehlschlägt, wird die
+     Tafel gelesen. */
+  try {
+    const st = zrStand(alter);
+    if (st && st.L1) {
+      const um = x => x && { zeichen: x.glyph + " " + x.zeichen, herrscher: x.herrscher,
+                             von: x.von, bis: x.bis, hoehepunkt: x.hoehepunkt, loesung: x.loesung };
+      return { L1: um(st.L1), L2: um(st.L2), L3: um(st.L3), fortunaZeichen: st.fortunaZeichen };
+    }
+  } catch (e) {}
+
+  if (!c) return null;
   const treffer = {};
   c.querySelectorAll("tbody tr").forEach(tr => {
     const z = [...tr.cells].map(td => td.innerText.trim());
@@ -295,14 +310,19 @@ function schreibe(zielWahl) {
   }
 
   if (zr) {
-    const l1 = zr.L1, l2 = zr.L2;
+    const l1 = zr.L1, l2 = zr.L2, l3 = zr.L3;
     cikti.appendChild(absatz("Wo du gerade stehst",
       `Im Zodiacal Releasing läuft seit deinem ${l1.von.toFixed(0)}. Jahr und noch bis zum ` +
       `${l1.bis.toFixed(0)}. das große Kapitel ${l1.zeichen}, geführt von ${l1.herrscher}. ` +
       (l2 ? `Darin steht gerade das kleinere ${l2.zeichen} unter ${l2.herrscher}, ` +
-            `von ${l2.von.toFixed(1)} bis ${l2.bis.toFixed(1)} Jahren. ` : "") +
-      `Das große Kapitel sagt, worum es in diesen Jahren überhaupt geht; das kleinere, ` +
-      `in welcher Tonart es gerade gespielt wird.`));
+            `von ${komma(l2.von)} bis ${komma(l2.bis)} Jahren. ` : "") +
+      (l3 ? `Und darin wiederum ${l3.zeichen} unter ${l3.herrscher}, das nur bis ` +
+            `${komma(l3.bis)} Jahren währt. ` : "") +
+      `Die erste Ebene sagt, worum es über Jahre hinweg geht; die zweite, in welcher Tonart ` +
+      `es gerade gespielt wird; die dritte färbt die Monate.` +
+      ((l2 && l2.hoehepunkt) || (l3 && l3.hoehepunkt)
+        ? ` Dabei steht ${l2 && l2.hoehepunkt ? "die zweite" : "die dritte"} Ebene gerade winkelhaft ` +
+          `zum Los des Glücks — eine der tätigen Strecken.` : "")));
   }
 
   if (zrg && alter != null) {

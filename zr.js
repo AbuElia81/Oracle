@@ -11,8 +11,8 @@
    das gegenüberliegende Zeichen und läuft von dort weiter. Valens hält
    diesen Sprung für einen der wichtigsten Augenblicke einer Biographie.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=80";
-import { berechneGeburt, norm360 } from "./astro.js?v=80";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=82";
+import { berechneGeburt, norm360 } from "./astro.js?v=82";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -158,6 +158,29 @@ function zeichnenBaender(container, perioden, maxAlter, maxLevel, onScrub) {
   svg.addEventListener("pointercancel", () => { ziehen = false; });
 }
 
+/* Die letzte Rechnung zum Nachfragen — die Tafel zeigt nur L1 und L2, die
+   dritte Ebene steckt in der Zeitleiste. Deutung und Essenz brauchen alle
+   drei, darum hier heraus statt über das Auslesen der Tabelle. */
+let letzteRechnung = null;
+
+export function zrStand(alter) {
+  if (!letzteRechnung) return null;
+  const { perioden, fortunaSign, losSign, losArt } = letzteRechnung;
+  const finde = lvl => perioden.find(pr => pr.level === lvl && alter >= pr.startAlter && alter < pr.endAlter) || null;
+  const schmuecke = pr => pr && ({
+    level: pr.level,
+    zeichen: ZEICHEN[pr.signIdx].name, glyph: ZEICHEN[pr.signIdx].glyph,
+    herrscher: PLANETEN[DOMIZIL[pr.signIdx]].name,
+    von: pr.startAlter, bis: pr.endAlter,
+    hoehepunkt: !!pr.hoehepunkt, loesung: !!pr.loesung, verdoppelt: !!pr.verdoppelt
+  });
+  return {
+    L1: schmuecke(finde(1)), L2: schmuecke(finde(2)), L3: schmuecke(finde(3)),
+    losArt, losZeichen: ZEICHEN[losSign].name, fortunaZeichen: ZEICHEN[fortunaSign].name,
+    alle: perioden
+  };
+}
+
 function berechneUndZeige() {
   const cikti = $("#zrCikti");
   const p = leseProfil();
@@ -192,6 +215,7 @@ function berechneUndZeige() {
   const perioden = [];
   erzeugePerioden(losSign, GESAMT_JAHRE, 0, 1, [], verdoppelt, maxLevel, maxAlter, perioden);
   perioden.forEach(pr => { pr.hoehepunkt = winkelhaft(pr.signIdx); });
+  letzteRechnung = { perioden, fortunaSign, losSign, losArt };
 
   cikti.hidden = false;
   cikti.innerHTML = "";

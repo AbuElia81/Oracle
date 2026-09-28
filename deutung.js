@@ -6,9 +6,10 @@
    fertigen Tafeln und setzt seinen Text in einen eigenen Kasten daneben.
    Deshalb überlebt die Deutung auch ein Neurechnen.
    --------------------------------------------------------------------- */
-import { leseProfilRoh } from "./profil.js?v=80";
-import { profektionJetzt } from "./jahr.js?v=80";
-import { zustandVon, radix, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=80";
+import { leseProfilRoh } from "./profil.js?v=82";
+import { profektionJetzt } from "./jahr.js?v=82";
+import { zustandVon, radix, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=82";
+import { zrStand } from "./zr.js?v=82";
 
 /* Ein Satz, der eine Zeitherrscher-Aussage am Geburtshoroskop festmacht.
    Genau darum geht es: Die Technik sagt wann, das Horoskop sagt was. */
@@ -193,6 +194,19 @@ function zrDeutung(kasten) {
       `unter ${l2.zeichen} und ${l2.herrscher}: ${KAPITEL[l2.zeichen] || "eigener Art."} ` +
       `Sie sagt nicht, worum es geht — das sagt das große Kapitel —, sondern woran man es gerade merkt.`;
     kasten.append(p2);
+  }
+
+  /* Die dritte Ebene steht nicht in der Tafel; zr.js gibt sie heraus. */
+  let l3 = null;
+  try { const st = zrStand(alter); if (st && st.L3) l3 = st.L3; } catch (e) {}
+  if (l3) {
+    const p3 = el("p");
+    p3.innerHTML = `<b>Und darin die dritte Ebene</b>: ${l3.glyph} ${l3.zeichen} unter ` +
+      `${l3.herrscher}, noch bis ${l3.bis.toFixed(1).replace(".", ",")} Jahren. ` +
+      `${(KAPITEL[l3.zeichen] || "eigener Art.").replace(/^./, c => c.toUpperCase())} ` +
+      `Auf dieser Ebene geht es um Monate, nicht um Jahre — ` +
+      `sie färbt die Tage, ohne das Thema zu ändern.`;
+    kasten.append(p3);
   }
 
   const festL1 = l1 && konkret(l1.herrscher, `${grossMitArtikel(l1.herrscher)} führt das große Kapitel und`);
