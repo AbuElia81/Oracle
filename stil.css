@@ -602,3 +602,16 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 @media (max-width: 34rem) {
   .periodenTablo th:nth-child(5), .periodenTablo td:nth-child(5) { display: none; }
 }
+
+/* Der Schlussabschnitt der Essenz. */
+.schlussKasten {
+  margin-top: 2.5rem; padding: 1.8rem 1.5rem;
+  background: linear-gradient(180deg, rgba(201,162,39,.06), transparent);
+  border: 1px solid var(--linie); border-top: 2px solid var(--ton); border-radius: 2px;
+}
+.schlussKasten h3:first-child { margin-top: 0; }
+.schlussKasten p { font-size: 1.05rem; }
+.schlussWort {
+  margin-top: 1.4rem; padding-top: 1.2rem; border-top: 1px solid var(--linie);
+  color: var(--gedaempft); font-size: .95rem !important; font-style: italic;
+}

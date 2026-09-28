@@ -6,13 +6,13 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=74";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=74";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=74";
-import { JAHR, profektionJetzt } from "./jahr.js?v=74";
-import { radix, transite, progression, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=74";
-import { mondHeute } from "./elektion.js?v=74";
-import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=74";
+import { cevir, toplam, kalan } from "./ebced.js?v=78";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=78";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=78";
+import { JAHR, profektionJetzt } from "./jahr.js?v=78";
+import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=78";
+import { mondHeute } from "./elektion.js?v=78";
+import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=78";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -142,6 +142,47 @@ function jahresPunkte() {
     if (!saetze.length && !punkte.length) return null;
     return { titel, kern: saetze[0] || "", punkte: punkte.slice(0, 3) };
   }).filter(Boolean);
+}
+
+/* ------------------------------------------------------- die Zusammenschau
+   Die einzelnen Techniken nennen jede einen Herrn der Zeit. Interessant
+   wird es, wo mehrere denselben nennen — Systeme, die einander nie gelesen
+   haben. Das ist keine Deutung aus der Luft, sondern eine Zählung. */
+
+const PLANET_NAME = {
+  sonne:"Sonne", mond:"Mond", merkur:"Merkur", venus:"Venus",
+  mars:"Mars", jupiter:"Jupiter", saturn:"Saturn"
+};
+const ZAHLWORT = { 1:"eine", 2:"zwei", 3:"drei", 4:"vier" };
+const NAME_ZU_KEY = Object.fromEntries(Object.entries(PLANET_NAME).map(([k, v]) => [v, k]));
+
+function herrenDerZeit({ zr, prof, fd, vd }) {
+  const stimmen = [];
+  /* Aus der ZR-Tafel kommt der Herrscher als "♄ Saturn" — Glyphe weg. */
+  const blank = t => String(t || "").replace(/[^A-Za-zÄÖÜäöüß]/g, "").trim();
+  const zrHerr = zr && zr.L1 ? blank(zr.L1.herrscher) : "";
+  if (NAME_ZU_KEY[zrHerr])
+    stimmen.push({ key: NAME_ZU_KEY[zrHerr], quelle: "Zodiacal Releasing" });
+  const profHerr = prof ? blank(prof.herr) : "";
+  if (NAME_ZU_KEY[profHerr])
+    stimmen.push({ key: NAME_ZU_KEY[profHerr], quelle: "die Profektion" });
+  if (fd && fd.laufend && PLANET_NAME[fd.laufend.key])
+    stimmen.push({ key: fd.laufend.key, quelle: "die Firdaria" });
+  if (vd && vd.laufend && PLANET_NAME[vd.laufend.key])
+    stimmen.push({ key: vd.laufend.key, quelle: "die Vimshottari Dasha" });
+
+  const zaehlung = {};
+  stimmen.forEach(st => {
+    zaehlung[st.key] = zaehlung[st.key] || { key: st.key, quellen: [] };
+    zaehlung[st.key].quellen.push(st.quelle);
+  });
+  const sortiert = Object.values(zaehlung).sort((a, b) => b.quellen.length - a.quellen.length);
+  return { stimmen, sortiert, anzahl: stimmen.length };
+}
+
+function undListe(teile) {
+  if (teile.length <= 1) return teile[0] || "";
+  return teile.slice(0, -1).join(", ") + " und " + teile[teile.length - 1];
 }
 
 /* ------------------------------------------------------------- der Text */
@@ -410,6 +451,73 @@ function schreibe(zielWahl) {
 
   if (sb) {
     cikti.appendChild(absatz("Der Rat", sb.burc.ogut));
+  }
+
+  /* ------------------------------------------------- die Zusammenschau */
+  const h = herrenDerZeit({ zr, prof: profektionJetzt(), fd, vd });
+
+  if (sb || r || h.anzahl) {
+    const kasten = el("div", "schlussKasten");
+    kasten.appendChild(el("h3", null, "Was das zusammen ergibt"));
+
+    /* Das Bleibende zuerst. */
+    if (r || sb) {
+      const hp = r && r.planeten[r.herrscher];
+      const satz = el("p");
+      satz.innerHTML =
+        (sb ? `Im Namen liegt ${sb.burc.tr} — ein Zeichen ${sb.unsur.de === "Feuer" ? "des Feuers" :
+              sb.unsur.de === "Erde" ? "der Erde" : sb.unsur.de === "Luft" ? "der Luft" : "des Wassers"}, ` +
+              `unter ${sb.herr.tr}. ` : "") +
+        (r && hp
+          ? `Im Himmel deiner Geburtsstunde steigt ${ZEICHEN[r.ascZeichen].name} auf, und ${mitArtikel(r.herrscher)} ` +
+            `führt von ${ZEICHEN[hp.zeichen].name} aus, ${HAUS[hp.haus - 1]}. `
+          : "") +
+        `Das ist der Teil, der sich nicht ändert — er läuft unter allem mit, was die Zeittechniken sagen.`;
+      kasten.appendChild(satz);
+    }
+
+    /* Und nun: worauf mehrere zugleich zeigen. */
+    if (h.anzahl) {
+      const oben = h.sortiert[0];
+      const mehrfach = oben.quellen.length > 1;
+      const z = zustandVon(oben.key);
+
+      const p1 = el("p");
+      if (mehrfach) {
+        p1.innerHTML = `Auffällig ist, worauf gerade <b>mehrere Systeme zugleich</b> zeigen: ` +
+          `${undListe(oben.quellen)} geben diese Jahre ${mitArtikel(oben.key)}. ` +
+          `${ZAHLWORT[h.anzahl] === "eine" ? "Eine" : (ZAHLWORT[h.anzahl] || h.anzahl).replace(/^./, c => c.toUpperCase())} Überlieferungen sprechen hier mit, die einander nie gelesen haben — ` +
+          `persisch, hellenistisch, indisch —, und ${ZAHLWORT[oben.quellen.length] || oben.quellen.length} ` +
+          `davon nennen denselben Herrn.`;
+      } else {
+        p1.innerHTML = `Die Zeittechniken nennen zurzeit verschiedene Herren: ` +
+          undListe(h.stimmen.map(st => `${st.quelle} ${mitArtikel(st.key)}`)) + `. ` +
+          `Keiner hat das Übergewicht — eine Strecke, in der mehreres nebeneinander läuft, ` +
+          `statt dass eine Sache alles bestimmt.`;
+      }
+      kasten.appendChild(p1);
+
+      if (mehrfach && z) {
+        const p2 = el("p");
+        p2.innerHTML = `Und dieser Herr ist bei dir kein Unbekannter: ${mitArtikel(oben.key)} steht ` +
+          `in ${z.zeichenGlyph} ${z.zeichenName}, im ${z.haus}. Haus — ${z.hausOrt}. ` +
+          `Dort, und nicht anderswo, wird sich in diesen Jahren entscheiden, was sie bringen. ` +
+          (z.wuerde.stufe === "—"
+            ? `Er hat dabei keine besondere Würde: Es hängt an den Umständen und an dir, nicht an einer mitgegebenen Stärke.`
+            : `Er steht dabei ${z.wuerde.text}, und das gibt der Sache ihr Gewicht.`);
+        kasten.appendChild(p2);
+      }
+    }
+
+    /* Der Schluss. */
+    const ende = el("p", "schlussWort");
+    ende.innerHTML =
+      "Keine dieser Künste sagt die Zukunft voraus, und keine wird hier so gebraucht. " +
+      "Sie geben Themen, Fälligkeiten und Tonarten — sie sagen, <em>worum es geht</em> und " +
+      "<em>wann es dran ist</em>, nicht, was daraus wird. Das steht in keiner Tafel.";
+    kasten.appendChild(ende);
+
+    cikti.appendChild(kasten);
   }
 
   /* Zwei Abschnitte kann die Essenz nicht von sich aus füllen — sie brauchen
