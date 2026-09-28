@@ -14,9 +14,9 @@
    Herr beginnt — und wie viel von seiner Zeit schon verbraucht war.
    Gerechnet wird siderisch, nicht tropisch.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=73";
-import { berechneGeburt, norm360 } from "./astro.js?v=73";
-import { zustandVon, ZEICHEN } from "./horoskop.js?v=73";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=74";
+import { berechneGeburt, norm360 } from "./astro.js?v=74";
+import { zustandVon, ZEICHEN } from "./horoskop.js?v=74";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -235,7 +235,7 @@ function zeichneFirdaria() {
   }
 
   const kutu = el("div", "tabloKutu");
-  const tab = el("table", "wuerdeTablo");
+  const tab = el("table", "wuerdeTablo periodenTablo");
   tab.innerHTML = "<thead><tr><th>Herr</th><th>Jahre</th><th>Von</th><th>Bis</th><th>Datum</th></tr></thead>";
   const tb = el("tbody");
   f.gross.forEach(g => {
@@ -298,7 +298,7 @@ function zeichneVimshottari() {
   }
 
   const kutu = el("div", "tabloKutu");
-  const tab = el("table", "wuerdeTablo");
+  const tab = el("table", "wuerdeTablo periodenTablo");
   tab.innerHTML = "<thead><tr><th>Mahadasha</th><th>Jahre</th><th>Von</th><th>Bis</th><th>Beginnt</th></tr></thead>";
   const tb = el("tbody");
   v.maha.forEach(m => {

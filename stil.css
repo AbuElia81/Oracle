@@ -596,3 +596,9 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 .spende .kucukNot {
   border: none; padding: 0; margin: 1rem auto 0; max-width: 30rem; text-align: center;
 }
+
+/* Auf dem Handy weicht in den Periodentafeln die Datumsspalte — das Alter
+   steht daneben, und abgeschnitten nützt das Datum niemandem. */
+@media (max-width: 34rem) {
+  .periodenTablo th:nth-child(5), .periodenTablo td:nth-child(5) { display: none; }
+}

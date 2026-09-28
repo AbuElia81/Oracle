@@ -6,7 +6,7 @@
    Geburtsprofil vorliegt, drückt dieses Modul den Knopf — nichts anderes.
    An ihrer Rechnung wird nichts geändert.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung } from "./profil.js?v=73";
+import { leseProfil, aufProfilAenderung } from "./profil.js?v=74";
 
 const RECHNER = [
   { knopf:"#lbBerechnen",        cikti:"#lbCikti",          reiter:"bLebensbogen" },
