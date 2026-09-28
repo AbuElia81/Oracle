@@ -6,14 +6,14 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=82";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=82";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=82";
-import { JAHR, profektionJetzt } from "./jahr.js?v=82";
-import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=82";
-import { mondHeute } from "./elektion.js?v=82";
-import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=82";
-import { zrStand } from "./zr.js?v=82";
+import { cevir, toplam, kalan } from "./ebced.js?v=85";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=85";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=85";
+import { JAHR, profektionJetzt } from "./jahr.js?v=85";
+import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=85";
+import { mondHeute } from "./elektion.js?v=85";
+import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=85";
+import { zrStand } from "./zr.js?v=85";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);

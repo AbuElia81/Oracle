@@ -626,3 +626,45 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 .gespeichertZeile .haken { color: var(--ton); margin-right: .3rem; }
 .gespeichert .kucukNot { border: none; padding: 0; margin: .5rem 0 0; }
 .sicherung { margin-top: 1.1rem; }
+
+/* ------------------------------------------------------- Das Leuchten */
+.lhBuehne {
+  position: relative; margin: 1.5rem auto 0; max-width: 20rem;
+  border: 1px solid var(--linie); border-radius: 2px; overflow: hidden;
+  background: #05060b;
+}
+.lhFigur { display: block; width: 100%; height: auto; }
+.lhAura {
+  position: absolute; inset: 0; pointer-events: none;
+  mix-blend-mode: screen;
+  transition: background .5s ease;
+  animation: auraPuls var(--puls, 2.4s) ease-in-out infinite;
+}
+@keyframes auraPuls { 0%,100% { opacity:.85; } 50% { opacity:1; } }
+
+.lhAblesung { text-align: center; margin-top: 1rem; line-height: 1.5; }
+.lhAlter { color: var(--schrift); font-size: 1.15rem; }
+.lhHerr { font-size: 1.15rem; margin-left: .4rem; }
+.lhEinig {
+  display: block; color: var(--gedaempft); font-size: .8rem;
+  letter-spacing: .1em; text-transform: uppercase; margin-top: .2rem;
+}
+
+.lhLeiste { display: flex; gap: .7rem; align-items: center; margin-top: 1.2rem; }
+.lhLeiste input[type=range] { flex: 1; accent-color: var(--ton); }
+.lhMarken {
+  display: flex; justify-content: space-between;
+  font-size: .68rem; color: var(--gedaempft); padding: 0 .2rem; margin-top: .2rem;
+}
+
+.lhStimmen {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: .5rem; margin-top: 1.4rem;
+}
+.lhChip {
+  background: var(--kagit2); border: 1px solid var(--linie);
+  border-left-width: 2px; border-radius: 2px; padding: .55rem .7rem;
+}
+.lhChipStern { font-size: 1.1rem; margin-right: .3rem; }
+.lhChipQuelle { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gedaempft); }
+.lhChipSagt { display: block; font-size: .85rem; color: var(--schrift); margin-top: .25rem; }
