@@ -615,3 +615,14 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
   margin-top: 1.4rem; padding-top: 1.2rem; border-top: 1px solid var(--linie);
   color: var(--gedaempft); font-size: .95rem !important; font-style: italic;
 }
+
+/* --------------------------------------------------- Speicher-Hinweis */
+.gespeichert {
+  margin-top: 1.2rem; padding: .9rem 1.1rem;
+  background: rgba(201,162,39,.06);
+  border: 1px solid var(--linie); border-left: 2px solid var(--ton); border-radius: 2px;
+}
+.gespeichertZeile { color: var(--schrift); font-size: .95rem; }
+.gespeichertZeile .haken { color: var(--ton); margin-right: .3rem; }
+.gespeichert .kucukNot { border: none; padding: 0; margin: .5rem 0 0; }
+.sicherung { margin-top: 1.1rem; }

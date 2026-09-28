@@ -1,7 +1,7 @@
 /* ------------------------------------------------------------------------
    profil-ui.js — Bedienung des Reiters "Meine Daten".
    --------------------------------------------------------------------- */
-import { leseProfilRoh, schreibeProfil, loescheProfil } from "./profil.js?v=78";
+import { leseProfilRoh, schreibeProfil, loescheProfil } from "./profil.js?v=80";
 
 const $ = s => document.querySelector(s);
 
@@ -66,8 +66,38 @@ function sammle() {
     ort: $("#pOrt").value.trim(),
     breite: parseFloat($("#pBreite").value),
     laenge: parseFloat($("#pLaenge").value),
-    utc: parseFloat($("#pUtc").value)
+    utc: parseFloat($("#pUtc").value),
+    gespeichertAm: new Date().toISOString()
   };
+}
+
+const MONATE = ["Januar","Februar","März","April","Mai","Juni","Juli",
+                "August","September","Oktober","November","Dezember"];
+
+/* Zeigt an, dass und wann die Angaben auf diesem Gerät liegen. Sie liegen
+   im localStorage des Browsers — nicht auf einem Server, den es nicht gibt,
+   und nicht auf anderen Geräten. Genau das soll dastehen. */
+function zeigeGespeichert() {
+  const kasten = $("#pGespeichert");
+  if (!kasten) return;
+  const p = leseProfilRoh();
+  if (!p) { kasten.hidden = true; return; }
+
+  let wann = "";
+  if (p.gespeichertAm) {
+    const d = new Date(p.gespeichertAm);
+    if (!isNaN(d)) {
+      const uhr = String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
+      wann = `${d.getDate()}. ${MONATE[d.getMonth()]} ${d.getFullYear()}, ${uhr} Uhr`;
+    }
+  }
+  kasten.hidden = false;
+  kasten.innerHTML =
+    `<div class="gespeichertZeile"><span class="haken">✓</span> ` +
+    `<b>Auf diesem Gerät gespeichert</b>${wann ? " — " + wann : ""}</div>` +
+    `<p class="kucukNot">Die Angaben liegen im Speicher deines Browsers. Beim nächsten Besuch ` +
+    `stehen sie wieder da, auch ohne Netz. Auf ein anderes Gerät kommen sie nur über eine ` +
+    `Sicherung — es gibt keinen Server, der sie abgleichen könnte.</p>`;
 }
 
 function speichern(still) {
@@ -87,6 +117,7 @@ function speichern(still) {
   }
 
   schreibeProfil(daten);
+  zeigeGespeichert();
 
   const ortOhneKoordinaten = daten.ort && (isNaN(daten.breite) || isNaN(daten.laenge));
   const warnung = $("#pKoordWarnung");
@@ -133,4 +164,70 @@ $("#pLoeschen").addEventListener("click", () => {
   const status = $("#pSpeicherStatus");
   status.className = "geoStatus";
   status.textContent = "Gelöscht.";
+  zeigeGespeichert();
 });
+
+/* ------------------------------------------------------------- Sicherung
+   Der Browserspeicher ist an dieses eine Gerät und diesen einen Browser
+   gebunden. Wer die Angaben mitnehmen will — auf das Telefon, in einen
+   anderen Browser, über eine Neuinstallation hinweg —, nimmt eine Datei. */
+
+$("#pAusgeben")?.addEventListener("click", () => {
+  const status = $("#pSicherungStatus");
+  status.className = "geoStatus";
+  const p = leseProfilRoh();
+  if (!p) { status.textContent = "Noch nichts einzutragen."; status.classList.add("fehler"); return; }
+
+  const text = JSON.stringify({ art: "oracle-geburtsprofil", fassung: 1, daten: p }, null, 2);
+  const blob = new Blob([text], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "oracle-daten" + (p.name ? "-" + p.name.toLowerCase().replace(/[^a-z0-9]+/g, "-") : "") + ".json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+  status.textContent = "Datei erzeugt — gut aufheben, sie enthält deine Angaben.";
+  status.classList.add("ok");
+});
+
+$("#pEinlesen")?.addEventListener("click", () => $("#pDatei")?.click());
+
+$("#pDatei")?.addEventListener("change", e => {
+  const status = $("#pSicherungStatus");
+  status.className = "geoStatus";
+  const datei = e.target.files && e.target.files[0];
+  if (!datei) return;
+
+  const leser = new FileReader();
+  leser.onload = () => {
+    try {
+      let gelesen;
+      try { gelesen = JSON.parse(String(leser.result)); }
+      catch (e) { throw new Error("die Datei ist beschädigt oder gar keine Sicherung"); }
+      const d = gelesen && gelesen.art === "oracle-geburtsprofil" ? gelesen.daten : gelesen;
+      if (!d || typeof d !== "object") throw new Error("unbekannter Inhalt");
+      const hatNamen = d.name && d.anne;
+      const hatGeburt = d.datum && d.zeit;
+      if (!hatNamen && !hatGeburt) throw new Error("keine brauchbaren Angaben darin");
+
+      fuelleFormular(d);
+      speichern(true);
+      status.textContent = "Eingelesen — alle Abschnitte rechnen jetzt damit.";
+      status.classList.add("ok");
+    } catch (fehler) {
+      status.textContent = "Das war keine Oracle-Sicherung — " + (fehler.message || "unlesbar") + ". Deine bisherigen Angaben bleiben unberührt.";
+      status.classList.add("fehler");
+    }
+    e.target.value = "";
+  };
+  leser.onerror = () => {
+    status.textContent = "Die Datei ließ sich nicht lesen.";
+    status.classList.add("fehler");
+    e.target.value = "";
+  };
+  leser.readAsText(datei);
+});
+
+zeigeGespeichert();

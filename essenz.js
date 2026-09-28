@@ -6,13 +6,13 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=78";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=78";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=78";
-import { JAHR, profektionJetzt } from "./jahr.js?v=78";
-import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=78";
-import { mondHeute } from "./elektion.js?v=78";
-import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=78";
+import { cevir, toplam, kalan } from "./ebced.js?v=80";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=80";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=80";
+import { JAHR, profektionJetzt } from "./jahr.js?v=80";
+import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=80";
+import { mondHeute } from "./elektion.js?v=80";
+import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=80";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
