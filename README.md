@@ -17,6 +17,8 @@ dann von selbst damit, ohne Knopfdruck und über das Neuladen hinweg.
 | **Der Lebensbogen** | Primärdirektionen |
 | **Zodiacal Releasing** | hellenistische Zeitalter aus dem Los des Glücks |
 | **Antiszien** | Schattenzwillinge |
+| **Firdaria** | persisch-arabisch (Abū Maʿšar): 75 Jahre auf neun Herren, Reihenfolge nach Tag- oder Nachtgeburt, mit Unterperioden |
+| **Vimshottari Dasha** | indisch: 120 Jahre auf neun Herren, gezählt vom siderischen Mondhaus der Geburt, mit Antardasha |
 | **Die Essenz** | liest alles Gefundene zu einem Text zusammen |
 
 Alles rechnet im Browser; nichts geht an einen Server dieser Seite, es gibt keinen.
@@ -141,6 +143,7 @@ Statische Seite, keine Baukette:
 | `yildiz-profil.js` · `geist-profil.js` | Brücken vom Profil in die einzelnen Abschnitte |
 | `ebced.js` · `korpus.js` · `oracle.js` | Yıldıznâme: Buchstabenwerte, Textkorpus, Bedienung |
 | `astro.js` · `direktionen.js` | gemeinsame Astronomie und Primärdirektionen |
+| `perioden.js` | Firdaria und Vimshottari |
 | `horoskop.js` | Radix, Transite, Progression — und die Auskunft, die andere Abschnitte abfragen |
 | `geist.js` · `lebensbogen.js` · `zr.js` · `antiszien.js` · `profektionen.js` | die einzelnen Rechner |
 | `deutung.js` · `jahr.js` | Deutungskästen und Jahresüberblick neben den Tafeln |

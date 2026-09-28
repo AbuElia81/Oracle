@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Oracle</title>
 <meta name="description" content="Oracle — Orakelrechner nach alten Büchern: das osmanische Yıldıznâme aus Name und Muttername, der Geist des 11. Hauses nach Agrippa, Primärdirektionen, Zodiacal Releasing und Antiszien.">
-<link rel="stylesheet" href="stil.css?v=70">
+<link rel="stylesheet" href="stil.css?v=73">
 </head>
 <body>
 
@@ -30,6 +30,8 @@
   <button data-bolum="bZR">Zodiacal Releasing</button>
   <button data-bolum="bAntiszien">Antiszien</button>
   <button data-bolum="bProfektionen">Profektionen</button>
+  <button data-bolum="bFirdaria">Firdaria</button>
+  <button data-bolum="bVimshottari">Vimshottari</button>
   <button data-bolum="bEssenz">Die Essenz</button>
   <button data-bolum="bNasil">Die Idee dahinter</button>
 </nav>
@@ -617,6 +619,45 @@
   geldliche Entscheidungen gehören zu Menschen, nicht zu Häusern.</p>
 </section>
 
+<!-- --------------------------------------------------------- Firdaria -->
+<section class="bolum" id="bFirdaria" hidden>
+  <div class="appKopf">
+    <div class="arapUst">فردار</div>
+    <h2>Firdaria</h2>
+    <p class="unterzeile">Fünfundsiebzig Jahre auf neun Herren</p>
+  </div>
+
+  <p class="giriş">Aus dem persisch-arabischen Zweig, bei <b>Abū Maʿšar</b>
+  und den Seinen. Das Leben wird nicht in Zeichen abgezählt, sondern in feste
+  Jahresmengen zerlegt: Sonne zehn, Venus acht, Merkur dreizehn, Mond neun,
+  Saturn elf, Jupiter zwölf, Mars sieben — dazu die beiden Mondknoten mit drei
+  und zwei. Zusammen fünfundsiebzig. Die Reihenfolge hängt an einer einzigen
+  Frage: Stand die Sonne bei der Geburt über oder unter dem Horizont?</p>
+
+  <button id="fdBerechnen" class="buyukDugme">Neu rechnen</button>
+  <div id="fdCikti" hidden></div>
+</section>
+
+<!-- ------------------------------------------------------ Vimshottari -->
+<section class="bolum" id="bVimshottari" hidden>
+  <div class="appKopf">
+    <div class="arapUst">विंशोत्तरी</div>
+    <h2>Vimshottari Dasha</h2>
+    <p class="unterzeile">Hundertzwanzig Jahre, gezählt vom Mondhaus der Geburt</p>
+  </div>
+
+  <p class="giriş">Das verbreitetste Zeitsystem der indischen Astrologie.
+  Hundertzwanzig Jahre verteilen sich auf neun Herren — Ketu sieben, Venus
+  zwanzig, Sonne sechs, Mond zehn, Mars sieben, Rahu achtzehn, Jupiter sechzehn,
+  Saturn neunzehn, Merkur siebzehn. Welcher beginnt, entscheidet der Mond: In
+  welchem seiner <b>siebenundzwanzig Häuser</b> er bei der Geburt stand, und wie
+  weit er darin schon gekommen war. Gerechnet wird <b>siderisch</b>, nicht
+  tropisch — der Unterschied beträgt derzeit gut vierundzwanzig Grad.</p>
+
+  <button id="vdBerechnen" class="buyukDugme">Neu rechnen</button>
+  <div id="vdCikti" hidden></div>
+</section>
+
 <!-- --------------------------------------------------------- V. Wie -->
 <section class="bolum" id="bNasil" hidden>
   <div class="appKopf">
@@ -776,6 +817,31 @@
   und das Alter. Gerade deshalb ist sie robust — sie irrt nicht an einer
   ungenauen Geburtszeit, solange das Zeichen des Aszendenten stimmt.</p>
 
+  <h3>Firdaria</h3>
+  <p>Aus dem persisch-arabischen Zweig, bei <b>Abū Maʿšar</b> und den Seinen.
+  Fünfundsiebzig Jahre werden in feste Mengen zerlegt und der Reihe nach
+  vergeben: Sonne zehn, Venus acht, Merkur dreizehn, Mond neun, Saturn elf,
+  Jupiter zwölf, Mars sieben, dazu die Mondknoten mit drei und zwei. Die
+  Reihenfolge hängt allein daran, ob die Sonne bei der Geburt über oder unter
+  dem Horizont stand. Jede große Periode zerfällt in sieben gleiche
+  Unterperioden, beginnend beim eigenen Herrn.</p>
+  <p>Das Verfahren fragt weder nach Zeichen noch nach Häusern — es ist reine
+  Abzählung. Seine Schärfe bekommt es erst dadurch, wo der jeweilige Herr im
+  Geburtshoroskop steht.</p>
+
+  <h3>Vimshottari Dasha</h3>
+  <p>Das verbreitetste Zeitsystem der indischen Astrologie. Hundertzwanzig
+  Jahre auf neun Herren: Ketu sieben, Venus zwanzig, Sonne sechs, Mond zehn,
+  Mars sieben, Rahu achtzehn, Jupiter sechzehn, Saturn neunzehn, Merkur
+  siebzehn. Welcher beginnt, entscheidet der Mond — genauer: in welchem seiner
+  <b>siebenundzwanzig Häuser</b> er bei der Geburt stand und wie weit er darin
+  schon gekommen war. Dieser Rest ist die erste Periode.</p>
+  <p>Gerechnet wird <b>siderisch</b>: Der indische Tierkreis hängt an den
+  Sternen, nicht am Frühlingspunkt, und läuft dem tropischen inzwischen um gut
+  vierundzwanzig Grad hinterher. Diese Differenz heißt Ayanamsa; hier nach
+  Lahiri, genähert auf wenige Bogenminuten — bei einem Mondhaus von 13°20′
+  fällt das nicht ins Gewicht.</p>
+
   <h3>Die Essenz</h3>
   <p>Rechnet nichts Eigenes. Sie liest zusammen, was die anderen Abschnitte
   gefunden haben, und fügt es zu einem Text — das Wesen aus den Namen, den
@@ -814,24 +880,25 @@
   osmanisch, hellenistisch, arabisch, ägyptisch, lateinisch</p>
 </footer>
 
-<script type="module" src="oracle.js?v=70"></script>
-<script type="module" src="profil.js?v=70"></script>
-<script type="module" src="profil-ui.js?v=70"></script>
-<script type="module" src="zugang.js?v=70"></script>
-<script type="module" src="horoskop.js?v=70"></script>
-<script type="module" src="elektion.js?v=70"></script>
-<script type="module" src="ramel.js?v=70"></script>
-<script type="module" src="spende.js?v=70"></script>
-<script type="module" src="geist.js?v=70"></script>
-<script type="module" src="geist-profil.js?v=70"></script>
-<script type="module" src="yildiz-profil.js?v=70"></script>
-<script type="module" src="essenz.js?v=70"></script>
-<script type="module" src="auto-rechnen.js?v=70"></script>
-<script type="module" src="deutung.js?v=70"></script>
-<script type="module" src="jahr.js?v=70"></script>
-<script type="module" src="lebensbogen.js?v=70"></script>
-<script type="module" src="zr.js?v=70"></script>
-<script type="module" src="antiszien.js?v=70"></script>
-<script type="module" src="profektionen.js?v=70"></script>
+<script type="module" src="oracle.js?v=73"></script>
+<script type="module" src="profil.js?v=73"></script>
+<script type="module" src="profil-ui.js?v=73"></script>
+<script type="module" src="zugang.js?v=73"></script>
+<script type="module" src="horoskop.js?v=73"></script>
+<script type="module" src="perioden.js?v=73"></script>
+<script type="module" src="elektion.js?v=73"></script>
+<script type="module" src="ramel.js?v=73"></script>
+<script type="module" src="spende.js?v=73"></script>
+<script type="module" src="geist.js?v=73"></script>
+<script type="module" src="geist-profil.js?v=73"></script>
+<script type="module" src="yildiz-profil.js?v=73"></script>
+<script type="module" src="essenz.js?v=73"></script>
+<script type="module" src="auto-rechnen.js?v=73"></script>
+<script type="module" src="deutung.js?v=73"></script>
+<script type="module" src="jahr.js?v=73"></script>
+<script type="module" src="lebensbogen.js?v=73"></script>
+<script type="module" src="zr.js?v=73"></script>
+<script type="module" src="antiszien.js?v=73"></script>
+<script type="module" src="profektionen.js?v=73"></script>
 </body>
 </html>

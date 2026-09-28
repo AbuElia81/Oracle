@@ -6,18 +6,20 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=70";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=70";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=70";
-import { JAHR, profektionJetzt } from "./jahr.js?v=70";
-import { radix, transite, progression, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=70";
-import { mondHeute } from "./elektion.js?v=70";
+import { cevir, toplam, kalan } from "./ebced.js?v=73";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=73";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=73";
+import { JAHR, profektionJetzt } from "./jahr.js?v=73";
+import { radix, transite, progression, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=73";
+import { mondHeute } from "./elektion.js?v=73";
+import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=73";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
   if (c) n.className = c; if (txt !== undefined) n.textContent = txt; return n; };
 
 const gezegen = ad => GEZEGENLER.find(g => g.tr === ad);
+const komma = n => n.toFixed(1).replace(".", ",");
 
 /* Alter heute, in Jahren, aus dem hinterlegten Geburtsdatum. */
 function alterHeute(p) {
@@ -176,6 +178,9 @@ function schreibe(zielWahl) {
   const tr = transite();
   const prg = progression();
   const zrg = zrGipfel();
+  let fd = null, vd = null;
+  try { fd = firdariaJetzt(); } catch (e) {}
+  try { vd = vimshottariJetzt(); } catch (e) {}
   let mond = null;
   try { mond = mondHeute(); } catch (e) { mond = null; }
   const prof = profektion();
@@ -288,6 +293,28 @@ function schreibe(zielWahl) {
           return "";
         })()));
     }
+  }
+
+  if ((fd && fd.laufend) || (vd && vd.laufend)) {
+    const teile = [];
+    if (fd && fd.laufend) {
+      teile.push(`Die <b>Firdaria</b> der Perser gibt diese Jahre ${fd.laufend.name} ` +
+        `(${komma(fd.laufend.anfang)} bis ${komma(fd.laufend.ende)})` +
+        (fd.laufendUnter && fd.laufendUnter.key !== fd.laufend.key
+          ? `, darin gerade ${fd.laufendUnter.name}` : "") +
+        ` — ${fd.laufend.was}`);
+    }
+    if (vd && vd.laufend) {
+      teile.push(`Die <b>Vimshottari Dasha</b> aus Indien, gezählt von deinem Mondhaus ` +
+        `${vd.nakshatra}, steht bei ${vd.laufend.name}` +
+        (vd.laufendUnter ? ` mit ${vd.laufendUnter.name} darin` : "") +
+        ` — ${vd.laufend.was}`);
+    }
+    const p = el("p");
+    p.innerHTML = teile.join(". ") + ". Zwei Systeme, die den Tierkreis gar nicht befragen, " +
+      "sondern feste Jahresmengen verteilen — und die trotzdem auf dieselben Jahre zeigen wie die übrigen.";
+    cikti.appendChild(el("h3", null, "Die Herren deiner Zeit"));
+    cikti.appendChild(p);
   }
 
   if (dir) {
@@ -411,7 +438,7 @@ function schreibe(zielWahl) {
     cikti.appendChild(kasten);
   }
 
-  if (!sb && !geist && !zr && !dir && !anti && !prof && !r) {
+  if (!sb && !geist && !zr && !dir && !anti && !prof && !r && !fd && !vd) {
     const w = el("p", "kucukNot", "Es fehlen noch Angaben. ");
     const b = el("button", "knopfKlein", "Zur Dateneingabe");
     b.addEventListener("click", zurDateneingabe);
