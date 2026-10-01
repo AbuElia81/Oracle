@@ -690,3 +690,9 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
   border: 1px solid var(--rot); border-radius: 2px;
   font-size: .95rem; line-height: 1.6;
 }
+/* Auf dem Handy weicht in der Hylech-Tafel die Gradspalte — die
+   Entscheidung hängt am Haus, nicht am Grad, und die Ja/Nein-Spalte
+   gehört ins Bild. */
+@media (max-width: 34rem) {
+  .hylechTablo th:nth-child(2), .hylechTablo td:nth-child(2) { display: none; }
+}

@@ -9,10 +9,10 @@
    zieht. Wo viele dasselbe sagen, brennt es hell; wo jedes etwas anderes
    sagt, bleibt es matt und vielfarbig.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=89";
-import { radix, PLANET, mitArtikel, ZEICHEN } from "./horoskop.js?v=89";
-import { firdaria, vimshottari } from "./perioden.js?v=89";
-import { zrStand } from "./zr.js?v=89";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=90";
+import { radix, PLANET, mitArtikel, ZEICHEN } from "./horoskop.js?v=90";
+import { firdaria, vimshottari } from "./perioden.js?v=90";
+import { zrStand } from "./zr.js?v=90";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);

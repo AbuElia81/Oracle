@@ -13,10 +13,10 @@
    gestritten wurde. Sie steht hier, weil sie zur Überlieferung gehört, und
    sie sagt nichts über den Tod eines Menschen.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=89";
-import { norm360, planetenPositionen, julianischesDatum, sonnenLaenge } from "./astro.js?v=89";
-import { radix, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel } from "./horoskop.js?v=89";
-import { wuerden, ermittleAlmuten } from "./geist.js?v=89";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=90";
+import { norm360, planetenPositionen, julianischesDatum, sonnenLaenge } from "./astro.js?v=90";
+import { radix, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel } from "./horoskop.js?v=90";
+import { wuerden, ermittleAlmuten } from "./geist.js?v=90";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -191,7 +191,7 @@ function zeichne() {
     "elften Haus. Sonst rückt der nächste Anwärter nach."));
 
   const kutu = el("div", "tabloKutu");
-  const tab = el("table", "wuerdeTablo");
+  const tab = el("table", "wuerdeTablo hylechTablo");
   tab.innerHTML = "<thead><tr><th>Anwärter</th><th>Stellung</th><th>Haus</th><th>Ort des Lebens?</th></tr></thead>";
   const tb = el("tbody");
   L.kandidaten.forEach(k => {
@@ -220,7 +220,7 @@ function zeichne() {
 
   const kutu2 = el("div", "tabloKutu");
   const tab2 = el("table", "wuerdeTablo");
-  tab2.innerHTML = "<thead><tr><th>Planet</th><th>Würde am Hylech</th><th>sieht ihn</th></tr></thead>";
+  tab2.innerHTML = "<thead><tr><th>Planet</th><th>Würde</th><th>sieht den Hylech</th></tr></thead>";
   const tb2 = el("tbody");
   REIHE.forEach(k => {
     const pl = L.radix.planeten[k];

@@ -11,8 +11,8 @@
    das gegenüberliegende Zeichen und läuft von dort weiter. Valens hält
    diesen Sprung für einen der wichtigsten Augenblicke einer Biographie.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=89";
-import { berechneGeburt, norm360 } from "./astro.js?v=89";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=90";
+import { berechneGeburt, norm360 } from "./astro.js?v=90";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
