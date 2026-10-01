@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Oracle</title>
 <meta name="description" content="Oracle — Orakelrechner nach alten Büchern: das osmanische Yıldıznâme aus Name und Muttername, der Geist des 11. Hauses nach Agrippa, Primärdirektionen, Zodiacal Releasing und Antiszien.">
-<link rel="stylesheet" href="stil.css?v=91">
+<link rel="stylesheet" href="stil.css?v=92">
 </head>
 <body>
 
@@ -19,23 +19,23 @@
 
 <nav id="reiter" aria-label="Abschnitte">
   <button class="etkin" data-bolum="bProfil">Oracle</button>
-  <button data-bolum="bHoroskop">Das Horoskop</button>
-  <button data-bolum="bYildiz">Yıldıznâme</button>
-  <button data-bolum="bNiyet">Niyet — die Frage</button>
-  <button data-bolum="bUyum">İsim uyumu</button>
-  <button data-bolum="bMenzil">Der rechte Zeitpunkt</button>
-  <button data-bolum="bRamel">ʿIlm al-Raml</button>
-  <button data-bolum="bGeist">Spirit Name</button>
-  <button data-bolum="bLebensbogen">Der Lebensbogen</button>
-  <button data-bolum="bZR">Zodiacal Releasing</button>
-  <button data-bolum="bAntiszien">Antiszien</button>
-  <button data-bolum="bProfektionen">Profektionen</button>
-  <button data-bolum="bFirdaria">Firdaria</button>
-  <button data-bolum="bVimshottari">Vimshottari</button>
-  <button data-bolum="bSolar">Jahresumdrehung</button>
-  <button data-bolum="bLebensmass">Das Lebensmaß</button>
-  <button data-bolum="bLeuchten">Das Leuchten</button>
-  <button data-bolum="bEssenz">Die Essenz</button>
+  <button data-bolum="bHoroskop" data-gruppe="sterne">Das Horoskop</button>
+  <button data-bolum="bYildiz" data-gruppe="sterne">Yıldıznâme</button>
+  <button data-bolum="bNiyet" data-gruppe="orakel">Niyet — die Frage</button>
+  <button data-bolum="bUyum" data-gruppe="orakel">İsim uyumu</button>
+  <button data-bolum="bMenzil" data-gruppe="orakel">Der rechte Zeitpunkt</button>
+  <button data-bolum="bRamel" data-gruppe="orakel">ʿIlm al-Raml</button>
+  <button data-bolum="bGeist" data-gruppe="sterne">Spirit Name</button>
+  <button data-bolum="bLebensbogen" data-gruppe="sterne">Der Lebensbogen</button>
+  <button data-bolum="bZR" data-gruppe="sterne">Zodiacal Releasing</button>
+  <button data-bolum="bAntiszien" data-gruppe="sterne">Antiszien</button>
+  <button data-bolum="bProfektionen" data-gruppe="sterne">Profektionen</button>
+  <button data-bolum="bFirdaria" data-gruppe="sterne">Firdaria</button>
+  <button data-bolum="bVimshottari" data-gruppe="sterne">Vimshottari</button>
+  <button data-bolum="bSolar" data-gruppe="sterne">Jahresumdrehung</button>
+  <button data-bolum="bLebensmass" data-gruppe="sterne">Das Lebensmaß</button>
+  <button data-bolum="bLeuchten" data-gruppe="sterne">Das Leuchten</button>
+  <button data-bolum="bEssenz" data-gruppe="beide">Die Essenz</button>
   <button data-bolum="bNasil">Die Idee dahinter</button>
 </nav>
 
@@ -327,6 +327,24 @@
   Dienst <a href="https://nominatim.openstreetmap.org" target="_blank" rel="noopener">Nominatim (OpenStreetMap)</a>
   — sonst bleibt alles hier im Browser (<code>localStorage</code>), nichts
   wird an einen Server dieser Seite geschickt, es gibt keinen.</p>
+
+  <div id="wahl" class="wahl" hidden>
+    <h3>Was möchtest du befragen?</h3>
+    <div class="wahlKarten">
+      <button type="button" class="wahlKarte" data-weg="orakel"
+              style="background-image:url('bilder/orakel.jpg')">
+        <span class="wahlName">Das Orakel</span>
+        <span class="wahlText">Eine Frage stellen und eine Antwort bekommen —
+        die Tafel der Absicht, zwei Namen gegeneinander, die Sandkunst, der rechte Zeitpunkt.</span>
+      </button>
+      <button type="button" class="wahlKarte" data-weg="sterne"
+              style="background-image:url('bilder/sterne.jpg')">
+        <span class="wahlName">Die Sterne</span>
+        <span class="wahlText">Den Himmel deiner Geburtsstunde auslegen —
+        Horoskop, Yıldıznâme, Spirit Name und die Herren der Zeit.</span>
+      </button>
+    </div>
+  </div>
 
   <div id="eStart" hidden>
     <div class="appKopf startEssenzKopf">
@@ -976,28 +994,28 @@
   osmanisch, hellenistisch, arabisch, ägyptisch, lateinisch</p>
 </footer>
 
-<script type="module" src="oracle.js?v=91"></script>
-<script type="module" src="profil.js?v=91"></script>
-<script type="module" src="profil-ui.js?v=91"></script>
-<script type="module" src="zugang.js?v=91"></script>
-<script type="module" src="horoskop.js?v=91"></script>
-<script type="module" src="perioden.js?v=91"></script>
-<script type="module" src="solar.js?v=91"></script>
-<script type="module" src="lebensmass.js?v=91"></script>
-<script type="module" src="leuchten.js?v=91"></script>
-<script type="module" src="elektion.js?v=91"></script>
-<script type="module" src="ramel.js?v=91"></script>
-<script type="module" src="spende.js?v=91"></script>
-<script type="module" src="geist.js?v=91"></script>
-<script type="module" src="geist-profil.js?v=91"></script>
-<script type="module" src="yildiz-profil.js?v=91"></script>
-<script type="module" src="essenz.js?v=91"></script>
-<script type="module" src="auto-rechnen.js?v=91"></script>
-<script type="module" src="deutung.js?v=91"></script>
-<script type="module" src="jahr.js?v=91"></script>
-<script type="module" src="lebensbogen.js?v=91"></script>
-<script type="module" src="zr.js?v=91"></script>
-<script type="module" src="antiszien.js?v=91"></script>
-<script type="module" src="profektionen.js?v=91"></script>
+<script type="module" src="oracle.js?v=92"></script>
+<script type="module" src="profil.js?v=92"></script>
+<script type="module" src="profil-ui.js?v=92"></script>
+<script type="module" src="zugang.js?v=92"></script>
+<script type="module" src="horoskop.js?v=92"></script>
+<script type="module" src="perioden.js?v=92"></script>
+<script type="module" src="solar.js?v=92"></script>
+<script type="module" src="lebensmass.js?v=92"></script>
+<script type="module" src="leuchten.js?v=92"></script>
+<script type="module" src="elektion.js?v=92"></script>
+<script type="module" src="ramel.js?v=92"></script>
+<script type="module" src="spende.js?v=92"></script>
+<script type="module" src="geist.js?v=92"></script>
+<script type="module" src="geist-profil.js?v=92"></script>
+<script type="module" src="yildiz-profil.js?v=92"></script>
+<script type="module" src="essenz.js?v=92"></script>
+<script type="module" src="auto-rechnen.js?v=92"></script>
+<script type="module" src="deutung.js?v=92"></script>
+<script type="module" src="jahr.js?v=92"></script>
+<script type="module" src="lebensbogen.js?v=92"></script>
+<script type="module" src="zr.js?v=92"></script>
+<script type="module" src="antiszien.js?v=92"></script>
+<script type="module" src="profektionen.js?v=92"></script>
 </body>
 </html>
