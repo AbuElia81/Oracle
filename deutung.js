@@ -6,10 +6,10 @@
    fertigen Tafeln und setzt seinen Text in einen eigenen Kasten daneben.
    Deshalb überlebt die Deutung auch ein Neurechnen.
    --------------------------------------------------------------------- */
-import { leseProfilRoh } from "./profil.js?v=92";
-import { profektionJetzt } from "./jahr.js?v=92";
-import { zustandVon, radix, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=92";
-import { zrStand } from "./zr.js?v=92";
+import { leseProfilRoh } from "./profil.js?v=96";
+import { profektionJetzt } from "./jahr.js?v=96";
+import { zustandVon, radix, transite, PLANET, ZEICHEN, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=96";
+import { zrStand } from "./zr.js?v=96";
 
 /* Ein Satz, der eine Zeitherrscher-Aussage am Geburtshoroskop festmacht.
    Genau darum geht es: Die Technik sagt wann, das Horoskop sagt was. */
@@ -300,6 +300,21 @@ function antiszienDeutung(kasten) {
 
 /* --------------------------------------------- Profektionen: Bedeutung */
 
+/* Was ein Planet mitbringt, wenn er durch ein Haus zieht. */
+const TRANSIT_WIRKUNG = {
+  sonne:   "bringt Licht und Sichtbarkeit — was hier liegt, wird gesehen, auch von anderen",
+  mond:    "bringt Bewegung und Stimmung — es rührt sich etwas, hält aber nicht von selbst",
+  merkur:  "bringt Gespräche, Papiere und Wege — hier wird verhandelt und geschrieben",
+  venus:   "bringt Entgegenkommen und leichtere Umstände — hier geht etwas gütlich aus",
+  mars:    "bringt Hitze und Entschluss — hier wird etwas durchgeschnitten, im Guten wie im Schlechten",
+  jupiter: "bringt Zuwachs, Gönner und Spielraum — hier geht das Jahr auf",
+  saturn:  "bringt Ernst, Verzögerung und Gewicht — hier wird gearbeitet oder verzichtet"
+};
+const TRANSIT_DAUER = {
+  mond:"zweieinhalb Tage", merkur:"zwei bis drei Wochen", venus:"knapp einen Monat",
+  sonne:"einen Monat", mars:"anderthalb Monate", jupiter:"ein Jahr", saturn:"zweieinhalb Jahre"
+};
+
 const HERR_IM_JAHR = {
   "Sonne":   "Es geht ums Gesehenwerden. Was du tust, geschieht dieses Jahr vor Zeugen — such dir die Zeugen aus.",
   "Mond":    "Ein Jahr der Wechsel und des Gemüts. Wohnung, Familie, Stimmungen; wenig bleibt, wo es war.",
@@ -352,6 +367,57 @@ function profektionenDeutung(kasten) {
         `wo ${mitArtikel(pr.herr)} in deinem Horoskop steht — ${HAUS[hp.haus - 1]}.`));
     }
   }
+  /* ------------------------------------------------- Wer gerade durchzieht */
+  let tr = null;
+  try { tr = transite(); } catch (e) {}
+  if (tr && tr.alle) {
+    const imHaus = Object.values(tr.alle).filter(x => x.zeichen === pr.zeichen);
+    const herrKey = pr.herr.toLowerCase();
+    const herrZieht = tr.alle[herrKey] || null;
+
+    kasten.append(el("h3", null, "Wer gerade durch das Haus des Jahres zieht"));
+    kasten.append(el("p", null,
+      `Das Zeichen des Jahres ist ${pr.glyph} ${pr.name}. Jeder Planet, der jetzt dort ` +
+      `hindurchläuft, rührt das Thema des Jahres unmittelbar an — die Profektion sagt, worum ` +
+      `es geht, der Transit sagt, wann es sich meldet.`));
+
+    if (!imHaus.length) {
+      kasten.append(el("p", null,
+        "Zurzeit zieht keiner der sieben durch dieses Zeichen. Das Jahresthema läuft im " +
+        "Hintergrund weiter, ohne dass es gerade angestoßen wird."));
+    } else {
+      const ul = el("ul", "deutungListe");
+      imHaus.sort((a, b) => a.grad - b.grad).forEach(x => {
+        const istHerr = x.key === herrKey;
+        const li = el("li", istHerr ? "dafuer" : null);
+        li.innerHTML = `<b>${PLANET[x.key].g} ${PLANET[x.key].name}</b> auf ` +
+          `${x.grad.toFixed(1)}° — ${TRANSIT_WIRKUNG[x.key]}. ` +
+          `Er bleibt dort etwa ${TRANSIT_DAUER[x.key]}.` +
+          (istHerr ? ` <b>Und das ist zugleich der Herr des Jahres selbst.</b>` : "");
+        ul.appendChild(li);
+      });
+      kasten.append(ul);
+    }
+
+    /* Der Sonderfall, nach dem ausdrücklich gefragt wird. */
+    if (herrZieht && herrZieht.zeichen === pr.zeichen) {
+      const p1 = el("p", "transitStark");
+      p1.innerHTML = `<b>Der Herr des Jahres zieht selbst durch das Haus des Jahres.</b> ` +
+        `Die Technik kennt kaum eine deutlichere Ansage: Was dieses Jahr bedeutet — ` +
+        `${pr.thema} —, kommt jetzt zur Sache und nicht irgendwann. ` +
+        `Was in dieser Zeit angefangen oder entschieden wird, trägt die Handschrift des Jahres.`;
+      kasten.append(p1);
+    } else if (herrZieht) {
+      const p2 = el("p");
+      p2.innerHTML = `Der Herr des Jahres, ${mitArtikel(pr.herr)}, läuft zurzeit nicht durch ` +
+        `das Zeichen des Jahres, sondern durch ${ZEICHEN[herrZieht.zeichen].glyph} ` +
+        `${ZEICHEN[herrZieht.zeichen].name} — bei dir ${HAUS[herrZieht.haus - 1]}. ` +
+        `Von dort aus wirkt er aufs Jahresthema, aber mittelbar: über diesen Bereich, ` +
+        `nicht unmittelbar.`;
+      kasten.append(p2);
+    }
+  }
+
   kasten.append(el("p", "kucukNot",
     "Das Profektionsjahr läuft von Geburtstag zu Geburtstag. Wo der Herr des Jahres im " +
     "Geburtshoroskop steht — gut oder schlecht gestellt, in welchem Haus —, entscheidet, " +

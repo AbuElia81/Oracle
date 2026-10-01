@@ -11,8 +11,8 @@
    das gegenüberliegende Zeichen und läuft von dort weiter. Valens hält
    diesen Sprung für einen der wichtigsten Augenblicke einer Biographie.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=92";
-import { berechneGeburt, norm360 } from "./astro.js?v=92";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=96";
+import { berechneGeburt, norm360 } from "./astro.js?v=96";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -268,8 +268,10 @@ function berechneUndZeige() {
   cikti.appendChild(el("p", "kucukNot", "Die Tafel zeigt L1 und L2; L3 ist in der Zeitleiste sichtbar, aber hier aus Platzgründen nicht aufgeführt."));
 
   /* ----------------------------------------- Gipfel und Bandlösungen */
-  const gipfel = perioden.filter(pr => pr.level === 2 && pr.hoehepunkt && pr.startAlter < maxAlter);
-  const loesungen = perioden.filter(pr => pr.loesung && pr.startAlter < maxAlter);
+  const gipfel = perioden.filter(pr => (pr.level === 2 || pr.level === 3) &&
+                                       pr.hoehepunkt && pr.startAlter < maxAlter);
+  const loesungenGross = perioden.filter(pr => pr.loesung && pr.level === 1);
+  const loesungenKlein = perioden.filter(pr => pr.loesung && pr.level > 1 && pr.startAlter < maxAlter);
 
   cikti.appendChild(el("h3", null, "Höhepunkte der Lebenskapitel"));
   cikti.appendChild(el("p", null,
@@ -280,15 +282,25 @@ function berechneUndZeige() {
   if (!gipfel.length) {
     cikti.appendChild(el("p", "kucukNot", "Im gewählten Altersfenster liegt keine solche Periode."));
   } else {
+    cikti.appendChild(el("p", "kucukNot",
+      "Die zweite Ebene gibt die großen Gipfel, die dritte die kurzen darin — " +
+      "oft nur Monate, aber auf derselben winkelhaften Stellung."));
     const ul = el("ul", "deutungListe");
-    gipfel.forEach(pr => {
+    gipfel.filter(pr => pr.level === 2).forEach(pr => {
       const stellung = ((pr.signIdx - fortunaSign) % 12 + 12) % 12;
       const li = el("li");
-      li.innerHTML = `<b>${pr.startAlter.toFixed(1)} – ${pr.endAlter.toFixed(1)} Jahre</b>: ` +
+      li.innerHTML = `<b>L2 · ${pr.startAlter.toFixed(1)} – ${pr.endAlter.toFixed(1)} Jahre</b>: ` +
         `${ZEICHEN[pr.signIdx].glyph} ${ZEICHEN[pr.signIdx].name} unter ` +
         `${PLANETEN[DOMIZIL[pr.signIdx]].name} — ${HAUSNAME_VOM_LOS[stellung]}.`;
       ul.appendChild(li);
     });
+    const kurz = gipfel.filter(pr => pr.level === 3);
+    if (kurz.length) {
+      const li = el("li");
+      li.innerHTML = `<b>L3</b>: dazu ${kurz.length} kurze Gipfel auf der dritten Ebene, ` +
+        `der nächste bei ${kurz.map(x => x.startAlter).filter(a => a >= 0).sort((a,b)=>a-b)[0].toFixed(1)} Jahren.`;
+      ul.appendChild(li);
+    }
     cikti.appendChild(ul);
   }
 
@@ -299,15 +311,29 @@ function berechneUndZeige() {
     `Valens hält diesen Sprung — die <em>lysis tōn desmōn</em> — für einen der wichtigsten ` +
     `Augenblicke einer Biographie: Das Band, das bis dahin trug, löst sich, und das Leben ` +
     `setzt an anderer Stelle neu an.`));
-  if (!loesungen.length) {
+
+  const gross = el("p");
+  gross.innerHTML = loesungenGross.length
+    ? `<b>Die große Lösung</b> auf der ersten Ebene fällt auf ` +
+      loesungenGross.map(x => `${x.startAlter.toFixed(1)} Jahre`).join(", ") + `.`
+    : `<b>Die große Lösung</b> auf der ersten Ebene kommt in einem Menschenleben nicht vor: ` +
+      `Ein voller Umlauf der zwölf Zeichen dauert dort 214 Jahre. Was man erlebt, sind die ` +
+      `kleinen Lösungen auf den unteren Ebenen — und die sind deutlich genug.`;
+  cikti.appendChild(gross);
+
+  if (!loesungenKlein.length) {
     cikti.appendChild(el("p", "kucukNot",
-      "Im gewählten Altersfenster kommt keine vor — die Umläufe sind dafür zu lang."));
+      "Im gewählten Altersfenster liegt auch keine kleine Lösung."));
   } else {
+    const kl = el("p");
+    kl.innerHTML = "<b>Die kleinen Lösungen</b> im gewählten Fenster:";
+    cikti.appendChild(kl);
     const ul2 = el("ul", "deutungListe");
-    loesungen.sort((a, b) => a.startAlter - b.startAlter).forEach(pr => {
+    loesungenKlein.sort((a, b) => a.startAlter - b.startAlter).forEach(pr => {
       const li = el("li");
       li.innerHTML = `<b>mit ${pr.startAlter.toFixed(1)} Jahren</b> auf Stufe L${pr.level}: ` +
-        `Sprung nach ${ZEICHEN[pr.signIdx].glyph} ${ZEICHEN[pr.signIdx].name}.`;
+        `Sprung nach ${ZEICHEN[pr.signIdx].glyph} ${ZEICHEN[pr.signIdx].name}` +
+        (pr.hoehepunkt ? " — und das ist zugleich ein Gipfel" : "") + `.`;
       ul2.appendChild(li);
     });
     cikti.appendChild(ul2);

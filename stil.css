@@ -737,3 +737,8 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
   .wahlKarten { grid-template-columns: 1fr; }
   .wahlName { margin-top: 5rem; }
 }
+.transitStark {
+  margin-top: 1rem; padding: .9rem 1.1rem;
+  background: rgba(201,162,39,.09);
+  border-left: 2px solid var(--ton); border-radius: 2px;
+}

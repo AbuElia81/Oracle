@@ -9,10 +9,10 @@
 
    Häuser im Ganzzeichen, wie überall auf dieser Seite.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=92";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=96";
 import { berechneGeburt, planetenPositionen, julianischesDatum,
          aszendent, medium, schiefeDerEkliptik, siderischeZeitGreenwich,
-         norm360 } from "./astro.js?v=92";
+         norm360 } from "./astro.js?v=96";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -201,7 +201,18 @@ export function transite() {
     const z = Math.floor(norm360(heute[k].laenge) / 30);
     stand[k] = { zeichen: z, haus: r.hausVon(heute[k].laenge), grad: norm360(heute[k].laenge) - z * 30 };
   });
-  return { treffer, stand };
+
+  /* Alle sieben — die Profektion fragt, wer gerade durch das Haus des
+     Jahres zieht, und da zählen auch die schnellen Läufer. */
+  const alle = {};
+  REIHE.forEach(k => {
+    if (!heute[k]) return;
+    const z = Math.floor(norm360(heute[k].laenge) / 30);
+    alle[k] = { key: k, zeichen: z, haus: r.hausVon(heute[k].laenge),
+                grad: norm360(heute[k].laenge) - z * 30, laenge: norm360(heute[k].laenge) };
+  });
+
+  return { treffer, stand, alle, jd };
 }
 
 /* ------------------------------------------------- sekundäre Progression

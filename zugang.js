@@ -7,7 +7,7 @@
    Himmel der Geburtsstunde auslegen. Erst die Wahl öffnet die Reiter des
    jeweiligen Weges; die Essenz gehört zu beiden.
    --------------------------------------------------------------------- */
-import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=92";
+import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=96";
 
 const HEIM = "bProfil";
 const SPEICHER = "oracle-weg";
