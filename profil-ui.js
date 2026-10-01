@@ -1,7 +1,7 @@
 /* ------------------------------------------------------------------------
    profil-ui.js — Bedienung des Reiters "Meine Daten".
    --------------------------------------------------------------------- */
-import { leseProfilRoh, schreibeProfil, loescheProfil } from "./profil.js?v=96";
+import { leseProfilRoh, schreibeProfil, loescheProfil } from "./profil.js?v=97";
 
 const $ = s => document.querySelector(s);
 
@@ -45,6 +45,8 @@ function fuelleFormular(p) {
   if (!p) return;
   $("#pName").value = p.name || "";
   $("#pAnne").value = p.anne || "";
+  if ($("#pPartner")) $("#pPartner").value = p.partner || "";
+  if ($("#pPartnerAnne")) $("#pPartnerAnne").value = p.partnerAnne || "";
   const r = document.querySelector(`input[name="pCinsiyet"][value="${p.cinsiyet || "erkek"}"]`);
   if (r) r.checked = true;
   $("#pDatum").value = p.datum || "";
@@ -60,6 +62,8 @@ function sammle() {
   return {
     name: $("#pName").value.trim(),
     anne: $("#pAnne").value.trim(),
+    partner: $("#pPartner") ? $("#pPartner").value.trim() : "",
+    partnerAnne: $("#pPartnerAnne") ? $("#pPartnerAnne").value.trim() : "",
     cinsiyet: document.querySelector('input[name="pCinsiyet"]:checked').value,
     datum: $("#pDatum").value,
     zeit: $("#pZeit").value,
@@ -148,7 +152,7 @@ $("#pSpeichern").addEventListener("click", () => speichern(false));
 /* Von selbst übernehmen: wer tippt, soll nicht erst einen Knopf suchen.
    Kurz abwarten, damit nicht jeder Tastenschlag die Rechner anwirft. */
 let uhr = null;
-["pName","pAnne","pDatum","pZeit","pOrt","pBreite","pLaenge","pUtc"].forEach(id => {
+["pName","pAnne","pPartner","pPartnerAnne","pDatum","pZeit","pOrt","pBreite","pLaenge","pUtc"].forEach(id => {
   const feld = $("#" + id);
   if (feld) feld.addEventListener("input", () => {
     clearTimeout(uhr);
@@ -160,7 +164,7 @@ document.querySelectorAll('input[name="pCinsiyet"]').forEach(r =>
 
 $("#pLoeschen").addEventListener("click", () => {
   loescheProfil();
-  ["pName","pAnne","pDatum","pZeit","pOrt","pBreite","pLaenge","pUtc"].forEach(id => $("#" + id).value = "");
+  ["pName","pAnne","pPartner","pPartnerAnne","pDatum","pZeit","pOrt","pBreite","pLaenge","pUtc"].forEach(id => $("#" + id).value = "");
   const status = $("#pSpeicherStatus");
   status.className = "geoStatus";
   status.textContent = "Gelöscht.";

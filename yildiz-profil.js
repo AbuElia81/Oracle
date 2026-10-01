@@ -3,7 +3,7 @@
    Abschnitten. Nach dem Vorbild von geist-profil.js: füllt nur deren
    eigene Felder vor und stößt die Rechnung an, rührt an ihr nichts.
    --------------------------------------------------------------------- */
-import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=96";
+import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=97";
 
 const $ = s => document.querySelector(s);
 
@@ -28,9 +28,11 @@ function uebernehmen(p) {
   // Niyet — der Name; die Frage bleibt dem Fragenden
   setze("#niyetAd", p.name);
 
-  // İsim uyumu — der erste der beiden; der zweite ist ja ein anderer Mensch
+  // İsim uyumu — beide, wenn der zweite auf der Hauptseite steht
   setze("#u1ad", p.name);
   setze("#u1anne", p.anne);
+  if (p.partner) setze("#u2ad", p.partner);
+  if (p.partnerAnne) setze("#u2anne", p.partnerAnne);
 }
 
 uebernehmen(leseProfilRoh());

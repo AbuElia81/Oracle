@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Oracle</title>
 <meta name="description" content="Oracle — Orakelrechner nach alten Büchern: das osmanische Yıldıznâme aus Name und Muttername, der Geist des 11. Hauses nach Agrippa, Primärdirektionen, Zodiacal Releasing und Antiszien.">
-<link rel="stylesheet" href="stil.css?v=96">
+<link rel="stylesheet" href="stil.css?v=97">
 </head>
 <body>
 
@@ -20,7 +20,7 @@
 <nav id="reiter" aria-label="Abschnitte">
   <button class="etkin" data-bolum="bProfil">Oracle</button>
   <button data-bolum="bHoroskop" data-gruppe="sterne">Das Horoskop</button>
-  <button data-bolum="bYildiz" data-gruppe="sterne">Yıldıznâme</button>
+  <button data-bolum="bYildiz" data-gruppe="orakel">Yıldıznâme</button>
   <button data-bolum="bNiyet" data-gruppe="orakel">Niyet — die Frage</button>
   <button data-bolum="bUyum" data-gruppe="orakel">İsim uyumu</button>
   <button data-bolum="bMenzil" data-gruppe="orakel">Der rechte Zeitpunkt</button>
@@ -260,75 +260,7 @@
   nicht beides: trag ein, was du hast, und geh dann auf den Abschnitt, der dich
   interessiert — das Ergebnis steht schon da.</p>
 
-  <h3>Die Namen — fürs Yıldıznâme</h3>
-  <div class="alanlar">
-    <label class="alan">
-      <span>Dein Name</span>
-      <input id="pName" type="text" autocomplete="off" placeholder="z. B. Mehmet oder Michael">
-    </label>
-    <label class="alan">
-      <span>Name deiner Mutter</span>
-      <input id="pAnne" type="text" autocomplete="off" placeholder="z. B. Fatma oder Gertrud">
-    </label>
-
-    <fieldset class="cinsiyet">
-      <legend>Die Bücher deuten getrennt</legend>
-      <label><input type="radio" name="pCinsiyet" value="erkek" checked> für den Mann</label>
-      <label><input type="radio" name="pCinsiyet" value="kadin"> für die Frau</label>
-    </fieldset>
-  </div>
-
-  <h3>Die Geburt — für Spirit Name, Lebensbogen und Zodiacal Releasing</h3>
-  <div class="alanlar">
-    <div class="geoZeile">
-      <label class="alan"><span>Geburtsdatum</span><input id="pDatum" type="date"></label>
-      <label class="alan"><span>Geburtszeit</span><input id="pZeit" type="time"></label>
-    </div>
-
-    <label class="alan">
-      <span>Geburtsort</span>
-      <input id="pOrt" type="text" autocomplete="off" placeholder="z. B. Palermo, Italien">
-    </label>
-    <div class="geoZeile">
-      <button type="button" id="pOrtSuchen" class="knopfKlein">Koordinaten suchen</button>
-      <span class="geoStatus" id="pGeoStatus"></span>
-    </div>
-    <p class="koordWarnung" id="pKoordWarnung" hidden></p>
-
-    <div class="geoZeile">
-      <label class="alan"><span>Breite (°N, Süd negativ)</span><input id="pBreite" type="number" step="0.0001" placeholder="z. B. 38.1157"></label>
-      <label class="alan"><span>Länge (°O, West negativ)</span><input id="pLaenge" type="number" step="0.0001" placeholder="z. B. 13.3615"></label>
-      <label class="alan"><span>UTC-Offset zur Geburtszeit</span><input id="pUtc" type="number" step="0.25" placeholder="z. B. 1 oder 2 (Sommerzeit)"></label>
-    </div>
-  </div>
-
-  <div class="geoZeile" style="margin-top:1.8rem;">
-    <button id="pSpeichern" class="buyukDugme" style="margin-top:0;">Speichern</button>
-    <button type="button" id="pLoeschen" class="knopfKlein">Daten löschen</button>
-  </div>
-  <p class="geoStatus" id="pSpeicherStatus"></p>
-
-  <div id="pGespeichert" class="gespeichert" hidden></div>
-
-  <div class="geoZeile sicherung">
-    <button type="button" id="pAusgeben" class="knopfKlein">Sicherung herunterladen</button>
-    <button type="button" id="pEinlesen" class="knopfKlein">Sicherung einlesen</button>
-    <input type="file" id="pDatei" accept="application/json,.json" hidden>
-    <span class="geoStatus" id="pSicherungStatus"></span>
-  </div>
-
-  <div id="torHinweis" class="torHinweis">
-    <p>Sobald hier etwas steht, öffnen sich die übrigen Abschnitte oben —
-    elf Rechner, die alle mit diesen Angaben arbeiten. Zwei Namen genügen fürs
-    Yıldıznâme; für den Himmel braucht es Datum, Uhrzeit und Ort.</p>
-  </div>
-
-  <p class="kucukNot">Die Ortssuche fragt einmalig, auf Knopfdruck, den freien
-  Dienst <a href="https://nominatim.openstreetmap.org" target="_blank" rel="noopener">Nominatim (OpenStreetMap)</a>
-  — sonst bleibt alles hier im Browser (<code>localStorage</code>), nichts
-  wird an einen Server dieser Seite geschickt, es gibt keinen.</p>
-
-  <div id="wahl" class="wahl" hidden>
+  <div id="wahl" class="wahl" >
     <h3>Was möchtest du befragen?</h3>
     <div class="wahlKarten">
       <button type="button" class="wahlKarte" data-weg="orakel"
@@ -345,6 +277,101 @@
       </button>
     </div>
   </div>
+
+
+  <div id="maskeGemein" hidden>
+    <div class="alanlar">
+      <label class="alan">
+        <span>Dein Name</span>
+        <input id="pName" type="text" autocomplete="off" placeholder="z. B. Mehmet oder Michael">
+      </label>
+    </div>
+  </div>
+
+  <!-- Maske für den Weg des Orakels: Namen, sonst nichts -->
+  <div id="maskeOrakel" hidden>
+    <h3>Die Namen</h3>
+    <p class="kucukNot">Das Orakel fragt nach Namen, nicht nach dem Himmel —
+    ein Geburtsdatum braucht es hier nicht.</p>
+    <div class="alanlar">
+      <label class="alan">
+        <span>Name deiner Mutter</span>
+        <input id="pAnne" type="text" autocomplete="off" placeholder="z. B. Fatma oder Gertrud">
+      </label>
+
+      <fieldset class="cinsiyet">
+        <legend>Die Bücher deuten getrennt</legend>
+        <label><input type="radio" name="pCinsiyet" value="erkek" checked> für den Mann</label>
+        <label><input type="radio" name="pCinsiyet" value="kadin"> für die Frau</label>
+      </fieldset>
+    </div>
+
+    <h3>Ein zweiter Mensch — für İsim uyumu</h3>
+    <p class="kucukNot">Nur nötig, wenn du zwei Namen gegeneinander rechnen willst.</p>
+    <div class="alanlar">
+      <div class="geoZeile">
+        <label class="alan"><span>Sein oder ihr Name</span>
+          <input id="pPartner" type="text" autocomplete="off" placeholder="optional"></label>
+        <label class="alan"><span>Name der Mutter</span>
+          <input id="pPartnerAnne" type="text" autocomplete="off" placeholder="optional"></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Maske für den Weg der Sterne: der Himmel der Geburtsstunde -->
+  <div id="maskeSterne" hidden>
+    <h3>Die Geburt</h3>
+    <p class="kucukNot">Die Sterne fragen nach der Stunde und dem Ort, nicht nach Namen.</p>
+    <div class="alanlar">
+      <div class="geoZeile">
+        <label class="alan"><span>Geburtsdatum</span><input id="pDatum" type="date"></label>
+        <label class="alan"><span>Geburtszeit</span><input id="pZeit" type="time"></label>
+      </div>
+
+      <label class="alan">
+        <span>Geburtsort</span>
+        <input id="pOrt" type="text" autocomplete="off" placeholder="z. B. Palermo, Italien">
+      </label>
+      <div class="geoZeile">
+        <button type="button" id="pOrtSuchen" class="knopfKlein">Koordinaten suchen</button>
+        <span class="geoStatus" id="pGeoStatus"></span>
+      </div>
+      <p class="koordWarnung" id="pKoordWarnung" hidden></p>
+
+      <div class="geoZeile">
+        <label class="alan"><span>Breite (°N, Süd negativ)</span><input id="pBreite" type="number" step="0.0001" placeholder="z. B. 38.1157"></label>
+        <label class="alan"><span>Länge (°O, West negativ)</span><input id="pLaenge" type="number" step="0.0001" placeholder="z. B. 13.3615"></label>
+        <label class="alan"><span>UTC-Offset zur Geburtszeit</span><input id="pUtc" type="number" step="0.25" placeholder="z. B. 1 oder 2 (Sommerzeit)"></label>
+      </div>
+    </div>
+  </div>
+
+  <div id="speicherBlock" hidden>
+  <div class="geoZeile" style="margin-top:1.8rem;">
+    <button id="pSpeichern" class="buyukDugme" style="margin-top:0;">Speichern</button>
+    <button type="button" id="pLoeschen" class="knopfKlein">Daten löschen</button>
+  </div>
+  <p class="geoStatus" id="pSpeicherStatus"></p>
+
+  <div id="pGespeichert" class="gespeichert" hidden></div>
+
+  <div class="geoZeile sicherung">
+    <button type="button" id="pAusgeben" class="knopfKlein">Sicherung herunterladen</button>
+    <button type="button" id="pEinlesen" class="knopfKlein">Sicherung einlesen</button>
+    <input type="file" id="pDatei" accept="application/json,.json" hidden>
+    <span class="geoStatus" id="pSicherungStatus"></span>
+  </div>
+  </div>
+
+  <div id="torHinweis" class="torHinweis" hidden>
+    <p>Sobald die Maske ausgefüllt ist, öffnen sich die Abschnitte dieses Weges
+    oben in der Leiste — und sie rechnen alle von selbst mit diesen Angaben.</p>
+  </div>
+
+  <p class="kucukNot">Die Ortssuche fragt einmalig, auf Knopfdruck, den freien
+  Dienst <a href="https://nominatim.openstreetmap.org" target="_blank" rel="noopener">Nominatim (OpenStreetMap)</a>
+  — sonst bleibt alles hier im Browser (<code>localStorage</code>), nichts
+  wird an einen Server dieser Seite geschickt, es gibt keinen.</p>
 
   <div id="eStart" hidden>
     <div class="appKopf startEssenzKopf">
@@ -417,10 +444,9 @@
 
   <button id="gBerechnen" class="buyukDugme">Geist berechnen</button>
 
-  <div id="torHinweis" class="torHinweis">
-    <p>Sobald hier etwas steht, öffnen sich die übrigen Abschnitte oben —
-    elf Rechner, die alle mit diesen Angaben arbeiten. Zwei Namen genügen fürs
-    Yıldıznâme; für den Himmel braucht es Datum, Uhrzeit und Ort.</p>
+  <div id="torHinweis" class="torHinweis" hidden>
+    <p>Sobald die Maske ausgefüllt ist, öffnen sich die Abschnitte dieses Weges
+    oben in der Leiste — und sie rechnen alle von selbst mit diesen Angaben.</p>
   </div>
 
   <p class="kucukNot">Die Ortssuche fragt einmalig, auf Knopfdruck, den freien
@@ -994,28 +1020,28 @@
   osmanisch, hellenistisch, arabisch, ägyptisch, lateinisch</p>
 </footer>
 
-<script type="module" src="oracle.js?v=96"></script>
-<script type="module" src="profil.js?v=96"></script>
-<script type="module" src="profil-ui.js?v=96"></script>
-<script type="module" src="zugang.js?v=96"></script>
-<script type="module" src="horoskop.js?v=96"></script>
-<script type="module" src="perioden.js?v=96"></script>
-<script type="module" src="solar.js?v=96"></script>
-<script type="module" src="lebensmass.js?v=96"></script>
-<script type="module" src="leuchten.js?v=96"></script>
-<script type="module" src="elektion.js?v=96"></script>
-<script type="module" src="ramel.js?v=96"></script>
-<script type="module" src="spende.js?v=96"></script>
-<script type="module" src="geist.js?v=96"></script>
-<script type="module" src="geist-profil.js?v=96"></script>
-<script type="module" src="yildiz-profil.js?v=96"></script>
-<script type="module" src="essenz.js?v=96"></script>
-<script type="module" src="auto-rechnen.js?v=96"></script>
-<script type="module" src="deutung.js?v=96"></script>
-<script type="module" src="jahr.js?v=96"></script>
-<script type="module" src="lebensbogen.js?v=96"></script>
-<script type="module" src="zr.js?v=96"></script>
-<script type="module" src="antiszien.js?v=96"></script>
-<script type="module" src="profektionen.js?v=96"></script>
+<script type="module" src="oracle.js?v=97"></script>
+<script type="module" src="profil.js?v=97"></script>
+<script type="module" src="profil-ui.js?v=97"></script>
+<script type="module" src="zugang.js?v=97"></script>
+<script type="module" src="horoskop.js?v=97"></script>
+<script type="module" src="perioden.js?v=97"></script>
+<script type="module" src="solar.js?v=97"></script>
+<script type="module" src="lebensmass.js?v=97"></script>
+<script type="module" src="leuchten.js?v=97"></script>
+<script type="module" src="elektion.js?v=97"></script>
+<script type="module" src="ramel.js?v=97"></script>
+<script type="module" src="spende.js?v=97"></script>
+<script type="module" src="geist.js?v=97"></script>
+<script type="module" src="geist-profil.js?v=97"></script>
+<script type="module" src="yildiz-profil.js?v=97"></script>
+<script type="module" src="essenz.js?v=97"></script>
+<script type="module" src="auto-rechnen.js?v=97"></script>
+<script type="module" src="deutung.js?v=97"></script>
+<script type="module" src="jahr.js?v=97"></script>
+<script type="module" src="lebensbogen.js?v=97"></script>
+<script type="module" src="zr.js?v=97"></script>
+<script type="module" src="antiszien.js?v=97"></script>
+<script type="module" src="profektionen.js?v=97"></script>
 </body>
 </html>

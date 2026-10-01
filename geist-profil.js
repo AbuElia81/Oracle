@@ -3,7 +3,7 @@
    "Der Geist des 11. Hauses". Absichtlich getrennt von geist.js: füllt
    dessen eigene Felder nur vor, rührt an dessen Rechnung nichts an.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung } from "./profil.js?v=96";
+import { leseProfil, aufProfilAenderung } from "./profil.js?v=97";
 
 const $ = s => document.querySelector(s);
 
