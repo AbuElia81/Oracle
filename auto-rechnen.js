@@ -6,7 +6,7 @@
    Geburtsprofil vorliegt, drückt dieses Modul den Knopf — nichts anderes.
    An ihrer Rechnung wird nichts geändert.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung } from "./profil.js?v=85";
+import { leseProfil, aufProfilAenderung } from "./profil.js?v=89";
 
 const RECHNER = [
   { knopf:"#lbBerechnen",        cikti:"#lbCikti",          reiter:"bLebensbogen" },
@@ -14,7 +14,8 @@ const RECHNER = [
   { knopf:"#azHoroskopBerechnen",cikti:"#azHoroskopCikti",  reiter:"bAntiszien" },
   { knopf:"#pfBerechnen",        cikti:"#pfCikti",          reiter:"bProfektionen" },
   { knopf:"#fdBerechnen",        cikti:"#fdCikti",          reiter:"bFirdaria" },
-  { knopf:"#vdBerechnen",        cikti:"#vdCikti",          reiter:"bVimshottari" }
+  { knopf:"#vdBerechnen",        cikti:"#vdCikti",          reiter:"bVimshottari" },
+  { knopf:"#srBerechnen",        cikti:"#srCikti",          reiter:"bSolar" }
 ];
 
 function leer(cikti) {

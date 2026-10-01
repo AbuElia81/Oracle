@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Oracle</title>
 <meta name="description" content="Oracle — Orakelrechner nach alten Büchern: das osmanische Yıldıznâme aus Name und Muttername, der Geist des 11. Hauses nach Agrippa, Primärdirektionen, Zodiacal Releasing und Antiszien.">
-<link rel="stylesheet" href="stil.css?v=85">
+<link rel="stylesheet" href="stil.css?v=89">
 </head>
 <body>
 
@@ -32,6 +32,8 @@
   <button data-bolum="bProfektionen">Profektionen</button>
   <button data-bolum="bFirdaria">Firdaria</button>
   <button data-bolum="bVimshottari">Vimshottari</button>
+  <button data-bolum="bSolar">Jahresumdrehung</button>
+  <button data-bolum="bLebensmass">Das Lebensmaß</button>
   <button data-bolum="bLeuchten">Das Leuchten</button>
   <button data-bolum="bEssenz">Die Essenz</button>
   <button data-bolum="bNasil">Die Idee dahinter</button>
@@ -852,6 +854,35 @@
   Lahiri, genähert auf wenige Bogenminuten — bei einem Mondhaus von 13°20′
   fällt das nicht ins Gewicht.</p>
 
+  <h3>Die Jahresumdrehung</h3>
+  <p>Einmal im Jahr kehrt die Sonne auf den Grad zurück, auf dem sie bei der
+  Geburt stand; für diesen Augenblick wird ein Horoskop gestellt. <b>Abū Maʿšar</b>
+  hat das Verfahren in „Über die Umdrehungen der Jahre der Geburten“ ausgearbeitet
+  — bis heute die ausführlichste Darstellung, die wir haben (auf Deutsch über
+  Benjamin Dykes’ Übersetzung zugänglich).</p>
+  <p>Entscheidend ist bei ihm nicht das Jahreshoroskop allein, sondern die
+  <b>Reihenfolge der Befragung</b>: erst die Geburt, dann ihre Sekte, dann das
+  Zeichen des Jahres und sein Herr, dann Firdar und Teilhaber, dann deren Stellung
+  zum Zeichen des Jahres und zum Herrn des Jahres, dann ihr Zustand in der Geburt
+  und in der Umdrehung — und erst danach die Deutung. Der Abschnitt geht sie
+  nummeriert durch. Wer sie umdreht und mit der Deutung anfängt, findet immer
+  etwas, aber nicht das, was dasteht.</p>
+
+  <h3>Das Lebensmaß — Hylech und Alkochoden</h3>
+  <p>Die älteste und umstrittenste Technik der Überlieferung. Gesucht wird erst
+  der <b>Hylech</b> (<em>haylāj</em>, griechisch <em>aphetes</em>, „der
+  Loslassende“): die Stelle, von der das Leben ausgeht — bei Tag zuerst die Sonne,
+  bei Nacht zuerst der Mond, aber nur in einem der Örter des Lebens; sonst die
+  Syzygie vor der Geburt, sonst der Aszendent. Dann der <b>Alkochoden</b>
+  (<em>kadkhudāh</em>, „der Hausherr“): wer über diesem Grad die meiste Würde hat
+  und ihn zugleich sieht. Er gibt seine Jahre — die größten, mittleren oder
+  kleinsten, je nachdem, wie er selbst steht —, und Wohltäter wie Übeltäter
+  schlagen zu oder ab.</p>
+  <p class="kucukNot">Diese Zahl ist kein Datum und keine Aussage über einen
+  Menschen. Ptolemaios rechnete anders als die Perser, die Perser anders als die
+  Araber; dieselbe Geburt ergab bei ihnen verschiedene Zahlen. Sie steht hier,
+  weil sie zur Überlieferung gehört — mit ihrer Uneinigkeit als Teil der Sache.</p>
+
   <h3>Die Essenz</h3>
   <p>Rechnet nichts Eigenes. Sie liest zusammen, was die anderen Abschnitte
   gefunden haben, und fügt es zu einem Text — das Wesen aus den Namen, den
@@ -874,6 +905,43 @@
 
 <!-- ------------------------------------------------------ Die Essenz -->
 <!-- ------------------------------------------------------ Das Leuchten -->
+<!-- ------------------------------------------------- Jahresumdrehung -->
+<section class="bolum" id="bSolar" hidden>
+  <div class="appKopf">
+    <div class="arapUst">تحويل السنة</div>
+    <h2>Die Jahresumdrehung</h2>
+    <p class="unterzeile">Solar Revolution nach Abū Maʿšar</p>
+  </div>
+
+  <p class="giriş">Einmal im Jahr kehrt die Sonne genau auf den Grad zurück, auf
+  dem sie bei deiner Geburt stand. Für diesen Augenblick wird ein Horoskop
+  gestellt — das Horoskop des Jahres. <b>Abū Maʿšar</b> hat das Verfahren in
+  „Über die Umdrehungen der Jahre der Geburten“ ausgearbeitet, und er verlangt
+  eine feste Reihenfolge der Befragung. Dieser Abschnitt geht sie Schritt für
+  Schritt durch — und kommt erst am Ende zur Deutung.</p>
+
+  <button id="srBerechnen" class="buyukDugme">Neu rechnen</button>
+  <div id="srCikti" hidden></div>
+</section>
+
+<!-- ----------------------------------------------------- Das Lebensmaß -->
+<section class="bolum" id="bLebensmass" hidden>
+  <div class="appKopf">
+    <h2>Das Lebensmaß</h2>
+    <p class="unterzeile">Hylech und Alkochoden — die umstrittenste Technik der Überlieferung</p>
+  </div>
+
+  <p class="giriş">Zuerst wird der <b>Hylech</b> gesucht (arabisch <em>haylāj</em>,
+  griechisch <em>aphetes</em>, „der Loslassende“): jene Stelle des Horoskops, von
+  der das Leben ausgeht. Dann der <b>Alkochoden</b> (<em>kadkhudāh</em>, „der
+  Hausherr“): der Planet, der über dieser Stelle die meiste Würde hat. Er gibt
+  seine Jahre her — seine größten, mittleren oder kleinsten, je nachdem, wie er
+  selbst steht.</p>
+
+  <button id="lmBerechnen" class="buyukDugme">Neu rechnen</button>
+  <div id="lmCikti" hidden></div>
+</section>
+
 <section class="bolum" id="bLeuchten" hidden>
   <div class="appKopf">
     <h2>Das Leuchten</h2>
@@ -908,26 +976,28 @@
   osmanisch, hellenistisch, arabisch, ägyptisch, lateinisch</p>
 </footer>
 
-<script type="module" src="oracle.js?v=85"></script>
-<script type="module" src="profil.js?v=85"></script>
-<script type="module" src="profil-ui.js?v=85"></script>
-<script type="module" src="zugang.js?v=85"></script>
-<script type="module" src="horoskop.js?v=85"></script>
-<script type="module" src="perioden.js?v=85"></script>
-<script type="module" src="leuchten.js?v=85"></script>
-<script type="module" src="elektion.js?v=85"></script>
-<script type="module" src="ramel.js?v=85"></script>
-<script type="module" src="spende.js?v=85"></script>
-<script type="module" src="geist.js?v=85"></script>
-<script type="module" src="geist-profil.js?v=85"></script>
-<script type="module" src="yildiz-profil.js?v=85"></script>
-<script type="module" src="essenz.js?v=85"></script>
-<script type="module" src="auto-rechnen.js?v=85"></script>
-<script type="module" src="deutung.js?v=85"></script>
-<script type="module" src="jahr.js?v=85"></script>
-<script type="module" src="lebensbogen.js?v=85"></script>
-<script type="module" src="zr.js?v=85"></script>
-<script type="module" src="antiszien.js?v=85"></script>
-<script type="module" src="profektionen.js?v=85"></script>
+<script type="module" src="oracle.js?v=89"></script>
+<script type="module" src="profil.js?v=89"></script>
+<script type="module" src="profil-ui.js?v=89"></script>
+<script type="module" src="zugang.js?v=89"></script>
+<script type="module" src="horoskop.js?v=89"></script>
+<script type="module" src="perioden.js?v=89"></script>
+<script type="module" src="solar.js?v=89"></script>
+<script type="module" src="lebensmass.js?v=89"></script>
+<script type="module" src="leuchten.js?v=89"></script>
+<script type="module" src="elektion.js?v=89"></script>
+<script type="module" src="ramel.js?v=89"></script>
+<script type="module" src="spende.js?v=89"></script>
+<script type="module" src="geist.js?v=89"></script>
+<script type="module" src="geist-profil.js?v=89"></script>
+<script type="module" src="yildiz-profil.js?v=89"></script>
+<script type="module" src="essenz.js?v=89"></script>
+<script type="module" src="auto-rechnen.js?v=89"></script>
+<script type="module" src="deutung.js?v=89"></script>
+<script type="module" src="jahr.js?v=89"></script>
+<script type="module" src="lebensbogen.js?v=89"></script>
+<script type="module" src="zr.js?v=89"></script>
+<script type="module" src="antiszien.js?v=89"></script>
+<script type="module" src="profektionen.js?v=89"></script>
 </body>
 </html>

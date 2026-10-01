@@ -668,3 +668,25 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 .lhChipStern { font-size: 1.1rem; margin-right: .3rem; }
 .lhChipQuelle { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gedaempft); }
 .lhChipSagt { display: block; font-size: .85rem; color: var(--schrift); margin-top: .25rem; }
+
+/* --------------------------------------------------- Die Jahresumdrehung */
+.srSchritt { display: flex; gap: .9rem; margin-top: 1.8rem; }
+.srNr {
+  flex: 0 0 1.9rem; height: 1.9rem; line-height: 1.75rem; text-align: center;
+  border: 1px solid var(--ton); border-radius: 50%;
+  color: var(--ton-hell); font-size: .9rem;
+}
+.srInhalt { flex: 1; min-width: 0; }
+.srInhalt h3 { margin-top: 0; }
+.srInhalt p { margin-bottom: .6rem; }
+.srInhalt p:last-child { margin-bottom: 0; }
+.srJa { color: var(--ton-hell); }
+.srNein { color: var(--gedaempft); }
+
+/* ------------------------------------------------------- Das Lebensmaß */
+.lmWarnung {
+  margin: 1.6rem 0; padding: 1.2rem 1.3rem;
+  background: rgba(156,74,60,.10);
+  border: 1px solid var(--rot); border-radius: 2px;
+  font-size: .95rem; line-height: 1.6;
+}

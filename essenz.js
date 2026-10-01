@@ -6,14 +6,16 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=85";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=85";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=85";
-import { JAHR, profektionJetzt } from "./jahr.js?v=85";
-import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=85";
-import { mondHeute } from "./elektion.js?v=85";
-import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=85";
-import { zrStand } from "./zr.js?v=85";
+import { cevir, toplam, kalan } from "./ebced.js?v=89";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=89";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=89";
+import { JAHR, profektionJetzt } from "./jahr.js?v=89";
+import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=89";
+import { mondHeute } from "./elektion.js?v=89";
+import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=89";
+import { zrStand } from "./zr.js?v=89";
+import { jahresUmdrehung } from "./solar.js?v=89";
+import { lebensmass } from "./lebensmass.js?v=89";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -234,7 +236,9 @@ function schreibe(zielWahl) {
   const tr = transite();
   const prg = progression();
   const zrg = zrGipfel();
-  let fd = null, vd = null;
+  let fd = null, vd = null, sr = null, lm = null;
+  try { sr = jahresUmdrehung(); } catch (e) {}
+  try { lm = lebensmass(); } catch (e) {}
   try { fd = firdariaJetzt(); } catch (e) {}
   try { vd = vimshottariJetzt(); } catch (e) {}
   let mond = null;
@@ -421,6 +425,17 @@ function schreibe(zielWahl) {
     jahrFach.appendChild(el("h3", null, `Dieses Jahr — ${JAHR}`));
     jahrFach.appendChild(el("p", null,
       `Was die einzelnen Techniken für ${JAHR} sagen, nebeneinandergelegt:`));
+    if (sr) {
+      const MON = ["Januar","Februar","März","April","Mai","Juni","Juli",
+                   "August","September","Oktober","November","Dezember"];
+      const zp = sr.zeitpunkt;
+      const sp = el("p");
+      sp.innerHTML = `<b>Jahresumdrehung:</b> Am ${zp.tag}. ${MON[zp.monat - 1]} ${zp.jahr} kehrte ` +
+        `die Sonne auf ihren Geburtsgrad zurück. Der Aszendent jener Stunde fällt in dein ` +
+        `${sr.umAscImNatal}. Geburtshaus — ${HAUS[sr.umAscImNatal - 1]}. Dort liegt in diesem ` +
+        `Jahr der Schwerpunkt.`;
+      jahrFach.appendChild(sp);
+    }
     if (mond) {
       const mp = el("p");
       mp.innerHTML = `<b>Heute:</b> Der Mond steht in ${ZEICHEN[mond.zeichen].glyph} ` +
@@ -468,6 +483,17 @@ function schreibe(zielWahl) {
   [500, 1200, 2500].forEach(ms => setTimeout(() => {
     if (document.body.contains(jahrFach)) zeichneJahr();
   }, ms));
+
+  if (lm) {
+    cikti.appendChild(absatz("Der Geber des Lebens",
+      `Die alte Lehre fragt, von welcher Stelle des Horoskops das Leben ausgeht — bei dir ist ` +
+      `das ${lm.hylech.art} auf ${ZEICHEN[lm.hZeichen].glyph} ${ZEICHEN[lm.hZeichen].name}. ` +
+      `Wer darüber gebietet, heißt der Hausherr des Lebens: ${mitArtikel(lm.alkochoden)}, ` +
+      `bei dir im ${lm.alkoHaus}. Haus — ${HAUS[lm.alkoHaus - 1]}. Von dort nimmt deine ` +
+      `Lebenskraft ihre Färbung. Die Jahreszahl, die die Tradition daraus zieht, steht ` +
+      `im eigenen Abschnitt und gehört nicht in eine Zusammenschau — sie ist ein Streitpunkt ` +
+      `der Überlieferung, kein Befund.`));
+  }
 
   if (sb) {
     cikti.appendChild(absatz("Der Rat", sb.burc.ogut));
@@ -566,7 +592,7 @@ function schreibe(zielWahl) {
     cikti.appendChild(kasten);
   }
 
-  if (!sb && !geist && !zr && !dir && !anti && !prof && !r && !fd && !vd) {
+  if (!sb && !geist && !zr && !dir && !anti && !prof && !r && !fd && !vd && !lm) {
     const w = el("p", "kucukNot", "Es fehlen noch Angaben. ");
     const b = el("button", "knopfKlein", "Zur Dateneingabe");
     b.addEventListener("click", zurDateneingabe);

@@ -244,7 +244,7 @@ function bildeNamen(buchstaben, endung) {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-function wuerden(signIdx, gradImZeichen, tagGeburt) {
+export function wuerden(signIdx, gradImZeichen, tagGeburt) {
   const s = {};
   PLANETEN_REIHE.forEach(p => { s[p] = { total:0, dom:false, ex:false, tri:false, term:false, face:false }; });
 
@@ -271,7 +271,7 @@ function wuerden(signIdx, gradImZeichen, tagGeburt) {
   return s;
 }
 
-function ermittleAlmuten(scores) {
+export function ermittleAlmuten(scores) {
   let best = null;
   PLANETEN_REIHE.forEach(p => {
     if (!best) { best = p; return; }
