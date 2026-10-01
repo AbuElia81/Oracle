@@ -9,10 +9,10 @@
    zieht. Wo viele dasselbe sagen, brennt es hell; wo jedes etwas anderes
    sagt, bleibt es matt und vielfarbig.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=90";
-import { radix, PLANET, mitArtikel, ZEICHEN } from "./horoskop.js?v=90";
-import { firdaria, vimshottari } from "./perioden.js?v=90";
-import { zrStand } from "./zr.js?v=90";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=91";
+import { radix, PLANET, mitArtikel, ZEICHEN } from "./horoskop.js?v=91";
+import { firdaria, vimshottari } from "./perioden.js?v=91";
+import { zrStand } from "./zr.js?v=91";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -44,38 +44,64 @@ const komma = n => n.toFixed(1).replace(".", ",");
 export function stimmenBei(alter, grund) {
   const stimmen = [];
 
+  /* Jedes System hat einen großen Herrn und einen kleineren darin. Der
+     große gibt die Farbe, der kleinere den Unterton — die Überlieferung
+     sagt überall dasselbe: das Thema vom großen, der Ton vom kleinen. */
   const zs = zrStand(alter);
   if (zs && zs.L1) {
     const k = NAME_ZU_KEY[blank(zs.L1.herrscher)];
-    if (k) stimmen.push({ key:k, quelle:"Zodiacal Releasing",
-      sagt:`${zs.L1.glyph} ${zs.L1.zeichen}` + (zs.L2 ? ` · ${zs.L2.glyph} ${zs.L2.zeichen}` : "") });
+    const u2 = zs.L2 ? NAME_ZU_KEY[blank(zs.L2.herrscher)] : null;
+    const u3 = zs.L3 ? NAME_ZU_KEY[blank(zs.L3.herrscher)] : null;
+    if (k) stimmen.push({ key:k, unterKey:u2, quelle:"Zodiacal Releasing",
+      gross:`${zs.L1.glyph} ${zs.L1.zeichen}`,
+      klein: zs.L2 ? `${zs.L2.glyph} ${zs.L2.zeichen}` + (zs.L3 ? ` › ${zs.L3.glyph} ${zs.L3.zeichen}` : "") : null,
+      dritt: u3 });
   }
 
   if (grund) {
+    /* Profektion: ein Zeichen im Jahr, und darin ein Zeichen im Monat. */
     const jahr = Math.floor(alter);
-    const zeichen = (grund.ascZeichen + jahr) % 12;
-    const k = DOMIZIL[zeichen];
-    stimmen.push({ key:k, quelle:"Profektion",
-      sagt:`${(jahr % 12) + 1}. Haus, ${ZEICHEN[zeichen].glyph} ${ZEICHEN[zeichen].name}` });
+    const monat = Math.floor((alter - jahr) * 12);
+    const zJahr = (grund.ascZeichen + jahr) % 12;
+    const zMonat = (zJahr + monat) % 12;
+    stimmen.push({ key:DOMIZIL[zJahr], unterKey:DOMIZIL[zMonat], quelle:"Profektion",
+      gross:`${(jahr % 12) + 1}. Haus, ${ZEICHEN[zJahr].glyph} ${ZEICHEN[zJahr].name}`,
+      klein:`Monat ${monat + 1}: ${ZEICHEN[zMonat].glyph} ${ZEICHEN[zMonat].name}` });
 
     const f = firdaria(alter, grund.tagGeburt);
-    if (f.laufend && FARBE[f.laufend.key]) stimmen.push({ key:f.laufend.key, quelle:"Firdaria",
-      sagt:`${komma(f.laufend.anfang)}–${komma(f.laufend.ende)} J.` +
-           (f.laufendUnter ? ` · ${f.laufendUnter.name}` : "") });
-    else if (!f.laufend) stimmen.push({ key:null, quelle:"Firdaria", sagt:"nach 75 Jahren zu Ende" });
+    if (f.laufend && FARBE[f.laufend.key]) {
+      const uk = f.laufendUnter && FARBE[f.laufendUnter.key] ? f.laufendUnter.key : null;
+      stimmen.push({ key:f.laufend.key, unterKey:uk, quelle:"Firdaria",
+        gross:`${komma(f.laufend.anfang)}–${komma(f.laufend.ende)} J.`,
+        klein: f.laufendUnter ? `${f.laufendUnter.name} bis ${komma(f.laufendUnter.ende)} J.` : null });
+    } else if (!f.laufend) {
+      stimmen.push({ key:null, unterKey:null, quelle:"Firdaria", gross:"nach 75 Jahren zu Ende", klein:null });
+    }
 
     const v = vimshottari(grund.mondLaenge, grund.jahr, alter);
-    if (v.laufend && FARBE[v.laufend.key]) stimmen.push({ key:v.laufend.key, quelle:"Vimshottari",
-      sagt:`${v.laufend.name}` + (v.laufendUnter ? ` · ${v.laufendUnter.name}` : "") });
+    if (v.laufend && FARBE[v.laufend.key]) {
+      const uk = v.laufendUnter && FARBE[v.laufendUnter.key] ? v.laufendUnter.key : null;
+      stimmen.push({ key:v.laufend.key, unterKey:uk, quelle:"Vimshottari",
+        gross:`${v.laufend.name} (Mahadasha)`,
+        klein: v.laufendUnter ? `${v.laufendUnter.name} (Antardasha)` : null });
+    }
   }
 
-  const zaehlung = {};
-  stimmen.forEach(st => { if (st.key) zaehlung[st.key] = (zaehlung[st.key] || 0) + 1; });
-  const sortiert = Object.entries(zaehlung).sort((a, b) => b[1] - a[1]);
-  const herr = sortiert.length ? sortiert[0][0] : null;
-  const einigkeit = sortiert.length ? sortiert[0][1] : 0;
+  const zaehle = feld => {
+    const z = {};
+    stimmen.forEach(st => { const k = st[feld]; if (k) z[k] = (z[k] || 0) + 1; });
+    return Object.entries(z).sort((a, b) => b[1] - a[1]);
+  };
+  const gross = zaehle("key"), klein = zaehle("unterKey");
 
-  return { stimmen, herr, einigkeit, verteilung: sortiert };
+  return {
+    stimmen,
+    herr: gross.length ? gross[0][0] : null,
+    einigkeit: gross.length ? gross[0][1] : 0,
+    unterHerr: klein.length ? klein[0][0] : null,
+    unterEinigkeit: klein.length ? klein[0][1] : 0,
+    verteilung: gross
+  };
 }
 
 /* ---------------------------------------------------------- Darstellung */
@@ -95,12 +121,11 @@ function sammleGrund() {
 }
 
 function male(alter) {
-  const { stimmen, herr, einigkeit } = stimmenBei(alter, grund);
-  const aura = $("#lhAura"), ablesung = $("#lhAblesung"), chips = $("#lhStimmen");
+  const { stimmen, herr, einigkeit, unterHerr, unterEinigkeit } = stimmenBei(alter, grund);
+  const aura = $("#lhAura"), kern = $("#lhKern"), ablesung = $("#lhAblesung"), chips = $("#lhStimmen");
   if (!aura) return;
 
   const farbe = herr ? FARBE[herr] : "#8b8471";
-  /* Je einiger sich die Systeme sind, desto heller und weiter das Leuchten. */
   const staerke = Math.min(einigkeit, 4);
   const deckung = 0.24 + staerke * 0.16;
   const weite = 32 + staerke * 9;
@@ -111,11 +136,28 @@ function male(alter) {
     `${farbe}3a 44%, transparent 74%)`;
   aura.style.setProperty("--puls", (2.6 - staerke * 0.25) + "s");
 
+  /* Der Unterton sitzt als engerer Kern darin — wo die kleineren Perioden
+     sich einig sind, glimmt eine zweite Farbe im Innern. */
+  if (kern) {
+    if (unterHerr && unterHerr !== herr) {
+      const uf = FARBE[unterHerr];
+      const ud = 0.14 + Math.min(unterEinigkeit, 4) * 0.08;
+      kern.style.background =
+        `radial-gradient(ellipse 17% 26% at 50% 44%, ` +
+        `${uf}${Math.round(ud * 255).toString(16).padStart(2, "0")} 0%, transparent 70%)`;
+    } else {
+      kern.style.background = "none";
+    }
+  }
+
   const jahre = Math.floor(alter);
   const monate = Math.round((alter - jahre) * 12);
   ablesung.innerHTML =
     `<span class="lhAlter">${jahre} Jahre${monate ? `, ${monate} Monate` : ""}</span>` +
     (herr ? ` <span class="lhHerr" style="color:${farbe}">${stern(herr)} ${nenne(herr)}</span>` : "") +
+    (unterHerr && unterHerr !== herr
+      ? `<span class="lhUnterton">Unterton <span style="color:${FARBE[unterHerr]}">${stern(unterHerr)} ${nenne(unterHerr)}</span></span>`
+      : "") +
     (einigkeit > 1 ? `<span class="lhEinig">${einigkeit} von ${stimmen.filter(x => x.key).length} Systemen</span>`
                    : `<span class="lhEinig">kein Übergewicht</span>`);
 
@@ -123,9 +165,15 @@ function male(alter) {
   stimmen.forEach(st => {
     const c = el("div", "lhChip");
     c.style.borderColor = st.key ? FARBE[st.key] : "var(--linie)";
-    c.innerHTML = `<span class="lhChipStern" style="color:${FARBE[st.key]}">${stern(st.key)}</span>` +
+    c.innerHTML =
+      `<span class="lhChipStern" style="color:${st.key ? FARBE[st.key] : "var(--gedaempft)"}">${st.key ? stern(st.key) : "·"}</span>` +
       `<span class="lhChipQuelle">${st.quelle}</span>` +
-      `<span class="lhChipSagt">${st.sagt}</span>`;
+      `<span class="lhChipSagt">${st.gross}</span>` +
+      (st.klein
+        ? `<span class="lhChipUnter">` +
+          (st.unterKey ? `<span style="color:${FARBE[st.unterKey]}">${stern(st.unterKey)}</span> ` : "") +
+          `${st.klein}</span>`
+        : "");
     chips.appendChild(c);
   });
 }
@@ -154,7 +202,8 @@ function zeichne() {
      Aura um die Figur, statt sie zu verdecken. */
   buehne.innerHTML =
     `<img class="lhFigur" src="bilder/figur.jpg?v=1" alt="stehende Gestalt">` +
-    `<div class="lhAura" id="lhAura"></div>`;
+    `<div class="lhAura" id="lhAura"></div>` +
+    `<div class="lhKern" id="lhKern"></div>`;
   ziel.appendChild(buehne);
 
   const ablesung = el("div", "lhAblesung"); ablesung.id = "lhAblesung";

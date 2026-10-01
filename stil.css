@@ -642,6 +642,17 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 }
 @keyframes auraPuls { 0%,100% { opacity:.85; } 50% { opacity:1; } }
 
+.lhKern {
+  position: absolute; inset: 0; pointer-events: none;
+  mix-blend-mode: screen; transition: background .5s ease;
+}
+.lhUnterton {
+  display: block; font-size: .9rem; color: var(--gedaempft); margin-top: .15rem;
+}
+.lhChipUnter {
+  display: block; font-size: .78rem; color: var(--gedaempft); margin-top: .3rem;
+  padding-top: .3rem; border-top: 1px dotted var(--linie);
+}
 .lhAblesung { text-align: center; margin-top: 1rem; line-height: 1.5; }
 .lhAlter { color: var(--schrift); font-size: 1.15rem; }
 .lhHerr { font-size: 1.15rem; margin-left: .4rem; }

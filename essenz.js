@@ -6,16 +6,16 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=90";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=90";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=90";
-import { JAHR, profektionJetzt } from "./jahr.js?v=90";
-import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=90";
-import { mondHeute } from "./elektion.js?v=90";
-import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=90";
-import { zrStand } from "./zr.js?v=90";
-import { jahresUmdrehung } from "./solar.js?v=90";
-import { lebensmass } from "./lebensmass.js?v=90";
+import { cevir, toplam, kalan } from "./ebced.js?v=91";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=91";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=91";
+import { JAHR, profektionJetzt } from "./jahr.js?v=91";
+import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=91";
+import { mondHeute } from "./elektion.js?v=91";
+import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=91";
+import { zrStand } from "./zr.js?v=91";
+import { jahresUmdrehung } from "./solar.js?v=91";
+import { lebensmass } from "./lebensmass.js?v=91";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -362,6 +362,12 @@ function schreibe(zielWahl) {
 
   if ((fd && fd.laufend) || (vd && vd.laufend)) {
     const teile = [];
+    if (zr && zr.L1) {
+      teile.push(`<b>Zodiacal Releasing</b> gibt das große Kapitel ${zr.L1.zeichen} unter ` +
+        `${zr.L1.herrscher}` +
+        (zr.L2 ? `, darin ${zr.L2.zeichen} unter ${zr.L2.herrscher}` : "") +
+        (zr.L3 ? `, und darin ${zr.L3.zeichen} unter ${zr.L3.herrscher}` : ""));
+    }
     if (fd && fd.laufend) {
       teile.push(`Die <b>Firdaria</b> der Perser gibt diese Jahre ${fd.laufend.name} ` +
         `(${komma(fd.laufend.anfang)} bis ${komma(fd.laufend.ende)})` +
@@ -430,10 +436,21 @@ function schreibe(zielWahl) {
                    "August","September","Oktober","November","Dezember"];
       const zp = sr.zeitpunkt;
       const sp = el("p");
+      const stuetzen = [];
+      if (sr.firdar && sr.firdar.winkelhaft) stuetzen.push("der Firdar steht winkelhaft zum Zeichen des Jahres");
+      if (sr.firdar && (sr.firdar.sichtZumHerrn || sr.firdar.key === sr.herrDesJahres)) stuetzen.push("er sieht den Herrn des Jahres");
+      if (sr.teilhaber && (sr.teilhaber.sichtZumHerrn || sr.teilhaber.key === sr.herrDesJahres)) stuetzen.push("der Teilhaber sieht ihn auch");
       sp.innerHTML = `<b>Jahresumdrehung:</b> Am ${zp.tag}. ${MON[zp.monat - 1]} ${zp.jahr} kehrte ` +
         `die Sonne auf ihren Geburtsgrad zurück. Der Aszendent jener Stunde fällt in dein ` +
-        `${sr.umAscImNatal}. Geburtshaus — ${HAUS[sr.umAscImNatal - 1]}. Dort liegt in diesem ` +
-        `Jahr der Schwerpunkt.`;
+        `${sr.umAscImNatal}. Geburtshaus — ${HAUS[sr.umAscImNatal - 1]}. Herr des Jahres ist ` +
+        `${mitArtikel(sr.herrDesJahres)}` +
+        (sr.firdarKey ? `, Firdar ist ${mitArtikel(sr.firdarKey)}` : "") +
+        (sr.teilhaberKey ? ` mit ${mitArtikel(sr.teilhaberKey)} als Teilhaber` : "") + ". " +
+        (stuetzen.length >= 2
+          ? `Nach Abū Maʿšar ein <b>sprechendes Jahr</b>: ${stuetzen.join(", ")}.`
+          : stuetzen.length === 1
+            ? `Eine Stütze: ${stuetzen[0]} — das Jahr spricht halblaut.`
+            : `Weder Firdar noch Teilhaber stützen das Zeichen des Jahres — nach Abū Maʿšar ein <b>stilles Jahr</b>.`);
       jahrFach.appendChild(sp);
     }
     if (mond) {
