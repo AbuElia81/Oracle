@@ -9,10 +9,10 @@
 
    Häuser im Ganzzeichen, wie überall auf dieser Seite.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=123";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=125";
 import { berechneGeburt, planetenPositionen, julianischesDatum,
          aszendent, medium, schiefeDerEkliptik, siderischeZeitGreenwich,
-         norm360 } from "./astro.js?v=123";
+         norm360 } from "./astro.js?v=125";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);

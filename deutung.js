@@ -6,10 +6,10 @@
    fertigen Tafeln und setzt seinen Text in einen eigenen Kasten daneben.
    Deshalb überlebt die Deutung auch ein Neurechnen.
    --------------------------------------------------------------------- */
-import { leseProfilRoh } from "./profil.js?v=123";
-import { profektionJetzt } from "./jahr.js?v=123";
-import { zustandVon, radix, transite, PLANET, ZEICHEN, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=123";
-import { zrStand } from "./zr.js?v=123";
+import { leseProfilRoh } from "./profil.js?v=125";
+import { profektionJetzt } from "./jahr.js?v=125";
+import { zustandVon, radix, transite, PLANET, ZEICHEN, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=125";
+import { zrStand } from "./zr.js?v=125";
 
 /* Ein Satz, der eine Zeitherrscher-Aussage am Geburtshoroskop festmacht.
    Genau darum geht es: Die Technik sagt wann, das Horoskop sagt was. */

@@ -909,3 +909,61 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
   .sternBild { max-width: 300px; margin: 0 auto; }
   .sternDaten { font-size: .83rem; gap: .25rem .7rem; }
 }
+
+/* ------------------------------------- Startseite: Kopf, Fuß, Rückweg */
+#heimKnopf {
+  display: block; width: 100%; padding: 0; margin: 0;
+  background: none; border: 0; cursor: pointer; color: inherit;
+  font: inherit; text-align: center;
+}
+#heimKnopf h1, #heimKnopf .unterzeile { margin: 0; }
+#heimKnopf h1 { transition: opacity .15s; }
+#heimKnopf:hover h1 { opacity: .82; }
+
+#heimFuss {
+  margin-top: 2.6rem; padding-top: 1.6rem;
+  border-top: 1px solid rgba(255,255,255,.08);
+  display: flex; flex-direction: column; gap: .7rem;
+}
+
+.wasIstKnopf {
+  display: block; width: 100%; text-align: left;
+  padding: .7rem 1rem; cursor: pointer;
+  font-family: inherit; font-size: .95rem; letter-spacing: .04em;
+  color: var(--gold);
+  background: rgba(255,255,255,.022);
+  border: 1px solid rgba(212,175,110,.22); border-radius: .45rem;
+  transition: background .15s;
+}
+.wasIstKnopf::after { content: "→"; float: right; opacity: .6; }
+.wasIstKnopf:hover { background: rgba(212,175,110,.07); }
+
+.zurueckKnopf {
+  display: inline-block; margin: 0 0 1.2rem;
+  padding: .4rem .9rem; cursor: pointer;
+  font-family: inherit; font-size: .85rem; letter-spacing: .04em;
+  color: var(--gold); background: none;
+  border: 1px solid rgba(212,175,110,.25); border-radius: .35rem;
+  transition: background .15s;
+}
+.zurueckKnopf:hover { background: rgba(212,175,110,.08); }
+
+/* ------------------------------------------- die Maske zum Aufklappen */
+.maskeRahmen {
+  margin: 1.6rem 0 0;
+  border: 1px solid rgba(212,175,110,.22); border-radius: .45rem;
+  background: rgba(255,255,255,.022);
+}
+.maskeRahmen > summary {
+  padding: .7rem 1rem; cursor: pointer; list-style: none;
+  color: var(--gold); font-size: .95rem; letter-spacing: .04em;
+  user-select: none;
+}
+.maskeRahmen > summary::-webkit-details-marker { display: none; }
+.maskeRahmen > summary::after {
+  content: "+"; float: right; opacity: .6; font-size: 1.1rem; line-height: 1;
+}
+.maskeRahmen[open] > summary::after { content: "–"; }
+.maskeRahmen > summary:hover { background: rgba(212,175,110,.07); }
+.maskeRahmen > *:not(summary) { margin-left: 1rem; margin-right: 1rem; }
+.maskeRahmen > *:last-child { margin-bottom: 1rem; }

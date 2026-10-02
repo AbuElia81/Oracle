@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Oracle</title>
 <meta name="description" content="Oracle — Orakelrechner nach alten Büchern: das osmanische Yıldıznâme aus Name und Muttername, der Geist des 11. Hauses nach Agrippa, Primärdirektionen, Zodiacal Releasing und Antiszien.">
-<link rel="stylesheet" href="stil.css?v=123">
+<link rel="stylesheet" href="stil.css?v=125">
 </head>
 <body>
 
@@ -13,8 +13,10 @@
 <div id="schleier"></div>
 
 <header id="kopf">
-  <h1>Oracle</h1>
-  <p class="unterzeile">Orakelrechner nach alten Büchern</p>
+  <button type="button" id="heimKnopf" title="Zurück zum Anfang">
+    <h1>Oracle</h1>
+    <p class="unterzeile">Orakelrechner nach alten Büchern</p>
+  </button>
 </header>
 
 <nav id="reiter" aria-label="Abschnitte">
@@ -36,7 +38,6 @@
   <button data-bolum="bLebensmass" data-gruppe="sterne">Das Lebensmaß</button>
   <button data-bolum="bLeuchten" data-gruppe="sterne">Das Leuchten</button>
   <button data-bolum="bEssenz" data-gruppe="beide">Die Essenz</button>
-  <button data-bolum="bNasil">Die Idee dahinter</button>
 </nav>
 
 <main>
@@ -288,30 +289,9 @@
     </div>
   </div>
 
-  <details id="wasIstOracle" class="wasIst">
-    <summary>Was ist Oracle?</summary>
-    <div class="gedanke">
-      <p><b>Oracle</b> sammelt Wahrsagekünste aus der ganzen Welt — solche, die
-    mit dem Himmel zu tun haben und mit dem Kosmos, in dem wir leben. Mit
-    Zyklen und Rhythmen: dem Umlauf der Planeten, den Herbergen des Mondes,
-    den Jahren, die von Geburtstag zu Geburtstag weiterrücken, dem Atemzug und
-    dem Herzschlag.</p>
 
-      <p>Und mit <b>Sprache und Klang</b>. Denn nicht alle diese Künste befragen
-    den Himmel über die Zeit. Das Yıldıznâme befragt ihn über den <em>Namen</em>:
-    Buchstaben sind dort Zahlen, ein Name ist eine Summe, und diese Summe fällt
-    in ein Fach des Himmels. Agrippas Geistname kommt aus dem hebräischen
-    Alphabet, das über den Tierkreis gelegt wird. Die Sandkunst liest gerade
-    und ungerade. Zahl, Laut und Umlauf sind in diesen Büchern dasselbe in
-    verschiedener Gestalt.</p>
-
-      <p>Sie widersprechen einander in vielem — hellenistisch, arabisch-osmanisch,
-    ägyptisch, lateinisch. Was sie teilen, ist eine Annahme: Ein Zeitpunkt oder
-    ein Name ist kein leerer Behälter, sondern hat eine Gestalt, und diese
-    Gestalt lässt sich abzählen.</p>
-    </div>
-  </details>
-
+  <details id="maskeRahmen" class="maskeRahmen" hidden>
+    <summary id="maskeGriff">Meine Angaben</summary>
   <p class="giriş">Hier stehen deine Angaben — einmal eingetragen, rechnen alle
   Abschnitte damit, und keiner fragt noch einmal. Die beiden Namen gehen an das
   Yıldıznâme, die Geburtsangaben an die astronomischen Rechner. Du brauchst
@@ -414,6 +394,35 @@
   Dienst <a href="https://nominatim.openstreetmap.org" target="_blank" rel="noopener">Nominatim (OpenStreetMap)</a>
   — sonst bleibt alles hier im Browser (<code>localStorage</code>), nichts
   wird an einen Server dieser Seite geschickt, es gibt keinen.</p>
+  </details>
+
+
+  <div id="heimFuss">
+  <details id="wasIstOracle" class="wasIst">
+    <summary>Was ist Oracle?</summary>
+    <div class="gedanke">
+      <p><b>Oracle</b> sammelt Wahrsagekünste aus der ganzen Welt — solche, die
+    mit dem Himmel zu tun haben und mit dem Kosmos, in dem wir leben. Mit
+    Zyklen und Rhythmen: dem Umlauf der Planeten, den Herbergen des Mondes,
+    den Jahren, die von Geburtstag zu Geburtstag weiterrücken, dem Atemzug und
+    dem Herzschlag.</p>
+
+      <p>Und mit <b>Sprache und Klang</b>. Denn nicht alle diese Künste befragen
+    den Himmel über die Zeit. Das Yıldıznâme befragt ihn über den <em>Namen</em>:
+    Buchstaben sind dort Zahlen, ein Name ist eine Summe, und diese Summe fällt
+    in ein Fach des Himmels. Agrippas Geistname kommt aus dem hebräischen
+    Alphabet, das über den Tierkreis gelegt wird. Die Sandkunst liest gerade
+    und ungerade. Zahl, Laut und Umlauf sind in diesen Büchern dasselbe in
+    verschiedener Gestalt.</p>
+
+      <p>Sie widersprechen einander in vielem — hellenistisch, arabisch-osmanisch,
+    ägyptisch, lateinisch. Was sie teilen, ist eine Annahme: Ein Zeitpunkt oder
+    ein Name ist kein leerer Behälter, sondern hat eine Gestalt, und diese
+    Gestalt lässt sich abzählen.</p>
+    </div>
+  </details>
+    <button type="button" id="zurIdee" class="wasIstKnopf">Die Idee dahinter</button>
+  </div>
 
 </section>
 
@@ -748,6 +757,7 @@
 
 <!-- --------------------------------------------------------- V. Wie -->
 <section class="bolum" id="bNasil" hidden>
+  <button type="button" class="zurueckKnopf" data-heim>← Zurück</button>
   <div class="appKopf">
     <h2>Die Idee dahinter</h2>
     <p class="unterzeile">Woher die Verfahren kommen und was sie behaupten</p>
@@ -1071,31 +1081,31 @@
   osmanisch, hellenistisch, arabisch, ägyptisch, lateinisch</p>
 </footer>
 
-<script type="module" src="oracle.js?v=123"></script>
-<script type="module" src="profil.js?v=123"></script>
-<script type="module" src="profil-ui.js?v=123"></script>
-<script type="module" src="zugang.js?v=123"></script>
-<script type="module" src="horoskop.js?v=123"></script>
-<script type="module" src="perioden.js?v=123"></script>
-<script type="module" src="solar.js?v=123"></script>
-<script type="module" src="lebensmass.js?v=123"></script>
-<script type="module" src="leuchten.js?v=123"></script>
-<script type="module" src="elektion.js?v=123"></script>
-<script type="module" src="ramel.js?v=123"></script>
-<script type="module" src="spende.js?v=123"></script>
-<script type="module" src="geist.js?v=123"></script>
-<script type="module" src="geist-profil.js?v=123"></script>
-<script type="module" src="yildiz-profil.js?v=123"></script>
-<script type="module" src="essenz.js?v=123"></script>
-<script type="module" src="auto-rechnen.js?v=123"></script>
-<script type="module" src="deutung.js?v=123"></script>
-<script type="module" src="jahr.js?v=123"></script>
-<script type="module" src="lebensbogen.js?v=123"></script>
-<script type="module" src="zr.js?v=123"></script>
-<script type="module" src="antiszien.js?v=123"></script>
-<script type="module" src="profektionen.js?v=123"></script>
-<script type="module" src="themen.js?v=123"></script>
-<script type="module" src="crosscheck.js?v=123"></script>
-<script type="module" src="planeten.js?v=123"></script>
+<script type="module" src="oracle.js?v=125"></script>
+<script type="module" src="profil.js?v=125"></script>
+<script type="module" src="profil-ui.js?v=125"></script>
+<script type="module" src="zugang.js?v=125"></script>
+<script type="module" src="horoskop.js?v=125"></script>
+<script type="module" src="perioden.js?v=125"></script>
+<script type="module" src="solar.js?v=125"></script>
+<script type="module" src="lebensmass.js?v=125"></script>
+<script type="module" src="leuchten.js?v=125"></script>
+<script type="module" src="elektion.js?v=125"></script>
+<script type="module" src="ramel.js?v=125"></script>
+<script type="module" src="spende.js?v=125"></script>
+<script type="module" src="geist.js?v=125"></script>
+<script type="module" src="geist-profil.js?v=125"></script>
+<script type="module" src="yildiz-profil.js?v=125"></script>
+<script type="module" src="essenz.js?v=125"></script>
+<script type="module" src="auto-rechnen.js?v=125"></script>
+<script type="module" src="deutung.js?v=125"></script>
+<script type="module" src="jahr.js?v=125"></script>
+<script type="module" src="lebensbogen.js?v=125"></script>
+<script type="module" src="zr.js?v=125"></script>
+<script type="module" src="antiszien.js?v=125"></script>
+<script type="module" src="profektionen.js?v=125"></script>
+<script type="module" src="themen.js?v=125"></script>
+<script type="module" src="crosscheck.js?v=125"></script>
+<script type="module" src="planeten.js?v=125"></script>
 </body>
 </html>

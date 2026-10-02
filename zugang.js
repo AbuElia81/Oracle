@@ -7,7 +7,7 @@
    Maske erscheint — und erst eine ausgefüllte Maske öffnet die Reiter
    des jeweiligen Weges.
    --------------------------------------------------------------------- */
-import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=123";
+import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=125";
 
 const HEIM = "bProfil";
 const SPEICHER = "oracle-weg";
@@ -32,14 +32,23 @@ function schalte() {
   const bereit = genug(weg, p);
 
   const zeig = (id, an) => { const e = document.querySelector(id); if (e) e.hidden = !an; };
+  zeig("#maskeRahmen", !!weg);
+  /* Steht schon alles da, bleibt die Maske zugeklappt — die Startseite
+     soll die beiden Wege zeigen und sonst nichts. Fehlt noch etwas,
+     steht sie offen, denn dann ist sie das Nächste, was zu tun ist. */
+  const rahmen = document.getElementById("maskeRahmen");
+  if (rahmen && rahmen.open === bereit) rahmen.open = !bereit;
   zeig("#maskeGemein", !!weg);
   zeig("#maskeOrakel", weg === "orakel");
   zeig("#maskeSterne", weg === "sterne");
   zeig("#speicherBlock", !!weg);
   zeig("#torHinweis", !!weg && !bereit);
 
+  /* Die Reiterleiste gehört zu den Abschnitten, nicht zum Anfang. Auf der
+     Startseite bleibt sie weg: Dort stehen nur die beiden Wege. */
   const leiste = document.querySelector("nav#reiter");
-  if (leiste) leiste.hidden = !bereit;
+  const daheim = !document.getElementById(HEIM)?.hidden;
+  if (leiste) leiste.hidden = !bereit || daheim;
 
   document.querySelectorAll("nav#reiter button").forEach(b => {
     const g = b.dataset.gruppe;
@@ -75,3 +84,26 @@ document.querySelectorAll("#wahl .wahlKarte").forEach(karte => {
 aufProfilAenderung(schalte);
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", schalte);
 else schalte();
+
+/* ------------------------------------------------- heim und wieder fort */
+function geheZu(id) {
+  const knopf = document.querySelector(`nav#reiter button[data-bolum="${id}"]`);
+  if (knopf) { knopf.click(); }
+  else {
+    /* Abschnitte ohne Reiter — etwa "Die Idee dahinter". */
+    document.querySelectorAll("nav#reiter button").forEach(b => b.classList.remove("etkin"));
+    document.querySelectorAll("section.bolum").forEach(s => s.hidden = s.id !== id);
+  }
+  schalte();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.getElementById("heimKnopf")?.addEventListener("click", () => geheZu(HEIM));
+document.getElementById("zurIdee")?.addEventListener("click", () => geheZu("bNasil"));
+document.querySelectorAll("[data-heim]").forEach(b =>
+  b.addEventListener("click", () => geheZu(HEIM)));
+
+/* Jeder Reiterklick kann die Leiste selbst betreffen — etwa der Weg zurück
+   auf die Startseite, wo sie verschwinden soll. */
+document.querySelectorAll("nav#reiter button").forEach(b =>
+  b.addEventListener("click", () => setTimeout(schalte, 0)));
