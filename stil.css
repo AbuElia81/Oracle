@@ -856,12 +856,18 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 .sternKarten { display: flex; flex-direction: column; gap: 2rem; margin: 1.8rem 0 1.4rem; }
 
 .sternKarte {
-  display: grid; grid-template-columns: 220px 1fr; gap: 1.5rem;
-  align-items: start;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: "bild name" "bild text";
+  gap: .4rem 1.5rem; align-items: start;
   padding: 1.2rem; border-radius: .5rem;
   border: 1px solid rgba(212,175,110,.2);
   background: rgba(255,255,255,.022);
 }
+.sternBild { grid-area: bild; }
+.sternName { grid-area: name; }
+.sternText { grid-area: text; }
 .sternBild {
   width: 100%; height: auto; display: block;
   border-radius: .35rem; box-shadow: 0 2px 14px rgba(0,0,0,.45);
@@ -891,7 +897,15 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 .sternGedanke { color: rgba(255,255,255,.72); }
 
 @media (max-width: 680px) {
-  .sternKarte { grid-template-columns: 1fr; gap: 1rem; padding: 1rem; }
+  /* Am Handy zuerst der Name, dann das Bild, dann der Text — sonst
+     scrollt man in ein Bild hinein, ohne zu wissen, wen man sieht. */
+  .sternKarte {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas: "name" "bild" "text";
+    gap: .8rem; padding: 1rem;
+  }
+  .sternName { margin-bottom: 0; }
   .sternBild { max-width: 300px; margin: 0 auto; }
   .sternDaten { font-size: .83rem; gap: .25rem .7rem; }
 }

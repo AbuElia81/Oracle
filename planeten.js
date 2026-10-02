@@ -143,11 +143,15 @@ if (ziel) {
     bild.className = "sternBild";
     karte.appendChild(bild);
 
-    const text = el("div", "sternText");
+    /* Der Name ist ein eigenes Kind der Karte, nicht Teil der Textspalte:
+       Dann kann er am Handy über das Bild rücken und am Schirm daneben
+       stehen bleiben — siehe grid-template-areas in stil.css. */
     const kopf = el("h3", "sternName");
     kopf.innerHTML = `<span class="sternGlyph">${p.glyph}</span> ${p.name} ` +
       `<span class="sternTr">${p.tr}</span>`;
-    text.appendChild(kopf);
+    karte.appendChild(kopf);
+
+    const text = el("div", "sternText");
 
     const daten = el("div", "sternDaten");
     [["Metall", p.metall], ["Tag", p.tag], ["Natur", p.natur],

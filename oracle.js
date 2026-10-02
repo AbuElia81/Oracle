@@ -1,9 +1,9 @@
 /* ------------------------------------------------------------------------
    oracle.js — die Bedienung.
    --------------------------------------------------------------------- */
-import { EBCED, HARFLER, cevir, dokum, toplam, kalan } from "./ebced.js?v=122";
+import { EBCED, HARFLER, cevir, dokum, toplam, kalan } from "./ebced.js?v=123";
 import { UNSURLAR, GEZEGENLER, BURCLAR, MENZILLER, NIYET, UYUM,
-         UNSUR_UYUM, SAAT_SIRASI, GUN_SAHIBI, GUN_ADI } from "./korpus.js?v=122";
+         UNSUR_UYUM, SAAT_SIRASI, GUN_SAHIBI, GUN_ADI } from "./korpus.js?v=123";
 
 const $  = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
