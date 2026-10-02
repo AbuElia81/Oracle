@@ -19,7 +19,7 @@
    IV.3 — die Doryphorie, die Leibwache der Lichter).
    ------------------------------------------------------------------------ */
 
-import { radix, ZEICHEN, PLANET, REIHE, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=125";
+import { radix, ZEICHEN, PLANET, REIHE, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=128";
 
 const DOMIZIL = ["mars","venus","merkur","mond","sonne","merkur",
                  "venus","mars","jupiter","saturn","saturn","jupiter"];

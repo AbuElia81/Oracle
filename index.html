@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Oracle</title>
 <meta name="description" content="Oracle — Orakelrechner nach alten Büchern: das osmanische Yıldıznâme aus Name und Muttername, der Geist des 11. Hauses nach Agrippa, Primärdirektionen, Zodiacal Releasing und Antiszien.">
-<link rel="stylesheet" href="stil.css?v=125">
+<link rel="stylesheet" href="stil.css?v=128">
 </head>
 <body>
 
@@ -36,7 +36,6 @@
   <button data-bolum="bVimshottari" data-gruppe="sterne">Vimshottari</button>
   <button data-bolum="bSolar" data-gruppe="sterne">Jahresumdrehung</button>
   <button data-bolum="bLebensmass" data-gruppe="sterne">Das Lebensmaß</button>
-  <button data-bolum="bLeuchten" data-gruppe="sterne">Das Leuchten</button>
   <button data-bolum="bEssenz" data-gruppe="beide">Die Essenz</button>
 </nav>
 
@@ -271,25 +270,6 @@
 
 <!-- --------------------------------------------------- V. Meine Daten -->
 <section class="bolum" id="bProfil">
-  <div id="wahl" class="wahl" >
-    <h3>Was möchtest du befragen?</h3>
-    <div class="wahlKarten">
-      <button type="button" class="wahlKarte" data-weg="orakel"
-              style="background-image:url('bilder/orakel.jpg')">
-        <span class="wahlName">Das Orakel</span>
-        <span class="wahlText">Eine Frage stellen und eine Antwort bekommen —
-        die Tafel der Absicht, zwei Namen gegeneinander, die Sandkunst, der rechte Zeitpunkt.</span>
-      </button>
-      <button type="button" class="wahlKarte" data-weg="sterne"
-              style="background-image:url('bilder/sterne.jpg')">
-        <span class="wahlName">Die Sterne</span>
-        <span class="wahlText">Den Himmel deiner Geburtsstunde auslegen —
-        Horoskop, Yıldıznâme, Spirit Name und die Herren der Zeit.</span>
-      </button>
-    </div>
-  </div>
-
-
   <details id="maskeRahmen" class="maskeRahmen" hidden>
     <summary id="maskeGriff">Meine Angaben</summary>
   <p class="giriş">Hier stehen deine Angaben — einmal eingetragen, rechnen alle
@@ -396,32 +376,48 @@
   wird an einen Server dieser Seite geschickt, es gibt keinen.</p>
   </details>
 
+  <div id="wahl" class="wahl" >
+    <h3>Was möchtest du befragen?</h3>
+    <div class="wahlKarten">
+      <button type="button" class="wahlKarte" data-weg="orakel"
+              style="background-image:url('bilder/orakel.jpg')">
+        <span class="wahlName">Das Orakel</span>
+        <span class="wahlText">Eine Frage stellen und eine Antwort bekommen —
+        die Tafel der Absicht, zwei Namen gegeneinander, die Sandkunst, der rechte Zeitpunkt.</span>
+      </button>
+      <button type="button" class="wahlKarte" data-weg="sterne"
+              style="background-image:url('bilder/sterne.jpg')">
+        <span class="wahlName">Die Sterne</span>
+        <span class="wahlText">Den Himmel deiner Geburtsstunde auslegen —
+        Horoskop, Yıldıznâme, Spirit Name und die Herren der Zeit.</span>
+      </button>
+    </div>
+  </div>
+
+
+
+
+  <div id="wegListe" class="wegListe" hidden></div>
+
+  <div id="leuchtenHeim" hidden>
+  <div class="appKopf">
+    <h2>Das Leuchten</h2>
+    <p class="unterzeile">Ein Leben, vor- und zurückgespult</p>
+  </div>
+
+  <p class="giriş">Vier Zeitherrscher-Systeme laufen nebeneinander her —
+  Zodiacal Releasing, die Profektion, die persische Firdaria und die indische
+  Vimshottari. Jedes nennt zu jedem Alter einen Herrn. Hier liegen sie
+  übereinander: Zieh die Leiste durch dein Leben und sieh, worauf sie
+  gemeinsam zeigen. Wo viele dasselbe sagen, brennt es hell und einfarbig;
+  wo jedes etwas anderes sagt, bleibt es matt und vielfarbig.</p>
+
+  <button id="lhBerechnen" class="buyukDugme">Neu rechnen</button>
+  <div id="lhCikti" hidden></div>
+  </div>
 
   <div id="heimFuss">
-  <details id="wasIstOracle" class="wasIst">
-    <summary>Was ist Oracle?</summary>
-    <div class="gedanke">
-      <p><b>Oracle</b> sammelt Wahrsagekünste aus der ganzen Welt — solche, die
-    mit dem Himmel zu tun haben und mit dem Kosmos, in dem wir leben. Mit
-    Zyklen und Rhythmen: dem Umlauf der Planeten, den Herbergen des Mondes,
-    den Jahren, die von Geburtstag zu Geburtstag weiterrücken, dem Atemzug und
-    dem Herzschlag.</p>
-
-      <p>Und mit <b>Sprache und Klang</b>. Denn nicht alle diese Künste befragen
-    den Himmel über die Zeit. Das Yıldıznâme befragt ihn über den <em>Namen</em>:
-    Buchstaben sind dort Zahlen, ein Name ist eine Summe, und diese Summe fällt
-    in ein Fach des Himmels. Agrippas Geistname kommt aus dem hebräischen
-    Alphabet, das über den Tierkreis gelegt wird. Die Sandkunst liest gerade
-    und ungerade. Zahl, Laut und Umlauf sind in diesen Büchern dasselbe in
-    verschiedener Gestalt.</p>
-
-      <p>Sie widersprechen einander in vielem — hellenistisch, arabisch-osmanisch,
-    ägyptisch, lateinisch. Was sie teilen, ist eine Annahme: Ein Zeitpunkt oder
-    ein Name ist kein leerer Behälter, sondern hat eine Gestalt, und diese
-    Gestalt lässt sich abzählen.</p>
-    </div>
-  </details>
-    <button type="button" id="zurIdee" class="wasIstKnopf">Die Idee dahinter</button>
+    <button type="button" id="zurIdee" class="wasIstKnopf">Was ist Oracle? — die Idee dahinter</button>
   </div>
 
 </section>
@@ -757,11 +753,31 @@
 
 <!-- --------------------------------------------------------- V. Wie -->
 <section class="bolum" id="bNasil" hidden>
-  <button type="button" class="zurueckKnopf" data-heim>← Zurück</button>
   <div class="appKopf">
     <h2>Die Idee dahinter</h2>
     <p class="unterzeile">Woher die Verfahren kommen und was sie behaupten</p>
   </div>
+
+  <div class="gedanke">
+      <p><b>Oracle</b> sammelt Wahrsagekünste aus der ganzen Welt — solche, die
+    mit dem Himmel zu tun haben und mit dem Kosmos, in dem wir leben. Mit
+    Zyklen und Rhythmen: dem Umlauf der Planeten, den Herbergen des Mondes,
+    den Jahren, die von Geburtstag zu Geburtstag weiterrücken, dem Atemzug und
+    dem Herzschlag.</p>
+
+      <p>Und mit <b>Sprache und Klang</b>. Denn nicht alle diese Künste befragen
+    den Himmel über die Zeit. Das Yıldıznâme befragt ihn über den <em>Namen</em>:
+    Buchstaben sind dort Zahlen, ein Name ist eine Summe, und diese Summe fällt
+    in ein Fach des Himmels. Agrippas Geistname kommt aus dem hebräischen
+    Alphabet, das über den Tierkreis gelegt wird. Die Sandkunst liest gerade
+    und ungerade. Zahl, Laut und Umlauf sind in diesen Büchern dasselbe in
+    verschiedener Gestalt.</p>
+
+      <p>Sie widersprechen einander in vielem — hellenistisch, arabisch-osmanisch,
+    ägyptisch, lateinisch. Was sie teilen, ist eine Annahme: Ein Zeitpunkt oder
+    ein Name ist kein leerer Behälter, sondern hat eine Gestalt, und diese
+    Gestalt lässt sich abzählen.</p>
+    </div>
 
   <p class="giriş">Oracle versammelt Techniken, die über zweitausend Jahre und
   drei Kulturkreise verteilt entstanden sind — hellenistisch, arabisch-osmanisch,
@@ -1047,22 +1063,6 @@
   <div id="lmCikti" hidden></div>
 </section>
 
-<section class="bolum" id="bLeuchten" hidden>
-  <div class="appKopf">
-    <h2>Das Leuchten</h2>
-    <p class="unterzeile">Ein Leben, vor- und zurückgespult</p>
-  </div>
-
-  <p class="giriş">Vier Zeitherrscher-Systeme laufen nebeneinander her —
-  Zodiacal Releasing, die Profektion, die persische Firdaria und die indische
-  Vimshottari. Jedes nennt zu jedem Alter einen Herrn. Hier liegen sie
-  übereinander: Zieh die Leiste durch dein Leben und sieh, worauf sie
-  gemeinsam zeigen. Wo viele dasselbe sagen, brennt es hell und einfarbig;
-  wo jedes etwas anderes sagt, bleibt es matt und vielfarbig.</p>
-
-  <button id="lhBerechnen" class="buyukDugme">Neu rechnen</button>
-  <div id="lhCikti" hidden></div>
-</section>
 
 <section class="bolum" id="bEssenz" hidden>
   <p class="giriş">Alles, was die einzelnen Abschnitte gefunden haben, in
@@ -1081,31 +1081,31 @@
   osmanisch, hellenistisch, arabisch, ägyptisch, lateinisch</p>
 </footer>
 
-<script type="module" src="oracle.js?v=125"></script>
-<script type="module" src="profil.js?v=125"></script>
-<script type="module" src="profil-ui.js?v=125"></script>
-<script type="module" src="zugang.js?v=125"></script>
-<script type="module" src="horoskop.js?v=125"></script>
-<script type="module" src="perioden.js?v=125"></script>
-<script type="module" src="solar.js?v=125"></script>
-<script type="module" src="lebensmass.js?v=125"></script>
-<script type="module" src="leuchten.js?v=125"></script>
-<script type="module" src="elektion.js?v=125"></script>
-<script type="module" src="ramel.js?v=125"></script>
-<script type="module" src="spende.js?v=125"></script>
-<script type="module" src="geist.js?v=125"></script>
-<script type="module" src="geist-profil.js?v=125"></script>
-<script type="module" src="yildiz-profil.js?v=125"></script>
-<script type="module" src="essenz.js?v=125"></script>
-<script type="module" src="auto-rechnen.js?v=125"></script>
-<script type="module" src="deutung.js?v=125"></script>
-<script type="module" src="jahr.js?v=125"></script>
-<script type="module" src="lebensbogen.js?v=125"></script>
-<script type="module" src="zr.js?v=125"></script>
-<script type="module" src="antiszien.js?v=125"></script>
-<script type="module" src="profektionen.js?v=125"></script>
-<script type="module" src="themen.js?v=125"></script>
-<script type="module" src="crosscheck.js?v=125"></script>
-<script type="module" src="planeten.js?v=125"></script>
+<script type="module" src="oracle.js?v=128"></script>
+<script type="module" src="profil.js?v=128"></script>
+<script type="module" src="profil-ui.js?v=128"></script>
+<script type="module" src="zugang.js?v=128"></script>
+<script type="module" src="horoskop.js?v=128"></script>
+<script type="module" src="perioden.js?v=128"></script>
+<script type="module" src="solar.js?v=128"></script>
+<script type="module" src="lebensmass.js?v=128"></script>
+<script type="module" src="leuchten.js?v=128"></script>
+<script type="module" src="elektion.js?v=128"></script>
+<script type="module" src="ramel.js?v=128"></script>
+<script type="module" src="spende.js?v=128"></script>
+<script type="module" src="geist.js?v=128"></script>
+<script type="module" src="geist-profil.js?v=128"></script>
+<script type="module" src="yildiz-profil.js?v=128"></script>
+<script type="module" src="essenz.js?v=128"></script>
+<script type="module" src="auto-rechnen.js?v=128"></script>
+<script type="module" src="deutung.js?v=128"></script>
+<script type="module" src="jahr.js?v=128"></script>
+<script type="module" src="lebensbogen.js?v=128"></script>
+<script type="module" src="zr.js?v=128"></script>
+<script type="module" src="antiszien.js?v=128"></script>
+<script type="module" src="profektionen.js?v=128"></script>
+<script type="module" src="themen.js?v=128"></script>
+<script type="module" src="crosscheck.js?v=128"></script>
+<script type="module" src="planeten.js?v=128"></script>
 </body>
 </html>

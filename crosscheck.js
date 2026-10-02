@@ -30,10 +30,10 @@
    passen kann oder nicht.
    ------------------------------------------------------------------------ */
 
-import { julianischesDatum, berechneGeburt, planetenPositionen, sonnenLaenge, norm360 } from "./astro.js?v=125";
-import { MENZILLER, SAAT_SIRASI, GUN_SAHIBI, GUN_ADI } from "./korpus.js?v=125";
-import { leseProfilRoh } from "./profil.js?v=125";
-import { ZEICHEN } from "./horoskop.js?v=125";
+import { julianischesDatum, berechneGeburt, planetenPositionen, sonnenLaenge, norm360 } from "./astro.js?v=128";
+import { MENZILLER, SAAT_SIRASI, GUN_SAHIBI, GUN_ADI } from "./korpus.js?v=128";
+import { leseProfilRoh } from "./profil.js?v=128";
+import { ZEICHEN } from "./horoskop.js?v=128";
 
 const SEKTOR  = 360 / 28;
 const DOMIZIL = ["mars","venus","merkur","mond","sonne","merkur",

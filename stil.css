@@ -967,3 +967,35 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 .maskeRahmen > summary:hover { background: rgba(212,175,110,.07); }
 .maskeRahmen > *:not(summary) { margin-left: 1rem; margin-right: 1rem; }
 .maskeRahmen > *:last-child { margin-bottom: 1rem; }
+
+/* ------------------------------------- die Techniken des gewählten Weges */
+.wegListe { margin: 2rem 0 0; display: flex; flex-direction: column; gap: .6rem; }
+.wegListe h3 { margin: 0 0 .4rem; }
+
+.wegFeld {
+  display: block; width: 100%; text-align: left;
+  padding: .95rem 1.1rem; cursor: pointer; font-family: inherit;
+  color: var(--text);
+  background: rgba(255,255,255,.028);
+  border: 1px solid rgba(212,175,110,.22); border-radius: .45rem;
+  transition: background .15s, border-color .15s;
+}
+.wegFeld:hover { background: rgba(212,175,110,.09); border-color: rgba(212,175,110,.5); }
+.wegName {
+  display: block; color: var(--gold);
+  font-size: 1.08rem; letter-spacing: .02em; margin-bottom: .3rem;
+}
+.wegWorum { display: block; font-size: .9rem; line-height: 1.5; opacity: .78; }
+
+@media (max-width: 480px) {
+  .wegFeld { padding: .85rem .9rem; }
+  .wegName { font-size: 1.02rem; }
+  .wegWorum { font-size: .86rem; }
+}
+
+/* ---------------------------------- das Leuchten unten auf der Startseite */
+#leuchtenHeim {
+  margin-top: 2.4rem; padding-top: 1.6rem;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+#leuchtenHeim .appKopf { margin-bottom: 1rem; }
