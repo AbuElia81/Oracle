@@ -7,7 +7,7 @@
    Maske erscheint — und erst eine ausgefüllte Maske öffnet die Reiter
    des jeweiligen Weges.
    --------------------------------------------------------------------- */
-import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=128";
+import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=131";
 
 const HEIM = "bProfil";
 const SPEICHER = "oracle-weg";
@@ -37,8 +37,13 @@ function schalte() {
      soll die beiden Wege zeigen und sonst nichts. Fehlt noch etwas,
      steht sie offen, denn dann ist sie das Nächste, was zu tun ist. */
   const rahmen = document.getElementById("maskeRahmen");
-  const etwasDa = p && (p.name || p.datum);
-  if (rahmen && rahmen.open === !!etwasDa) rahmen.open = !etwasDa;
+  if (rahmen) {
+    /* Offen, solange für den gewählten Weg noch etwas fehlt — sonst bliebe
+       auch der Hinweis verborgen, der sagt, was fehlt. Ohne Wahl richtet
+       sie sich danach, ob überhaupt schon etwas dasteht. */
+    const soll = weg ? !bereit : !(p && (p.name || p.datum));
+    if (rahmen.open !== soll) rahmen.open = soll;
+  }
   /* Die Angaben stehen jetzt vor der Wahl. Solange kein Weg gewählt ist,
      zeigt die Maske alles — die Zwischenüberschriften sagen ohnehin, was
      wofür gebraucht wird. Nach der Wahl bleibt nur das Nötige stehen. */
@@ -76,8 +81,9 @@ function schalte() {
 
 document.querySelectorAll("#wahl .wahlKarte").forEach(karte => {
   karte.addEventListener("click", () => {
-    const neu = karte.dataset.weg;
-    schreib(lies() === neu ? "" : neu);
+    /* Eine Karte wählt ihren Weg — sie hebt ihn nicht wieder auf.
+       Wer wechseln will, drückt die andere. */
+    schreib(karte.dataset.weg);
     schalte();
     /* Nicht gleich in die erste Technik springen: Erst zeigen, was es gibt. */
     const ziel = lies() && genug(lies(), leseProfilRoh())
@@ -87,9 +93,6 @@ document.querySelectorAll("#wahl .wahlKarte").forEach(karte => {
   });
 });
 
-aufProfilAenderung(schalte);
-if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", schalte);
-else schalte();
 
 /* ---------------------------------------------- die Techniken des Weges
    Nach der Wahl steht nicht gleich die erste Technik da, sondern die
@@ -178,3 +181,11 @@ document.querySelectorAll("section.bolum").forEach(ab => {
   k.addEventListener("click", () => geheZu(HEIM));
   ab.prepend(k);
 });
+
+/* Erst ganz zum Schluss loslegen: schalte() greift auf WORUM und
+   zeichneWege() weiter unten zu, und ein const ist vor seiner Zeile
+   noch nicht da — ein Aufruf von hier oben bräche mitten in der
+   Liste ab. */
+aufProfilAenderung(schalte);
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", schalte);
+else schalte();
