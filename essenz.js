@@ -6,17 +6,17 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=113";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=113";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=113";
-import { JAHR, profektionJetzt } from "./jahr.js?v=113";
-import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=113";
-import { mondHeute } from "./elektion.js?v=113";
-import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=113";
-import { zrStand } from "./zr.js?v=113";
-import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=113";
-import { jahresUmdrehung } from "./solar.js?v=113";
-import { lebensmass } from "./lebensmass.js?v=113";
+import { cevir, toplam, kalan } from "./ebced.js?v=121";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=121";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=121";
+import { JAHR, profektionJetzt } from "./jahr.js?v=121";
+import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=121";
+import { mondHeute } from "./elektion.js?v=121";
+import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=121";
+import { zrStand } from "./zr.js?v=121";
+import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=121";
+import { jahresUmdrehung } from "./solar.js?v=121";
+import { lebensmass } from "./lebensmass.js?v=121";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -650,26 +650,14 @@ $("#eLesen")?.addEventListener("click", () => schreibe("#eCikti"));
 const reiter = document.querySelector('nav#reiter button[data-bolum="bEssenz"]');
 if (reiter) reiter.addEventListener("click", () => setTimeout(() => schreibe("#eCikti"), 0));
 
-/* ------------------------------------------------ Essenz auf der Hauptseite
-   Wer seine Angaben eingetragen hat, soll nicht erst einen Reiter suchen:
-   Die Zusammenschau steht gleich darunter, und von dort geht man in die
-   einzelnen Abschnitte, um zu vertiefen. */
-function startEssenz() {
-  const ziel = $("#eStartCikti");
-  const rahmen = $("#eStart");
-  if (!ziel || !rahmen) return;
-  const p = leseProfilRoh();
-  const etwasDa = p && ((p.name && p.anne) || (p.datum && p.zeit && !isNaN(parseFloat(p.breite))));
-  rahmen.hidden = !etwasDa;
-  if (etwasDa) schreibe("#eStartCikti");
-}
-
-let startUhr = null;
-function startNachziehen() {
-  clearTimeout(startUhr);
-  startUhr = setTimeout(startEssenz, 600);
-  [1500, 3000].forEach(ms => setTimeout(startEssenz, ms));
-}
-aufProfilAenderung(startNachziehen);
-if (document.readyState === "complete") startNachziehen();
-else window.addEventListener("load", startNachziehen);
+/* Die Essenz steht nicht mehr auf der Hauptseite — dort stehen die beiden
+   Wege. Sie wird gelesen, wenn man ihren Abschnitt öffnet, und nachgezogen,
+   sobald sich die Angaben ändern. */
+let nachUhr = null;
+aufProfilAenderung(() => {
+  clearTimeout(nachUhr);
+  nachUhr = setTimeout(() => {
+    const b = document.getElementById("bEssenz");
+    if (b && !b.hidden) schreibe("#eCikti");
+  }, 600);
+});

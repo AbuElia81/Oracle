@@ -1,7 +1,7 @@
 /* ------------------------------------------------------------------------
    profil-ui.js — Bedienung des Reiters "Meine Daten".
    --------------------------------------------------------------------- */
-import { leseProfilRoh, schreibeProfil, loescheProfil } from "./profil.js?v=113";
+import { leseProfilRoh, schreibeProfil, loescheProfil } from "./profil.js?v=121";
 
 const $ = s => document.querySelector(s);
 

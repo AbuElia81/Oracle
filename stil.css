@@ -812,3 +812,42 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 
 .sonderKasten .buyukToplam { font-size: 1.9rem; line-height: 1.15; }
 @media (max-width: 480px) { .sonderKasten .buyukToplam { font-size: 1.55rem; } }
+
+/* ------------------------------------------------- der Crosscheck */
+.ccKasten {
+  margin: 1.6rem 0 .5rem; padding: 1.1rem 1.2rem;
+  border: 1px solid rgba(212,175,110,.28); border-radius: .5rem;
+  background: rgba(255,255,255,.028);
+}
+.ccKasten h4 { margin: 1.3rem 0 .4rem; font-size: 1rem; }
+.ccKasten h4:first-of-type { margin-top: .8rem; }
+
+.ccKopf { border-left: 3px solid var(--gold); padding: .2rem 0 .2rem .9rem; }
+.ccWort { font-size: 1.18rem; color: var(--gold); letter-spacing: .02em; margin-bottom: .35rem; }
+.ccSatz { line-height: 1.55; }
+.ccKopf.cc-ja   { border-left-color: #8fbf7a; }
+.ccKopf.cc-ja   .ccWort { color: #a8d694; }
+.ccKopf.cc-nein { border-left-color: #bf7a7a; }
+.ccKopf.cc-nein .ccWort { color: #d69494; }
+
+/* ------------------------------------- „Was ist Oracle?" zum Aufklappen */
+.wasIst {
+  margin: 1.6rem 0 1.8rem;
+  border: 1px solid rgba(212,175,110,.22); border-radius: .45rem;
+  background: rgba(255,255,255,.022);
+}
+.wasIst > summary {
+  padding: .7rem 1rem; cursor: pointer; list-style: none;
+  color: var(--gold); font-size: .95rem; letter-spacing: .04em;
+  user-select: none;
+}
+.wasIst > summary::-webkit-details-marker { display: none; }
+.wasIst > summary::after {
+  content: "+"; float: right; opacity: .6; font-size: 1.1rem; line-height: 1;
+}
+.wasIst[open] > summary::after { content: "–"; }
+.wasIst > summary:hover { background: rgba(212,175,110,.07); }
+.wasIst .gedanke {
+  padding: 0 1rem 1rem; margin: 0;
+  border: 0; background: none;
+}

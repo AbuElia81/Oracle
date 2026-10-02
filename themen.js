@@ -19,7 +19,7 @@
    IV.3 — die Doryphorie, die Leibwache der Lichter).
    ------------------------------------------------------------------------ */
 
-import { radix, ZEICHEN, PLANET, REIHE, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=113";
+import { radix, ZEICHEN, PLANET, REIHE, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=121";
 
 const DOMIZIL = ["mars","venus","merkur","mond","sonne","merkur",
                  "venus","mars","jupiter","saturn","saturn","jupiter"];
@@ -99,8 +99,9 @@ function stellung(h) {
 
 function verbrannt(pl, sonne) {
   if (!pl || !sonne || pl.key === "sonne") return null;
-  const d = Math.abs(((pl.laenge - sonne.laenge + 540) % 360) - 180);
-  const abstand = 180 - d;
+  /* Der Betrag der nach (-180,180] gebrachten Differenz ist schon der
+     Abstand; die Verbrennung misst die Nähe zur Sonne, nicht die Ferne. */
+  const abstand = Math.abs(((pl.laenge - sonne.laenge + 540) % 360) - 180);
   if (abstand < 0.283) return { stufe: "cazimi",     punkte: 2,
     text: "im Herzen der Sonne — das ist keine Verbrennung, sondern die höchste Gunst" };
   if (abstand < 8)     return { stufe: "verbrannt",  punkte: -2,

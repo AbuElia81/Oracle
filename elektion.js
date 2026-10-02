@@ -8,9 +8,9 @@
    taugt und wovor sie warnt. Dazu treten die klassischen Elektionsregeln —
    zunehmender oder abnehmender Mond, die verbrannte Bahn, die Stunde.
    --------------------------------------------------------------------- */
-import { MENZILLER } from "./korpus.js?v=113";
-import { planetenPositionen, julianischesDatum, norm360, sonnenLaenge } from "./astro.js?v=113";
-import { ZEICHEN, PLANET } from "./horoskop.js?v=113";
+import { MENZILLER } from "./korpus.js?v=121";
+import { planetenPositionen, julianischesDatum, norm360, sonnenLaenge } from "./astro.js?v=121";
+import { ZEICHEN, PLANET } from "./horoskop.js?v=121";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);

@@ -9,10 +9,10 @@
 
    Häuser im Ganzzeichen, wie überall auf dieser Seite.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=113";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=121";
 import { berechneGeburt, planetenPositionen, julianischesDatum,
          aszendent, medium, schiefeDerEkliptik, siderischeZeitGreenwich,
-         norm360 } from "./astro.js?v=113";
+         norm360 } from "./astro.js?v=121";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -86,8 +86,11 @@ const ASPEKTE = [
 ];
 
 function aspektZwischen(a, b, orbis) {
-  const d = Math.abs(((a - b + 540) % 360) - 180);
-  const abstand = 180 - d;                       // 0..180
+  /* ((a-b+540) mod 360) - 180 bringt die Differenz nach (-180,180];
+     der Betrag davon ist bereits der Winkelabstand 0..180. Ihn noch
+     einmal von 180 abzuziehen ergäbe das Komplement und vertauschte
+     Konjunktion mit Opposition und Sextil mit Trigon. */
+  const abstand = Math.abs(((a - b + 540) % 360) - 180);
   for (const asp of ASPEKTE) {
     const ab = Math.abs(abstand - asp.winkel);
     if (ab <= orbis) return { ...asp, orbis: ab };
