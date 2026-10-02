@@ -6,17 +6,17 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=109";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=109";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=109";
-import { JAHR, profektionJetzt } from "./jahr.js?v=109";
-import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=109";
-import { mondHeute } from "./elektion.js?v=109";
-import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=109";
-import { zrStand } from "./zr.js?v=109";
-import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=109";
-import { jahresUmdrehung } from "./solar.js?v=109";
-import { lebensmass } from "./lebensmass.js?v=109";
+import { cevir, toplam, kalan } from "./ebced.js?v=113";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=113";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=113";
+import { JAHR, profektionJetzt } from "./jahr.js?v=113";
+import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=113";
+import { mondHeute } from "./elektion.js?v=113";
+import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=113";
+import { zrStand } from "./zr.js?v=113";
+import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=113";
+import { jahresUmdrehung } from "./solar.js?v=113";
+import { lebensmass } from "./lebensmass.js?v=113";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);

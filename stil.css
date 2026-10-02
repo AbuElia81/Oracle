@@ -742,3 +742,73 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
   background: rgba(201,162,39,.09);
   border-left: 2px solid var(--ton); border-radius: 2px;
 }
+
+/* ------------------------------------------------- die zwölf Felder */
+.themaUeberschrift { margin-top: 2rem; }
+
+.themaWahl {
+  display: flex; flex-wrap: wrap; gap: .5rem;
+  margin: 1.2rem 0 1.5rem;
+}
+.themaKnopf {
+  flex: 1 1 auto; min-width: 9.5rem;
+  padding: .55rem .8rem;
+  font-family: inherit; font-size: .88rem;
+  color: var(--text); background: rgba(255,255,255,.04);
+  border: 1px solid rgba(212,175,110,.25); border-radius: .4rem;
+  cursor: pointer; text-align: left; line-height: 1.3;
+  transition: background .15s, border-color .15s;
+}
+.themaKnopf:hover { background: rgba(212,175,110,.1); border-color: rgba(212,175,110,.5); }
+.themaKnopf.aktiv {
+  background: rgba(212,175,110,.16); border-color: var(--gold); color: var(--gold);
+}
+
+.themaFrage {
+  font-style: italic; color: var(--gold);
+  margin: .2rem 0 1.1rem; font-size: 1.02rem;
+}
+
+.themaUrteil {
+  border-left: 3px solid var(--gold);
+  padding: .8rem 1rem; margin: 1rem 0 1.4rem;
+  background: rgba(255,255,255,.03); border-radius: 0 .4rem .4rem 0;
+}
+.themaUrteilWort { font-size: 1.25rem; color: var(--gold); letter-spacing: .02em; }
+.themaUrteil.u-stark    { border-left-color: #8fbf7a; }
+.themaUrteil.u-stark .themaUrteilWort    { color: #a8d694; }
+.themaUrteil.u-gut      { border-left-color: #a9c48e; }
+.themaUrteil.u-gemischt { border-left-color: var(--gold); }
+.themaUrteil.u-muehsam  { border-left-color: #c4915e; }
+.themaUrteil.u-muehsam .themaUrteilWort  { color: #d7a873; }
+.themaUrteil.u-schwer   { border-left-color: #bf7a7a; }
+.themaUrteil.u-schwer .themaUrteilWort   { color: #d69494; }
+
+.zeugenListe { list-style: none; padding: 0; margin: .6rem 0 1.2rem; }
+.zeugenListe li {
+  padding: .6rem .8rem .6rem 1rem; margin-bottom: .45rem;
+  border-left: 2px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.025); border-radius: 0 .3rem .3rem 0;
+  line-height: 1.55;
+}
+.zeugenListe li.z-gut      { border-left-color: #8fbf7a; }
+.zeugenListe li.z-schlecht { border-left-color: #bf7a7a; }
+.zGewicht {
+  display: inline-block; margin-left: .4rem;
+  font-size: .8rem; opacity: .55; white-space: nowrap;
+}
+
+.sonderKasten {
+  margin: 1.6rem 0 1rem; padding: 1rem 1.1rem;
+  border: 1px solid rgba(212,175,110,.3); border-radius: .5rem;
+  background: rgba(212,175,110,.045);
+}
+.sonderKasten h4 { margin-top: 0; }
+
+@media (max-width: 480px) {
+  .themaKnopf { min-width: 100%; }
+  .themaWahl { gap: .4rem; }
+}
+
+.sonderKasten .buyukToplam { font-size: 1.9rem; line-height: 1.15; }
+@media (max-width: 480px) { .sonderKasten .buyukToplam { font-size: 1.55rem; } }
