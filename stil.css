@@ -851,3 +851,47 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
   padding: 0 1rem 1rem; margin: 0;
   border: 0; background: none;
 }
+
+/* ------------------------------------------- die sieben Wandelsterne */
+.sternKarten { display: flex; flex-direction: column; gap: 2rem; margin: 1.8rem 0 1.4rem; }
+
+.sternKarte {
+  display: grid; grid-template-columns: 220px 1fr; gap: 1.5rem;
+  align-items: start;
+  padding: 1.2rem; border-radius: .5rem;
+  border: 1px solid rgba(212,175,110,.2);
+  background: rgba(255,255,255,.022);
+}
+.sternBild {
+  width: 100%; height: auto; display: block;
+  border-radius: .35rem; box-shadow: 0 2px 14px rgba(0,0,0,.45);
+}
+.sternText > p { line-height: 1.6; }
+.sternText > p:last-child { margin-bottom: 0; }
+
+.sternName { margin: 0 0 .7rem; font-size: 1.3rem; }
+.sternGlyph { color: var(--gold); margin-right: .25rem; }
+.sternTr { font-size: .8rem; opacity: .5; letter-spacing: .08em; margin-left: .4rem; }
+
+.sternDaten {
+  display: flex; flex-wrap: wrap; gap: .3rem .9rem;
+  margin: 0 0 1rem; padding-bottom: .9rem;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  font-size: .87rem;
+}
+.sternDatum { white-space: nowrap; }
+.sternSchild { color: var(--gold); opacity: .75; margin-right: .35rem; }
+
+.sternGestalt {
+  font-style: italic;
+  border-left: 2px solid rgba(212,175,110,.35);
+  padding-left: .9rem;
+}
+.sternGestalt b { font-style: normal; }
+.sternGedanke { color: rgba(255,255,255,.72); }
+
+@media (max-width: 680px) {
+  .sternKarte { grid-template-columns: 1fr; gap: 1rem; padding: 1rem; }
+  .sternBild { max-width: 300px; margin: 0 auto; }
+  .sternDaten { font-size: .83rem; gap: .25rem .7rem; }
+}
