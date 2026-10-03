@@ -6,17 +6,17 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=131";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=131";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=131";
-import { JAHR, profektionJetzt } from "./jahr.js?v=131";
-import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=131";
-import { mondHeute } from "./elektion.js?v=131";
-import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=131";
-import { zrStand } from "./zr.js?v=131";
-import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=131";
-import { jahresUmdrehung } from "./solar.js?v=131";
-import { lebensmass } from "./lebensmass.js?v=131";
+import { cevir, toplam, kalan } from "./ebced.js?v=136";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=136";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=136";
+import { JAHR, profektionJetzt } from "./jahr.js?v=136";
+import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=136";
+import { mondHeute } from "./elektion.js?v=136";
+import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=136";
+import { zrStand } from "./zr.js?v=136";
+import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=136";
+import { jahresUmdrehung } from "./solar.js?v=136";
+import { lebensmass } from "./lebensmass.js?v=136";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -206,9 +206,13 @@ function undListe(teile) {
 
 /* ------------------------------------------------------------- der Text */
 
+let kapitelZaehler = 0;
 function absatz(titel, text) {
   const f = document.createDocumentFragment();
-  f.append(el("h3", null, titel), el("p", null, text));
+  const h = el("h3", null, titel);
+  const t = el("p", kapitelZaehler === 0 ? "erstesWort" : null, text);
+  kapitelZaehler++;
+  f.append(h, t);
   return f;
 }
 
@@ -218,6 +222,7 @@ function schreibe(zielWahl) {
   const p = leseProfilRoh();
   cikti.hidden = false;
   cikti.innerHTML = "";
+  kapitelZaehler = 0;
 
   if (!p) {
     const w = el("p", "kucukNot", "Noch nichts hinterlegt. ");
@@ -247,8 +252,19 @@ function schreibe(zielWahl) {
   try { mond = mondHeute(); } catch (e) { mond = null; }
   const prof = profektion();
 
-  cikti.appendChild(el("p", "kucukNot", "Für: " + profilBeschriftung(p) +
+  /* Eine Eröffnung, ehe die Kapitel anfangen: Sie sagt, was hier gelesen
+     wird, und gibt dem Ganzen einen Anfang statt eines Beginns. */
+  const auftakt = el("div", "essenzAuftakt");
+  auftakt.appendChild(el("p", "auftaktZeile",
+    p.name ? `Was über ${p.name} zu sagen ist` : "Was zu sagen ist"));
+  auftakt.appendChild(el("p", "auftaktText",
+    "Vier Überlieferungen, die einander nie gelesen haben, sind hier übereinandergelegt " +
+    "worden — eine aus Griechenland, eine aus Persien, eine aus Indien, eine aus dem " +
+    "osmanischen Buch der Sterne. Was folgt, ist nicht ihre Summe, sondern das, worin " +
+    "sie sich berühren."));
+  auftakt.appendChild(el("p", "auftaktDaten", profilBeschriftung(p) +
     (alter != null ? ` · heute ${alter.toFixed(0)} Jahre alt` : "")));
+  cikti.appendChild(auftakt);
 
   if (r) {
     const h = r.planeten[r.herrscher];
@@ -528,7 +544,10 @@ function schreibe(zielWahl) {
   }
 
   if (sb) {
-    cikti.appendChild(absatz("Der Rat", sb.burc.ogut));
+    const rat = el("div", "ratBand");
+    rat.appendChild(el("div", "ratSchild", "Der Rat"));
+    rat.appendChild(el("p", "ratWort", sb.burc.ogut));
+    cikti.appendChild(rat);
   }
 
   /* ------------------------------------------------- die Zusammenschau */
@@ -623,8 +642,11 @@ function schreibe(zielWahl) {
   if (offen.length) {
     const kasten = el("div", "offeneListe");
     kasten.append(el("h3", null, "Was hier noch fehlt"));
+    const ZAHL = { 1:"Ein Abschnitt steht", 2:"Zwei Abschnitte stehen",
+                   3:"Drei Abschnitte stehen", 4:"Vier Abschnitte stehen" };
     kasten.append(el("p", null,
-      "Zwei Abschnitte stehen bereit, brauchen aber etwas von dir:"));
+      `${ZAHL[offen.length] || offen.length + " Abschnitte stehen"} bereit und ` +
+      `${offen.length === 1 ? "braucht" : "brauchen"} nur noch etwas von dir:`));
     const ul = el("ul", "deutungListe");
     offen.forEach(([titel, was]) => {
       const li = el("li");
@@ -642,6 +664,12 @@ function schreibe(zielWahl) {
     w.appendChild(b);
     cikti.appendChild(w);
   }
+
+  /* Ein Schlusszeichen ganz zuletzt — es markiert das Ende des Gelesenen,
+     und steht darum hinter allem, was noch kommt. */
+  const zier = el("div", "schlussZier");
+  zier.textContent = "✧";
+  cikti.appendChild(zier);
 }
 
 $("#eLesen")?.addEventListener("click", () => schreibe("#eCikti"));
