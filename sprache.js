@@ -11,7 +11,7 @@
    wechselt.
    --------------------------------------------------------------------- */
 
-export const FIGUR = {
+const FIGUR_DE = {
   sonne: {
     figur: "der König im Licht", dat: "dem König im Licht", akk: "den König im Licht",
     kurz: "der König", pron: "er",
@@ -79,7 +79,7 @@ export const FIGUR = {
 };
 
 /* Die zwölf Zeichen als Bild, nicht als Name. */
-export const BILD = [
+const BILD_DE = [
   "der erste Trieb, der durch den Frost stößt",
   "der Garten, der trägt, weil ihn jemand hält",
   "zwei, die sich unterhalten und dabei weitergehen",
@@ -95,7 +95,7 @@ export const BILD = [
 ];
 
 /* Die zwölf Orte in gewöhnlichen Worten. */
-export const ORT = [
+const ORT_DE = [
   "bei dir selbst, an Leib und Auftreten",
   "bei dem, was du besitzt und verdienst",
   "auf den kurzen Wegen, unter Geschwistern und Nachrichten",
@@ -111,7 +111,7 @@ export const ORT = [
 ];
 
 /* Wie zwei Gestalten zueinander stehen. */
-export const NAEHE = {
+const NAEHE_DE = {
   "Konjunktion": "stehen so dicht beieinander, dass man sie kaum trennen kann",
   "Opposition":  "stehen einander gegenüber wie zwei, die sich über einen Tisch hinweg ansehen",
   "Quadrat":     "reiben sich aneinander; was der eine aufbaut, stellt der andere in Frage",
@@ -120,7 +120,7 @@ export const NAEHE = {
 };
 
 /* Zustand eines Planeten, ohne die Fachwörter. */
-export const STAND = {
+const STAND_DE = {
   "Domizil":  "Dort ist sie auf eigenem Grund: Da muss niemand um Erlaubnis gebeten werden.",
   "Erhöhung": "Dort wird mehr erwartet, als das eigene Maß hergibt — wie bei einem Gast, den man überschätzt und der sich nichts anmerken lässt.",
   "Exil":     "Dort ist fremdes Land: Nichts kommt von selbst, alles muss erarbeitet werden.",
@@ -132,10 +132,37 @@ export const figurVon = k => FIGUR[k] || { figur:k, dat:k, akk:k, kurz:k, pron:"
 
 /* Die Bilder im Dativ — "bei dem Haus mit dem Feuer darin". */
 const DAT_ART = { der: "dem", die: "der", das: "dem", zwei: "zweien," };
-export const bildDat = i => {
-  const b = BILD[i];
+const bildDat_DE = i => {
+  const b = BILD_DE[i];
   if (!b) return b;
   const m = b.match(/^(der|die|das|zwei)\b(.*)$/);
   if (!m) return b;
   return m[1] === "zwei" ? "zweien" + m[2].replace(/^, /, ", ") : DAT_ART[m[1]] + m[2];
 };
+
+/* ------------------------------------------------------ die Sprachschalter
+   Die Exporte sind absichtlich mit let gebunden: ES-Module geben lebende
+   Bindungen weiter, darum sehen alle Abschnitte sofort die andere Tafel,
+   sobald hier umgehängt wird. */
+import { FIGUR_IT, BILD_IT, ORT_IT, NAEHE_IT, STAND_IT, bildDat_IT } from "./sprache-it.js?v=178";
+import { aktuelleSprache } from "./sprachen.js?v=178";
+
+export let FIGUR = FIGUR_DE, BILD = BILD_DE, ORT = ORT_DE,
+           NAEHE = NAEHE_DE, STAND = STAND_DE, bildDat = bildDat_DE;
+
+/* Welche Sprachen haben eine eigene Bildersprache? Die übrigen fallen
+   auf Deutsch zurück, bis sie übersetzt sind. */
+export const TEXTSPRACHEN = ["de", "it"];
+
+export function setzeTextsprache(code) {
+  const it = code === "it";
+  FIGUR = it ? FIGUR_IT : FIGUR_DE;
+  BILD  = it ? BILD_IT  : BILD_DE;
+  ORT   = it ? ORT_IT   : ORT_DE;
+  NAEHE = it ? NAEHE_IT : NAEHE_DE;
+  STAND = it ? STAND_IT : STAND_DE;
+  bildDat = it ? bildDat_IT : bildDat_DE;
+}
+
+setzeTextsprache(aktuelleSprache());
+window.addEventListener("sprache-geaendert", e => setzeTextsprache(e.detail));

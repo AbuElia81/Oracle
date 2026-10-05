@@ -26,9 +26,9 @@
    ------------------------------------------------------------------------ */
 
 import { radix, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel, grossMitArtikel, zustandVon }
-  from "./horoskop.js?v=165";
-import { almutemFiguris } from "./almutem.js?v=165";
-import { FIGUR, BILD, ORT, STAND, figurVon, bildDat } from "./sprache.js?v=165";
+  from "./horoskop.js?v=178";
+import { almutemFiguris } from "./almutem.js?v=178";
+import { FIGUR, BILD, ORT, STAND, figurVon, bildDat } from "./sprache.js?v=178";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);

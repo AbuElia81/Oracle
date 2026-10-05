@@ -6,18 +6,22 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=165";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=165";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=165";
-import { JAHR, profektionJetzt } from "./jahr.js?v=165";
-import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=165";
-import { mondHeute } from "./elektion.js?v=165";
-import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=165";
-import { zrStand } from "./zr.js?v=165";
-import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=165";
-import { jahresUmdrehung } from "./solar.js?v=165";
-import { lebensmass } from "./lebensmass.js?v=165";
-import { verteilungBei } from "./verteilung.js?v=165";
+import { cevir, toplam, kalan } from "./ebced.js?v=178";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=178";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=178";
+import { JAHR, profektionJetzt } from "./jahr.js?v=178";
+import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=178";
+import { mondHeute } from "./elektion.js?v=178";
+import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=178";
+import { zrStand } from "./zr.js?v=178";
+import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=178";
+import { e, setzeEssenzSprache } from "./essenz-texte.js?v=178";
+import { aktuelleSprache } from "./sprachen.js?v=178";
+setzeEssenzSprache(aktuelleSprache());
+window.addEventListener("sprache-geaendert", ev => setzeEssenzSprache(ev.detail));
+import { jahresUmdrehung } from "./solar.js?v=178";
+import { lebensmass } from "./lebensmass.js?v=178";
+import { verteilungBei } from "./verteilung.js?v=178";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -258,13 +262,8 @@ function schreibe(zielWahl) {
   /* Eine Eröffnung, ehe die Kapitel anfangen: Sie sagt, was hier gelesen
      wird, und gibt dem Ganzen einen Anfang statt eines Beginns. */
   const auftakt = el("div", "essenzAuftakt");
-  auftakt.appendChild(el("p", "auftaktZeile",
-    p.name ? `Was über ${p.name} zu sagen ist` : "Was zu sagen ist"));
-  auftakt.appendChild(el("p", "auftaktText",
-    "Vier Überlieferungen, die einander nie gelesen haben, sind hier übereinandergelegt " +
-    "worden — eine aus Griechenland, eine aus Persien, eine aus Indien, eine aus dem " +
-    "osmanischen Buch der Sterne. Was folgt, ist nicht ihre Summe, sondern das, worin " +
-    "sie sich berühren."));
+  auftakt.appendChild(el("p", "auftaktZeile", e("auftakt.zeile", p.name)));
+  auftakt.appendChild(el("p", "auftaktText", e("auftakt.text")));
   auftakt.appendChild(el("p", "auftaktDaten", profilBeschriftung(p) +
     (alter != null ? ` · heute ${alter.toFixed(0)} Jahre alt` : "")));
   cikti.appendChild(auftakt);
@@ -272,23 +271,15 @@ function schreibe(zielWahl) {
   if (r) {
     const h = r.planeten[r.herrscher];
     const fh = figurVon(r.herrscher);
-    cikti.appendChild(absatz("Womit du anfängst",
-      `In der Stunde deiner Geburt stieg über den Rand der Welt ${BILD[r.ascZeichen]}. ` +
-      `Es war ${r.tagGeburt ? "hell" : "dunkel"} — die Sonne stand ${r.tagGeburt ? "über" : "unter"} ` +
-      `dem Horizont, und das entscheidet, wer in deinem Leben leise auftritt und wer laut. ` +
-      (h ? `Wer die Führung hat, ist ${fh.figur} — ${fh.pron} ${fh.tut}. ` +
-           `${fh.pron.charAt(0).toUpperCase() + fh.pron.slice(1)} hält sich auf ${ORT[h.haus - 1]}. ` +
-           `${STAND[h.wuerde.stufe] || STAND["—"]} ` +
-           `Dorthin zieht dein Leben, noch ehe irgendeine Zählung etwas dazu sagt.` : "")));
+    cikti.appendChild(absatz(e("titel.anfang"),
+      e("anfang", BILD[r.ascZeichen], r.tagGeburt, h ? fh : null,
+        h ? ORT[h.haus - 1] : "", h ? (STAND[h.wuerde.stufe] || STAND["—"]) : "")));
 
     if (r.aspekte.length) {
       const a = r.aspekte[0];
       const fa = figurVon(a.a.key), fb = figurVon(a.b.key);
-      cikti.appendChild(absatz("Zwei, die nicht voneinander loskommen",
-        `${fa.figur.charAt(0).toUpperCase() + fa.figur.slice(1)} und ${fb.figur} ` +
-        `${NAEHE[a.name] || "stehen in einem festen Verhältnis zueinander"}. ` +
-        `Der eine ${fa.tut}, der andere ${fb.tut}. Das ist der Zug, der sich durch alles zieht, ` +
-        `was dir begegnet — du wirst ihn in jeder Geschichte deines Lebens wiederfinden.`));
+      cikti.appendChild(absatz(e("titel.zwei"),
+        e("zwei", fa, fb, NAEHE[a.name] || NAEHE["Konjunktion"])));
     }
   }
 
@@ -303,25 +294,20 @@ function schreibe(zielWahl) {
     );
     cikti.appendChild(kopf);
 
-    cikti.appendChild(absatz("Wer du bist",
-      `${sb.burc.tabiat} ${sb.kadin ? sb.burc.kadin : sb.burc.erkek} ` +
-      `Dein Element ist ${sb.unsur.tr.toLowerCase() === "ateş" ? "das Feuer" :
-        sb.unsur.de === "Erde" ? "die Erde" : sb.unsur.de === "Luft" ? "die Luft" : "das Wasser"}: ` +
-      `${sb.unsur.metin}`));
+    cikti.appendChild(absatz(e("titel.werDuBist"),
+      e("werDuBist", sb.burc.tabiat, sb.kadin ? sb.burc.kadin : sb.burc.erkek,
+        e(sb.unsur.de === "Feuer" ? "element.feuer" : sb.unsur.de === "Erde" ? "element.erde"
+          : sb.unsur.de === "Luft" ? "element.luft" : "element.wasser"),
+        sb.unsur.metin)));
 
     if (sb.menzil) {
-      cikti.appendChild(absatz("Deine Herberge",
-        `Der Mond zieht in gut siebenundzwanzig Tagen durch achtundzwanzig Herbergen, und deine ` +
-        `Namenssumme fällt auf die ${sb.menzil.no}., ${sb.menzil.tr}: ${sb.menzil.hukum} ` +
-        `Günstig für ${sb.menzil.iyi.toLowerCase()}; meide ${sb.menzil.kacin.toLowerCase()}.`));
+      cikti.appendChild(absatz(e("titel.herberge"),
+        e("herberge", sb.menzil.no, sb.menzil.tr, sb.menzil.hukum,
+          sb.menzil.iyi.toLowerCase(), sb.menzil.kacin.toLowerCase())));
     }
 
     const fHerr = figurVon((sb.herr.de || "").toLowerCase());
-    cikti.appendChild(absatz("Was dir gegeben und was dir genommen ist",
-      `Über deinem Zeichen steht ${fHerr.figur}: ${fHerr.fabel}. ` +
-      `Er gibt dir ${fHerr.gabe}. Und er nimmt dafür ${fHerr.preis}. ` +
-      `Das ist kein Handel, den man ausschlagen könnte — es ist dieselbe Eigenschaft, ` +
-      `von zwei Seiten gesehen.`));
+    cikti.appendChild(absatz(e("titel.gegeben"), e("gegeben", fHerr)));
   }
 
   if (geist) {
@@ -332,14 +318,7 @@ function schreibe(zielWahl) {
       geist.herkunft ? el("div", "kucukNot", geist.herkunft) : el("span")
     );
     cikti.appendChild(kasten);
-    cikti.appendChild(absatz("Der gute Geist",
-      `Dieser Name kommt nicht aus deinem Namen, sondern aus dem Himmel selbst: aus der Stelle, ` +
-      `die in deiner Geburtsstunde über den Rand der Welt stieg, aus dem Stand von Sonne und Mond, ` +
-      `aus der Stelle, an der dir das Glück zufällt, und aus dem letzten Mal, als Sonne und Mond ` +
-      `vor deiner Geburt zusammentraten. Fünf Orte, ein Name. Die Alten setzten ihn an die Stelle, ` +
-      `wo bei den Griechen der gute Dämon wohnt — Sokrates' Stimme, die ihn nie zu etwas trieb, ` +
-      `sondern ihn nur zurückhielt, wenn er im Begriff war, sich selbst zu schaden. Kein Fremder, ` +
-      `der über dich wacht: der Name dessen, was in dir für dich ist.`));
+    cikti.appendChild(absatz(e("titel.geist"), e("geist", geist.name)));
   }
 
   if (zr) {
@@ -348,16 +327,11 @@ function schreibe(zielWahl) {
       const i = ZEICHEN.findIndex(z => txt && txt.includes(z.name));
       return i >= 0 ? BILD[i] : "ein eigenes Bild";
     };
-    cikti.appendChild(absatz("Das Kapitel, in dem du gerade liest",
-      `Dein Leben zerfällt nicht in Jahre, sondern in Kapitel, und eines davon läuft seit deinem ` +
-      `${l1.von.toFixed(0)}. Lebensjahr und noch bis zum ${l1.bis.toFixed(0)}. Sein Bild ist ` +
-      `${bildVon(l1.zeichen)}, und es steht unter ` +
-      `${figurVon(NAME_ZU_KEY[blank(l1.herrscher)] || "").dat || l1.herrscher}. ` +
-      (l2 ? `Darin liegt ein kleineres Kapitel, die Jahre ${komma(l2.von)} bis ${komma(l2.bis)}: ` +
-            `${bildVon(l2.zeichen)}. ` : "") +
-      (l3 ? `Und über diesen Monaten liegt noch einmal ein eigenes Licht: ${bildVon(l3.zeichen)}. ` : "") +
-      `Das Kapitel sagt, worum es überhaupt geht; das Unterkapitel, in welcher Tonart; die Monate, ` +
-      `woran du es gerade merkst.`));
+    cikti.appendChild(absatz(e("titel.kapitel"),
+      e("kapitel", l1.von.toFixed(0), l1.bis.toFixed(0), bildVon(l1.zeichen),
+        figurVon(NAME_ZU_KEY[blank(l1.herrscher)] || "").dat || l1.herrscher,
+        l2 ? komma(l2.von) : null, l2 ? komma(l2.bis) : null,
+        l2 ? bildVon(l2.zeichen) : null, l3 ? bildVon(l3.zeichen) : null)));
   }
 
   if (zrg && alter != null) {
@@ -375,18 +349,10 @@ function schreibe(zielWahl) {
         return m ? { jahr: parseFloat(m[1]), text: l } : null;
       }).filter(Boolean).filter(x => x.jahr > alter).sort((a, b) => a.jahr - b.jahr)[0];
 
-      cikti.appendChild(absatz("Laute und leise Strecken",
-        (laufend
-          ? `Du stehst gerade auf einer lauten Strecke — einer von denen, auf denen sich entscheidet, ` +
-            `wie man dich sieht und wofür man dich hält. `
-          : `Du stehst gerade auf einer leisen Strecke. Das ist keine schlechte Nachricht: Auf den ` +
-            `leisen Strecken wird vorbereitet, was auf den lauten dann als plötzlicher Erfolg aussieht. `) +
-        (kommend ? `Die nächste laute beginnt mit ${kommend.match(/([\d.]+)/)[1].replace(".", ",")} Jahren. ` : "") +
-        (naechsteLoesung
-          ? `Und mit etwa ${komma(naechsteLoesung.jahr)} Jahren reißt ein Faden: Was bis dahin trug, ` +
-            `hört auf zu tragen, und das Leben setzt an ganz anderer Stelle neu an. Die alten Bücher ` +
-            `halten solche Stellen für die wichtigsten einer Biographie.`
-          : "")));
+      cikti.appendChild(absatz(e("titel.strecken"),
+        e("strecken", !!laufend,
+          kommend ? kommend.match(/([\d.]+)/)[1].replace(".", ",") : null,
+          bond ? bond.replace(".", ",") : null)));
     }
   }
 
@@ -406,7 +372,7 @@ function schreibe(zielWahl) {
     const pp = el("p");
     pp.innerHTML = teile.join(". ") + ". Beide zählen keine Sternbilder ab, sondern verteilen feste " +
       "Mengen von Jahren — und landen trotzdem bei denselben Zeiten wie die übrigen.";
-    cikti.appendChild(el("h3", null, "Wer deine Jahre führt"));
+    cikti.appendChild(el("h3", null, e("titel.jahreFuehrt")));
     cikti.appendChild(pp);
   }
 
@@ -427,30 +393,13 @@ function schreibe(zielWahl) {
     if (vt && vt.laufend) {
     const fv = figurVon(vt.laufend.herr);
     const ft = vt.laufend.teilhaber ? figurVon(vt.laufend.teilhaber.key) : null;
-    cikti.appendChild(absatz("Wer gerade austeilt",
-      `Es gibt eine noch ältere Zählung, und sie ist die einzige, die danach fragt, wo du ` +
-      `geboren bist. Der Punkt, der in deiner Geburtsstunde über den Rand der Welt kam, ` +
-      `wandert mit der Drehung des Himmels weiter, und jedes Stück Weg dauert genau so lange, ` +
-      `wie der Himmel über deinem Geburtsort dafür braucht. Darum sind diese Abschnitte ` +
-      `ungleich lang — an einem anderen Ort geboren, hättest du andere. ` +
-      `Von deinem ${vt.laufend.vonJahr.toFixed(0)}. bis zu deinem ${vt.laufend.bisJahr.toFixed(0)}. ` +
-      `Jahr teilt ${fv.figur} aus: ${fv.pron} ${fv.tut}. ` +
-      (ft
-        ? `Und ${ft.figur} teilt sich die Zeit mit ${fv.dat} — von dort kommen die Menschen ` +
-          `und das, was tatsächlich geschieht, während der erste nur das Thema vorgibt.`
-        : `Teilhaber hat ${fv.pron} keinen: Was in diesen Jahren geschieht, geschieht ohne ` +
-          `zweite Hand.`) +
-      (vt.naechster
-        ? ` Mit ${vt.naechster.vonJahr.toFixed(0)} wechselt das Austeilen an ` +
-          `${figurVon(vt.naechster.herr).akk}.`
-        : "")));
+    cikti.appendChild(absatz(e("titel.austeilt"),
+      e("austeilt", vt.laufend.vonJahr.toFixed(0), vt.laufend.bisJahr.toFixed(0), fv, ft,
+        vt.naechster ? vt.naechster.vonJahr.toFixed(0) : null,
+        vt.naechster ? figurVon(vt.naechster.herr).akk : null)));
   }
 
-  cikti.appendChild(absatz("Was als Nächstes an die Tür klopft",
-      `Die älteste aller Zählungen rechnet mit der Drehung der Erde selbst: ein Grad für ein ` +
-      `Lebensjahr. Nach ihr klopft ${wann}, mit ${komma(dir.alter)} Jahren, ${wer} ${wo}. ` +
-      `Das sagt nicht, was geschieht — nur, wann ein Thema fällig wird. Ob geöffnet wird und wer ` +
-      `davorsteht, steht auf einem anderen Blatt.`));
+  cikti.appendChild(absatz(e("titel.klopft"), e("klopft", wann, komma(dir.alter), wer, wo)));
   }
 
   if (anti) {
@@ -459,20 +408,9 @@ function schreibe(zielWahl) {
         const n = [...new Set((f.match(/(Sonne|Mond|Merkur|Venus|Mars|Jupiter|Saturn|Aszendent|ASC|MC)/g) || []))];
         return n.slice(0, 2).join(" und ");
       }).filter(Boolean);
-      cikti.appendChild(absatz("Was im Verborgenen mitläuft",
-        `Es gibt in deinem Himmel ${namen.length === 1 ? "ein Paar" : "mehrere Paare"}, die ` +
-        `einander nicht ansehen und doch denselben Schatten werfen: Spiegelt man die eine Seite ` +
-        `des Jahres auf die andere — Sommer auf Winter, längster Tag auf kürzesten —, dann stehen ` +
-        `sie genau übereinander. Gleich hoch am Himmel, gleich lang am Tag, und trotzdem fällt kein ` +
-        `Blick von einem zum anderen: ${namen.join("; ")}. ` +
-        `So wie Kastor und Polydeukes, von denen immer nur einer oben war, während der andere ` +
-        `unten blieb, und die doch nie etwas getrennt voneinander taten: Diese Paare arbeiten ` +
-        `zusammen, ohne dass man es von außen bemerkt. Es sind die Stellen, an denen bei dir etwas ` +
-        `geschieht, das sich hinterher nicht erklären lässt.`));
+      cikti.appendChild(absatz(e("titel.verborgen"), e("verborgen.ja", namen)));
     } else {
-      cikti.appendChild(absatz("Was im Verborgenen mitläuft",
-        "Spiegelt man die eine Hälfte des Jahres auf die andere, fällt bei dir nichts zusammen. " +
-        "Es läuft bei dir nichts im Verborgenen mit: Was wirkt, zeigt sich auch."));
+      cikti.appendChild(absatz(e("titel.verborgen"), e("verborgen.nein")));
     }
   }
 
@@ -487,7 +425,7 @@ function schreibe(zielWahl) {
     jahrFach.innerHTML = "";
     if (!pf && !sr && !mond && !tr && !prg) return 0;
 
-    jahrFach.appendChild(el("h3", null, `Dieses Jahr — ${JAHR}`));
+    jahrFach.appendChild(el("h3", null, e("titel.jahr", JAHR)));
 
     if (pf) {
       const fh = figurVon(pf.herr.toLowerCase());
@@ -556,7 +494,7 @@ function schreibe(zielWahl) {
   }, ms));
 
   if (lm) {
-    cikti.appendChild(absatz("Der Geber des Lebens",
+    cikti.appendChild(absatz(e("titel.geber"),
       `Die Alten fragten: Wo in diesem Himmel brennt die Flamme, von der ein Leben seine Wärme ` +
       `nimmt? Bei dir brennt sie bei ${bildDat(lm.hZeichen)}. ` +
       `Und wer hütet diese Flamme? ${figurVon(lm.alkochoden).figur.replace(/^./, c => c.toUpperCase())} — ` +
@@ -570,7 +508,7 @@ function schreibe(zielWahl) {
 
   if (sb) {
     const rat = el("div", "ratBand");
-    rat.appendChild(el("div", "ratSchild", "Der Rat"));
+    rat.appendChild(el("div", "ratSchild", e("rat.schild")));
     rat.appendChild(el("p", "ratWort", sb.burc.ogut));
     cikti.appendChild(rat);
   }
@@ -580,7 +518,7 @@ function schreibe(zielWahl) {
 
   if (sb || r || h.anzahl) {
     const kasten = el("div", "schlussKasten");
-    kasten.appendChild(el("h3", null, "Was das zusammen ergibt"));
+    kasten.appendChild(el("h3", null, e("titel.zusammen")));
 
     /* Das Bleibende zuerst. */
     if (r || sb) {
@@ -644,10 +582,7 @@ function schreibe(zielWahl) {
 
     /* Der Schluss. */
     const ende = el("p", "schlussWort");
-    ende.innerHTML =
-      "Keine dieser Künste sagt die Zukunft voraus, und keine wird hier so gebraucht. " +
-      "Sie geben Themen, Fälligkeiten und Tonarten — sie sagen, <em>worum es geht</em> und " +
-      "<em>wann es dran ist</em>, nicht, was daraus wird. Das steht in keiner Tafel.";
+    ende.innerHTML = e("schluss");
     kasten.appendChild(ende);
 
     cikti.appendChild(kasten);
@@ -666,12 +601,8 @@ function schreibe(zielWahl) {
     ["Der rechte Zeitpunkt", "ein Vorhaben, das du beginnen willst; dann prüft er den Mondstand darauf"]);
   if (offen.length) {
     const kasten = el("div", "offeneListe");
-    kasten.append(el("h3", null, "Was hier noch fehlt"));
-    const ZAHL = { 1:"Ein Abschnitt steht", 2:"Zwei Abschnitte stehen",
-                   3:"Drei Abschnitte stehen", 4:"Vier Abschnitte stehen" };
-    kasten.append(el("p", null,
-      `${ZAHL[offen.length] || offen.length + " Abschnitte stehen"} bereit und ` +
-      `${offen.length === 1 ? "braucht" : "brauchen"} nur noch etwas von dir:`));
+    kasten.append(el("h3", null, e("titel.fehlt")));
+    kasten.append(el("p", null, e("fehlt.zahl", offen.length)));
     const ul = el("ul", "deutungListe");
     offen.forEach(([titel, was]) => {
       const li = el("li");

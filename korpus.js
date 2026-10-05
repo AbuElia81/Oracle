@@ -283,3 +283,36 @@ export const UYUM = [
 export const SAAT_SIRASI = ["Zühal","Müşteri","Merih","Şems","Zühre","Utarit","Kamer"];
 export const GUN_SAHIBI = ["Şems","Kamer","Merih","Utarit","Müşteri","Zühre","Zühal"];
 export const GUN_ADI = ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
+
+/* ------------------------------------------------------- die Sprachschalter
+   Die Tafeln bleiben dieselben Objekte; nur die Textfelder werden beim
+   Sprachwechsel ausgetauscht. So sehen alle Abschnitte sofort die andere
+   Sprache, ohne dass irgendwo ein Import umgehängt werden müsste. */
+import { BURC_IT, MENZIL_IT, BURC_GESCHLECHT_IT, UNSUR_IT } from "./korpus-it.js?v=178";
+import { aktuelleSprache } from "./sprachen.js?v=178";
+
+const BURC_DE_TEXTE = BURCLAR.map(b => ({ tabiat: b.tabiat, ogut: b.ogut, erkek: b.erkek, kadin: b.kadin }));
+const UNSUR_DE_TEXTE = UNSURLAR.map(u => u.metin);
+const MENZIL_DE_TEXTE = MENZILLER.map(m => ({ hukum: m.hukum, iyi: m.iyi, kacin: m.kacin }));
+
+export function setzeKorpusSprache(code) {
+  const it = code === "it";
+  BURCLAR.forEach((b, i) => {
+    const q = it ? BURC_IT[i] : BURC_DE_TEXTE[i];
+    if (!q) return;
+    b.tabiat = q.tabiat; b.ogut = q.ogut;
+    const g = it ? BURC_GESCHLECHT_IT[i] : q;
+    if (g) { b.erkek = g.erkek; b.kadin = g.kadin; }
+  });
+  UNSURLAR.forEach((u, i) => {
+    u.metin = it ? (UNSUR_IT[i] || u.metin) : UNSUR_DE_TEXTE[i];
+  });
+  MENZILLER.forEach((m, i) => {
+    const q = it ? MENZIL_IT[i] : MENZIL_DE_TEXTE[i];
+    if (!q) return;
+    m.hukum = q.hukum; m.iyi = q.iyi; m.kacin = q.kacin;
+  });
+}
+
+setzeKorpusSprache(aktuelleSprache());
+window.addEventListener("sprache-geaendert", e => setzeKorpusSprache(e.detail));
