@@ -104,3 +104,12 @@ export const UNSUR_IT = [
 
 /* Le qualità dei quattro elementi. */
 export const UNSUR_TABIAT_IT = ["caldo e secco", "freddo e secco", "caldo e umido", "freddo e umido"];
+
+/* I nomi che nelle tavole stanno nel campo "de". */
+export const ZEICHEN_DE_IT = ["Ariete","Toro","Gemelli","Cancro","Leone","Vergine",
+                              "Bilancia","Scorpione","Sagittario","Capricorno","Acquario","Pesci"];
+export const ELEMENT_DE_IT = ["Fuoco","Terra","Aria","Acqua"];
+export const PLANET_DE_IT  = ["Sole","Venere","Mercurio","Luna","Saturno","Giove","Marte"];
+export const WOCHENTAG_IT  = { "Sonntag":"domenica", "Montag":"lunedì", "Dienstag":"martedì",
+                               "Mittwoch":"mercoledì", "Donnerstag":"giovedì",
+                               "Freitag":"venerdì", "Samstag":"sabato" };

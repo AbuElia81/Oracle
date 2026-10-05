@@ -172,7 +172,35 @@ export const R = {
     "wuerde.Zeichen":"Zeichen", "wuerde.Erhöhung":"Erhöhung", "wuerde.Triplizität":"Triplizität",
     "wuerde.Grenze":"Grenze", "wuerde.Gesicht":"Gesicht",
 
-    "fehlt.geburt":"Dafür fehlen die Geburtsangaben — Datum, Uhrzeit und der Ort mit gesuchten Koordinaten."
+    "fehlt.geburt":"Dafür fehlen die Geburtsangaben — Datum, Uhrzeit und der Ort mit gesuchten Koordinaten.",
+
+    "ny.frage":"Erst die Frage.",
+    "ny.stunde": (tag, nr, planet, deutsch, soru, name, stunde, summe, rest) =>
+      `${tag}, ${nr}. Stunde nach Sonnenaufgang — sie gehört ${planet} (${deutsch}). ` +
+      `Frage ${soru} + Name ${name} + Stunde ${stunde} = ${summe}, geteilt durch zwölf: Rest ${rest}.`,
+    "ny.note":"Dieselbe Frage bekommt zu anderer Stunde eine andere Antwort. Das ist keine " +
+      "Schwäche der Tafel, sondern ihr Sinn: gefragt wird nicht die Sache, sondern der Augenblick.",
+    "uy.beide":"Beide Namen und beide Mütter.",
+    "uy.rechnung": (a, b, summe, rest) =>
+      `${a} + ${b} = ${summe}, geteilt durch zwölf: Rest ${rest}.`,
+    "wochentage":["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"],
+    "yz.restNull":"Rest null zählt als das letzte Fach — die Fächer sind von eins an gezählt. " +
+      "Dass Zeichen und Element dasselbe Element nennen, ist kein Zufall: zwölf ist durch vier teilbar.",
+    "yz.gemuet":"Mizaç — das Gemüt", "yz.frau":"Für die Frau", "yz.mann":"Für den Mann",
+    "yz.element":"Element", "yz.stern": (tr) => `Stern der Summe — ${tr}`,
+    "yz.sternText": (gibt, nimmt, tag, metall, zahl, anrufung) =>
+      `Er gibt: ${gibt}. Er nimmt: ${nimmt}. Sein Tag ist ${tag}, sein Metall ${metall}, ` +
+      `seine Zahl ${zahl}, seine Anrufung ${anrufung}.`,
+    "yz.erwerb":"Erwerb und Amt", "yz.ehe":"Ehe",
+    "yz.eheText": (liste) =>
+      `Es passen zu dir: ${liste}. Die Bücher raten ab von dem Zeichen, das dir im Kreis ` +
+      `gegenübersteht — außer du hast es schon geheiratet; dann ist es die Aufgabe und nicht ` +
+      `der Fehler.`,
+    "yz.krankheit":"Krankheit",
+    "yz.herberge": (nr, tr) => `Mondherberge ${nr} — ${tr}`,
+    "yz.herbergeText": (ar, urteil, gut, meide) =>
+      `${ar} — ${urteil} Günstig für: ${gut}. Meide: ${meide}.`,
+    "yz.rat":"Der Rat"
   },
 
   it: {
@@ -333,7 +361,34 @@ export const R = {
     "wuerde.Zeichen":"segno", "wuerde.Erhöhung":"esaltazione", "wuerde.Triplizität":"triplicità",
     "wuerde.Grenze":"termine", "wuerde.Gesicht":"faccia",
 
-    "fehlt.geburt":"Per questo mancano i dati di nascita — data, ora e il luogo con le coordinate cercate."
+    "fehlt.geburt":"Per questo mancano i dati di nascita — data, ora e il luogo con le coordinate cercate.",
+
+    "ny.frage":"Prima la domanda.",
+    "ny.stunde": (tag, nr, planet, deutsch, soru, name, stunde, summe, rest) =>
+      `${tag}, ${nr}ª ora dopo il levar del sole — appartiene a ${planet} (${deutsch}). ` +
+      `Domanda ${soru} + nome ${name} + ora ${stunde} = ${summe}, diviso dodici: resto ${rest}.`,
+    "ny.note":"La stessa domanda riceve a un'altra ora un'altra risposta. Non è una debolezza " +
+      "della tavola, ma il suo senso: non si interroga la cosa, bensì l'istante.",
+    "uy.beide":"Entrambi i nomi ed entrambe le madri.",
+    "uy.rechnung": (a, b, summe, rest) =>
+      `${a} + ${b} = ${summe}, diviso dodici: resto ${rest}.`,
+    "wochentage":["domenica","lunedì","martedì","mercoledì","giovedì","venerdì","sabato"],
+    "yz.restNull":"Il resto zero vale come l'ultimo scomparto — gli scomparti sono contati da uno. " +
+      "Che segno ed elemento nominino lo stesso elemento non è un caso: dodici è divisibile per quattro.",
+    "yz.gemuet":"Mizaç — l'animo", "yz.frau":"Per la donna", "yz.mann":"Per l'uomo",
+    "yz.element":"Elemento", "yz.stern": (tr) => `Stella della somma — ${tr}`,
+    "yz.sternText": (gibt, nimmt, tag, metall, zahl, anrufung) =>
+      `Dà: ${gibt}. Prende: ${nimmt}. Il suo giorno è ${tag}, il suo metallo ${metall}, ` +
+      `il suo numero ${zahl}, la sua invocazione ${anrufung}.`,
+    "yz.erwerb":"Guadagno e carica", "yz.ehe":"Matrimonio",
+    "yz.eheText": (liste) =>
+      `Ti si addicono: ${liste}. I libri sconsigliano il segno che ti sta di fronte nel ` +
+      `cerchio — a meno che tu non l'abbia già sposato; allora è il compito e non l'errore.`,
+    "yz.krankheit":"Malattia",
+    "yz.herberge": (nr, tr) => `Stazione lunare ${nr} — ${tr}`,
+    "yz.herbergeText": (ar, urteil, gut, meide) =>
+      `${ar} — ${urteil} Favorevole a: ${gut}. Evita: ${meide}.`,
+    "yz.rat":"Il consiglio"
   }
 };
 

@@ -1,9 +1,13 @@
 /* ------------------------------------------------------------------------
    oracle.js — die Bedienung.
    --------------------------------------------------------------------- */
-import { EBCED, HARFLER, cevir, dokum, toplam, kalan } from "./ebced.js?v=195";
+import { EBCED, HARFLER, cevir, dokum, toplam, kalan } from "./ebced.js?v=202";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=202";
+import { aktuelleSprache } from "./sprachen.js?v=202";
+setzeRestSprache(aktuelleSprache());
+window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 import { UNSURLAR, GEZEGENLER, BURCLAR, MENZILLER, NIYET, UYUM,
-         UNSUR_UYUM, SAAT_SIRASI, GUN_SAHIBI, GUN_ADI } from "./korpus.js?v=195";
+         UNSUR_UYUM, SAAT_SIRASI, GUN_SAHIBI, GUN_ADI } from "./korpus.js?v=202";
 
 const $  = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
@@ -114,8 +118,7 @@ function yildizname() {
   });
   hesap.appendChild(kalanlar);
   hesap.appendChild(el("p", "kucukNot",
-    "Rest null zählt als das letzte Fach — die Fächer sind von eins an gezählt. " +
-    "Dass Zeichen und Element dasselbe Element nennen, ist kein Zufall: zwölf ist durch vier teilbar."));
+    rt("yz.restNull")));
   cikti.appendChild(hesap);
 
   /* Das Kapitel. */
@@ -138,17 +141,17 @@ function yildizname() {
   k.appendChild(satir);
 
   const boluml = [
-    ["Mizaç — das Gemüt", burc.tabiat],
-    [kadin ? "Für die Frau" : "Für den Mann", kadin ? burc.kadin : burc.erkek],
-    ["Element", unsur.metin],
-    [`Stern der Summe — ${gSum.tr}`,
-      `Er gibt: ${gSum.armagan}. Er nimmt: ${gSum.tehlike}. Sein Tag ist ${gSum.gun}, sein Metall ${gSum.maden}, seine Zahl ${gSum.sayi}, seine Anrufung ${gSum.esma}.`],
-    ["Erwerb und Amt", burc.is],
-    ["Ehe", `Es passen zu dir: ${burc.evlilik.join(", ")}. Die Bücher raten ab von dem Zeichen, das dir im Kreis gegenübersteht — außer du hast es schon geheiratet; dann ist es die Aufgabe und nicht der Fehler.`],
-    ["Krankheit", burc.hastalik],
-    [`Mondherberge ${menzil.no} — ${menzil.tr}`,
-      `${menzil.ar} — ${menzil.hukum} Günstig für: ${menzil.iyi}. Meide: ${menzil.kacin}.`],
-    ["Der Rat", burc.ogut]
+    [rt("yz.gemuet"), burc.tabiat],
+    [kadin ? rt("yz.frau") : rt("yz.mann"), kadin ? burc.kadin : burc.erkek],
+    [rt("yz.element"), unsur.metin],
+    [rt("yz.stern", gSum.tr),
+      rt("yz.sternText", gSum.armagan, gSum.tehlike, gSum.gun, gSum.maden, gSum.sayi, gSum.esma)],
+    [rt("yz.erwerb"), burc.is],
+    [rt("yz.ehe"), rt("yz.eheText", burc.evlilik.join(", "))],
+    [rt("yz.krankheit"), burc.hastalik],
+    [rt("yz.herberge", menzil.no, menzil.tr),
+      rt("yz.herbergeText", menzil.ar, menzil.hukum, menzil.iyi, menzil.kacin)],
+    [rt("yz.rat"), burc.ogut]
   ];
   boluml.forEach(([b, m]) => {
     k.append(el("h3", null, b), el("p", null, m));
@@ -168,7 +171,7 @@ const alanNiyetAd = adAlani("#niyetAd", "#zincirNiyetAd", () => {});
 $("#niyetSor").addEventListener("click", () => {
   const soru = $("#soru").value.trim();
   const cikti = $("#niyetCikti");
-  if (!soru) { cikti.hidden = false; cikti.textContent = "Erst die Frage."; return; }
+  if (!soru) { cikti.hidden = false; cikti.textContent = rt("ny.frage"); return; }
 
   const saat = saatSahibi();
   const g = gezegen(saat.gezegen);
@@ -181,14 +184,12 @@ $("#niyetSor").addEventListener("click", () => {
   cikti.textContent = "";
   cikti.append(
     el("p", "kucukNot",
-      `${saat.gun}, ${saat.no}. Stunde nach Sonnenaufgang — sie gehört ${g.tr} (${g.de}). ` +
-      `Frage ${soruT} + Name ${alanNiyetAd.toplam} + Stunde ${saat.no} = ${t}, geteilt durch zwölf: Rest ${kalan(t,12)}.`),
+      rt("ny.stunde", rt("wochentage")[new Date().getDay()], saat.no, g.tr, g.de,
+         soruT, alanNiyetAd.toplam, saat.no, t, kalan(t, 12))),
     el("div", "hukum", n.hukum),
     el("div", "hukumDe", n.de),
     el("p", "niyetMetin", n.metin),
-    el("p", "kucukNot",
-      "Dieselbe Frage bekommt zu anderer Stunde eine andere Antwort. Das ist keine Schwäche der Tafel, " +
-      "sondern ihr Sinn: gefragt wird nicht die Sache, sondern der Augenblick.")
+    el("p", "kucukNot", rt("ny.note"))
   );
 });
 
@@ -201,7 +202,7 @@ const u2m = adAlani("#u2anne", "#zincirU2anne", () => {});
 $("#uyumHesapla").addEventListener("click", () => {
   const A = u1a.toplam + u1m.toplam, B = u2a.toplam + u2m.toplam;
   const cikti = $("#uyumCikti");
-  if (!A || !B) { cikti.hidden = false; cikti.textContent = "Beide Namen und beide Mütter."; return; }
+  if (!A || !B) { cikti.hidden = false; cikti.textContent = rt("uy.beide"); return; }
 
   const bA = BURCLAR[kalan(A, 12) - 1], bB = BURCLAR[kalan(B, 12) - 1];
   const uA = UNSURLAR[bA.unsur - 1], uB = UNSURLAR[bB.unsur - 1];
@@ -219,7 +220,7 @@ $("#uyumHesapla").addEventListener("click", () => {
     ust.appendChild(kk);
   });
   cikti.append(ust,
-    el("p", "kucukNot", `${A} + ${B} = ${A + B}, geteilt durch zwölf: Rest ${kalan(A + B, 12)}.`),
+    el("p", "kucukNot", rt("uy.rechnung", A, B, A + B, kalan(A + B, 12))),
     el("h3", null, anahtar[0]), el("p", null, anahtar[1]),
     el("h3", null, kar.hukum), el("p", null, kar.metin));
 });
