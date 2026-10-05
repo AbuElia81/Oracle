@@ -1260,3 +1260,40 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
   .rdTafel tr.rdStark { border-color: rgba(143,191,122,.45); }
   .rdTafel tr.rdSchwach { opacity: .62; }
 }
+
+/* ------------------------------------------------ Werk, Lebensalter, Punkte */
+.wkKasten {
+  text-align: center; padding: 1.4rem 1.2rem; margin: 1.3rem 0 1.6rem;
+  border: 1px solid rgba(212,175,110,.3); border-radius: .5rem;
+  background: rgba(212,175,110,.05);
+}
+.wkKasten p { text-align: left; line-height: 1.7; margin-top: 1rem; }
+.wkPaar {
+  border-top: 1px solid rgba(255,255,255,.1); padding-top: .9rem;
+}
+
+.laDrittel {
+  padding: 1rem 1.1rem; margin-bottom: .8rem;
+  border: 1px solid rgba(255,255,255,.1); border-radius: .45rem;
+  background: rgba(255,255,255,.02);
+}
+.laDrittel.laHier { border-color: var(--gold); background: rgba(212,175,110,.07); }
+.laKopf { display: flex; align-items: baseline; gap: .8rem; margin-bottom: .5rem; flex-wrap: wrap; }
+.laSpanne { font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; opacity: .55; }
+.laName { font-size: 1.15rem; color: var(--gold); }
+.laDrittel p { margin: 0; line-height: 1.7; }
+.laJetzt {
+  margin-top: .7rem; font-size: .78rem; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--gold);
+}
+
+.apKarte {
+  padding: .9rem 1rem; margin-bottom: .6rem;
+  border-left: 2px solid rgba(212,175,110,.35);
+  background: rgba(255,255,255,.022); border-radius: 0 .35rem .35rem 0;
+}
+.apKopf { display: flex; justify-content: space-between; align-items: baseline; gap: .8rem; flex-wrap: wrap; }
+.apName { font-size: 1.08rem; color: var(--gold); }
+.apOrt { font-size: .85rem; opacity: .7; white-space: nowrap; }
+.apLat { font-size: .76rem; letter-spacing: .07em; opacity: .45; margin: .15rem 0 .5rem; font-style: italic; }
+.apKarte p { margin: 0; line-height: 1.65; font-size: .95rem; }

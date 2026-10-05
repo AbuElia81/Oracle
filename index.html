@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Oracle</title>
 <meta name="description" content="Oracle — Orakelrechner nach alten Büchern: das osmanische Yıldıznâme aus Name und Muttername, der Geist des 11. Hauses nach Agrippa, Primärdirektionen, Zodiacal Releasing und Antiszien.">
-<link rel="stylesheet" href="stil.css?v=152">
+<link rel="stylesheet" href="stil.css?v=157">
 </head>
 <body>
 
@@ -37,6 +37,9 @@
   <button data-bolum="bSolar" data-gruppe="sterne">Jahresumdrehung</button>
   <button data-bolum="bRadixdeutung" data-gruppe="sterne">Die Deutung</button>
   <button data-bolum="bAlmutem" data-gruppe="sterne">Der Herr der Geburt</button>
+  <button data-bolum="bWerk" data-gruppe="sterne">Das Werk</button>
+  <button data-bolum="bLebensalter" data-gruppe="sterne">Die drei Lebensalter</button>
+  <button data-bolum="bPunkte" data-gruppe="sterne">Die arabischen Punkte</button>
   <button data-bolum="bVerteilung" data-gruppe="sterne">Die Verteilung</button>
   <button data-bolum="bLebensmass" data-gruppe="sterne">Das Lebensmaß</button>
   <button data-bolum="bEssenz" data-gruppe="beide">Die Essenz</button>
@@ -1099,6 +1102,50 @@
   <div id="afCikti" hidden></div>
 </section>
 
+<section class="bolum" id="bWerk" hidden>
+  <div class="appKopf">
+    <h2>Das Werk</h2>
+    <p class="unterzeile">Der Herr des Werks nach Ptolemäus — woraus deine Arbeit gemacht ist</p>
+  </div>
+  <p class="giriş"><b>Ptolemäus</b> (<em>Tetrabiblos</em> IV.4) fragt nicht, welchen Beruf
+  jemand ergreift, sondern aus welchem Stoff seine Tätigkeit ist. Er sucht dafür zwei
+  Stellen ab — den Planeten, der morgens vor der Sonne aufgeht, und den am
+  Himmelsmittelpunkt — und lässt nur drei als Herrn des Werks gelten: <b>Merkur, Venus
+  und Mars</b>. Alles Hervorbringen, sagt er, geht durch Hand, Auge oder Wort. Die
+  übrigen vier geben Rang und Umstände, nicht das Werk selbst.</p>
+  <button id="wkBerechnen" class="buyukDugme">Neu rechnen</button>
+  <div id="wkCikti" hidden></div>
+</section>
+
+<section class="bolum" id="bLebensalter" hidden>
+  <div class="appKopf">
+    <h2>Die drei Lebensalter</h2>
+    <p class="unterzeile">Die Triplizitätsherren nach Dorotheos</p>
+  </div>
+  <p class="giriş">Jedes Element hat drei Herren: einen für den Tag, einen für die Nacht
+  und einen dritten, den die arabische Überlieferung den <em>Teilhaber</em> nennt.
+  <b>Dorotheos</b> teilt das Leben in drei Teile und gibt jedem einen von ihnen. Wie
+  dieser Herr steht, so verläuft sein Drittel. Es ist die einfachste Zeitteilung der
+  ganzen Überlieferung — und zugleich die gröbste: Sie sagt eine Tendenz, keinen Termin.</p>
+  <button id="laBerechnen" class="buyukDugme">Neu rechnen</button>
+  <div id="laCikti" hidden></div>
+</section>
+
+<section class="bolum" id="bPunkte" hidden>
+  <div class="appKopf">
+    <h2>Die arabischen Punkte</h2>
+    <p class="unterzeile">Partes — gerechnete Stellen, keine Himmelskörper</p>
+  </div>
+  <p class="giriş">Sie heißen arabisch, sind aber älter: Schon Paulus Alexandrinus und
+  der <em>Liber Hermetis</em> kennen sie. Ein Punkt entsteht immer gleich — man nimmt den
+  Abstand zwischen zwei Stellen des Horoskops und trägt ihn vom Aufsteigenden aus noch
+  einmal ab. Was herauskommt, ist kein Himmelskörper, sondern ein Ort, an dem zwei
+  Bedeutungen sich treffen. <b>Guido Bonatti</b> führt siebenundneunzig davon auf; hier
+  stehen die sieben hermetischen und die gebräuchlichsten.</p>
+  <button id="apBerechnen" class="buyukDugme">Neu rechnen</button>
+  <div id="apCikti" hidden></div>
+</section>
+
 <section class="bolum" id="bVerteilung" hidden>
   <div class="appKopf">
     <h2>Die Verteilung</h2>
@@ -1158,34 +1205,36 @@
   osmanisch, hellenistisch, arabisch, ägyptisch, lateinisch</p>
 </footer>
 
-<script type="module" src="oracle.js?v=152"></script>
-<script type="module" src="profil.js?v=152"></script>
-<script type="module" src="profil-ui.js?v=152"></script>
-<script type="module" src="zugang.js?v=152"></script>
-<script type="module" src="horoskop.js?v=152"></script>
-<script type="module" src="perioden.js?v=152"></script>
-<script type="module" src="solar.js?v=152"></script>
-<script type="module" src="lebensmass.js?v=152"></script>
-<script type="module" src="leuchten.js?v=152"></script>
-<script type="module" src="elektion.js?v=152"></script>
-<script type="module" src="ramel.js?v=152"></script>
-<script type="module" src="spende.js?v=152"></script>
-<script type="module" src="geist.js?v=152"></script>
-<script type="module" src="geist-profil.js?v=152"></script>
-<script type="module" src="yildiz-profil.js?v=152"></script>
-<script type="module" src="essenz.js?v=152"></script>
-<script type="module" src="auto-rechnen.js?v=152"></script>
-<script type="module" src="deutung.js?v=152"></script>
-<script type="module" src="jahr.js?v=152"></script>
-<script type="module" src="lebensbogen.js?v=152"></script>
-<script type="module" src="zr.js?v=152"></script>
-<script type="module" src="antiszien.js?v=152"></script>
-<script type="module" src="profektionen.js?v=152"></script>
-<script type="module" src="themen.js?v=152"></script>
-<script type="module" src="crosscheck.js?v=152"></script>
-<script type="module" src="planeten.js?v=152"></script>
-<script type="module" src="verteilung.js?v=152"></script>
-<script type="module" src="almutem.js?v=152"></script>
-<script type="module" src="radixdeutung.js?v=152"></script>
+<script type="module" src="oracle.js?v=157"></script>
+<script type="module" src="profil.js?v=157"></script>
+<script type="module" src="profil-ui.js?v=157"></script>
+<script type="module" src="zugang.js?v=157"></script>
+<script type="module" src="horoskop.js?v=157"></script>
+<script type="module" src="perioden.js?v=157"></script>
+<script type="module" src="solar.js?v=157"></script>
+<script type="module" src="lebensmass.js?v=157"></script>
+<script type="module" src="leuchten.js?v=157"></script>
+<script type="module" src="elektion.js?v=157"></script>
+<script type="module" src="ramel.js?v=157"></script>
+<script type="module" src="spende.js?v=157"></script>
+<script type="module" src="geist.js?v=157"></script>
+<script type="module" src="geist-profil.js?v=157"></script>
+<script type="module" src="yildiz-profil.js?v=157"></script>
+<script type="module" src="essenz.js?v=157"></script>
+<script type="module" src="auto-rechnen.js?v=157"></script>
+<script type="module" src="deutung.js?v=157"></script>
+<script type="module" src="jahr.js?v=157"></script>
+<script type="module" src="lebensbogen.js?v=157"></script>
+<script type="module" src="zr.js?v=157"></script>
+<script type="module" src="antiszien.js?v=157"></script>
+<script type="module" src="profektionen.js?v=157"></script>
+<script type="module" src="themen.js?v=157"></script>
+<script type="module" src="crosscheck.js?v=157"></script>
+<script type="module" src="planeten.js?v=157"></script>
+<script type="module" src="verteilung.js?v=157"></script>
+<script type="module" src="almutem.js?v=157"></script>
+<script type="module" src="radixdeutung.js?v=157"></script>
+<script type="module" src="werk.js?v=157"></script>
+<script type="module" src="punkte.js?v=157"></script>
 </body>
 </html>

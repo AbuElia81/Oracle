@@ -7,7 +7,7 @@
    Maske erscheint — und erst eine ausgefüllte Maske öffnet die Reiter
    des jeweiligen Weges.
    --------------------------------------------------------------------- */
-import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=152";
+import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=157";
 
 const HEIM = "bProfil";
 const SPEICHER = "oracle-weg";
@@ -121,6 +121,9 @@ const WORUM = {
   bSolar:        "Einmal im Jahr kehrt die Sonne auf ihren Geburtsgrad zurück. Was dieses Jahr trägt — in neun Schritten nach Abū Maʿšar.",
   bRadixdeutung: "Die Geburt als Ganzes, ehe die Zeit anfängt — Sekte, Temperament, der Aufsteigende und sein Herr. Wahlweise nüchtern nach Bonatti oder in Bildern und Fabeln.",
   bAlmutem:      "Der Herr des ganzen Horoskops nach Ibn Ezra und Bonatti — wer über diese Geburt als solche das letzte Wort hat, wenn die einzelnen Zeugen sich widersprechen.",
+  bWerk:         "Ptolemäus fragt nicht nach dem Beruf, sondern aus welchem Stoff deine Arbeit ist — durch Hand, Auge oder Wort.",
+  bLebensalter:  "Dorotheos teilt das Leben in drei Teile und gibt jedem einen der drei Herren deines Elements.",
+  bPunkte:       "Gerechnete Stellen, keine Himmelskörper: wo Glück, Geist, Liebe, Vater, Mutter und die übrigen im Horoskop zu liegen kommen.",
   bVerteilung:   "Dorotheos' Verteilung durch die Grenzen: Der Aszendent wandert mit der Drehung des Himmels, und jede Grenze dauert so lange, wie sie an deinem Ort zum Aufgehen braucht.",
   bLebensmass:   "Die alte Frage nach dem Maß des Lebens: Hylech und Alcocoden, der Geber und der Hüter.",
   bEssenz:       "Alles zusammen, in Bildern statt in Fachsprache — was die einzelnen Künste gemeinsam sagen."
