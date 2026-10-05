@@ -8,9 +8,13 @@
    taugt und wovor sie warnt. Dazu treten die klassischen Elektionsregeln —
    zunehmender oder abnehmender Mond, die verbrannte Bahn, die Stunde.
    --------------------------------------------------------------------- */
-import { MENZILLER } from "./korpus.js?v=202";
-import { planetenPositionen, julianischesDatum, norm360, sonnenLaenge } from "./astro.js?v=202";
-import { ZEICHEN, PLANET } from "./horoskop.js?v=202";
+import { MENZILLER } from "./korpus.js?v=210";
+import { planetenPositionen, julianischesDatum, norm360, sonnenLaenge } from "./astro.js?v=210";
+import { ZEICHEN, PLANET } from "./horoskop.js?v=210";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=210";
+import { aktuelleSprache } from "./sprachen.js?v=210";
+setzeRestSprache(aktuelleSprache());
+window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -25,49 +29,50 @@ const SEKTOR = 360 / 28;
    aufbaut (zunehmender Mond) oder abträgt (abnehmender). */
 const VORHABEN = [
   { art:"Reise und Aufbruch",
-    woerter:["reis","fahr","flieg","urlaub","umzug","umzieh","weg","ausland","fortgeh","aufbruch","wander","pilger"],
+    woerter:["reis","fahr","flieg","urlaub","umzug","umzieh","weg","ausland","fortgeh","aufbruch","wander","pilger","viagg","part","volo","vacanz","trasloc","estero","pellegrin"],
     dafuer:["reise","aufbruch","heimkehr","weg","rückkehr"], dagegen:["reise","ortswechsel","fortgehen","neues land"],
     planet:"merkur", richtung:"zunehmend" },
   { art:"Ehe, Liebe und Versöhnung",
-    woerter:["heirat","hochzeit","ehe","antrag","verlob","liebe","date","versöhn","aussöhn","beziehung","partner"],
+    woerter:["heirat","hochzeit","ehe","antrag","verlob","liebe","date","versöhn","aussöhn","beziehung","partner","sposa","matrimon","nozze","fidanz","amore","appuntament","riconcil","relazion"],
     dafuer:["ehe","liebe","freundschaft","versöhnung","bündnis","eintracht"], dagegen:["hochzeit","ehe","bindung"],
     planet:"venus", richtung:"zunehmend" },
   { art:"Handel, Kauf und Vertrag",
-    woerter:["kauf","verkauf","vertrag","geschäft","handel","investier","geld","gehalt","verhandl","angebot","rechnung","miete"],
+    woerter:["kauf","verkauf","vertrag","geschäft","handel","investier","geld","gehalt","verhandl","angebot","rechnung","miete","commerc","compr","vend","contratt","affar","acquist","firm","negozi"],
     dafuer:["handel","gewinn","kaufen","verkaufen","bündnis","ernte"], dagegen:["schulden","verträge auf dauer","anvertrauen"],
     planet:"merkur", richtung:"zunehmend" },
   { art:"Bauen, Gründen und Anfangen",
-    woerter:["bau","haus","grundstein","gründ","firma","eröffn","anfang","beginn","start","projekt","renovier","einzieh"],
+    woerter:["bau","haus","grundstein","gründ","firma","eröffn","anfang","beginn","start","projekt","renovier","einzieh","costru","fonda","comincia","inizi","avvi","edific"],
     dafuer:["bauen","säen","grundstein","beginn","aussaat"], dagegen:["großes anfangen","bauen"],
     planet:"saturn", richtung:"zunehmend" },
   { art:"Heilung und Gesundheit",
-    woerter:["arzt","operation","op ","heil","kur","medizin","zahn","therapie","krank","behandl","impf","diät"],
+    woerter:["arzt","operation","op ","heil","kur","medizin","zahn","therapie","krank","behandl","impf","diät","guari","salut","cura","medic","operaz","terapia","malatt"],
     dafuer:["heilung","heilen","arznei","genesung","befreien"], dagegen:["arznei"],
     planet:"sonne", richtung:"abnehmend" },
   { art:"Lernen, Schreiben und Vortragen",
-    woerter:["lern","prüfung","schreib","vortrag","bewerb","studi","kurs","examen","rede","brief","buch","unterricht"],
+    woerter:["lern","prüfung","schreib","vortrag","bewerb","studi","kurs","examen","rede","brief","buch","unterricht","impar","studi","scriv","esam","insegn","corso"],
     dafuer:["lernen","studium","botschaft","schrift","bündnis"], dagegen:["bitten vortragen"],
     planet:"merkur", richtung:"zunehmend" },
   { art:"Säen, Pflanzen und Ernten",
-    woerter:["sä","pflanz","garten","ernte","setzling","acker","baum","beet"],
+    woerter:["sä","pflanz","garten","ernte","setzling","acker","baum","beet","semin","pianta","raccol","giardin","orto","albero"],
     dafuer:["aussaat","säen","ernte","ernten","erdarbeit"], dagegen:["säen"],
     planet:"mond", richtung:"zunehmend" },
   { art:"Beenden, Trennen und Aufräumen",
-    woerter:["kündig","trenn","beend","aufhör","scheid","entrümpel","aufräum","entlass","löschen","schluss","abschied","wegwerf"],
+    woerter:["kündig","trenn","beend","aufhör","scheid","entrümpel","aufräum","entlass","löschen","schluss","abschied","wegwerf","fini","separ","divorz","chiud","smett","lascia","termin"],
     dafuer:["auflösen","beenden","trennen","lösen","freilassen","scheiden"], dagegen:["bewahren","verwahren"],
     planet:"saturn", richtung:"abnehmend" },
   { art:"Streit, Recht und Behörde",
-    woerter:["prozess","klage","streit","gericht","anwalt","behörde","amt","antrag","widerspruch","einspruch"],
+    woerter:["prozess","klage","streit","gericht","anwalt","behörde","amt","antrag","widerspruch","einspruch","lite","contesa","diritto","tribunal","autorit","ufficio","causa"],
     dafuer:["feinde besiegen","standhalten","grenzen ziehen","recht"], dagegen:["streit suchen","feindschaft","klagen"],
     planet:"mars", richtung:"zunehmend" },
   { art:"Bitten und Ansprechen",
-    woerter:["bitt","frag","ansprech","chef","gespräch","um etwas","erbitten","werben"],
+    woerter:["bitt","frag","ansprech","chef","gespräch","um etwas","erbitten","werben","chied","pregh","domanda","richiest","supplic","rivolg"],
     dafuer:["bitten","bitten bei mächtigen","wohlwollen","liebe"], dagegen:["bitten vortragen","öffentliches"],
     planet:"jupiter", richtung:"zunehmend" }
 ];
 
 function erkenneVorhaben(text) {
   const t = (text || "").toLowerCase();
+  VORHABEN.forEach((v, i) => { v.artKey = i; });
   const treffer = VORHABEN.filter(v => v.woerter.some(w => t.includes(w)));
   return treffer.length ? treffer[0] : null;
 }
@@ -178,35 +183,32 @@ function raten() {
   const stand = mondStand(jetzt);
   const { punkte, gruende } = bewerte(stand, vor);
 
-  const urteil = punkte >= 4 ? { wort:"Ein guter Zeitpunkt", klasse:"gut" }
-              : punkte >= 1 ? { wort:"Brauchbar", klasse:"gut" }
-              : punkte >= -1 ? { wort:"Weder noch", klasse:"mittel" }
-              : { wort:"Lieber nicht heute", klasse:"schlecht" };
+  const urteil = punkte >= 4 ? { wort:rt("ek.gut"), klasse:"gut" }
+              : punkte >= 1 ? { wort:rt("ek.brauchbar"), klasse:"gut" }
+              : punkte >= -1 ? { wort:rt("ek.weder"), klasse:"mittel" }
+              : { wort:rt("ek.nicht"), klasse:"schlecht" };
 
   const kasten = el("div", "geistName");
   kasten.append(
-    el("div", "kalanBaslik", vor ? vor.art : "Dein Vorhaben"),
+    el("div", "kalanBaslik", vor ? rt("ek.art")[vor.artKey] : rt("ek.vorhaben")),
     el("div", "buyukToplam", urteil.wort),
     el("div", "kucukNot",
-      `Der Mond steht in ${ZEICHEN[stand.zeichen].glyph} ${ZEICHEN[stand.zeichen].name}, ` +
-      `Station ${stand.menzilNr} — ${stand.menzil.tr}, und ${stand.zunehmend ? "nimmt zu" : "nimmt ab"}.`)
+      rt("ek.mond", `${ZEICHEN[stand.zeichen].glyph} ${ZEICHEN[stand.zeichen].name}`,
+         stand.menzilNr, stand.menzil.tr, stand.zunehmend))
   );
   cikti.appendChild(kasten);
 
   if (!vor) {
-    cikti.appendChild(el("p", "kucukNot",
-      "Die Art des Vorhabens konnte ich nicht sicher erkennen — geurteilt wird deshalb nur " +
-      "nach dem allgemeinen Stand des Mondes. Nenne etwas konkreter, worum es geht " +
-      "(reisen, heiraten, kaufen, bauen, heilen, lernen, säen, beenden, streiten, bitten)."));
+    cikti.appendChild(el("p", "kucukNot", rt("ek.unklar")));
   }
 
-  cikti.appendChild(el("h3", null, "Die Station heute"));
+  cikti.appendChild(el("h3", null, rt("ek.station")));
   const p1 = el("p");
-  p1.innerHTML = `<b>${stand.menzilNr}. ${stand.menzil.tr}</b> (${stand.menzil.ar}) — ` +
-    `${stand.menzil.hukum} Günstig für: ${stand.menzil.iyi}. Meide: ${stand.menzil.kacin}.`;
+  p1.innerHTML = rt("ek.stationText", stand.menzilNr, stand.menzil.tr, stand.menzil.ar,
+    stand.menzil.hukum, stand.menzil.iyi, stand.menzil.kacin);
   cikti.appendChild(p1);
 
-  cikti.appendChild(el("h3", null, "Was dafür und was dagegen spricht"));
+  cikti.appendChild(el("h3", null, rt("ek.dafuer")));
   const ul = el("ul", "deutungListe");
   gruende.forEach(g => {
     const li = el("li", g.gut ? "dafuer" : "dagegen");

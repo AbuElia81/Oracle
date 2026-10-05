@@ -200,7 +200,31 @@ export const R = {
     "yz.herberge": (nr, tr) => `Mondherberge ${nr} — ${tr}`,
     "yz.herbergeText": (ar, urteil, gut, meide) =>
       `${ar} — ${urteil} Günstig für: ${gut}. Meide: ${meide}.`,
-    "yz.rat":"Der Rat"
+    "yz.rat":"Der Rat",
+    "rm.frage":"Erst die Frage — ohne Absicht schweigt der Sand.",
+    "rm.ueberspringen":"Überspringen",
+    "rm.richter":"Der Richter — قاضي",
+    "rm.zeugen":"Die beiden Zeugen",
+    "rm.zeugenText":"Der rechte Zeuge spricht über das, was war und was von dir ausgeht; der " +
+      "linke über das, was kommt und was dir entgegentritt. Der Richter entsteht aus beiden.",
+    "rm.rechts":"Rechter Zeuge · was war", "rm.links":"Linker Zeuge · was kommt",
+    "rm.mutter": (n) => `${n}. Mutter`,
+    "ek.art":["Reise und Aufbruch","Ehe, Liebe und Versöhnung","Handel, Kauf und Vertrag",
+              "Bauen, Gründen und Anfangen","Heilung und Gesundheit",
+              "Lernen, Schreiben und Vortragen","Säen, Pflanzen und Ernten",
+              "Beenden, Trennen und Aufräumen","Streit, Recht und Behörde","Bitten und Ansprechen"],
+    "ek.vorhaben":"Dein Vorhaben",
+    "ek.gut":"Ein guter Zeitpunkt", "ek.brauchbar":"Brauchbar",
+    "ek.weder":"Weder noch", "ek.nicht":"Lieber nicht heute",
+    "ek.mond": (zeichen, nr, name, zu) =>
+      `Der Mond steht in ${zeichen}, Station ${nr} — ${name}, und ${zu ? "nimmt zu" : "nimmt ab"}.`,
+    "ek.unklar":"Die Art des Vorhabens konnte ich nicht sicher erkennen — geurteilt wird " +
+      "deshalb nur nach dem allgemeinen Stand des Mondes. Nenne etwas konkreter, worum es geht " +
+      "(reisen, heiraten, kaufen, bauen, heilen, lernen, säen, beenden).",
+    "ek.station":"Die Station heute",
+    "ek.stationText": (nr, tr, ar, urteil, gut, meide) =>
+      `<b>${nr}. ${tr}</b> (${ar}) — ${urteil} Günstig für: ${gut}. Meide: ${meide}.`,
+    "ek.dafuer":"Was dafür und was dagegen spricht"
   },
 
   it: {
@@ -388,7 +412,31 @@ export const R = {
     "yz.herberge": (nr, tr) => `Stazione lunare ${nr} — ${tr}`,
     "yz.herbergeText": (ar, urteil, gut, meide) =>
       `${ar} — ${urteil} Favorevole a: ${gut}. Evita: ${meide}.`,
-    "yz.rat":"Il consiglio"
+    "yz.rat":"Il consiglio",
+    "rm.frage":"Prima la domanda — senza intenzione la sabbia tace.",
+    "rm.ueberspringen":"Salta",
+    "rm.richter":"Il giudice — قاضي",
+    "rm.zeugen":"I due testimoni",
+    "rm.zeugenText":"Il testimone destro parla di ciò che è stato e di ciò che parte da te; " +
+      "il sinistro di ciò che viene e di ciò che ti viene incontro. Il giudice nasce da entrambi.",
+    "rm.rechts":"Testimone destro · ciò che è stato", "rm.links":"Testimone sinistro · ciò che viene",
+    "rm.mutter": (n) => `${n}ª madre`,
+    "ek.art":["Viaggio e partenza","Matrimonio, amore e riconciliazione","Commercio, acquisto e contratto",
+              "Costruire, fondare e cominciare","Guarigione e salute",
+              "Imparare, scrivere e esporre","Seminare, piantare e raccogliere",
+              "Finire, separare e mettere in ordine","Lite, diritto e autorità","Chiedere e rivolgersi"],
+    "ek.vorhaben":"Il tuo proposito",
+    "ek.gut":"Un buon momento", "ek.brauchbar":"Utilizzabile",
+    "ek.weder":"Né l'uno né l'altro", "ek.nicht":"Oggi meglio di no",
+    "ek.mond": (zeichen, nr, name, zu) =>
+      `La luna sta in ${zeichen}, stazione ${nr} — ${name}, e ${zu ? "cresce" : "cala"}.`,
+    "ek.unklar":"Non ho potuto riconoscere con sicurezza il genere del proposito — si giudica " +
+      "perciò soltanto sulla posizione generale della luna. Di' più concretamente di che cosa " +
+      "si tratta (viaggiare, sposarsi, comprare, costruire, guarire, imparare, seminare, finire).",
+    "ek.station":"La stazione di oggi",
+    "ek.stationText": (nr, tr, ar, urteil, gut, meide) =>
+      `<b>${nr}. ${tr}</b> (${ar}) — ${urteil} Favorevole a: ${gut}. Evita: ${meide}.`,
+    "ek.dafuer":"Che cosa parla a favore e che cosa contro"
   }
 };
 

@@ -21,6 +21,12 @@ const el = (t, c, txt) => { const n = document.createElement(t);
    Rubeus, Fortuna maior und minor, Acquisitio und Amissio, Laetitia und
    Tristitia, Caput und Cauda. Nur Via, Populus, Carcer und Coniunctio
    spiegeln sich selbst. */
+import { FIGUR_IT, RAMEL_ELEMENT_IT, RAMEL_JA_IT, RAMEL_PLANET_IT } from "./ramel-it.js?v=210";
+import { aktuelleSprache } from "./sprachen.js?v=210";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=210";
+setzeRestSprache(aktuelleSprache());
+window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
+
 export const FIGUREN = [
   { m:"1111", ar:"طريق", tr:"Ṭarīq", lat:"Via", de:"Der Weg",
     el:"Wasser", planet:"Mond", ja:"beweglich",
@@ -212,7 +218,7 @@ function inszeniere(w, cikti, danach) {
   const figuren = el("div", "ramlWerden");
   buehne.appendChild(figuren);
 
-  const ueber = el("button", "knopfKlein ramlUeberspringen", "Überspringen");
+  const ueber = el("button", "knopfKlein ramlUeberspringen", rt("rm.ueberspringen"));
   buehne.appendChild(ueber);
   cikti.appendChild(buehne);
 
@@ -287,7 +293,7 @@ function werfen() {
   cikti.innerHTML = "";
 
   if (!frage) {
-    cikti.appendChild(el("p", "kucukNot", "Erst die Frage — ohne Absicht schweigt der Sand."));
+    cikti.appendChild(el("p", "kucukNot", rt("rm.frage")));
     return;
   }
 
@@ -300,7 +306,7 @@ function zeigeErgebnis(w, frage, cikti) {
   /* Der Richter zuerst: er ist die Antwort. */
   const kasten = el("div", "geistName");
   kasten.innerHTML =
-    `<div class="kalanBaslik">Der Richter — قاضي</div>` +
+    `<div class="kalanBaslik">${rt("rm.richter")}</div>` +
     `<div class="ramlRichter">${figurSvg(w.richter, true)}</div>` +
     `<div class="buyukToplam">${w.richter.de}</div>` +
     `<div class="kucukNot">${w.richter.tr} · ${w.richter.lat} · ${w.richter.el} · ${w.richter.planet}</div>`;
@@ -310,13 +316,11 @@ function zeigeErgebnis(w, frage, cikti) {
   cikti.appendChild(el("p", null, w.richter.text));
 
   /* Die Zeugen */
-  cikti.appendChild(el("h3", null, "Die beiden Zeugen"));
-  cikti.appendChild(el("p", null,
-    "Der rechte Zeuge spricht über das, was war und was von dir ausgeht; der linke über " +
-    "das, was kommt und was dir entgegentritt. Der Richter entsteht aus beiden."));
+  cikti.appendChild(el("h3", null, rt("rm.zeugen")));
+  cikti.appendChild(el("p", null, rt("rm.zeugenText")));
   const zeugen = el("div", "ramlReihe");
-  zeugen.append(figurKachel(w.zeugeRechts, "Rechter Zeuge · was war", true),
-                figurKachel(w.zeugeLinks, "Linker Zeuge · was kommt", true));
+  zeugen.append(figurKachel(w.zeugeRechts, rt("rm.rechts"), true),
+                figurKachel(w.zeugeLinks, rt("rm.links"), true));
   cikti.appendChild(zeugen);
   const zl = el("ul", "deutungListe");
   const z1 = el("li"); z1.innerHTML = `<b>${w.zeugeRechts.de}</b> (${w.zeugeRechts.lat}) — ${w.zeugeRechts.text}`;
@@ -393,3 +397,22 @@ $("#rmFrage")?.addEventListener("keydown", e => { if (e.key === "Enter") { e.pre
     ziel.appendChild(tr);
   });
 })();
+
+/* ------------------------------------------------------- die Sprachschalter
+   Die Figuren bleiben dieselben Objekte; nur ihre Texte wechseln. */
+const FIGUR_DE_TEXTE = FIGUREN.map(f => ({ de:f.de, text:f.text, frage:f.frage, el:f.el, ja:f.ja, planet:f.planet }));
+
+export function setzeRamelSprache(code) {
+  const it = code === "it";
+  FIGUREN.forEach((f, i) => {
+    const q = it ? FIGUR_IT[i] : FIGUR_DE_TEXTE[i];
+    if (!q) return;
+    f.de = q.de; f.text = q.text; f.frage = q.frage;
+    f.el = it ? (RAMEL_ELEMENT_IT[FIGUR_DE_TEXTE[i].el] || f.el) : FIGUR_DE_TEXTE[i].el;
+    f.ja = it ? (RAMEL_JA_IT[FIGUR_DE_TEXTE[i].ja] || f.ja) : FIGUR_DE_TEXTE[i].ja;
+    f.planet = it ? (RAMEL_PLANET_IT[FIGUR_DE_TEXTE[i].planet] || f.planet) : FIGUR_DE_TEXTE[i].planet;
+  });
+}
+
+setzeRamelSprache(aktuelleSprache());
+window.addEventListener("sprache-geaendert", e => setzeRamelSprache(e.detail));
