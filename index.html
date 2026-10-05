@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Oracle</title>
 <meta name="description" content="Oracle — Orakelrechner nach alten Büchern: das osmanische Yıldıznâme aus Name und Muttername, der Geist des 11. Hauses nach Agrippa, Primärdirektionen, Zodiacal Releasing und Antiszien.">
-<link rel="stylesheet" href="stil.css?v=142">
+<link rel="stylesheet" href="stil.css?v=146">
 </head>
 <body>
 
@@ -35,6 +35,7 @@
   <button data-bolum="bFirdaria" data-gruppe="sterne">Firdaria</button>
   <button data-bolum="bVimshottari" data-gruppe="sterne">Vimshottari</button>
   <button data-bolum="bSolar" data-gruppe="sterne">Jahresumdrehung</button>
+  <button data-bolum="bAlmutem" data-gruppe="sterne">Der Herr der Geburt</button>
   <button data-bolum="bVerteilung" data-gruppe="sterne">Die Verteilung</button>
   <button data-bolum="bLebensmass" data-gruppe="sterne">Das Lebensmaß</button>
   <button data-bolum="bEssenz" data-gruppe="beide">Die Essenz</button>
@@ -1036,6 +1037,30 @@
 </section>
 
 <!-- ----------------------------------------------------- Das Lebensmaß -->
+<section class="bolum" id="bAlmutem" hidden>
+  <div class="appKopf">
+    <h2>Der Herr der Geburt</h2>
+    <p class="unterzeile">Almutem Figuris — wer über das Ganze zu sagen hat</p>
+  </div>
+
+  <p class="giriş">Alles andere auf dieser Seite fragt nach einzelnen Dingen:
+  wer dieses Jahr regiert, wer dieses Feld, wer diese Stunde. Der
+  <b>Almutem Figuris</b> fragt nach dem Ganzen — welcher der sieben über diese
+  Geburt als solche am meisten zu sagen hat. Bei <b>Abraham Ibn Ezra</b>
+  (<em>Sefer ha-Moladot</em>, 12. Jh.) steht das Verfahren zuerst geschlossen
+  beisammen, <b>Guido Bonatti</b> nimmt es in den <em>Liber Astronomiae</em>
+  auf. In der mittelalterlichen Schule gilt er als der Schlüssel zur ganzen
+  Deutung: Wer ihn nicht kennt, deutet Einzelheiten ohne Mitte.</p>
+
+  <p>Gerechnet wird in drei Lagen: die Würden über fünf Stellen — Sonne, Mond,
+  Aszendent, Glückspunkt und die Syzygie vor der Geburt —, dann der Ort, an dem
+  der Planet selbst steht, und zuletzt der Herr des Wochentages und der Herr
+  der Geburtsstunde.</p>
+
+  <button id="afBerechnen" class="buyukDugme">Neu rechnen</button>
+  <div id="afCikti" hidden></div>
+</section>
+
 <section class="bolum" id="bVerteilung" hidden>
   <div class="appKopf">
     <h2>Die Verteilung</h2>
@@ -1095,32 +1120,33 @@
   osmanisch, hellenistisch, arabisch, ägyptisch, lateinisch</p>
 </footer>
 
-<script type="module" src="oracle.js?v=142"></script>
-<script type="module" src="profil.js?v=142"></script>
-<script type="module" src="profil-ui.js?v=142"></script>
-<script type="module" src="zugang.js?v=142"></script>
-<script type="module" src="horoskop.js?v=142"></script>
-<script type="module" src="perioden.js?v=142"></script>
-<script type="module" src="solar.js?v=142"></script>
-<script type="module" src="lebensmass.js?v=142"></script>
-<script type="module" src="leuchten.js?v=142"></script>
-<script type="module" src="elektion.js?v=142"></script>
-<script type="module" src="ramel.js?v=142"></script>
-<script type="module" src="spende.js?v=142"></script>
-<script type="module" src="geist.js?v=142"></script>
-<script type="module" src="geist-profil.js?v=142"></script>
-<script type="module" src="yildiz-profil.js?v=142"></script>
-<script type="module" src="essenz.js?v=142"></script>
-<script type="module" src="auto-rechnen.js?v=142"></script>
-<script type="module" src="deutung.js?v=142"></script>
-<script type="module" src="jahr.js?v=142"></script>
-<script type="module" src="lebensbogen.js?v=142"></script>
-<script type="module" src="zr.js?v=142"></script>
-<script type="module" src="antiszien.js?v=142"></script>
-<script type="module" src="profektionen.js?v=142"></script>
-<script type="module" src="themen.js?v=142"></script>
-<script type="module" src="crosscheck.js?v=142"></script>
-<script type="module" src="planeten.js?v=142"></script>
-<script type="module" src="verteilung.js?v=142"></script>
+<script type="module" src="oracle.js?v=146"></script>
+<script type="module" src="profil.js?v=146"></script>
+<script type="module" src="profil-ui.js?v=146"></script>
+<script type="module" src="zugang.js?v=146"></script>
+<script type="module" src="horoskop.js?v=146"></script>
+<script type="module" src="perioden.js?v=146"></script>
+<script type="module" src="solar.js?v=146"></script>
+<script type="module" src="lebensmass.js?v=146"></script>
+<script type="module" src="leuchten.js?v=146"></script>
+<script type="module" src="elektion.js?v=146"></script>
+<script type="module" src="ramel.js?v=146"></script>
+<script type="module" src="spende.js?v=146"></script>
+<script type="module" src="geist.js?v=146"></script>
+<script type="module" src="geist-profil.js?v=146"></script>
+<script type="module" src="yildiz-profil.js?v=146"></script>
+<script type="module" src="essenz.js?v=146"></script>
+<script type="module" src="auto-rechnen.js?v=146"></script>
+<script type="module" src="deutung.js?v=146"></script>
+<script type="module" src="jahr.js?v=146"></script>
+<script type="module" src="lebensbogen.js?v=146"></script>
+<script type="module" src="zr.js?v=146"></script>
+<script type="module" src="antiszien.js?v=146"></script>
+<script type="module" src="profektionen.js?v=146"></script>
+<script type="module" src="themen.js?v=146"></script>
+<script type="module" src="crosscheck.js?v=146"></script>
+<script type="module" src="planeten.js?v=146"></script>
+<script type="module" src="verteilung.js?v=146"></script>
+<script type="module" src="almutem.js?v=146"></script>
 </body>
 </html>

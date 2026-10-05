@@ -1138,3 +1138,34 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
   .vtTafel th:nth-child(2), .vtTafel td:nth-child(2) { display: none; }
   .vtTafel th, .vtTafel td { padding: .4rem .25rem; }
 }
+
+/* ------------------------------------------------- Der Herr der Geburt */
+.afKasten {
+  text-align: center; padding: 1.4rem 1.2rem; margin: 1.4rem 0 1.8rem;
+  border: 1px solid rgba(212,175,110,.3); border-radius: .5rem;
+  background: rgba(212,175,110,.05);
+}
+.afKasten p { text-align: left; line-height: 1.7; margin-top: 1rem; }
+
+.afTafel { width: 100%; border-collapse: collapse; font-size: .87rem; margin: .6rem 0 1.2rem; }
+.afTafel th {
+  text-align: left; padding: .5rem .4rem; color: var(--gold); font-weight: normal;
+  font-size: .74rem; letter-spacing: .1em; text-transform: uppercase;
+  border-bottom: 1px solid rgba(212,175,110,.3);
+}
+.afTafel td { padding: .5rem .4rem; border-bottom: 1px solid rgba(255,255,255,.06); vertical-align: top; }
+.afP { opacity: .5; font-size: .85em; }
+
+.afListe { margin: .8rem 0 1.2rem; }
+.afZeile { display: flex; align-items: center; gap: .7rem; margin-bottom: .45rem; }
+.afName { flex: 0 0 7.5rem; font-size: .92rem; }
+.afBalken { flex: 1; height: .95rem; background: rgba(255,255,255,.06); border-radius: .2rem; overflow: hidden; }
+.afFuellung { height: 100%; background: rgba(212,175,110,.45); }
+.afZahl { flex: 0 0 2.2rem; text-align: right; font-size: .85rem; opacity: .7; }
+.afErster .afFuellung { background: var(--gold); }
+.afErster .afName, .afErster .afZahl { color: var(--gold); opacity: 1; }
+
+@media (max-width: 520px) {
+  .afName { flex-basis: 5.8rem; font-size: .85rem; }
+  .afTafel { font-size: .8rem; }
+}
