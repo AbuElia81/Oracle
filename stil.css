@@ -754,31 +754,31 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
   flex: 1 1 auto; min-width: 9.5rem;
   padding: .55rem .8rem;
   font-family: inherit; font-size: .88rem;
-  color: var(--text); background: rgba(255,255,255,.04);
+  color: var(--schrift); background: rgba(255,255,255,.04);
   border: 1px solid rgba(212,175,110,.25); border-radius: .4rem;
   cursor: pointer; text-align: left; line-height: 1.3;
   transition: background .15s, border-color .15s;
 }
 .themaKnopf:hover { background: rgba(212,175,110,.1); border-color: rgba(212,175,110,.5); }
 .themaKnopf.aktiv {
-  background: rgba(212,175,110,.16); border-color: var(--gold); color: var(--gold);
+  background: rgba(212,175,110,.16); border-color: var(--ton); color: var(--ton);
 }
 
 .themaFrage {
-  font-style: italic; color: var(--gold);
+  font-style: italic; color: var(--ton);
   margin: .2rem 0 1.1rem; font-size: 1.02rem;
 }
 
 .themaUrteil {
-  border-left: 3px solid var(--gold);
+  border-left: 3px solid var(--ton);
   padding: .8rem 1rem; margin: 1rem 0 1.4rem;
   background: rgba(255,255,255,.03); border-radius: 0 .4rem .4rem 0;
 }
-.themaUrteilWort { font-size: 1.25rem; color: var(--gold); letter-spacing: .02em; }
+.themaUrteilWort { font-size: 1.25rem; color: var(--ton); letter-spacing: .02em; }
 .themaUrteil.u-stark    { border-left-color: #8fbf7a; }
 .themaUrteil.u-stark .themaUrteilWort    { color: #a8d694; }
 .themaUrteil.u-gut      { border-left-color: #a9c48e; }
-.themaUrteil.u-gemischt { border-left-color: var(--gold); }
+.themaUrteil.u-gemischt { border-left-color: var(--ton); }
 .themaUrteil.u-muehsam  { border-left-color: #c4915e; }
 .themaUrteil.u-muehsam .themaUrteilWort  { color: #d7a873; }
 .themaUrteil.u-schwer   { border-left-color: #bf7a7a; }
@@ -822,8 +822,8 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 .ccKasten h4 { margin: 1.3rem 0 .4rem; font-size: 1rem; }
 .ccKasten h4:first-of-type { margin-top: .8rem; }
 
-.ccKopf { border-left: 3px solid var(--gold); padding: .2rem 0 .2rem .9rem; }
-.ccWort { font-size: 1.18rem; color: var(--gold); letter-spacing: .02em; margin-bottom: .35rem; }
+.ccKopf { border-left: 3px solid var(--ton); padding: .2rem 0 .2rem .9rem; }
+.ccWort { font-size: 1.18rem; color: var(--ton); letter-spacing: .02em; margin-bottom: .35rem; }
 .ccSatz { line-height: 1.55; }
 .ccKopf.cc-ja   { border-left-color: #8fbf7a; }
 .ccKopf.cc-ja   .ccWort { color: #a8d694; }
@@ -838,7 +838,7 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 }
 .wasIst > summary {
   padding: .7rem 1rem; cursor: pointer; list-style: none;
-  color: var(--gold); font-size: .95rem; letter-spacing: .04em;
+  color: var(--ton); font-size: .95rem; letter-spacing: .04em;
   user-select: none;
 }
 .wasIst > summary::-webkit-details-marker { display: none; }
@@ -876,7 +876,7 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 .sternText > p:last-child { margin-bottom: 0; }
 
 .sternName { margin: 0 0 .7rem; font-size: 1.3rem; }
-.sternGlyph { color: var(--gold); margin-right: .25rem; }
+.sternGlyph { color: var(--ton); margin-right: .25rem; }
 .sternTr { font-size: .8rem; opacity: .5; letter-spacing: .08em; margin-left: .4rem; }
 
 .sternDaten {
@@ -886,7 +886,7 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
   font-size: .87rem;
 }
 .sternDatum { white-space: nowrap; }
-.sternSchild { color: var(--gold); opacity: .75; margin-right: .35rem; }
+.sternSchild { color: var(--ton); opacity: .75; margin-right: .35rem; }
 
 .sternGestalt {
   font-style: italic;
@@ -930,7 +930,7 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
   display: block; width: 100%; text-align: left;
   padding: .7rem 1rem; cursor: pointer;
   font-family: inherit; font-size: .95rem; letter-spacing: .04em;
-  color: var(--gold);
+  color: var(--ton);
   background: rgba(255,255,255,.022);
   border: 1px solid rgba(212,175,110,.22); border-radius: .45rem;
   transition: background .15s;
@@ -942,7 +942,7 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
   display: inline-block; margin: 0 0 1.2rem;
   padding: .4rem .9rem; cursor: pointer;
   font-family: inherit; font-size: .85rem; letter-spacing: .04em;
-  color: var(--gold); background: none;
+  color: var(--ton); background: none;
   border: 1px solid rgba(212,175,110,.25); border-radius: .35rem;
   transition: background .15s;
 }
@@ -956,7 +956,7 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 }
 .maskeRahmen > summary {
   padding: .7rem 1rem; cursor: pointer; list-style: none;
-  color: var(--gold); font-size: .95rem; letter-spacing: .04em;
+  color: var(--ton); font-size: .95rem; letter-spacing: .04em;
   user-select: none;
 }
 .maskeRahmen > summary::-webkit-details-marker { display: none; }
@@ -975,14 +975,14 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 .wegFeld {
   display: block; width: 100%; text-align: left;
   padding: .95rem 1.1rem; cursor: pointer; font-family: inherit;
-  color: var(--text);
+  color: var(--schrift);
   background: rgba(255,255,255,.028);
   border: 1px solid rgba(212,175,110,.22); border-radius: .45rem;
   transition: background .15s, border-color .15s;
 }
 .wegFeld:hover { background: rgba(212,175,110,.09); border-color: rgba(212,175,110,.5); }
 .wegName {
-  display: block; color: var(--gold);
+  display: block; color: var(--ton);
   font-size: 1.08rem; letter-spacing: .02em; margin-bottom: .3rem;
 }
 .wegWorum { display: block; font-size: .9rem; line-height: 1.5; opacity: .78; }
@@ -1025,7 +1025,7 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 }
 #eCikti .auftaktZeile, #eStartCikti .auftaktZeile, .auftaktZeile {
   font-size: clamp(1.4rem, 5vw, 1.9rem);
-  color: var(--gold); line-height: 1.25;
+  color: var(--ton); line-height: 1.25;
   margin: 0 0 .9rem; letter-spacing: .01em;
 }
 #eCikti .auftaktText, #eStartCikti .auftaktText, .auftaktText {
@@ -1037,7 +1037,7 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 #eCikti > h3, #eStartCikti > h3, .jahrFach > h3 {
   margin: 2.5rem 0 .8rem;
   font-size: .82rem; letter-spacing: .16em; text-transform: uppercase;
-  color: var(--gold); opacity: .85; font-weight: normal;
+  color: var(--ton); opacity: .85; font-weight: normal;
   position: relative; padding-top: .9rem;
 }
 #eCikti > h3::before, #eStartCikti > h3::before, .jahrFach > h3::before {
@@ -1050,7 +1050,7 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 /* Eine Initiale im ersten Absatz — einmal, nicht überall. */
 .erstesWort::first-letter {
   float: left; font-size: 3.1rem; line-height: .86;
-  padding: .12em .14em 0 0; color: var(--gold);
+  padding: .12em .14em 0 0; color: var(--ton);
   font-family: Georgia, "Times New Roman", serif;
 }
 
@@ -1064,7 +1064,7 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 }
 .ratSchild {
   font-size: .74rem; letter-spacing: .2em; text-transform: uppercase;
-  color: var(--gold); opacity: .7; margin-bottom: .7rem;
+  color: var(--ton); opacity: .7; margin-bottom: .7rem;
 }
 #eCikti .ratWort, #eStartCikti .ratWort, .ratWort {
   font-size: 1.16rem; line-height: 1.65;
@@ -1088,7 +1088,7 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
   padding-top: 1.2rem; margin-top: 1.6rem;
 }
 .schlussZier {
-  text-align: center; color: var(--gold); opacity: .45;
+  text-align: center; color: var(--ton); opacity: .45;
   font-size: 1.2rem; letter-spacing: .4em; margin-top: 1.4rem;
 }
 
@@ -1101,7 +1101,7 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 
 /* ------------------------------------------- Die Verteilung durch die Grenzen */
 .vtKopf {
-  border-left: 3px solid var(--gold); padding: .7rem 0 .7rem 1rem;
+  border-left: 3px solid var(--ton); padding: .7rem 0 .7rem 1rem;
   margin: 1.2rem 0 1.6rem; line-height: 1.6;
 }
 .vtJetzt {
@@ -1125,7 +1125,7 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 
 .vtTafel { width: 100%; border-collapse: collapse; font-size: .88rem; margin: .5rem 0 1rem; }
 .vtTafel th {
-  text-align: left; padding: .5rem .4rem; color: var(--gold);
+  text-align: left; padding: .5rem .4rem; color: var(--ton);
   font-weight: normal; font-size: .76rem; letter-spacing: .1em; text-transform: uppercase;
   border-bottom: 1px solid rgba(212,175,110,.3);
 }
@@ -1149,7 +1149,7 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 
 .afTafel { width: 100%; border-collapse: collapse; font-size: .87rem; margin: .6rem 0 1.2rem; }
 .afTafel th {
-  text-align: left; padding: .5rem .4rem; color: var(--gold); font-weight: normal;
+  text-align: left; padding: .5rem .4rem; color: var(--ton); font-weight: normal;
   font-size: .74rem; letter-spacing: .1em; text-transform: uppercase;
   border-bottom: 1px solid rgba(212,175,110,.3);
 }
@@ -1162,8 +1162,8 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 .afBalken { flex: 1; height: .95rem; background: rgba(255,255,255,.06); border-radius: .2rem; overflow: hidden; }
 .afFuellung { height: 100%; background: rgba(212,175,110,.45); }
 .afZahl { flex: 0 0 2.2rem; text-align: right; font-size: .85rem; opacity: .7; }
-.afErster .afFuellung { background: var(--gold); }
-.afErster .afName, .afErster .afZahl { color: var(--gold); opacity: 1; }
+.afErster .afFuellung { background: var(--ton); }
+.afErster .afName, .afErster .afZahl { color: var(--ton); opacity: 1; }
 
 @media (max-width: 520px) {
   .afName { flex-basis: 5.8rem; font-size: .85rem; }
@@ -1177,7 +1177,7 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
   min-height: 11rem; padding: 7rem 1rem 1rem;
   border: 1px solid rgba(212,175,110,.25); border-radius: .5rem;
   background-size: cover; background-position: center; font-family: inherit;
-  color: var(--text); overflow: hidden; transition: border-color .15s;
+  color: var(--schrift); overflow: hidden; transition: border-color .15s;
 }
 .brilleKarte::before {
   content: ""; position: absolute; inset: 0;
@@ -1185,9 +1185,9 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 }
 .brilleKarte > * { position: relative; }
 .brilleKarte:hover { border-color: rgba(212,175,110,.6); }
-.brilleKarte.gewaehlt { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold) inset; }
+.brilleKarte.gewaehlt { border-color: var(--ton); box-shadow: 0 0 0 1px var(--ton) inset; }
 .brilleName {
-  display: block; color: var(--gold); font-size: 1.12rem; margin-bottom: .4rem;
+  display: block; color: var(--ton); font-size: 1.12rem; margin-bottom: .4rem;
   letter-spacing: .01em;
 }
 .brilleText { display: block; font-size: .86rem; line-height: 1.5; opacity: .82; }
@@ -1197,7 +1197,7 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 .rdTeil h3 { margin: 0 0 .7rem; }
 .rdTeil p { line-height: 1.75; }
 .rdNummer {
-  float: left; margin: .1rem .8rem 0 0; color: var(--gold); opacity: .45;
+  float: left; margin: .1rem .8rem 0 0; color: var(--ton); opacity: .45;
   font-size: .95rem; letter-spacing: .08em;
 }
 .rdTempKasten {
@@ -1205,7 +1205,7 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
   border: 1px solid rgba(212,175,110,.28); border-radius: .5rem;
   background: rgba(212,175,110,.045);
 }
-.rdTempName { font-size: 1.7rem; color: var(--gold); margin-bottom: .3rem; }
+.rdTempName { font-size: 1.7rem; color: var(--ton); margin-bottom: .3rem; }
 .rdWaage { margin-top: 1.1rem; }
 .rdWaageZeile { display: flex; align-items: center; gap: .6rem; margin-bottom: .5rem; }
 .rdPol { font-size: .76rem; opacity: .6; flex: 0 0 3.6rem; }
@@ -1220,12 +1220,12 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
 }
 .rdWaagePunkt {
   position: absolute; top: 50%; width: .8rem; height: .8rem;
-  margin: -.4rem 0 0 -.4rem; border-radius: 50%; background: var(--gold);
+  margin: -.4rem 0 0 -.4rem; border-radius: 50%; background: var(--ton);
 }
-.rdQual { color: var(--gold); opacity: .8; font-size: .9em; }
+.rdQual { color: var(--ton); opacity: .8; font-size: .9em; }
 .rdTafel { width: 100%; border-collapse: collapse; font-size: .86rem; margin: .6rem 0 1rem; }
 .rdTafel th {
-  text-align: left; padding: .5rem .35rem; color: var(--gold); font-weight: normal;
+  text-align: left; padding: .5rem .35rem; color: var(--ton); font-weight: normal;
   font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
   border-bottom: 1px solid rgba(212,175,110,.3);
 }
@@ -1252,7 +1252,7 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
     background: rgba(255,255,255,.02);
   }
   .rdTafel td { border: 0; padding: .1rem 0; }
-  .rdTafel td:first-child { font-size: 1.02rem; color: var(--gold); margin-bottom: .2rem; }
+  .rdTafel td:first-child { font-size: 1.02rem; color: var(--ton); margin-bottom: .2rem; }
   .rdTafel td:nth-child(2)::before { content: "in "; opacity: .5; }
   .rdTafel td:nth-child(3)::before { content: "im "; opacity: .5; }
   .rdTafel td:nth-child(3)::after  { content: " Feld"; opacity: .5; }
@@ -1277,14 +1277,14 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
   border: 1px solid rgba(255,255,255,.1); border-radius: .45rem;
   background: rgba(255,255,255,.02);
 }
-.laDrittel.laHier { border-color: var(--gold); background: rgba(212,175,110,.07); }
+.laDrittel.laHier { border-color: var(--ton); background: rgba(212,175,110,.07); }
 .laKopf { display: flex; align-items: baseline; gap: .8rem; margin-bottom: .5rem; flex-wrap: wrap; }
 .laSpanne { font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; opacity: .55; }
-.laName { font-size: 1.15rem; color: var(--gold); }
+.laName { font-size: 1.15rem; color: var(--ton); }
 .laDrittel p { margin: 0; line-height: 1.7; }
 .laJetzt {
   margin-top: .7rem; font-size: .78rem; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--gold);
+  text-transform: uppercase; color: var(--ton);
 }
 
 .apKarte {
@@ -1293,7 +1293,25 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
   background: rgba(255,255,255,.022); border-radius: 0 .35rem .35rem 0;
 }
 .apKopf { display: flex; justify-content: space-between; align-items: baseline; gap: .8rem; flex-wrap: wrap; }
-.apName { font-size: 1.08rem; color: var(--gold); }
+.apName { font-size: 1.08rem; color: var(--ton); }
 .apOrt { font-size: .85rem; opacity: .7; white-space: nowrap; }
 .apLat { font-size: .76rem; letter-spacing: .07em; opacity: .45; margin: .15rem 0 .5rem; font-style: italic; }
 .apKarte p { margin: 0; line-height: 1.65; font-size: .95rem; }
+
+/* Zwischenüberschriften in der Technikliste */
+.wegGruppe {
+  margin: 1.4rem 0 .2rem; font-size: .74rem; font-weight: normal;
+  letter-spacing: .16em; text-transform: uppercase;
+  color: var(--ton); opacity: .6;
+}
+.wegListe > .wegGruppe:first-of-type { margin-top: .6rem; }
+
+@media (max-width: 480px) {
+  /* Siebzehn Felder mit voller Beschreibung sind drei Bildschirme Scrollen.
+     Am Telefon reichen zwei Zeilen: Sie sagen, worum es geht, und der Rest
+     steht im Abschnitt selbst. */
+  .wegWorum {
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}

@@ -13,10 +13,10 @@
    gestritten wurde. Sie steht hier, weil sie zur Überlieferung gehört, und
    sie sagt nichts über den Tod eines Menschen.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=157";
-import { norm360, planetenPositionen, julianischesDatum, sonnenLaenge } from "./astro.js?v=157";
-import { radix, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel } from "./horoskop.js?v=157";
-import { wuerden, ermittleAlmuten } from "./geist.js?v=157";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=160";
+import { norm360, planetenPositionen, julianischesDatum, sonnenLaenge } from "./astro.js?v=160";
+import { radix, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel } from "./horoskop.js?v=160";
+import { wuerden, ermittleAlmuten } from "./geist.js?v=160";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);

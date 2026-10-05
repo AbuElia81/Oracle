@@ -7,7 +7,7 @@
    Maske erscheint — und erst eine ausgefüllte Maske öffnet die Reiter
    des jeweiligen Weges.
    --------------------------------------------------------------------- */
-import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=157";
+import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=160";
 
 const HEIM = "bProfil";
 const SPEICHER = "oracle-weg";
@@ -138,26 +138,68 @@ function zeichneWege() {
   if (liste.hidden) { liste.innerHTML = ""; return; }
 
   liste.innerHTML = "";
+  /* Siebzehn Felder in einer Reihe sind am Telefon drei Bildschirme ohne
+     Ordnung. Darum in Gruppen, und zwar in der Reihenfolge der alten
+     Schule: erst das Geburtsbild, dann was darin angelegt ist, dann die
+     Zeitherren, zuletzt die Zusammenschau. */
+  const GRUPPEN = weg === "orakel" ? [
+    ["Den Augenblick befragen", ["bNiyet","bRamel","bMenzil"]],
+    ["Namen gegeneinander",     ["bYildiz","bUyum"]],
+    ["Alles zusammen",          ["bEssenz"]]
+  ] : [
+    ["Das Geburtsbild",            ["bHoroskop","bRadixdeutung","bAlmutem","bPunkte","bGeist"]],
+    ["Was darin angelegt ist",     ["bWerk","bLebensmass","bAntiszien"]],
+    ["Die Herren der Zeit",        ["bProfektionen","bVerteilung","bZR","bFirdaria",
+                                    "bVimshottari","bLebensalter","bLebensbogen","bSolar"]],
+    ["Alles zusammen",             ["bEssenz"]]
+  ];
+
+  const knopfVon = id => document.querySelector(`nav#reiter button[data-bolum="${id}"]`);
+
   const kopf = document.createElement("h3");
   kopf.textContent = weg === "orakel" ? "Das Orakel — die Künste" : "Die Sterne — die Techniken";
   liste.appendChild(kopf);
 
-  document.querySelectorAll("nav#reiter button").forEach(b => {
-    const g = b.dataset.gruppe;
-    if (!g || (g !== "beide" && g !== weg)) return;
-    const k = document.createElement("button");
-    k.type = "button";
-    k.className = "wegFeld";
-    const t = document.createElement("span");
-    t.className = "wegName";
-    t.textContent = b.textContent;
-    const u = document.createElement("span");
-    u.className = "wegWorum";
-    u.textContent = WORUM[b.dataset.bolum] || "";
-    k.append(t, u);
-    k.addEventListener("click", () => { b.click(); window.scrollTo({ top: 0, behavior: "smooth" }); });
-    liste.appendChild(k);
+  const gezeigt = new Set();
+  GRUPPEN.forEach(([titel, ids]) => {
+    const drin = ids.map(knopfVon).filter(b => b && b.dataset.gruppe &&
+      (b.dataset.gruppe === "beide" || b.dataset.gruppe === weg));
+    if (!drin.length) return;
+    const h = document.createElement("h4");
+    h.className = "wegGruppe";
+    h.textContent = titel;
+    liste.appendChild(h);
+    drin.forEach(b => { gezeigt.add(b.dataset.bolum); liste.appendChild(feldVon(b)); });
   });
+
+  /* Was keiner Gruppe zugeordnet ist, hängt hinten dran — so geht beim
+     Hinzufügen einer Technik nichts verloren. */
+  const rest = [...document.querySelectorAll("nav#reiter button")].filter(b => {
+    const g = b.dataset.gruppe;
+    return g && (g === "beide" || g === weg) && !gezeigt.has(b.dataset.bolum);
+  });
+  if (rest.length) {
+    const h = document.createElement("h4");
+    h.className = "wegGruppe";
+    h.textContent = "Weiteres";
+    liste.appendChild(h);
+    rest.forEach(b => liste.appendChild(feldVon(b)));
+  }
+}
+
+function feldVon(b) {
+  const k = document.createElement("button");
+  k.type = "button";
+  k.className = "wegFeld";
+  const t = document.createElement("span");
+  t.className = "wegName";
+  t.textContent = b.textContent;
+  const u = document.createElement("span");
+  u.className = "wegWorum";
+  u.textContent = WORUM[b.dataset.bolum] || "";
+  k.append(t, u);
+  k.addEventListener("click", () => { b.click(); window.scrollTo({ top: 0, behavior: "smooth" }); });
+  return k;
 }
 
 /* ------------------------------------------------- heim und wieder fort */
