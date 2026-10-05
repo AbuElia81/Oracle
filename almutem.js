@@ -29,10 +29,10 @@
    Wort hat, wenn die anderen sich widersprechen.
    ------------------------------------------------------------------------ */
 
-import { norm360, julianischesDatum } from "./astro.js?v=163";
-import { radix, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=163";
-import { wuerden } from "./geist.js?v=163";
-import { leseProfil } from "./profil.js?v=163";
+import { norm360, julianischesDatum } from "./astro.js?v=165";
+import { radix, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=165";
+import { wuerden } from "./geist.js?v=165";
+import { leseProfil } from "./profil.js?v=165";
 
 /* Ibn Ezras Gewichtung der zwölf Örter. Das erste Feld wiegt am
    schwersten, das zwölfte am leichtesten. */

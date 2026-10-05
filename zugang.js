@@ -7,7 +7,8 @@
    Maske erscheint — und erst eine ausgefüllte Maske öffnet die Reiter
    des jeweiligen Weges.
    --------------------------------------------------------------------- */
-import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=163";
+import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=165";
+import { t } from "./sprachen.js?v=165";
 
 const HEIM = "bProfil";
 const SPEICHER = "oracle-weg";
@@ -143,21 +144,21 @@ function zeichneWege() {
      Schule: erst das Geburtsbild, dann was darin angelegt ist, dann die
      Zeitherren, zuletzt die Zusammenschau. */
   const GRUPPEN = weg === "orakel" ? [
-    ["Den Augenblick befragen", ["bNiyet","bRamel","bMenzil"]],
-    ["Namen gegeneinander",     ["bYildiz","bUyum"]],
-    ["Alles zusammen",          ["bEssenz"]]
+    [t("gruppe.augenblick"), ["bNiyet","bRamel","bMenzil"]],
+    [t("gruppe.namen"),      ["bYildiz","bUyum"]],
+    [t("gruppe.zusammen"),   ["bEssenz"]]
   ] : [
-    ["Das Geburtsbild",            ["bHoroskop","bRadixdeutung","bAlmutem","bPunkte","bGeist"]],
-    ["Was darin angelegt ist",     ["bWerk","bLebensmass","bAntiszien"]],
-    ["Die Herren der Zeit",        ["bProfektionen","bVerteilung","bZR","bFirdaria",
-                                    "bVimshottari","bLebensalter","bLebensbogen","bSolar"]],
-    ["Alles zusammen",             ["bEssenz"]]
+    [t("gruppe.geburtsbild"), ["bHoroskop","bRadixdeutung","bAlmutem","bPunkte","bGeist"]],
+    [t("gruppe.angelegt"),    ["bWerk","bLebensmass","bAntiszien"]],
+    [t("gruppe.zeit"),        ["bProfektionen","bVerteilung","bZR","bFirdaria",
+                               "bVimshottari","bLebensalter","bLebensbogen","bSolar"]],
+    [t("gruppe.zusammen"),    ["bEssenz"]]
   ];
 
   const knopfVon = id => document.querySelector(`nav#reiter button[data-bolum="${id}"]`);
 
   const kopf = document.createElement("h3");
-  kopf.textContent = weg === "orakel" ? "Das Orakel — die Künste" : "Die Sterne — die Techniken";
+  kopf.textContent = t(weg === "orakel" ? "liste.orakel" : "liste.sterne");
   liste.appendChild(kopf);
 
   const gezeigt = new Set();
@@ -231,7 +232,8 @@ document.querySelectorAll("section.bolum").forEach(ab => {
   const k = document.createElement("button");
   k.type = "button";
   k.className = "zurueckKnopf";
-  k.textContent = "\u2190 Zurück zum Anfang";
+  k.textContent = t("knopf.zurueck");
+  k.dataset.t = "knopf.zurueck";
   k.addEventListener("click", () => geheZu(HEIM));
   ab.prepend(k);
 });
@@ -243,3 +245,5 @@ document.querySelectorAll("section.bolum").forEach(ab => {
 aufProfilAenderung(schalte);
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", schalte);
 else schalte();
+
+window.addEventListener("sprache-geaendert", () => schalte());

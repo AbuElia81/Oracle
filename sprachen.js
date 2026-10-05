@@ -1,0 +1,215 @@
+/* ------------------------------------------------------------------------
+   sprachen.js — die Oberfläche in sieben Sprachen.
+
+   Übersetzt werden die Wegweiser: Kopf, Navigation, die beiden Wege, die
+   Namen der Abschnitte, die Beschriftungen der Eingabefelder, die Knöpfe.
+   Die langen Deutungstexte bleiben vorerst deutsch — sie sind in Bildern
+   und Fabeln geschrieben, und eine maschinelle Übertragung würde genau
+   das zerstören, was an ihnen etwas taugt. Wo ein Abschnitt noch nicht
+   übersetzt ist, sagt die Seite das.
+
+   Arabisch läuft von rechts nach links; dafür wird am Wurzelelement
+   dir="rtl" gesetzt, und das Satzbild dreht sich mit.
+   ------------------------------------------------------------------------ */
+
+export const SPRACHEN = [
+  { code: "de", name: "Deutsch",   kurz: "DE" },
+  { code: "en", name: "English",   kurz: "EN" },
+  { code: "tr", name: "Türkçe",    kurz: "TR" },
+  { code: "it", name: "Italiano",  kurz: "IT" },
+  { code: "es", name: "Español",   kurz: "ES" },
+  { code: "fr", name: "Français",  kurz: "FR" },
+  { code: "ar", name: "العربية",   kurz: "AR", rtl: true }
+];
+
+export const WORTE = {
+  "kopf.unterzeile": {
+    de:"Orakelrechner nach alten Büchern", en:"Oracle calculators from old books",
+    tr:"Eski kitaplara göre fal hesapları", it:"Calcolatori oracolari dai libri antichi",
+    es:"Calculadoras oraculares de libros antiguos", fr:"Calculateurs oraculaires d'après les livres anciens",
+    ar:"حاسبات العرافة من الكتب القديمة" },
+
+  "start.frage": {
+    de:"Was möchtest du befragen?", en:"What would you like to consult?",
+    tr:"Neyi sormak istersin?", it:"Che cosa vuoi interrogare?",
+    es:"¿Qué deseas consultar?", fr:"Que veux-tu interroger ?",
+    ar:"ماذا تريد أن تسأل؟" },
+
+  "weg.orakel": {
+    de:"Das Orakel", en:"The Oracle", tr:"Fal", it:"L'oracolo",
+    es:"El oráculo", fr:"L'oracle", ar:"العرافة" },
+  "weg.orakel.text": {
+    de:"Eine Frage stellen und eine Antwort bekommen — die Tafel der Absicht, zwei Namen gegeneinander, die Sandkunst, der rechte Zeitpunkt.",
+    en:"Ask a question and receive an answer — the table of intention, two names weighed against each other, the sand art, the right moment.",
+    tr:"Bir soru sor ve cevap al — niyet cetveli, iki ad karşı karşıya, remil, doğru vakit.",
+    it:"Porre una domanda e ricevere una risposta — la tavola dell'intenzione, due nomi messi a confronto, l'arte della sabbia, il momento giusto.",
+    es:"Hacer una pregunta y recibir una respuesta — la tabla de la intención, dos nombres enfrentados, el arte de la arena, el momento justo.",
+    fr:"Poser une question et recevoir une réponse — la table de l'intention, deux noms confrontés, l'art du sable, le moment juste.",
+    ar:"اطرح سؤالاً واحصل على جواب — لوح النية، اسمان في المقابلة، علم الرمل، الوقت المناسب." },
+  "weg.sterne": {
+    de:"Die Sterne", en:"The Stars", tr:"Yıldızlar", it:"Le stelle",
+    es:"Las estrellas", fr:"Les étoiles", ar:"النجوم" },
+  "weg.sterne.text": {
+    de:"Den Himmel deiner Geburtsstunde auslegen — Horoskop, Yıldıznâme, Spirit Name und die Herren der Zeit.",
+    en:"Read the sky of your birth hour — the chart, the Yıldıznâme, the spirit name and the lords of time.",
+    tr:"Doğum saatinin göğünü yorumla — yıldız haritası, Yıldıznâme, ruh adı ve zaman efendileri.",
+    it:"Interpretare il cielo della tua ora di nascita — oroscopo, Yıldıznâme, nome dello spirito e i signori del tempo.",
+    es:"Interpretar el cielo de tu hora de nacimiento — horóscopo, Yıldıznâme, nombre del espíritu y los señores del tiempo.",
+    fr:"Lire le ciel de ton heure de naissance — horoscope, Yıldıznâme, nom de l'esprit et les seigneurs du temps.",
+    ar:"اقرأ سماء ساعة ميلادك — الطالع، اليلدزنامه، اسم الروح وأرباب الزمان." },
+
+  "maske.titel": {
+    de:"Meine Angaben", en:"My details", tr:"Bilgilerim", it:"I miei dati",
+    es:"Mis datos", fr:"Mes données", ar:"بياناتي" },
+  "feld.name": {
+    de:"Dein Name", en:"Your name", tr:"Adın", it:"Il tuo nome",
+    es:"Tu nombre", fr:"Ton nom", ar:"اسمك" },
+  "feld.mutter": {
+    de:"Name deiner Mutter", en:"Your mother's name", tr:"Annenin adı",
+    it:"Il nome di tua madre", es:"El nombre de tu madre",
+    fr:"Le nom de ta mère", ar:"اسم أمك" },
+  "feld.datum": {
+    de:"Geburtsdatum", en:"Date of birth", tr:"Doğum tarihi", it:"Data di nascita",
+    es:"Fecha de nacimiento", fr:"Date de naissance", ar:"تاريخ الميلاد" },
+  "feld.zeit": {
+    de:"Geburtszeit", en:"Time of birth", tr:"Doğum saati", it:"Ora di nascita",
+    es:"Hora de nacimiento", fr:"Heure de naissance", ar:"ساعة الميلاد" },
+  "feld.ort": {
+    de:"Geburtsort", en:"Place of birth", tr:"Doğum yeri", it:"Luogo di nascita",
+    es:"Lugar de nacimiento", fr:"Lieu de naissance", ar:"مكان الميلاد" },
+  "knopf.koordinaten": {
+    de:"Koordinaten suchen", en:"Find coordinates", tr:"Koordinat ara",
+    it:"Cerca coordinate", es:"Buscar coordenadas", fr:"Chercher les coordonnées",
+    ar:"ابحث عن الإحداثيات" },
+  "knopf.speichern": {
+    de:"Speichern", en:"Save", tr:"Kaydet", it:"Salva", es:"Guardar",
+    fr:"Enregistrer", ar:"احفظ" },
+  "knopf.rechnen": {
+    de:"Neu rechnen", en:"Recalculate", tr:"Yeniden hesapla", it:"Ricalcola",
+    es:"Recalcular", fr:"Recalculer", ar:"أعد الحساب" },
+  "knopf.zurueck": {
+    de:"← Zurück zum Anfang", en:"← Back to the start", tr:"← Başa dön",
+    it:"← Torna all'inizio", es:"← Volver al inicio", fr:"← Retour au début",
+    ar:"→ العودة إلى البداية" },
+  "knopf.idee": {
+    de:"Was ist Oracle? — die Idee dahinter", en:"What is Oracle? — the idea behind it",
+    tr:"Oracle nedir? — arkasındaki fikir", it:"Che cos'è Oracle? — l'idea dietro",
+    es:"¿Qué es Oracle? — la idea detrás", fr:"Qu'est-ce qu'Oracle ? — l'idée derrière",
+    ar:"ما هو أوراكل؟ — الفكرة وراءه" },
+
+  "gruppe.geburtsbild": {
+    de:"Das Geburtsbild", en:"The birth chart", tr:"Doğum haritası",
+    it:"Il quadro di nascita", es:"La carta natal", fr:"Le thème de naissance",
+    ar:"خريطة الميلاد" },
+  "gruppe.angelegt": {
+    de:"Was darin angelegt ist", en:"What is laid out in it", tr:"İçinde yatanlar",
+    it:"Ciò che vi è iscritto", es:"Lo que en ella está dispuesto",
+    fr:"Ce qui y est inscrit", ar:"ما هو مُودَع فيها" },
+  "gruppe.zeit": {
+    de:"Die Herren der Zeit", en:"The lords of time", tr:"Zamanın efendileri",
+    it:"I signori del tempo", es:"Los señores del tiempo",
+    fr:"Les seigneurs du temps", ar:"أرباب الزمان" },
+  "gruppe.zusammen": {
+    de:"Alles zusammen", en:"Everything together", tr:"Hepsi birlikte",
+    it:"Tutto insieme", es:"Todo junto", fr:"Tout ensemble", ar:"كل ذلك معاً" },
+  "gruppe.augenblick": {
+    de:"Den Augenblick befragen", en:"Consulting the moment", tr:"Ânı sormak",
+    it:"Interrogare l'istante", es:"Consultar el instante",
+    fr:"Interroger l'instant", ar:"سؤال اللحظة" },
+  "gruppe.namen": {
+    de:"Namen gegeneinander", en:"Names weighed against each other",
+    tr:"Adları karşılaştırmak", it:"Nomi a confronto",
+    es:"Nombres enfrentados", fr:"Noms confrontés", ar:"الأسماء في المقابلة" },
+
+  "liste.orakel": {
+    de:"Das Orakel — die Künste", en:"The Oracle — the arts", tr:"Fal — sanatlar",
+    it:"L'oracolo — le arti", es:"El oráculo — las artes",
+    fr:"L'oracle — les arts", ar:"العرافة — الفنون" },
+  "liste.sterne": {
+    de:"Die Sterne — die Techniken", en:"The Stars — the techniques",
+    tr:"Yıldızlar — teknikler", it:"Le stelle — le tecniche",
+    es:"Las estrellas — las técnicas", fr:"Les étoiles — les techniques",
+    ar:"النجوم — الطرق" },
+
+  "hinweis.nurDeutsch": {
+    de:"", 
+    en:"The calculations run in every language; the long interpretive texts are still in German. They are written in images and fables, and a machine translation would destroy exactly what is worth having about them.",
+    tr:"Hesaplar her dilde çalışır; uzun yorum metinleri şimdilik Almancadır. Bunlar imge ve masallarla yazılmıştır, makine çevirisi değerli olan şeyi tam olarak yok ederdi.",
+    it:"I calcoli funzionano in ogni lingua; i lunghi testi interpretativi sono ancora in tedesco. Sono scritti per immagini e favole, e una traduzione automatica distruggerebbe proprio ciò che vale.",
+    es:"Los cálculos funcionan en todos los idiomas; los textos largos de interpretación siguen en alemán. Están escritos en imágenes y fábulas, y una traducción automática destruiría justo lo que vale la pena.",
+    fr:"Les calculs fonctionnent dans toutes les langues ; les longs textes d'interprétation sont encore en allemand. Ils sont écrits en images et en fables, et une traduction automatique détruirait précisément ce qui en fait la valeur.",
+    ar:"الحسابات تعمل بكل اللغات؛ أما نصوص التأويل الطويلة فما زالت بالألمانية. وهي مكتوبة بالصور والأمثال، والترجمة الآلية تُفسد ما فيها من قيمة." }
+};
+
+const SCHLUESSEL = "oracle-sprache";
+
+export function aktuelleSprache() {
+  try {
+    const g = localStorage.getItem(SCHLUESSEL);
+    if (g && SPRACHEN.some(s => s.code === g)) return g;
+  } catch (e) {}
+  const b = (navigator.language || "de").slice(0, 2).toLowerCase();
+  return SPRACHEN.some(s => s.code === b) ? b : "de";
+}
+
+export function t(schluessel, sprache) {
+  const s = sprache || aktuelleSprache();
+  const e = WORTE[schluessel];
+  if (!e) return schluessel;
+  return e[s] || e.de || "";
+}
+
+export function setzeSprache(code) {
+  try { localStorage.setItem(SCHLUESSEL, code); } catch (e) {}
+  anwenden(code);
+  window.dispatchEvent(new CustomEvent("sprache-geaendert", { detail: code }));
+}
+
+/* Jedes Element mit data-t bekommt seinen Text, jedes mit data-t-ph den
+   Platzhalter. So bleibt die Übersetzung im HTML sichtbar statt im Code
+   versteckt. */
+export function anwenden(code) {
+  const s = code || aktuelleSprache();
+  const def = SPRACHEN.find(x => x.code === s) || SPRACHEN[0];
+  document.documentElement.lang = s;
+  document.documentElement.dir = def.rtl ? "rtl" : "ltr";
+  document.body.classList.toggle("rtl", !!def.rtl);
+
+  document.querySelectorAll("[data-t]").forEach(e => {
+    const w = t(e.dataset.t, s);
+    if (w) e.textContent = w;
+  });
+  document.querySelectorAll("[data-t-ph]").forEach(e => {
+    const w = t(e.dataset.tPh, s);
+    if (w) e.placeholder = w;
+  });
+
+  const hinweis = document.getElementById("spracheHinweis");
+  if (hinweis) {
+    const txt = t("hinweis.nurDeutsch", s);
+    hinweis.textContent = txt;
+    hinweis.hidden = !txt;
+  }
+
+  document.querySelectorAll("#sprachWahl button").forEach(b =>
+    b.classList.toggle("aktiv", b.dataset.sprache === s));
+}
+
+/* ------------------------------------------------------------ der Umschalter */
+function baueWahl() {
+  const ziel = document.getElementById("sprachWahl");
+  if (!ziel) return;
+  ziel.innerHTML = "";
+  SPRACHEN.forEach(s => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.dataset.sprache = s.code;
+    b.textContent = s.kurz;
+    b.title = s.name;
+    b.addEventListener("click", () => setzeSprache(s.code));
+    ziel.appendChild(b);
+  });
+}
+
+baueWahl();
+anwenden();

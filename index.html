@@ -5,17 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Oracle</title>
 <meta name="description" content="Oracle — Orakelrechner nach alten Büchern: das osmanische Yıldıznâme aus Name und Muttername, der Geist des 11. Hauses nach Agrippa, Primärdirektionen, Zodiacal Releasing und Antiszien.">
-<link rel="stylesheet" href="stil.css?v=163">
+<link rel="stylesheet" href="stil.css?v=165">
 </head>
 <body>
 
 <div id="himmel"></div>
 <div id="schleier"></div>
 
+<div id="sprachWahl" aria-label="Sprache"></div>
+
 <header id="kopf">
   <button type="button" id="heimKnopf" title="Zurück zum Anfang">
     <h1>Oracle</h1>
-    <p class="unterzeile">Orakelrechner nach alten Büchern</p>
+    <p class="unterzeile" data-t="kopf.unterzeile">Orakelrechner nach alten Büchern</p>
   </button>
 </header>
 
@@ -45,6 +47,8 @@
   <button data-bolum="bEssenz" data-gruppe="beide">Die Essenz</button>
 </nav>
 
+<p id="spracheHinweis" class="kucukNot" hidden></p>
+
 <main>
 
 <!-- ------------------------------------------------------- I. Sternbild -->
@@ -60,7 +64,7 @@
   Was fällig wird, steht hier. Ohne die Deutung des Geburtshoroskops bleiben
   jene Techniken ein Kalender ohne Inhalt; mit ihr werden sie konkret.</p>
 
-  <button id="hkBerechnen" class="buyukDugme">Neu rechnen</button>
+  <button id="hkBerechnen" class="buyukDugme" data-t="knopf.rechnen">Neu rechnen</button>
 
   <div id="hkCikti" hidden></div>
   <div id="hkZeit" hidden></div>
@@ -97,13 +101,13 @@
 
   <div class="alanlar">
     <label class="alan">
-      <span>Dein Name</span>
+      <span data-t="feld.name">Dein Name</span>
       <input id="ad" type="text" autocomplete="off" placeholder="z. B. Mehmet oder Michael">
     </label>
     <div class="zincir" id="zincirAd" dir="rtl"></div>
 
     <label class="alan">
-      <span>Name deiner Mutter</span>
+      <span data-t="feld.mutter">Name deiner Mutter</span>
       <input id="anne" type="text" autocomplete="off" placeholder="z. B. Fatma oder Gertrud">
     </label>
     <div class="zincir" id="zincirAnne" dir="rtl"></div>
@@ -277,7 +281,7 @@
 <!-- --------------------------------------------------- V. Meine Daten -->
 <section class="bolum" id="bProfil">
   <details id="maskeRahmen" class="maskeRahmen" hidden>
-    <summary id="maskeGriff">Meine Angaben</summary>
+    <summary id="maskeGriff" data-t="maske.titel">Meine Angaben</summary>
 
   <div id="maskeGemein" hidden>
     <div class="alanlar">
@@ -321,16 +325,16 @@
     <h3>Die Geburt</h3>
     <div class="alanlar">
       <div class="geoZeile">
-        <label class="alan"><span>Geburtsdatum</span><input id="pDatum" type="date"></label>
-        <label class="alan"><span>Geburtszeit</span><input id="pZeit" type="time"></label>
+        <label class="alan"><span data-t="feld.datum">Geburtsdatum</span><input id="pDatum" type="date"></label>
+        <label class="alan"><span data-t="feld.zeit">Geburtszeit</span><input id="pZeit" type="time"></label>
       </div>
 
       <label class="alan">
-        <span>Geburtsort</span>
+        <span data-t="feld.ort">Geburtsort</span>
         <input id="pOrt" type="text" autocomplete="off" placeholder="z. B. Palermo, Italien">
       </label>
       <div class="geoZeile">
-        <button type="button" id="pOrtSuchen" class="knopfKlein">Koordinaten suchen</button>
+        <button type="button" id="pOrtSuchen" class="knopfKlein" data-t="knopf.koordinaten">Koordinaten suchen</button>
         <span class="geoStatus" id="pGeoStatus"></span>
       </div>
       <p class="koordWarnung" id="pKoordWarnung" hidden></p>
@@ -345,7 +349,7 @@
 
   <div id="speicherBlock" hidden>
   <div class="geoZeile" style="margin-top:1.8rem;">
-    <button id="pSpeichern" class="buyukDugme" style="margin-top:0;">Speichern</button>
+    <button id="pSpeichern" class="buyukDugme" style="margin-top:0;" data-t="knopf.speichern">Speichern</button>
     <button type="button" id="pLoeschen" class="knopfKlein">Daten löschen</button>
   </div>
   <p class="geoStatus" id="pSpeicherStatus"></p>
@@ -372,19 +376,17 @@
   </details>
 
   <div id="wahl" class="wahl" >
-    <h3>Was möchtest du befragen?</h3>
+    <h3 data-t="start.frage">Was möchtest du befragen?</h3>
     <div class="wahlKarten">
       <button type="button" class="wahlKarte" data-weg="orakel"
               style="background-image:url('bilder/orakel.jpg')">
-        <span class="wahlName">Das Orakel</span>
-        <span class="wahlText">Eine Frage stellen und eine Antwort bekommen —
-        die Tafel der Absicht, zwei Namen gegeneinander, die Sandkunst, der rechte Zeitpunkt.</span>
+        <span class="wahlName" data-t="weg.orakel">Das Orakel</span>
+        <span class="wahlText" data-t="weg.orakel.text">Eine Frage stellen und eine Antwort bekommen — die Tafel der Absicht, zwei Namen gegeneinander, die Sandkunst, der rechte Zeitpunkt.</span>
       </button>
       <button type="button" class="wahlKarte" data-weg="sterne"
               style="background-image:url('bilder/sterne.jpg')">
-        <span class="wahlName">Die Sterne</span>
-        <span class="wahlText">Den Himmel deiner Geburtsstunde auslegen —
-        Horoskop, Yıldıznâme, Spirit Name und die Herren der Zeit.</span>
+        <span class="wahlName" data-t="weg.sterne">Die Sterne</span>
+        <span class="wahlText" data-t="weg.sterne.text">Den Himmel deiner Geburtsstunde auslegen — Horoskop, Yıldıznâme, Spirit Name und die Herren der Zeit.</span>
       </button>
     </div>
   </div>
@@ -407,12 +409,12 @@
   gemeinsam zeigen. Wo viele dasselbe sagen, brennt es hell und einfarbig;
   wo jedes etwas anderes sagt, bleibt es matt und vielfarbig.</p>
 
-  <button id="lhBerechnen" class="buyukDugme">Neu rechnen</button>
+  <button id="lhBerechnen" class="buyukDugme" data-t="knopf.rechnen">Neu rechnen</button>
   <div id="lhCikti" hidden></div>
   </div>
 
   <div id="heimFuss">
-    <button type="button" id="zurIdee" class="wasIstKnopf">Was ist Oracle? — die Idee dahinter</button>
+    <button type="button" id="zurIdee" class="wasIstKnopf" data-t="knopf.idee">Was ist Oracle? — die Idee dahinter</button>
   </div>
 
 </section>
@@ -450,7 +452,7 @@
       <input id="gOrt" type="text" autocomplete="off" placeholder="z. B. Palermo, Italien">
     </label>
     <div class="geoZeile">
-      <button type="button" id="gOrtSuchen" class="knopfKlein">Koordinaten suchen</button>
+      <button type="button" id="gOrtSuchen" class="knopfKlein" data-t="knopf.koordinaten">Koordinaten suchen</button>
       <span class="geoStatus" id="gGeoStatus"></span>
     </div>
 
@@ -735,7 +737,7 @@
   und zwei. Zusammen fünfundsiebzig. Die Reihenfolge hängt an einer einzigen
   Frage: Stand die Sonne bei der Geburt über oder unter dem Horizont?</p>
 
-  <button id="fdBerechnen" class="buyukDugme">Neu rechnen</button>
+  <button id="fdBerechnen" class="buyukDugme" data-t="knopf.rechnen">Neu rechnen</button>
   <div id="fdCikti" hidden></div>
 </section>
 
@@ -755,7 +757,7 @@
   weit er darin schon gekommen war. Gerechnet wird <b>siderisch</b>, nicht
   tropisch — der Unterschied beträgt derzeit gut vierundzwanzig Grad.</p>
 
-  <button id="vdBerechnen" class="buyukDugme">Neu rechnen</button>
+  <button id="vdBerechnen" class="buyukDugme" data-t="knopf.rechnen">Neu rechnen</button>
   <div id="vdCikti" hidden></div>
 </section>
 
@@ -1049,7 +1051,7 @@
   eine feste Reihenfolge der Befragung. Dieser Abschnitt geht sie Schritt für
   Schritt durch — und kommt erst am Ende zur Deutung.</p>
 
-  <button id="srBerechnen" class="buyukDugme">Neu rechnen</button>
+  <button id="srBerechnen" class="buyukDugme" data-t="knopf.rechnen">Neu rechnen</button>
   <div id="srCikti" hidden></div>
 </section>
 
@@ -1087,7 +1089,7 @@
     </button>
   </div>
 
-  <button id="rdBerechnen" class="buyukDugme">Neu rechnen</button>
+  <button id="rdBerechnen" class="buyukDugme" data-t="knopf.rechnen">Neu rechnen</button>
   <div id="rdCikti" hidden></div>
 </section>
 
@@ -1111,7 +1113,7 @@
   der Planet selbst steht, und zuletzt der Herr des Wochentages und der Herr
   der Geburtsstunde.</p>
 
-  <button id="afBerechnen" class="buyukDugme">Neu rechnen</button>
+  <button id="afBerechnen" class="buyukDugme" data-t="knopf.rechnen">Neu rechnen</button>
   <div id="afCikti" hidden></div>
 </section>
 
@@ -1126,7 +1128,7 @@
   Himmelsmittelpunkt — und lässt nur drei als Herrn des Werks gelten: <b>Merkur, Venus
   und Mars</b>. Alles Hervorbringen, sagt er, geht durch Hand, Auge oder Wort. Die
   übrigen vier geben Rang und Umstände, nicht das Werk selbst.</p>
-  <button id="wkBerechnen" class="buyukDugme">Neu rechnen</button>
+  <button id="wkBerechnen" class="buyukDugme" data-t="knopf.rechnen">Neu rechnen</button>
   <div id="wkCikti" hidden></div>
 </section>
 
@@ -1140,7 +1142,7 @@
   <b>Dorotheos</b> teilt das Leben in drei Teile und gibt jedem einen von ihnen. Wie
   dieser Herr steht, so verläuft sein Drittel. Es ist die einfachste Zeitteilung der
   ganzen Überlieferung — und zugleich die gröbste: Sie sagt eine Tendenz, keinen Termin.</p>
-  <button id="laBerechnen" class="buyukDugme">Neu rechnen</button>
+  <button id="laBerechnen" class="buyukDugme" data-t="knopf.rechnen">Neu rechnen</button>
   <div id="laCikti" hidden></div>
 </section>
 
@@ -1155,7 +1157,7 @@
   einmal ab. Was herauskommt, ist kein Himmelskörper, sondern ein Ort, an dem zwei
   Bedeutungen sich treffen. <b>Guido Bonatti</b> führt siebenundneunzig davon auf; hier
   stehen die sieben hermetischen und die gebräuchlichsten.</p>
-  <button id="apBerechnen" class="buyukDugme">Neu rechnen</button>
+  <button id="apBerechnen" class="buyukDugme" data-t="knopf.rechnen">Neu rechnen</button>
   <div id="apCikti" hidden></div>
 </section>
 
@@ -1179,7 +1181,7 @@
   Strahl der Punkt zuletzt überschritten hat: Er gibt die Menschen, die
   Ereignisse, das Getane. Ein Abschnitt heißt also immer mit zwei Namen.</p>
 
-  <button id="vtBerechnen" class="buyukDugme">Neu rechnen</button>
+  <button id="vtBerechnen" class="buyukDugme" data-t="knopf.rechnen">Neu rechnen</button>
   <div id="vtCikti" hidden></div>
 </section>
 
@@ -1196,7 +1198,7 @@
   seine Jahre her — seine größten, mittleren oder kleinsten, je nachdem, wie er
   selbst steht.</p>
 
-  <button id="lmBerechnen" class="buyukDugme">Neu rechnen</button>
+  <button id="lmBerechnen" class="buyukDugme" data-t="knopf.rechnen">Neu rechnen</button>
   <div id="lmCikti" hidden></div>
 </section>
 
@@ -1218,37 +1220,38 @@
   osmanisch, hellenistisch, arabisch, ägyptisch, lateinisch</p>
 </footer>
 
-<script type="module" src="oracle.js?v=163"></script>
-<script type="module" src="profil.js?v=163"></script>
-<script type="module" src="profil-ui.js?v=163"></script>
-<script type="module" src="zugang.js?v=163"></script>
-<script type="module" src="horoskop.js?v=163"></script>
-<script type="module" src="perioden.js?v=163"></script>
-<script type="module" src="solar.js?v=163"></script>
-<script type="module" src="lebensmass.js?v=163"></script>
-<script type="module" src="leuchten.js?v=163"></script>
-<script type="module" src="elektion.js?v=163"></script>
-<script type="module" src="ramel.js?v=163"></script>
-<script type="module" src="spende.js?v=163"></script>
-<script type="module" src="geist.js?v=163"></script>
-<script type="module" src="geist-profil.js?v=163"></script>
-<script type="module" src="yildiz-profil.js?v=163"></script>
-<script type="module" src="essenz.js?v=163"></script>
-<script type="module" src="auto-rechnen.js?v=163"></script>
-<script type="module" src="deutung.js?v=163"></script>
-<script type="module" src="jahr.js?v=163"></script>
-<script type="module" src="lebensbogen.js?v=163"></script>
-<script type="module" src="zr.js?v=163"></script>
-<script type="module" src="antiszien.js?v=163"></script>
-<script type="module" src="profektionen.js?v=163"></script>
-<script type="module" src="themen.js?v=163"></script>
-<script type="module" src="crosscheck.js?v=163"></script>
-<script type="module" src="planeten.js?v=163"></script>
-<script type="module" src="verteilung.js?v=163"></script>
-<script type="module" src="almutem.js?v=163"></script>
-<script type="module" src="radixdeutung.js?v=163"></script>
-<script type="module" src="werk.js?v=163"></script>
-<script type="module" src="punkte.js?v=163"></script>
-<script type="module" src="haeuser.js?v=163"></script>
+<script type="module" src="sprachen.js?v=165"></script>
+<script type="module" src="oracle.js?v=165"></script>
+<script type="module" src="profil.js?v=165"></script>
+<script type="module" src="profil-ui.js?v=165"></script>
+<script type="module" src="zugang.js?v=165"></script>
+<script type="module" src="horoskop.js?v=165"></script>
+<script type="module" src="perioden.js?v=165"></script>
+<script type="module" src="solar.js?v=165"></script>
+<script type="module" src="lebensmass.js?v=165"></script>
+<script type="module" src="leuchten.js?v=165"></script>
+<script type="module" src="elektion.js?v=165"></script>
+<script type="module" src="ramel.js?v=165"></script>
+<script type="module" src="spende.js?v=165"></script>
+<script type="module" src="geist.js?v=165"></script>
+<script type="module" src="geist-profil.js?v=165"></script>
+<script type="module" src="yildiz-profil.js?v=165"></script>
+<script type="module" src="essenz.js?v=165"></script>
+<script type="module" src="auto-rechnen.js?v=165"></script>
+<script type="module" src="deutung.js?v=165"></script>
+<script type="module" src="jahr.js?v=165"></script>
+<script type="module" src="lebensbogen.js?v=165"></script>
+<script type="module" src="zr.js?v=165"></script>
+<script type="module" src="antiszien.js?v=165"></script>
+<script type="module" src="profektionen.js?v=165"></script>
+<script type="module" src="themen.js?v=165"></script>
+<script type="module" src="crosscheck.js?v=165"></script>
+<script type="module" src="planeten.js?v=165"></script>
+<script type="module" src="verteilung.js?v=165"></script>
+<script type="module" src="almutem.js?v=165"></script>
+<script type="module" src="radixdeutung.js?v=165"></script>
+<script type="module" src="werk.js?v=165"></script>
+<script type="module" src="punkte.js?v=165"></script>
+<script type="module" src="haeuser.js?v=165"></script>
 </body>
 </html>
