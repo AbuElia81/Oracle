@@ -34,8 +34,12 @@
    ------------------------------------------------------------------------ */
 
 import { norm360, schiefeDerEkliptik, schiefeAufgangsRA, julianischesDatum }
-  from "./astro.js?v=182";
-import { radix, PLANET, REIHE, ZEICHEN, mitArtikel, grossMitArtikel } from "./horoskop.js?v=182";
+  from "./astro.js?v=195";
+import { radix, PLANET, REIHE, ZEICHEN, mitArtikel, grossMitArtikel } from "./horoskop.js?v=195";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=195";
+import { aktuelleSprache } from "./sprachen.js?v=195";
+setzeRestSprache(aktuelleSprache());
+window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 
 /* Die ägyptischen Grenzen — dieselbe Tafel, nach der auch die Würden
    gerechnet werden. [obere Grenze in Grad, Herr] */
@@ -199,15 +203,8 @@ const el = (t, c, txt) => { const n = document.createElement(t);
 const FARBE = { saturn:"#8f8fa8", jupiter:"#c8a86b", mars:"#c47a6a",
                 sonne:"#d4af6e", venus:"#8fb89a", merkur:"#9aa8c4", mond:"#b8b8c8" };
 
-const WESEN = {
-  saturn:  "Arbeit, Ausdauer, Einsamkeit, alles Langsame und Dauerhafte; alte Dinge und alte Leute",
-  jupiter: "Großzügigkeit, Lehre, Recht, Ansehen, Freiheit; was sich weitet",
-  mars:    "Streit, Antrieb, Risiko, Aufbruch; was schneidet und was treibt",
-  sonne:   "Rang, Stolz, Sichtbarkeit, Väter und Obrigkeit; was ins Licht tritt",
-  venus:   "Liebe, Schönheit, Kunst, Vergnügen, Frieden; was gefällt",
-  merkur:  "Reden, Schreiben, Handel, Lernen, Geschwister; was zwischen Menschen geht",
-  mond:    "Mutter, Volk, Leib, Reisen, Wechsel; was nährt und was sich wandelt"
-};
+const WESEN = new Proxy({}, { get: (_, k) => rt("vt." + String(k)) });
+
 
 function alterHeute(p) {
   if (!p || !p.datum) return null;
@@ -230,8 +227,7 @@ function zeichne() {
   if (!r) {
     ziel.hidden = false;
     ziel.innerHTML = "";
-    ziel.appendChild(el("p", "kucukNot",
-      "Dafür fehlen die Geburtsangaben — Datum, Uhrzeit und der Ort mit gesuchten Koordinaten."));
+    ziel.appendChild(el("p", "kucukNot", rt("fehlt.geburt")));
     return;
   }
   const v = verteilung(95);
@@ -246,14 +242,9 @@ function zeichne() {
   const kopf = el("div", "vtKopf");
   const laengstes = v.zeichenZeiten.indexOf(Math.max(...v.zeichenZeiten));
   const kuerzestes = v.zeichenZeiten.indexOf(Math.min(...v.zeichenZeiten));
-  kopf.innerHTML =
-    `Gerechnet für ${Math.abs(v.breite).toFixed(2)}° ${v.breite >= 0 ? "Nord" : "Süd"}. ` +
-    `An diesem Ort braucht ${ZEICHEN[laengstes].glyph} ${ZEICHEN[laengstes].name} ` +
-    `<b>${v.zeichenZeiten[laengstes].toFixed(1)} Jahre</b> zum Aufgehen und ` +
-    `${ZEICHEN[kuerzestes].glyph} ${ZEICHEN[kuerzestes].name} nur ` +
-    `<b>${v.zeichenZeiten[kuerzestes].toFixed(1)}</b>. ` +
-    `Darum sind die Abschnitte unten so ungleich lang: Sie messen nicht Grade, ` +
-    `sondern die Zeit, die der Himmel über diesem Ort dafür braucht.`;
+  kopf.innerHTML = rt("vt.kopf", Math.abs(v.breite).toFixed(2), v.breite >= 0,
+    `${ZEICHEN[laengstes].glyph} ${ZEICHEN[laengstes].name}`, v.zeichenZeiten[laengstes].toFixed(1),
+    `${ZEICHEN[kuerzestes].glyph} ${ZEICHEN[kuerzestes].name}`, v.zeichenZeiten[kuerzestes].toFixed(1));
   ziel.appendChild(kopf);
 
   /* Der laufende Abschnitt zuerst. */
@@ -262,27 +253,21 @@ function zeichne() {
     if (jetzt) {
       const k = el("div", "vtJetzt");
       const f = PLANET[jetzt.herr];
-      k.appendChild(el("div", "kalanBaslik", "Wo du gerade stehst"));
+      k.appendChild(el("div", "kalanBaslik", rt("vt.jetzt")));
       k.appendChild(el("div", "buyukToplam", `${f.g} ${f.name}`));
       k.appendChild(el("div", "kucukNot",
-        `verteilt dir die Jahre ${jetzt.vonJahr.toFixed(1)} bis ${jetzt.bisJahr.toFixed(1)} — ` +
-        `also ${datumBei(p, jetzt.vonJahr)} bis ${datumBei(p, jetzt.bisJahr)}`));
+        rt("vt.spanne", jetzt.vonJahr.toFixed(1), jetzt.bisJahr.toFixed(1),
+           datumBei(p, jetzt.vonJahr), datumBei(p, jetzt.bisJahr))));
       const satz = el("p");
-      satz.innerHTML = `Der <b>Verteiler</b> dieses Abschnitts ist ${mitArtikel(f.name)}: ` +
-        `${WESEN[jetzt.herr]}. Das ist das Thema, unter dem diese Jahre stehen. ` +
-        (jetzt.teilhaber
-          ? `Dein <b>Teilhaber</b> ist ${mitArtikel(jetzt.teilhaber.name)} — der Punkt hat ` +
-            `${jetzt.teilhaber.art === "Körper" ? "seinen Körper" : `sein ${jetzt.teilhaber.art}`} ` +
-            `zuletzt überschritten, bei ${jetzt.teilhaber.jahre.toFixed(1)} Jahren. ` +
-            `Von dort kommen die Menschen und die Ereignisse.`
-          : `Einen Teilhaber gibt es hier noch nicht — der Punkt hat seit der Geburt ` +
-            `keinen Körper und keinen Strahl überschritten. Der Verteiler steht allein.`);
+      satz.innerHTML = rt("vt.satz", mitArtikel(f.name), WESEN[jetzt.herr],
+        jetzt.teilhaber ? mitArtikel(jetzt.teilhaber.name) : null,
+        jetzt.teilhaber ? (jetzt.teilhaber.art === "Körper" ? rt("vt.koerper") : rt("vt.strahl", jetzt.teilhaber.art)) : "",
+        jetzt.teilhaber ? jetzt.teilhaber.jahre.toFixed(1) : "");
       k.appendChild(satz);
       if (jetzt.waehrend.length) {
         const w = el("p", "kucukNot");
-        w.innerHTML = "Noch in diesem Abschnitt kommt dazu: " +
-          jetzt.waehrend.map(x =>
-            `${PLANET[x.key].g} ${x.name} (${x.art}) mit ${x.jahre.toFixed(1)} Jahren`).join(", ") + ".";
+        w.innerHTML = rt("vt.waehrend", jetzt.waehrend.map(x =>
+          `${PLANET[x.key].g} ${x.name} (${x.art}) ${x.jahre.toFixed(1)}`).join(", "));
         k.appendChild(w);
       }
       ziel.appendChild(k);
@@ -290,7 +275,7 @@ function zeichne() {
   }
 
   /* Die ganze Folge als Balken. */
-  ziel.appendChild(el("h3", null, "Die Folge der Verteiler"));
+  ziel.appendChild(el("h3", null, rt("vt.folge")));
   const leiste = el("div", "vtLeiste");
   const gesamt = v.abschnitte[v.abschnitte.length - 1].bisJahr;
   v.abschnitte.forEach(a => {
@@ -305,8 +290,9 @@ function zeichne() {
   ziel.appendChild(leiste);
 
   const tabelle = el("table", "vtTafel");
-  tabelle.innerHTML = "<thead><tr><th>Alter</th><th>Jahr</th><th>Verteiler</th>" +
-                      "<th>Grenze</th><th>Teilhaber</th></tr></thead>";
+  tabelle.innerHTML = `<thead><tr><th>${rt("vt.tab.alter")}</th><th>${rt("vt.tab.jahr")}</th>` +
+                      `<th>${rt("vt.tab.verteiler")}</th><th>${rt("vt.tab.grenze")}</th>` +
+                      `<th>${rt("vt.tab.teilhaber")}</th></tr></thead>`;
   const tb = el("tbody");
   v.abschnitte.forEach(a => {
     const tr = el("tr");
@@ -324,13 +310,7 @@ function zeichne() {
   tabelle.appendChild(tb);
   ziel.appendChild(tabelle);
 
-  ziel.appendChild(el("p", "kucukNot",
-    "Dorotheos liest an dieser Tafel auch das Maß des Lebens ab — dort, wo ein Übeltäter " +
-    "verteilt und ein Übeltäter zugleich Teilhaber ist. Diese Lesart steht hier nicht: " +
-    "Sie nennt Jahreszahlen für einen Tod, und das tut diese Seite nicht. " +
-    "Gerechnet wird mit den schiefen Aufstiegen für deine Geburtsbreite, nicht mit einer " +
-    "Klimatafel — geprüft an den Beispielen aus Benjamin Dykes' Werkstattunterlagen zur " +
-    "Verteilung, auf fünf Stellen genau."));
+  ziel.appendChild(el("p", "kucukNot", rt("vt.note")));
 }
 
 $("#vtBerechnen")?.addEventListener("click", zeichne);
@@ -338,3 +318,5 @@ if ($("#vtCikti")) {
   window.addEventListener("load", () => setTimeout(zeichne, 300));
   window.addEventListener("profil-geaendert", () => setTimeout(zeichne, 200));
 }
+
+window.addEventListener("sprache-geaendert", () => setTimeout(zeichne, 80));

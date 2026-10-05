@@ -18,8 +18,13 @@
    Der Punkt des Todes steht nicht dabei.
    ------------------------------------------------------------------------ */
 
-import { radix, PLANET, ZEICHEN, HAUS, mitArtikel } from "./horoskop.js?v=182";
-import { norm360 } from "./astro.js?v=182";
+import { radix, PLANET, ZEICHEN, HAUS, mitArtikel } from "./horoskop.js?v=195";
+import { norm360 } from "./astro.js?v=195";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=195";
+import { PUNKT_IT } from "./namen-it.js?v=195";
+import { aktuelleSprache } from "./sprachen.js?v=195";
+setzeRestSprache(aktuelleSprache());
+window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -31,63 +36,70 @@ const DOMIZIL = ["mars","venus","merkur","mond","sonne","merkur",
 /* Jeder Punkt: von welcher Stelle zu welcher, und ob er sich bei Nacht
    umkehrt. Formel immer: Aszendent + a − b. */
 export const PUNKTE = [
-  { key:"fortuna", name:"Glück", lat:"Pars Fortunae", stern:"Mond", dreht:true,
+  { key:"fortuna", name:"Glück", lat:"Pars Fortunae", sternKey:"mond", dreht:true,
     a:"mond", b:"sonne",
     was:"Der Leib und das, was einem zufällt. Die älteste und am häufigsten gebrauchte " +
         "Stelle: wo das Glück von außen kommt, ohne dass man es sich erarbeitet hat." },
-  { key:"geist", name:"Geist", lat:"Pars Spiritus", stern:"Sonne", dreht:true,
+  { key:"geist", name:"Geist", lat:"Pars Spiritus", sternKey:"sonne", dreht:true,
     a:"sonne", b:"mond",
     was:"Der Gegenpunkt zum Glück. Was nicht zufällt, sondern aus einem selbst kommt — " +
         "Wille, Vorhaben, das Gewollte. Die Alten sagen: Fortuna ist, was dir geschieht, " +
         "Spiritus, was du tust." },
-  { key:"liebe", name:"Liebe", lat:"Pars Amoris", stern:"Venus", dreht:true,
+  { key:"liebe", name:"Liebe", lat:"Pars Amoris", sternKey:"venus", dreht:true,
     a:"$geist", b:"$fortuna",
     was:"Wo Zuneigung entsteht und worauf sie sich richtet — nicht die Ehe, sondern " +
         "das Mögen selbst, auch für Dinge und Künste." },
-  { key:"not", name:"Notwendigkeit", lat:"Pars Necessitatis", stern:"Merkur", dreht:true,
+  { key:"not", name:"Notwendigkeit", lat:"Pars Necessitatis", sternKey:"merkur", dreht:true,
     a:"$fortuna", b:"$geist",
     was:"Wo man unter Zwang steht und keine Wahl hat. Die arabischen Autoren setzen " +
         "hier auch den Streit und die Schulden an." },
-  { key:"sieg", name:"Sieg", lat:"Pars Victoriae", stern:"Jupiter", dreht:true,
+  { key:"sieg", name:"Sieg", lat:"Pars Victoriae", sternKey:"jupiter", dreht:true,
     a:"jupiter", b:"$geist",
     was:"Wo man durchkommt. Nicht Glück, sondern Gelingen gegen Widerstand — " +
         "und wo Vertrauen von anderen zurückkommt." },
-  { key:"kuehn", name:"Kühnheit", lat:"Pars Audaciae", stern:"Mars", dreht:true,
+  { key:"kuehn", name:"Kühnheit", lat:"Pars Audaciae", sternKey:"mars", dreht:true,
     a:"$fortuna", b:"mars",
     was:"Wo man wagt und wo man sich überhebt. Die Stelle des Muts und derselben " +
         "Stelle die Unvorsichtigkeit." },
-  { key:"nemesis", name:"Vergeltung", lat:"Pars Nemesis", stern:"Saturn", dreht:true,
+  { key:"nemesis", name:"Vergeltung", lat:"Pars Nemesis", sternKey:"saturn", dreht:true,
     a:"saturn", b:"$fortuna",
     was:"Wo etwas zurückkommt, das man selbst in Gang gesetzt hat — im Guten wie im " +
         "Schlechten. Die Alten nennen hier auch das Verborgene und das Vergangene." },
 
-  { key:"vater", name:"Vater", lat:"Pars Patris", stern:"—", dreht:true,
+  { key:"vater", name:"Vater", lat:"Pars Patris", sternKey:null, dreht:true,
     a:"sonne", b:"saturn",
     was:"Der Vater und was von ihm kommt: Herkunft, Name, Erbe im weiteren Sinn." },
-  { key:"mutter", name:"Mutter", lat:"Pars Matris", stern:"—", dreht:true,
+  { key:"mutter", name:"Mutter", lat:"Pars Matris", sternKey:null, dreht:true,
     a:"mond", b:"venus",
     was:"Die Mutter und was von ihr kommt: Nahrung, Schutz, der erste Boden." },
-  { key:"geschwister", name:"Geschwister", lat:"Pars Fratrum", stern:"—", dreht:false,
+  { key:"geschwister", name:"Geschwister", lat:"Pars Fratrum", sternKey:null, dreht:false,
     a:"saturn", b:"jupiter",
     was:"Geschwister und alle, die mit einem aufwachsen." },
-  { key:"kinder", name:"Kinder", lat:"Pars Filiorum", stern:"—", dreht:true,
+  { key:"kinder", name:"Kinder", lat:"Pars Filiorum", sternKey:null, dreht:true,
     a:"jupiter", b:"saturn",
     was:"Kinder und alles Hervorgebrachte, das eigenes Leben bekommt." },
-  { key:"ehe", name:"Ehe", lat:"Pars Matrimonii", stern:"—", dreht:false,
+  { key:"ehe", name:"Ehe", lat:"Pars Matrimonii", sternKey:null, dreht:false,
     a:"venus", b:"saturn", frauUm:true,
     was:"Die Bindung und ihr Zustandekommen. Bonatti rechnet sie für Mann und Frau " +
         "verschieden — hier steht die Form, die zum eingetragenen Geschlecht passt." },
-  { key:"glaube", name:"Glaube", lat:"Pars Fidei", stern:"—", dreht:false,
+  { key:"glaube", name:"Glaube", lat:"Pars Fidei", sternKey:null, dreht:false,
     a:"merkur", b:"mond",
     was:"Woran man ohne Beweis festhält — Religion, Überzeugung, Vertrauen in eine Lehre." },
-  { key:"reise", name:"Reise", lat:"Pars Peregrinationis", stern:"—", dreht:false,
+  { key:"reise", name:"Reise", lat:"Pars Peregrinationis", sternKey:null, dreht:false,
     a:"$fortuna", b:"saturn",
     was:"Das Fortgehen und die Fremde: wo einen das Weggehen hinführt." }
 ];
 
+/* Name und Beschreibung jedes Punktes hängen an der Sprache. */
+function punktText(p, sprache) {
+  const q = sprache === "it" ? PUNKT_IT[p.key] : null;
+  return { name: q ? q.name : p.name, was: q ? q.was : p.was };
+}
+
 export function arabischePunkte() {
   const r = radix();
   if (!r) return null;
+  const sprache = aktuelleSprache();
   const tag = r.tagGeburt;
   const lon = k => {
     if (k === "asc") return r.asc;
@@ -111,7 +123,8 @@ export function arabischePunkte() {
     fertig[p.key] = wert;
     const z = Math.floor(wert / 30);
     const haus = ((z - r.ascZeichen + 12) % 12) + 1;
-    liste.push({ ...p, laenge: wert, zeichen: z, grad: wert - z * 30, haus,
+    liste.push({ ...p, ...punktText(p, sprache),
+                 laenge: wert, zeichen: z, grad: wert - z * 30, haus,
                  herr: DOMIZIL[z], herrStand: r.planeten[DOMIZIL[z]] || null,
                  gedreht: p.dreht && !tag });
   });
@@ -127,21 +140,15 @@ function zeichne() {
   const d = arabischePunkte();
   ziel.innerHTML = ""; ziel.hidden = false;
   if (!d) {
-    ziel.appendChild(el("p", "kucukNot",
-      "Dafür fehlen die Geburtsangaben — Datum, Uhrzeit und der Ort mit gesuchten Koordinaten."));
+    ziel.appendChild(el("p", "kucukNot", rt("fehlt.geburt")));
     return;
   }
 
-  ziel.appendChild(el("p", "kucukNot",
-    d.tag
-      ? "Du bist bei Tag geboren — die Punkte werden in ihrer Grundform gerechnet."
-      : "Du bist bei Nacht geboren — die meisten Punkte kehren sich darum um. Das ist " +
-        "kein Kunstgriff: Der Glückspunkt misst den Weg von der Sonne zum Mond, und bei " +
-        "Nacht führt der Mond."));
+  ziel.appendChild(el("p", "kucukNot", rt(d.tag ? "pkt.tag" : "pkt.nacht")));
 
   const gruppen = [
-    ["Die sieben hermetischen", ["fortuna","geist","liebe","not","sieg","kuehn","nemesis"]],
-    ["Die Punkte der Verhältnisse", ["vater","mutter","geschwister","kinder","ehe","glaube","reise"]]
+    [rt("pkt.gruppe1"), ["fortuna","geist","liebe","not","sieg","kuehn","nemesis"]],
+    [rt("pkt.gruppe2"), ["vater","mutter","geschwister","kinder","ehe","glaube","reise"]]
   ];
 
   gruppen.forEach(([titel, keys]) => {
@@ -153,36 +160,27 @@ function zeichne() {
       const kopf = el("div", "apKopf");
       kopf.appendChild(el("span", "apName", p.name));
       kopf.appendChild(el("span", "apOrt",
-        `${ZEICHEN[p.zeichen].glyph} ${p.grad.toFixed(1)}° · ${p.haus}. Feld`));
+        `${ZEICHEN[p.zeichen].glyph} ${p.grad.toFixed(1)}° · ${rt("pkt.feld", p.haus)}`));
       karte.appendChild(kopf);
       karte.appendChild(el("div", "apLat",
-        p.lat + (p.stern !== "—" ? ` · ${p.stern}` : "") + (p.gedreht ? " · bei Nacht umgekehrt" : "")));
+        p.lat + (p.sternKey ? ` · ${PLANET[p.sternKey].name}` : "") + (p.gedreht ? " · " + rt("pkt.gedreht") : "")));
       const t = el("p");
-      t.innerHTML = `${p.was} Bei dir ${ORT_SATZ(p.haus)} ` +
-        `Darüber gebietet ${mitArtikel(PLANET[p.herr].name)}` +
-        (p.herrStand
-          ? `, und der steht im ${p.herrStand.haus}. Feld` +
-            (p.herrStand.wuerde.stufe !== "—" ? ` und ${p.herrStand.wuerde.text}` : "") + "."
-          : ".");
+      t.innerHTML = rt("pkt.satz", p.was, HAUS[p.haus - 1], mitArtikel(PLANET[p.herr].name),
+        p.herrStand ? p.herrStand.haus : null,
+        p.herrStand && p.herrStand.wuerde.stufe !== "—" ? `, ${p.herrStand.wuerde.text}` : "");
       karte.appendChild(t);
       ziel.appendChild(karte);
     });
   });
 
-  ziel.appendChild(el("p", "kucukNot",
-    "Ein Punkt ist kein Himmelskörper, sondern eine gerechnete Stelle: Man nimmt den " +
-    "Abstand zwischen zwei Orten des Horoskops und trägt ihn vom Aufsteigenden noch " +
-    "einmal ab. Bonatti führt siebenundneunzig davon auf; hier stehen die sieben " +
-    "hermetischen — zu jedem Wandelstern einer — und die, nach denen in der Praxis am " +
-    "häufigsten gefragt wurde. Der Punkt des Todes steht nicht dabei."));
+  ziel.appendChild(el("p", "kucukNot", rt("pkt.note")));
 }
 
-function ORT_SATZ(haus) {
-  return `fällt diese Stelle ${HAUS[haus - 1]}.`;
-}
 
 $("#apBerechnen")?.addEventListener("click", zeichne);
 if ($("#apCikti")) {
   window.addEventListener("load", () => setTimeout(zeichne, 350));
   window.addEventListener("profil-geaendert", () => setTimeout(zeichne, 250));
 }
+
+window.addEventListener("sprache-geaendert", () => setTimeout(zeichne, 80));

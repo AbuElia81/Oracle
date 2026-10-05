@@ -6,22 +6,22 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=182";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=182";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=182";
-import { JAHR, profektionJetzt } from "./jahr.js?v=182";
-import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=182";
-import { mondHeute } from "./elektion.js?v=182";
-import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=182";
-import { zrStand } from "./zr.js?v=182";
-import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=182";
-import { e, setzeEssenzSprache } from "./essenz-texte.js?v=182";
-import { aktuelleSprache } from "./sprachen.js?v=182";
+import { cevir, toplam, kalan } from "./ebced.js?v=195";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=195";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=195";
+import { JAHR, profektionJetzt } from "./jahr.js?v=195";
+import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=195";
+import { mondHeute } from "./elektion.js?v=195";
+import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=195";
+import { zrStand } from "./zr.js?v=195";
+import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=195";
+import { e, setzeEssenzSprache } from "./essenz-texte.js?v=195";
+import { aktuelleSprache } from "./sprachen.js?v=195";
 setzeEssenzSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeEssenzSprache(ev.detail));
-import { jahresUmdrehung } from "./solar.js?v=182";
-import { lebensmass } from "./lebensmass.js?v=182";
-import { verteilungBei } from "./verteilung.js?v=182";
+import { jahresUmdrehung } from "./solar.js?v=195";
+import { lebensmass } from "./lebensmass.js?v=195";
+import { verteilungBei } from "./verteilung.js?v=195";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -186,14 +186,14 @@ function herrenDerZeit({ zr, prof, fd, vd }) {
   const blank = t => String(t || "").replace(/[^A-Za-zÄÖÜäöüß]/g, "").trim();
   const zrHerr = zr && zr.L1 ? blank(zr.L1.herrscher) : "";
   if (NAME_ZU_KEY[zrHerr])
-    stimmen.push({ key: NAME_ZU_KEY[zrHerr], quelle: "die Tafel der Kapitel" });
+    stimmen.push({ key: NAME_ZU_KEY[zrHerr], quelle: e("quelle.zr") });
   const profHerr = prof ? blank(prof.herr) : "";
   if (NAME_ZU_KEY[profHerr])
-    stimmen.push({ key: NAME_ZU_KEY[profHerr], quelle: "der Zeiger, der jedes Jahr ein Feld weiterrückt" });
+    stimmen.push({ key: NAME_ZU_KEY[profHerr], quelle: e("quelle.prof") });
   if (fd && fd.laufend && PLANET_NAME[fd.laufend.key])
-    stimmen.push({ key: fd.laufend.key, quelle: "eine persische Zählung" });
+    stimmen.push({ key: fd.laufend.key, quelle: e("quelle.fd") });
   if (vd && vd.laufend && PLANET_NAME[vd.laufend.key])
-    stimmen.push({ key: vd.laufend.key, quelle: "eine indische Zählung" });
+    stimmen.push({ key: vd.laufend.key, quelle: e("quelle.vd") });
 
   const zaehlung = {};
   stimmen.forEach(st => {
@@ -206,7 +206,7 @@ function herrenDerZeit({ zr, prof, fd, vd }) {
 
 function undListe(teile) {
   if (teile.length <= 1) return teile[0] || "";
-  return teile.slice(0, -1).join(", ") + " und " + teile[teile.length - 1];
+  return teile.slice(0, -1).join(", ") + " " + e("und") + " " + teile[teile.length - 1];
 }
 
 /* ------------------------------------------------------------- der Text */
@@ -264,8 +264,9 @@ function schreibe(zielWahl) {
   const auftakt = el("div", "essenzAuftakt");
   auftakt.appendChild(el("p", "auftaktZeile", e("auftakt.zeile", p.name)));
   auftakt.appendChild(el("p", "auftaktText", e("auftakt.text")));
-  auftakt.appendChild(el("p", "auftaktDaten", profilBeschriftung(p) +
-    (alter != null ? ` · heute ${alter.toFixed(0)} Jahre alt` : "")));
+  auftakt.appendChild(el("p", "auftaktDaten",
+    profilBeschriftung(p).replace(" Uhr", e("daten.uhr") ? " " + e("daten.uhr") : "") +
+    (alter != null ? e("daten.alter", alter.toFixed(0)) : "")));
   cikti.appendChild(auftakt);
 
   if (r) {
@@ -286,11 +287,10 @@ function schreibe(zielWahl) {
   if (sb) {
     const kopf = el("div", "essenzKopf");
     kopf.append(
-      el("div", "kalanBaslik", "Dein Zeichen im Yıldıznâme"),
+      el("div", "kalanBaslik", e("kopf.zeichen")),
       el("div", "buyukToplam", `${sb.burc.tr} — ${sb.burc.de}`),
       el("div", "kucukNot",
-        `ein Zeichen ${sb.unsur.de === "Feuer" ? "des Feuers" : sb.unsur.de === "Erde" ? "der Erde" :
-          sb.unsur.de === "Luft" ? "der Luft" : "des Wassers"} — ${sb.unsur.tabiat}`)
+        e("kopf.element", sb.unsur.de, sb.unsur.tabiat))
     );
     cikti.appendChild(kopf);
 
@@ -349,10 +349,13 @@ function schreibe(zielWahl) {
         return m ? { jahr: parseFloat(m[1]), text: l } : null;
       }).filter(Boolean).filter(x => x.jahr > alter).sort((a, b) => a.jahr - b.jahr)[0];
 
+      /* Der Riss im Faden ist die nächste Lösung des Bandes — vorher hieß
+         die Variable hier bond und gab es nicht; die Essenz brach an dieser
+         Stelle ab und zeigte nur die ersten sieben Abschnitte. */
       cikti.appendChild(absatz(e("titel.strecken"),
         e("strecken", !!laufend,
           kommend ? kommend.match(/([\d.]+)/)[1].replace(".", ",") : null,
-          bond ? bond.replace(".", ",") : null)));
+          naechsteLoesung ? String(naechsteLoesung.jahr).replace(".", ",") : null)));
     }
   }
 
@@ -360,18 +363,16 @@ function schreibe(zielWahl) {
     const nenn = k => figurVon(k).figur;
     const teile = [];
     if (fd && fd.laufend) {
-      teile.push(`Eine persische Zählung gibt diese Jahre ${figurVon(fd.laufend.key).dat}` +
-        (fd.laufendUnter && fd.laufendUnter.key !== fd.laufend.key
-          ? `, und darin führt gerade ${figurVon(fd.laufendUnter.key).figur}` : ""));
+      teile.push(e("jahre.persisch", figurVon(fd.laufend.key).dat,
+        fd.laufendUnter && fd.laufendUnter.key !== fd.laufend.key
+          ? figurVon(fd.laufendUnter.key).figur : null));
     }
     if (vd && vd.laufend) {
-      teile.push(`Eine indische, die vom Stand des Mondes bei deiner Geburt ausgeht, nennt ` +
-        `${figurVon(vd.laufend.key).akk}` +
-        (vd.laufendUnter ? ` und darin ${figurVon(vd.laufendUnter.key).akk}` : ""));
+      teile.push(e("jahre.indisch", figurVon(vd.laufend.key).akk,
+        vd.laufendUnter ? figurVon(vd.laufendUnter.key).akk : null));
     }
     const pp = el("p");
-    pp.innerHTML = teile.join(". ") + ". Beide zählen keine Sternbilder ab, sondern verteilen feste " +
-      "Mengen von Jahren — und landen trotzdem bei denselben Zeiten wie die übrigen.";
+    pp.innerHTML = teile.join(". ") + e("jahre.schluss");
     cikti.appendChild(el("h3", null, e("titel.jahreFuehrt")));
     cikti.appendChild(pp);
   }
@@ -430,30 +431,18 @@ function schreibe(zielWahl) {
     if (pf) {
       const fh = figurVon(pf.herr.toLowerCase());
       const p1 = el("p");
-      p1.innerHTML = `Jedes Jahr rückt ein Zeiger um ein Feld weiter, und in diesem Jahr steht er ` +
-        `${ORT[pf.haus - 1]}. Darum geht es, von Geburtstag zu Geburtstag. Die Hand, die das Jahr ` +
-        `führt, ist ${fh.figur} — ${fh.pron} ${fh.tut}.`;
+      p1.innerHTML = e("jahr.zeiger", ORT[pf.haus - 1], fh);
       jahrFach.appendChild(p1);
     }
 
     if (sr) {
-      const MON = ["Januar","Februar","März","April","Mai","Juni","Juli",
-                   "August","September","Oktober","November","Dezember"];
       const zp = sr.zeitpunkt;
       const stuetzen = (sr.firdar && sr.firdar.winkelhaft ? 1 : 0) +
                        (sr.firdar && (sr.firdar.sichtZumHerrn || sr.firdar.key === sr.herrDesJahres) ? 1 : 0) +
                        (sr.teilhaber && (sr.teilhaber.sichtZumHerrn || sr.teilhaber.key === sr.herrDesJahres) ? 1 : 0);
       const p2 = el("p");
-      p2.innerHTML = `Am ${zp.tag}. ${MON[zp.monat - 1]} ${zp.jahr} stand die Sonne wieder genau ` +
-        `dort, wo sie bei deiner Geburt stand — das ist der Jahreswechsel, den diese Bücher zählen, ` +
-        `nicht der erste Januar. Der Schwerpunkt des Jahres fällt dabei ` +
-        `${ORT[sr.umAscImNatal - 1]}. ` +
-        (stuetzen >= 2
-          ? `Die Zeichen stützen einander: ein <b>lautes Jahr</b>, in dem man merkt, was geschieht.`
-          : stuetzen === 1
-            ? `Eine einzige Stütze: Das Jahr spricht, aber halblaut.`
-            : `Nichts stützt einander: ein <b>stilles Jahr</b>. Es geschieht etwas, aber unter der ` +
-              `Oberfläche, und man erkennt es erst später.`);
+      p2.innerHTML = e("jahr.sonne", zp.tag, e("monate")[zp.monat - 1], zp.jahr,
+        ORT[sr.umAscImNatal - 1], stuetzen);
       jahrFach.appendChild(p2);
     }
 
@@ -461,28 +450,24 @@ function schreibe(zielWahl) {
       const t = tr.treffer[0];
       const ft = figurVon((t.transit.name || "").toLowerCase());
       const tp = el("p");
-      tp.innerHTML = `Von den langsamen Wanderern steht dir gerade ${ft.figur} am nächsten: ` +
-        `${ft.pron} ${ft.tut} — und rührt dabei an ` +
-        (t.natal.achse ? "eine deiner Achsen" : `das, was bei dir ${figurVon(t.natal.key || "").kurz || t.natal.name} trägt`) + `.`;
+      tp.innerHTML = e("jahr.transit", ft,
+        t.natal.achse ? e("jahr.achse")
+          : e("jahr.traegt", figurVon(t.natal.key || "").kurz || t.natal.name));
       jahrFach.appendChild(tp);
     }
 
     if (prg) {
       const gp = el("p");
-      gp.innerHTML = `Dein inneres Wetter — eine Zählung, die jeden Tag nach deiner Geburt für ein ` +
-        `ganzes Lebensjahr nimmt — steht bei ${bildDat(prg.sonne.zeichen)}, und das Licht, ` +
-        `das darin zu- und abnimmt, bei ${bildDat(prg.mond.zeichen)}. ` +
-        `${prg.phaseText.charAt(0).toUpperCase() + prg.phaseText.slice(1)}.`;
+      gp.innerHTML = e("jahr.progression", bildDat(prg.sonne.zeichen), bildDat(prg.mond.zeichen),
+        prg.phaseText.charAt(0).toUpperCase() + prg.phaseText.slice(1));
       jahrFach.appendChild(gp);
     }
 
     if (mond) {
       const mp = el("p");
-      mp.innerHTML = `Und für heute: Der Mond ist in seiner ${mond.menzilNr}. Herberge, ` +
-        `${mond.menzil.tr} — ${mond.menzil.hukum.replace(/\.$/, "")} — und ` +
-        `${mond.zunehmend ? "nimmt zu" : "nimmt ab"}. Günstig für ${mond.menzil.iyi.toLowerCase()}; ` +
-        `meide ${mond.menzil.kacin.toLowerCase()}.` +
-        (mond.verbrannt ? " Er steht dabei auf der verbrannten Strecke — heute nichts anfangen, was halten soll." : "");
+      mp.innerHTML = e("jahr.mond", mond.menzilNr, mond.menzil.tr,
+        mond.menzil.hukum.replace(/\.$/, ""), mond.zunehmend,
+        mond.menzil.iyi.toLowerCase(), mond.menzil.kacin.toLowerCase(), mond.verbrannt);
       jahrFach.appendChild(mp);
     }
     return 1;
@@ -495,15 +480,9 @@ function schreibe(zielWahl) {
 
   if (lm) {
     cikti.appendChild(absatz(e("titel.geber"),
-      `Die Alten fragten: Wo in diesem Himmel brennt die Flamme, von der ein Leben seine Wärme ` +
-      `nimmt? Bei dir brennt sie bei ${bildDat(lm.hZeichen)}. ` +
-      `Und wer hütet diese Flamme? ${figurVon(lm.alkochoden).figur.replace(/^./, c => c.toUpperCase())} — ` +
-      `und ${figurVon(lm.alkochoden).pron} hütet sie ${ORT[lm.alkoHaus - 1]}. ` +
-      `Von dort nimmt deine Kraft ihre Färbung; wie bei Meleagros, dessen Leben an einem Holzscheit ` +
-      `hing, den seine Mutter aus dem Feuer zog und verwahrte: Es gibt eine Stelle, an der ein ` +
-      `Leben besonders nah an sich selbst liegt. ` +
-      `Wie viele Jahre daraus gezählt werden, steht im eigenen Kapitel und bleibt dort — darüber ` +
-      `sind sich die Überlieferungen selbst nicht einig, und eine Zahl wäre hier eine falsche Sicherheit.`));
+      e("geber", bildDat(lm.hZeichen),
+        figurVon(lm.alkochoden).figur.replace(/^./, c => c.toUpperCase()),
+        figurVon(lm.alkochoden).pron, ORT[lm.alkoHaus - 1])));
   }
 
   if (sb) {
@@ -524,18 +503,16 @@ function schreibe(zielWahl) {
     if (r || sb) {
       const hp = r && r.planeten[r.herrscher];
       const satz = el("p");
-      satz.innerHTML =
-        (sb ? `Im Namen liegt ${sb.burc.tr} — ein Zeichen ${sb.unsur.de === "Feuer" ? "des Feuers" :
-              sb.unsur.de === "Erde" ? "der Erde" : sb.unsur.de === "Luft" ? "der Luft" : "des Wassers"}, ` +
-              `unter ${sb.herr.tr}. ` : "") +
-        (r && hp
-          ? `In der Stunde deiner Geburt kam ${BILD[r.ascZeichen]} über den Rand der Welt herauf, ` +
-            `und die Hand, die das führt, ist ${figurVon(r.herrscher).figur}: ` +
-            `${figurVon(r.herrscher).pron} steht bei ${bildDat(hp.zeichen)}, und hält sich auf ` +
-            `${ORT[hp.haus - 1]}. `
-          : "") +
-        `Das ist der Teil, der sich nicht ändert. Er läuft unter allem mit — die Zählungen weiter ` +
-        `unten sagen nur, welches Wetter gerade darüber hinwegzieht.`;
+      satz.innerHTML = e("zus.bleibend",
+        sb ? sb.burc.tr : null,
+        sb ? e(sb.unsur.de === "Feuer" ? "zus.element.feuer" : sb.unsur.de === "Erde" ? "zus.element.erde"
+              : sb.unsur.de === "Luft" ? "zus.element.luft" : "zus.element.wasser") : "",
+        sb ? sb.herr.tr : "",
+        (r && hp) ? BILD[r.ascZeichen] : null,
+        (r && hp) ? figurVon(r.herrscher).figur : "",
+        (r && hp) ? figurVon(r.herrscher).pron : "",
+        (r && hp) ? bildDat(hp.zeichen) : "",
+        (r && hp) ? ORT[hp.haus - 1] : "");
       kasten.appendChild(satz);
     }
 
@@ -549,33 +526,21 @@ function schreibe(zielWahl) {
       if (mehrfach) {
         const fo = figurVon(oben.key);
         const GROSS = w => w.charAt(0).toUpperCase() + w.slice(1);
-        p1.innerHTML = `Und nun das Merkwürdige. Hier sprechen ` +
-          `${ZAHLWORT[h.anzahl] || h.anzahl} alte Zählungen mit, die einander nie gelesen haben — ` +
-          `aus Persien, aus Griechenland, aus Indien —, und ` +
-          `${ZAHLWORT[oben.quellen.length] || oben.quellen.length} von ihnen zeigen auf ` +
-          `<b>dieselbe Hand</b>, nämlich auf ${fo.akk} — ${undListe(oben.quellen)}. ` +
-          `Es ist wie mit den Blinden in der Fabel, die denselben Elefanten betasten: Jeder greift ` +
-          `etwas anderes, und am Ende reden doch alle von einem Tier. Wenn Fremde aus ` +
-          `verschiedenen Ländern unabhängig voneinander dasselbe sagen, lohnt es sich hinzuhören. ` +
-          `${GROSS(fo.pron)} ${fo.tut}. Dafür gibt ${fo.pron} dir ${fo.gabe} — und nimmt sich ` +
-          `${fo.preis}.`;
+        p1.innerHTML = e("zus.einig",
+          e("zahlwort")[h.anzahl] || h.anzahl,
+          e("zahlwort")[oben.quellen.length] || oben.quellen.length,
+          fo.akk, undListe(oben.quellen), fo);
       } else {
-        p1.innerHTML = `Diesmal sagen die Zählungen nicht dasselbe. Jede nennt eine andere Hand: ` +
-          undListe(h.stimmen.map(st =>
-            `${st.quelle.charAt(0).toUpperCase() + st.quelle.slice(1)} nennt ${figurVon(st.key).akk}`)) + `. ` +
-          `Keine hat das Übergewicht — eine Strecke wie ein Weg mit mehreren Spuren, auf dem sich ` +
-          `noch nicht entschieden hat, welche die Hauptspur wird. Das ist kein Mangel: Es heißt, ` +
-          `dass gerade mehr als eine Sache gleichzeitig wächst.`;
+        p1.innerHTML = e("zus.uneinig", undListe(h.stimmen.map(st =>
+          e("zus.nennt", st.quelle, figurVon(st.key).akk))));
       }
       kasten.appendChild(p1);
 
       if (mehrfach && z) {
         const p2 = el("p");
         const fo2 = figurVon(oben.key);
-        p2.innerHTML = `Und diese Hand ist bei dir keine fremde. Sie stand schon in der Stunde deiner ` +
-          `Geburt da, und zwar bei ${bildDat(z.zeichen)} — und ihr Ort ist ` +
-          `${ORT[z.haus - 1]}. Dort, und nirgends sonst, wird sich in diesen Jahren entscheiden, ` +
-          `was sie bringen. ${STAND[z.wuerde.stufe] || STAND["—"]}`;
+        p2.innerHTML = e("zus.hand", bildDat(z.zeichen), ORT[z.haus - 1],
+          STAND[z.wuerde.stufe] || STAND["—"]);
         kasten.appendChild(p2);
       }
     }
@@ -592,13 +557,13 @@ function schreibe(zielWahl) {
      etwas, das nur du beisteuern kannst. */
   const offen = [];
   if (document.querySelector("#soru")) offen.push(
-    ["Niyet — die Frage", "eine Frage in einem Satz; die Antwort hängt auch an der Stunde, in der du fragst"]);
+    e("offen.niyet"));
   if (document.querySelector("#u2ad")) offen.push(
-    ["İsim uyumu", "den Namen eines zweiten Menschen und den seiner Mutter"]);
+    e("offen.uyum"));
   if (document.querySelector("#rmFrage")) offen.push(
-    ["ʿIlm al-Raml", "eine Frage — der Sand antwortet auf den Augenblick, nicht auf das Leben"]);
+    e("offen.raml"));
   if (document.querySelector("#ekVorhaben")) offen.push(
-    ["Der rechte Zeitpunkt", "ein Vorhaben, das du beginnen willst; dann prüft er den Mondstand darauf"]);
+    e("offen.zeit"));
   if (offen.length) {
     const kasten = el("div", "offeneListe");
     kasten.append(el("h3", null, e("titel.fehlt")));

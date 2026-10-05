@@ -101,3 +101,6 @@ export const UNSUR_IT = [
   "Ciò che sta nell'aria collega. A te appartengono la parola e la strada fra le persone; guardati dall'essere ovunque e dal non restare in nessun luogo.",
   "Ciò che sta nell'acqua prende la forma di ciò che lo circonda. Senti prima di sapere; proprio per questo ti servono confini che tu stesso poni."
 ];
+
+/* Le qualità dei quattro elementi. */
+export const UNSUR_TABIAT_IT = ["caldo e secco", "freddo e secco", "caldo e umido", "freddo e umido"];

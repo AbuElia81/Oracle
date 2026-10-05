@@ -33,6 +33,11 @@ export const T = {
     "titel.jahr":        jahr => `Dieses Jahr — ${jahr}`,
 
     "auftakt.zeile":     name => name ? `Was über ${name} zu sagen ist` : "Was zu sagen ist",
+    "daten.uhr":"Uhr", "daten.alter": (n) => ` · heute ${n} Jahre alt`,
+    "kopf.zeichen":"Dein Zeichen im Yıldıznâme",
+    "kopf.element": (element, tabiat) =>
+      `ein Zeichen ${element === "Feuer" ? "des Feuers" : element === "Erde" ? "der Erde"
+        : element === "Luft" ? "der Luft" : "des Wassers"} — ${tabiat}`,
     "auftakt.text":      "Vier Überlieferungen, die einander nie gelesen haben, sind hier " +
       "übereinandergelegt worden — eine aus Griechenland, eine aus Persien, eine aus Indien, " +
       "eine aus dem osmanischen Buch der Sterne. Was folgt, ist nicht ihre Summe, sondern " +
@@ -135,6 +140,92 @@ export const T = {
       `Namenssumme fällt auf die ${nr}., ${name}: ${urteil} ` +
       `Günstig für ${gut}; meide ${meide}.`,
 
+    "jahre.persisch": (herr, unter) =>
+      `Eine persische Zählung gibt diese Jahre ${herr}` +
+      (unter ? `, und darin führt gerade ${unter}` : ""),
+    "jahre.indisch": (herr, unter) =>
+      `Eine indische, die vom Stand des Mondes bei deiner Geburt ausgeht, nennt ${herr}` +
+      (unter ? ` und darin ${unter}` : ""),
+    "jahre.schluss":". Beide zählen keine Sternbilder ab, sondern verteilen feste Mengen von " +
+      "Jahren — und landen trotzdem bei denselben Zeiten wie die übrigen.",
+
+    "jahr.zeiger": (ort, fh) =>
+      `Jedes Jahr rückt ein Zeiger um ein Feld weiter, und in diesem Jahr steht er ${ort}. ` +
+      `Darum geht es, von Geburtstag zu Geburtstag. Die Hand, die das Jahr führt, ist ` +
+      `${fh.figur} — ${fh.pron} ${fh.tut}.`,
+    "jahr.sonne": (tag, monat, jahr, ort, stuetzen) =>
+      `Am ${tag}. ${monat} ${jahr} stand die Sonne wieder genau dort, wo sie bei deiner Geburt ` +
+      `stand — das ist der Jahreswechsel, den diese Bücher zählen, nicht der erste Januar. Der ` +
+      `Schwerpunkt des Jahres fällt dabei ${ort}. ` +
+      (stuetzen >= 2 ? `Die Zeichen stützen einander: ein <b>lautes Jahr</b>, in dem man merkt, was geschieht.`
+       : stuetzen === 1 ? `Eine einzige Stütze: Das Jahr spricht, aber halblaut.`
+       : `Nichts stützt einander: ein <b>stilles Jahr</b>. Es geschieht etwas, aber unter der ` +
+         `Oberfläche, und man erkennt es erst später.`),
+    "jahr.transit": (ft, woran) =>
+      `Von den langsamen Wanderern steht dir gerade ${ft.figur} am nächsten: ${ft.pron} ${ft.tut} ` +
+      `— und rührt dabei an ${woran}.`,
+    "jahr.achse":"eine deiner Achsen",
+    "jahr.traegt": (was) => `das, was bei dir ${was} trägt`,
+    "jahr.progression": (sonne, mond, phase) =>
+      `Dein inneres Wetter — eine Zählung, die jeden Tag nach deiner Geburt für ein ganzes ` +
+      `Lebensjahr nimmt — steht bei ${sonne}, und das Licht, das darin zu- und abnimmt, bei ` +
+      `${mond}. ${phase}.`,
+    "jahr.mond": (nr, name, urteil, zu, gut, meide, verbrannt) =>
+      `Und für heute: Der Mond ist in seiner ${nr}. Herberge, ${name} — ${urteil} — und ` +
+      `${zu ? "nimmt zu" : "nimmt ab"}. Günstig für ${gut}; meide ${meide}.` +
+      (verbrannt ? " Er steht dabei auf der verbrannten Strecke — heute nichts anfangen, was halten soll." : ""),
+    "monate":["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"],
+
+    "geber": (flamme, huetet, pron, ort) =>
+      `Die Alten fragten: Wo in diesem Himmel brennt die Flamme, von der ein Leben seine Wärme ` +
+      `nimmt? Bei dir brennt sie bei ${flamme}. Und wer hütet diese Flamme? ${huetet} — und ` +
+      `${pron} hütet sie ${ort}. Von dort nimmt deine Kraft ihre Färbung; wie bei Meleagros, ` +
+      `dessen Leben an einem Holzscheit hing, den seine Mutter aus dem Feuer zog und verwahrte: ` +
+      `Es gibt eine Stelle, an der ein Leben besonders nah an sich selbst liegt. Wie viele Jahre ` +
+      `daraus gezählt werden, steht im eigenen Kapitel und bleibt dort — darüber sind sich die ` +
+      `Überlieferungen selbst nicht einig, und eine Zahl wäre hier eine falsche Sicherheit.`,
+
+    "zus.bleibend": (name, element, herr, bild, figur, pron, steht, ort) =>
+      (name ? `Im Namen liegt ${name} — ein Zeichen ${element}, unter ${herr}. ` : "") +
+      (bild ? `In der Stunde deiner Geburt kam ${bild} über den Rand der Welt herauf, und die ` +
+              `Hand, die das führt, ist ${figur}: ${pron} steht bei ${steht}, und hält sich auf ` +
+              `${ort}. ` : "") +
+      `Das ist der Teil, der sich nicht ändert. Er läuft unter allem mit — die Zählungen weiter ` +
+      `unten sagen nur, welches Wetter gerade darüber hinwegzieht.`,
+    "zus.element.feuer":"des Feuers", "zus.element.erde":"der Erde",
+    "zus.element.luft":"der Luft", "zus.element.wasser":"des Wassers",
+
+    "offen.niyet":["Niyet — die Frage","eine Frage in einem Satz; die Antwort hängt auch an der Stunde, in der du fragst"],
+    "offen.uyum":["İsim uyumu","den Namen eines zweiten Menschen und den seiner Mutter"],
+    "offen.raml":["ʿIlm al-Raml","eine Frage — der Sand antwortet auf den Augenblick, nicht auf das Leben"],
+    "offen.zeit":["Der rechte Zeitpunkt","ein Vorhaben, das du beginnen willst; dann prüft er den Mondstand darauf"],
+
+    "zus.einig": (anzahl, davon, akk, quellen, fo) =>
+      `Und nun das Merkwürdige. Hier sprechen ${anzahl} alte Zählungen mit, die einander nie ` +
+      `gelesen haben — aus Persien, aus Griechenland, aus Indien —, und ${davon} von ihnen ` +
+      `zeigen auf <b>dieselbe Hand</b>, nämlich auf ${akk} — ${quellen}. ` +
+      `Es ist wie mit den Blinden in der Fabel, die denselben Elefanten betasten: Jeder greift ` +
+      `etwas anderes, und am Ende reden doch alle von einem Tier. Wenn Fremde aus verschiedenen ` +
+      `Ländern unabhängig voneinander dasselbe sagen, lohnt es sich hinzuhören. ` +
+      `${fo.pron.charAt(0).toUpperCase() + fo.pron.slice(1)} ${fo.tut}. Dafür gibt ${fo.pron} ` +
+      `dir ${fo.gabe} — und nimmt sich ${fo.preis}.`,
+    "zus.uneinig": (liste) =>
+      `Diesmal sagen die Zählungen nicht dasselbe. Jede nennt eine andere Hand: ${liste}. ` +
+      `Keine hat das Übergewicht — eine Strecke wie ein Weg mit mehreren Spuren, auf dem sich ` +
+      `noch nicht entschieden hat, welche die Hauptspur wird. Das ist kein Mangel: Es heißt, ` +
+      `dass gerade mehr als eine Sache gleichzeitig wächst.`,
+    "zus.nennt": (quelle, akk) => `${quelle.charAt(0).toUpperCase() + quelle.slice(1)} nennt ${akk}`,
+    "zus.hand": (zeichen, ort, stand) =>
+      `Und diese Hand ist bei dir keine fremde. Sie stand schon in der Stunde deiner Geburt da, ` +
+      `und zwar bei ${zeichen} — und ihr Ort ist ${ort}. Dort, und nirgends sonst, wird sich in ` +
+      `diesen Jahren entscheiden, was sie bringen. ${stand}`,
+    "zahlwort":{1:"eine",2:"zwei",3:"drei",4:"vier"},
+    "quelle.zr":"die Tafel der Kapitel",
+    "quelle.prof":"der Zeiger, der jedes Jahr ein Feld weiterrückt",
+    "quelle.fd":"eine persische Zählung",
+    "quelle.vd":"eine indische Zählung",
+    "und":"und",
+
     "rat.schild":        "Der Rat",
     "schluss":
       "Keine dieser Künste sagt die Zukunft voraus, und keine wird hier so gebraucht. " +
@@ -162,6 +253,11 @@ export const T = {
     "titel.jahr":        jahr => `Quest'anno — ${jahr}`,
 
     "auftakt.zeile":     name => name ? `Ciò che si può dire di ${name}` : "Ciò che si può dire",
+    "daten.uhr":"", "daten.alter": (n) => ` · oggi ${n} anni`,
+    "kopf.zeichen":"Il tuo segno nello Yıldıznâme",
+    "kopf.element": (element, tabiat) =>
+      `un segno ${element === "Feuer" ? "del fuoco" : element === "Erde" ? "della terra"
+        : element === "Luft" ? "dell'aria" : "dell'acqua"} — ${tabiat}`,
     "auftakt.text":      "Quattro tradizioni che non si sono mai lette a vicenda sono state " +
       "qui sovrapposte — una dalla Grecia, una dalla Persia, una dall'India, una dal libro " +
       "ottomano delle stelle. Ciò che segue non è la loro somma, ma il punto in cui si toccano.",
@@ -224,7 +320,7 @@ export const T = {
               `punti i più importanti di una biografia.` : ""),
 
     "verborgen.ja": (namen) =>
-      `Nel tuo cielo c'${namen.length === 1 ? "è una coppia" : "sono più coppie"} che non si ` +
+      `Nel tuo cielo ${namen.length === 1 ? "c'è una coppia" : "ci sono più coppie"} che non si ` +
       `guardano e tuttavia gettano la stessa ombra: se si specchia una metà dell'anno sull'altra ` +
       `— l'estate sull'inverno, il giorno più lungo sul più corto —, essi vengono a stare ` +
       `esattamente l'uno sopra l'altro. Stessa altezza in cielo, stessa durata del giorno, e ` +
@@ -259,6 +355,90 @@ export const T = {
       `La luna attraversa in poco più di ventisette giorni ventotto stazioni, e la somma del tuo ` +
       `nome cade sulla ${nr}ª, ${name}: ${urteil} ` +
       `Favorevole a ${gut}; evita ${meide}.`,
+
+    "jahre.persisch": (herr, unter) =>
+      `Un calcolo persiano affida questi anni ${herr}` +
+      (unter ? `, e dentro di essi conduce in questo momento ${unter}` : ""),
+    "jahre.indisch": (herr, unter) =>
+      `Uno indiano, che parte dalla posizione della luna alla tua nascita, nomina ${herr}` +
+      (unter ? ` e dentro ${unter}` : ""),
+    "jahre.schluss":". Nessuno dei due conta costellazioni: distribuiscono quantità fisse di " +
+      "anni — e finiscono ugualmente sugli stessi tempi degli altri.",
+
+    "jahr.zeiger": (ort, fh) =>
+      `Ogni anno una lancetta avanza di un campo, e quest'anno sta ${ort}. Di questo si tratta, ` +
+      `di compleanno in compleanno. La mano che guida l'anno è ${fh.figur} — ${fh.pron} ${fh.tut}.`,
+    "jahr.sonne": (tag, monat, jahr, ort, stuetzen) =>
+      `Il ${tag} ${monat} ${jahr} il sole è tornato esattamente dove stava alla tua nascita — ` +
+      `è il capodanno che questi libri contano, non il primo di gennaio. Il baricentro dell'anno ` +
+      `cade ${ort}. ` +
+      (stuetzen >= 2 ? `I segni si sostengono a vicenda: un <b>anno rumoroso</b>, in cui ci si accorge di ciò che accade.`
+       : stuetzen === 1 ? `Un solo sostegno: l'anno parla, ma a mezza voce.`
+       : `Nulla si sostiene: un <b>anno silenzioso</b>. Qualcosa accade, ma sotto la superficie, ` +
+         `e lo si riconosce solo dopo.`),
+    "jahr.transit": (ft, woran) =>
+      `Dei camminatori lenti ti sta ora più vicino ${ft.figur}: ${ft.pron} ${ft.tut} — e tocca ` +
+      `con ciò ${woran}.`,
+    "jahr.achse":"uno dei tuoi assi",
+    "jahr.traegt": (was) => `ciò che in te regge ${was}`,
+    "jahr.progression": (sonne, mond, phase) =>
+      `Il tuo tempo interiore — un calcolo che prende ogni giorno dopo la tua nascita per un ` +
+      `intero anno di vita — sta presso ${sonne}, e la luce che vi cresce e cala, presso ` +
+      `${mond}. ${phase}.`,
+    "jahr.mond": (nr, name, urteil, zu, gut, meide, verbrannt) =>
+      `E per oggi: la luna è nella sua ${nr}ª stazione, ${name} — ${urteil} — e ` +
+      `${zu ? "cresce" : "cala"}. Favorevole a ${gut}; evita ${meide}.` +
+      (verbrannt ? " Sta per giunta sulla via combusta — oggi non cominciare nulla che debba durare." : ""),
+    "monate":["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"],
+
+    "geber": (flamme, huetet, pron, ort) =>
+      `Gli antichi domandavano: dove in questo cielo arde la fiamma da cui una vita prende il suo ` +
+      `calore? In te arde presso ${flamme}. E chi custodisce questa fiamma? ${huetet} — e ` +
+      `${pron} la custodisce ${ort}. Di là la tua forza prende il suo colore; come per Meleagro, ` +
+      `la cui vita era appesa a un tizzone che sua madre trasse dal fuoco e serbò: c'è un punto ` +
+      `in cui una vita sta particolarmente vicina a se stessa. Quanti anni se ne contino sta nel ` +
+      `capitolo proprio e lì rimane — su questo le tradizioni stesse non concordano, e una cifra ` +
+      `sarebbe qui una falsa sicurezza.`,
+
+    "zus.bleibend": (name, element, herr, bild, figur, pron, steht, ort) =>
+      (name ? `Nel nome sta ${name} — un segno ${element}, sotto ${herr}. ` : "") +
+      (bild ? `Nell'ora della tua nascita ${bild} venne su oltre il bordo del mondo, e la mano ` +
+              `che conduce è ${figur}: ${pron} sta presso ${steht}, e si trattiene ${ort}. ` : "") +
+      `È la parte che non cambia. Corre sotto tutto il resto — i calcoli più in basso dicono ` +
+      `soltanto quale tempo passa sopra di essa in questo momento.`,
+    "zus.element.feuer":"del fuoco", "zus.element.erde":"della terra",
+    "zus.element.luft":"dell'aria", "zus.element.wasser":"dell'acqua",
+
+    "offen.niyet":["Niyet — la domanda","una domanda in una sola frase; la risposta dipende anche dall'ora in cui chiedi"],
+    "offen.uyum":["İsim uyumu","il nome di una seconda persona e quello di sua madre"],
+    "offen.raml":["ʿIlm al-Raml","una domanda — la sabbia risponde all'istante, non alla vita"],
+    "offen.zeit":["Il momento giusto","un proposito che vuoi cominciare; allora esamina su di esso la posizione della luna"],
+
+    "zus.einig": (anzahl, davon, akk, quellen, fo) =>
+      `E ora il fatto curioso. Qui parlano ${anzahl} calcoli antichi che non si sono mai letti a ` +
+      `vicenda — dalla Persia, dalla Grecia, dall'India —, e ${davon} di essi indicano ` +
+      `<b>la stessa mano</b>, cioè ${akk} — ${quellen}. ` +
+      `È come con i ciechi della favola che tastano lo stesso elefante: ciascuno afferra qualcosa ` +
+      `di diverso, e alla fine parlano tutti di un solo animale. Quando stranieri di paesi ` +
+      `diversi dicono indipendentemente la stessa cosa, conviene ascoltare. ` +
+      `${fo.pron.charAt(0).toUpperCase() + fo.pron.slice(1)} ${fo.tut}. In cambio ${fo.pron} ti ` +
+      `dà ${fo.gabe} — e si prende ${fo.preis}.`,
+    "zus.uneinig": (liste) =>
+      `Questa volta i calcoli non dicono la stessa cosa. Ciascuno nomina una mano diversa: ` +
+      `${liste}. Nessuna ha il sopravvento — un tratto come una strada a più corsie, su cui non ` +
+      `si è ancora deciso quale sarà la principale. Non è un difetto: vuol dire che in questo ` +
+      `momento cresce più di una cosa per volta.`,
+    "zus.nennt": (quelle, akk) => `${quelle.charAt(0).toUpperCase() + quelle.slice(1)} nomina ${akk}`,
+    "zus.hand": (zeichen, ort, stand) =>
+      `E questa mano per te non è una straniera. Stava già là nell'ora della tua nascita, e ` +
+      `precisamente presso ${zeichen} — e il suo luogo è ${ort}. Lì, e in nessun altro posto, si ` +
+      `deciderà in questi anni che cosa portino. ${stand}`,
+    "zahlwort":{1:"uno",2:"due",3:"tre",4:"quattro"},
+    "quelle.zr":"la tavola dei capitoli",
+    "quelle.prof":"la lancetta che ogni anno avanza di un campo",
+    "quelle.fd":"un calcolo persiano",
+    "quelle.vd":"un calcolo indiano",
+    "und":"e",
 
     "titel.jahreFuehrt": "Chi guida i tuoi anni",
     "rat.schild":        "Il consiglio",

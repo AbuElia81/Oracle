@@ -20,8 +20,13 @@
    ------------------------------------------------------------------------ */
 
 import { radix, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel, grossMitArtikel }
-  from "./horoskop.js?v=182";
-import { norm360 } from "./astro.js?v=182";
+  from "./horoskop.js?v=195";
+import { norm360 } from "./astro.js?v=195";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=195";
+import { ELEMENT_NAME_IT } from "./namen-it.js?v=195";
+import { aktuelleSprache } from "./sprachen.js?v=195";
+setzeRestSprache(aktuelleSprache());
+window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -33,33 +38,17 @@ const el = (t, c, txt) => { const n = document.createElement(t);
 const WERKER = ["merkur", "venus", "mars"];
 
 const STOFF = {
-  merkur: { kurz: "durch das Wort und die Zahl",
-    feld: "Schreiben, Rechnen, Lehren, Handeln, Vermitteln, Deuten — alles, was " +
-          "zwischen Menschen hin und her geht und dabei genau sein muss. Ptolemäus " +
-          "nennt Schreiber, Kaufleute, Rechner, Astrologen, Redner; die Araber fügen " +
-          "Übersetzer und Boten hinzu." },
-  venus:  { kurz: "durch das Auge und die Hand",
-    feld: "Machen, was gefällt: Musik, Malerei, Schmuck, Kleider, Wohlgeruch, Gärten, " +
-          "Gastlichkeit. Ptolemäus nennt Musikanten, Maler, Salbenmischer, Weber — alle, " +
-          "deren Arbeit daran gemessen wird, ob sie schön geworden ist." },
-  mars:   { kurz: "durch Feuer und Eisen",
-    feld: "Alles Schneidende und Formende: Handwerk am Metall, Bauen, Wundarznei, " +
-          "Waffen, Feuer, Schlachten. Ptolemäus nennt Schmiede, Chirurgen, Soldaten, " +
-          "Köche, Steinmetzen — Arbeit, bei der etwas nachgibt, weil man es zwingt." }
+  merkur: { get kurz() { return rt("werk.merkur.kurz"); }, get feld() { return rt("werk.merkur.feld"); } },
+  venus:  { get kurz() { return rt("werk.venus.kurz"); },  get feld() { return rt("werk.venus.feld"); } },
+  mars:   { get kurz() { return rt("werk.mars.kurz"); },   get feld() { return rt("werk.mars.feld"); } }
 };
 
+
 /* Die Verbindungen, die Ptolemäus eigens aufführt. */
-const PAARE = {
-  "merkur+venus": "Wort und Schönheit zusammen: Musik mit Text, Dichtung, Lehre von " +
-    "schönen Dingen, Handel mit Kunst, alles Darstellende. Ptolemäus nennt hier " +
-    "ausdrücklich die, die auf Bühnen stehen.",
-  "mars+merkur":  "Wort und Eisen zusammen: scharfes, strittiges Reden — Recht, " +
-    "Streitführung, Kritik, Chirurgie mit Lehre, Technik mit Berechnung. Es geht " +
-    "hier um Arbeit, die trennt und dabei genau sein muss.",
-  "mars+venus":   "Schönheit und Eisen zusammen: Arbeit am Stoff, die Kraft und " +
-    "Geschmack zugleich verlangt — Bildhauerei, Schmiedekunst, Färberei, Küche, " +
-    "alles Handwerk, dessen Ergebnis man ansieht."
-};
+const PAAR_KEY = { "merkur+venus":"werk.paar.merkurVenus",
+                   "mars+merkur":"werk.paar.marsMerkur",
+                   "mars+venus":"werk.paar.marsVenus" };
+
 
 /* Steht ein Planet morgens vor der Sonne? Dann geht er ihr voraus und
    wird kurz vor Sonnenaufgang sichtbar — Ptolemäus' erste Bedingung. */
@@ -91,15 +80,15 @@ export function herrDesWerks() {
       const nah = 360 - abstand;
       if (nah > 8) {
         punkte += 3;
-        gruende.push(`geht morgens vor der Sonne auf (${nah.toFixed(0)}° davor)`);
+        gruende.push(rt("werk.grund.morgens", nah.toFixed(0)));
       } else {
-        gruende.push(`steht der Sonne zu nah (${nah.toFixed(1)}°) — verbrannt, zählt nicht`);
+        gruende.push(rt("werk.grund.verbrannt", nah.toFixed(1)));
       }
     }
-    if (pl.haus === 10) { punkte += 3; gruende.push("steht im zehnten Feld, am Himmelsmittelpunkt"); }
-    if (pl.zeichen === mcZeichen) { punkte += 2; gruende.push("steht im Zeichen des Himmelsmittelpunkts"); }
-    if (k === mcHerr) { punkte += 2; gruende.push("ist Herr des Himmelsmittelpunkts"); }
-    if ([1, 4, 7, 10].includes(pl.haus)) { punkte += 1; gruende.push("steht winkelhaft"); }
+    if (pl.haus === 10) { punkte += 3; gruende.push(rt("werk.grund.zehntes")); }
+    if (pl.zeichen === mcZeichen) { punkte += 2; gruende.push(rt("werk.grund.mcZeichen")); }
+    if (k === mcHerr) { punkte += 2; gruende.push(rt("werk.grund.mcHerr")); }
+    if ([1, 4, 7, 10].includes(pl.haus)) { punkte += 1; gruende.push(rt("werk.grund.winkel")); }
     if (pl.wuerde.stufe === "Domizil" || pl.wuerde.stufe === "Erhöhung") {
       punkte += 1; gruende.push(`und ${pl.wuerde.text}`);
     }
@@ -114,7 +103,7 @@ export function herrDesWerks() {
     : null;
 
   return { kandidaten, erster, zweiter: kandidaten[1], geteilt,
-           paar: paarKey && PAARE[paarKey] ? { key: paarKey, text: PAARE[paarKey] } : null,
+           paar: paarKey && PAAR_KEY[paarKey] ? { key: paarKey, get text() { return rt(PAAR_KEY[paarKey]); } } : null,
            mcZeichen, mcHerr, leer: erster.punkte === 0, radix: r };
 }
 
@@ -146,14 +135,14 @@ export function lebensalter(lebensdauer = 75) {
     const von = lebensdauer / 3 * i, bis = lebensdauer / 3 * (i + 1);
     const stellung = !pl ? null
       : WINKEL.includes(pl.haus) ? { art: "winkelhaft", gut: true,
-          text: "steht winkelhaft — dieses Drittel wirkt sichtbar und bringt hervor" }
+          text: rt("alter.winkel") }
       : FOLGEND.includes(pl.haus) ? { art: "folgend", gut: true,
-          text: "steht folgend — dieses Drittel trägt, aber langsamer" }
+          text: rt("alter.folgend") }
       : { art: "kadent", gut: false,
-          text: "steht kadent — dieses Drittel geht über Umwege und durch andere" };
+          text: rt("alter.kadent") };
     const wuerde = pl ? pl.wuerde : null;
     return { key: k, pl, von, bis, stellung, wuerde,
-             rang: i === 0 ? "erste" : i === 1 ? "zweite" : "dritte" };
+             rang: i === 0 ? "alter.erste" : i === 1 ? "alter.zweite" : "alter.dritte" };
   });
 
   return { element: t.element, tagGeburt: r.tagGeburt, drittel, lebensdauer, radix: r };
@@ -167,27 +156,21 @@ function zeichneWerk() {
   const w = herrDesWerks();
   ziel.innerHTML = ""; ziel.hidden = false;
   if (!w) {
-    ziel.appendChild(el("p", "kucukNot",
-      "Dafür fehlen die Geburtsangaben — Datum, Uhrzeit und der Ort mit gesuchten Koordinaten."));
+    ziel.appendChild(el("p", "kucukNot", rt("fehlt.geburt")));
     return;
   }
 
   if (w.leer) {
     const k = el("div", "wkKasten");
-    k.appendChild(el("div", "kalanBaslik", "Kein Herr des Werks"));
-    k.appendChild(el("p", null,
-      "Keiner der drei — Merkur, Venus, Mars — steht morgens vor der Sonne, am " +
-      "Himmelsmittelpunkt oder in dessen Zeichen. Ptolemäus sagt für diesen Fall, " +
-      "dass der Mensch keinem bestimmten Werk zugeordnet ist: Er lebt dann nicht von " +
-      "einem Handwerk, sondern von dem, was ihm zufällt — aus Herkunft, Amt oder Besitz. " +
-      "Die Araber lesen es milder: Das Werk ist nicht vorgezeichnet und darum frei."));
+    k.appendChild(el("div", "kalanBaslik", rt("werk.keiner.titel")));
+    k.appendChild(el("p", null, rt("werk.keiner.text")));
     ziel.appendChild(k);
     return;
   }
 
   const e = w.erster, st = STOFF[e.key];
   const kasten = el("div", "wkKasten");
-  kasten.appendChild(el("div", "kalanBaslik", "Der Herr deines Werks"));
+  kasten.appendChild(el("div", "kalanBaslik", rt("werk.titel")));
   kasten.appendChild(el("div", "buyukToplam", `${PLANET[e.key].g} ${PLANET[e.key].name}`));
   kasten.appendChild(el("div", "kucukNot", st.kurz));
   const p = el("p");
@@ -196,35 +179,27 @@ function zeichneWerk() {
 
   if (w.geteilt && w.paar) {
     const g = el("p", "wkPaar");
-    g.innerHTML = `<b>Zwei teilen sich den Vorrang:</b> ${PLANET[e.key].name} und ` +
-      `${PLANET[w.zweiter.key].name} kommen auf gleich viel. Ptolemäus hat für diesen ` +
-      `Fall eigene Sätze — ${w.paar.text}`;
+    g.innerHTML = rt("werk.geteilt", PLANET[e.key].name, PLANET[w.zweiter.key].name, w.paar.text);
     kasten.appendChild(g);
   }
 
   const zeichen = e.pl.zeichen;
   const z = el("p");
-  z.innerHTML = `Er steht bei dir in ${ZEICHEN[zeichen].glyph} <b>${ZEICHEN[zeichen].name}</b>, ` +
-    `im ${e.pl.haus}. Feld — ${HAUS[e.pl.haus - 1]}. Das Zeichen sagt, in welcher Art von ` +
-    `Stoff gearbeitet wird, das Feld, in wessen Auftrag.`;
+  z.innerHTML = rt("werk.ort", `${ZEICHEN[zeichen].glyph} <b>${ZEICHEN[zeichen].name}</b>`, e.pl.haus, HAUS[e.pl.haus - 1]);
   kasten.appendChild(z);
   ziel.appendChild(kasten);
 
-  ziel.appendChild(el("h3", null, "Wie gerechnet wurde"));
+  ziel.appendChild(el("h3", null, rt("werk.wie")));
   const ul = el("ul", "zeugenListe");
   w.kandidaten.forEach(k => {
     const li = el("li", k === w.erster ? "z-gut" : k.punkte ? "z-neutral" : "z-schlecht");
     li.innerHTML = `<b>${PLANET[k.key].g} ${PLANET[k.key].name}</b> — ` +
-      (k.gruende.length ? k.gruende.join("; ") : "keine der Bedingungen erfüllt") +
+      (k.gruende.length ? k.gruende.join("; ") : rt("werk.grund.keine")) +
       ` <span class="zGewicht">${k.punkte}</span>`;
     ul.appendChild(li);
   });
   ziel.appendChild(ul);
-  ziel.appendChild(el("p", "kucukNot",
-    "Nach Ptolemäus (Tetrabiblos IV.4): Gesucht wird der Planet, der morgens vor der " +
-    "Sonne aufgeht, und der am Himmelsmittelpunkt steht. Nur Merkur, Venus und Mars " +
-    "gelten als Herren des Werks — alles Hervorbringen, sagt er, geht durch Hand, Auge " +
-    "oder Wort. Die übrigen vier geben Rang und Umstände, nicht das Werk selbst."));
+  ziel.appendChild(el("p", "kucukNot", rt("werk.note")));
 }
 
 function zeichneAlter() {
@@ -233,7 +208,7 @@ function zeichneAlter() {
   const a = lebensalter();
   ziel.innerHTML = ""; ziel.hidden = false;
   if (!a) {
-    ziel.appendChild(el("p", "kucukNot", "Dafür fehlen die Geburtsangaben."));
+    ziel.appendChild(el("p", "kucukNot", rt("fehlt.geburt")));
     return;
   }
 
@@ -241,39 +216,28 @@ function zeichneAlter() {
   const [jj, mm, tt] = p.datum.split("-").map(Number);
   const jetzt = (Date.now() - new Date(jj, mm - 1, tt).getTime()) / (365.2422 * 864e5);
 
-  ziel.appendChild(el("p", "kucukNot",
-    `Dein aufsteigendes Zeichen gehört dem Element ${a.element}. Du bist ` +
-    `${a.tagGeburt ? "bei Tag" : "bei Nacht"} geboren, darum führt ` +
-    `${a.tagGeburt ? "der Herr des Tages" : "der Herr der Nacht"} das erste Drittel.`));
+  ziel.appendChild(el("p", "kucukNot", rt("alter.kopf", aktuelleSprache() === "it" ? (ELEMENT_NAME_IT[a.element] || a.element) : a.element, a.tagGeburt)));
 
   a.drittel.forEach(d => {
     const k = el("div", "laDrittel" + (jetzt >= d.von && jetzt < d.bis ? " laHier" : ""));
     const kopf = el("div", "laKopf");
-    kopf.appendChild(el("span", "laSpanne", `${d.von.toFixed(0)}–${d.bis.toFixed(0)} Jahre`));
+    kopf.appendChild(el("span", "laSpanne", rt("alter.spanne", d.von.toFixed(0), d.bis.toFixed(0))));
     kopf.appendChild(el("span", "laName", `${PLANET[d.key].g} ${PLANET[d.key].name}`));
     k.appendChild(kopf);
     const t = el("p");
     t.innerHTML = d.pl
-      ? `Das ${d.rang} Drittel steht unter ${mitArtikel(PLANET[d.key].name)}. ` +
-        `${grossMitArtikel(PLANET[d.key].name)} steht in ${ZEICHEN[d.pl.zeichen].glyph} ` +
-        `${ZEICHEN[d.pl.zeichen].name}, im ${d.pl.haus}. Feld, und ${d.stellung.text}` +
-        (d.wuerde.stufe !== "—" ? `. Dazu: ${d.wuerde.text}` : "") + "."
-      : `Das ${d.rang} Drittel steht unter ${PLANET[d.key].name}.`;
+      ? rt("alter.satz", rt(d.rang), mitArtikel(PLANET[d.key].name),
+          `${ZEICHEN[d.pl.zeichen].glyph} ${ZEICHEN[d.pl.zeichen].name}`, d.pl.haus,
+          d.stellung.text, d.wuerde.stufe !== "—" ? `. ${d.wuerde.text}` : "")
+      : rt("alter.satz", rt(d.rang), mitArtikel(PLANET[d.key].name), "", "", "", "");
     k.appendChild(t);
     if (jetzt >= d.von && jetzt < d.bis) {
-      k.appendChild(el("div", "laJetzt", "Hier stehst du gerade"));
+      k.appendChild(el("div", "laJetzt", rt("alter.jetzt")));
     }
     ziel.appendChild(k);
   });
 
-  ziel.appendChild(el("p", "kucukNot",
-    "Nach Dorotheos (Carmen Astrologicum I): Jedes Element hat drei Herren — einen für " +
-    "den Tag, einen für die Nacht und einen dritten, den die arabische Überlieferung den " +
-    "Teilhaber nennt. Das Leben zerfällt in drei Teile, und wie der jeweilige Herr steht, " +
-    "so verläuft sein Drittel. Die Drittel sind hier auf 75 Jahre gerechnet; die alten " +
-    "Texte setzen dafür die Jahre an, die das Lebensmaß ergibt. Es ist die einfachste " +
-    "Zeitteilung der Überlieferung und zugleich die gröbste — sie sagt eine Tendenz, " +
-    "keinen Termin."));
+  ziel.appendChild(el("p", "kucukNot", rt("alter.note")));
 }
 
 $("#wkBerechnen")?.addEventListener("click", zeichneWerk);
@@ -283,3 +247,5 @@ if ($("#wkCikti") || $("#laCikti")) {
   window.addEventListener("load", () => setTimeout(alle, 350));
   window.addEventListener("profil-geaendert", () => setTimeout(alle, 250));
 }
+
+window.addEventListener("sprache-geaendert", () => setTimeout(() => { zeichneWerk(); zeichneAlter(); }, 80));

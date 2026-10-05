@@ -29,10 +29,14 @@
    Wort hat, wenn die anderen sich widersprechen.
    ------------------------------------------------------------------------ */
 
-import { norm360, julianischesDatum } from "./astro.js?v=182";
-import { radix, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=182";
-import { wuerden } from "./geist.js?v=182";
-import { leseProfil } from "./profil.js?v=182";
+import { norm360, julianischesDatum } from "./astro.js?v=195";
+import { radix, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=195";
+import { wuerden } from "./geist.js?v=195";
+import { leseProfil } from "./profil.js?v=195";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=195";
+import { aktuelleSprache } from "./sprachen.js?v=195";
+setzeRestSprache(aktuelleSprache());
+window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 
 /* Ibn Ezras Gewichtung der zwölf Örter. Das erste Feld wiegt am
    schwersten, das zwölfte am leichtesten. */
@@ -42,11 +46,11 @@ const SAAT_SIRASI = ["saturn","jupiter","mars","sonne","venus","merkur","mond"];
 const TAG_HERR    = ["sonne","mond","mars","merkur","jupiter","venus","saturn"];
 
 const STELLEN = [
-  { key: "sonne",      name: "die Sonne" },
-  { key: "mond",       name: "der Mond" },
-  { key: "asc",        name: "der Aszendent" },
-  { key: "fortuna",    name: "der Glückspunkt" },
-  { key: "syzygie",    name: "die Syzygie vor der Geburt" }
+  { key: "sonne",   get name() { return rt("alm.stelle.sonne"); } },
+  { key: "mond",    get name() { return rt("alm.stelle.mond"); } },
+  { key: "asc",     get name() { return rt("alm.stelle.asc"); } },
+  { key: "fortuna", get name() { return rt("alm.stelle.fortuna"); } },
+  { key: "syzygie", get name() { return rt("alm.stelle.syzygie"); } }
 ];
 
 /* Glückspunkt: bei Tag Asz + Mond − Sonne, bei Nacht umgekehrt. */
@@ -99,8 +103,8 @@ export function almutemFiguris() {
       const x = w[k];
       if (!x || !x.total) return;
       punkte[k].wuerde += x.total;
-      const art = x.dom ? "Zeichen" : x.ex ? "Erhöhung" : x.tri ? "Triplizität"
-                : x.term ? "Grenze" : "Gesicht";
+      const art = rt("wuerde." + (x.dom ? "Zeichen" : x.ex ? "Erhöhung" : x.tri ? "Triplizität"
+                : x.term ? "Grenze" : "Gesicht"));
       punkte[k].belege.push(`${art} über ${s.name}`);
       mit.push({ key: k, punkte: x.total, art });
     });
@@ -157,15 +161,8 @@ const el = (t, c, txt) => { const n = document.createElement(t);
 
 const WOCHE = ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
 
-const ROLLE = {
-  saturn:  "Er macht aus dieser Geburt eine, die lange braucht und dann bleibt. Was hier zählt, zählt erst spät — und dann nicht wenig.",
-  jupiter: "Er macht aus dieser Geburt eine, der Raum gegeben wird. Es geht weiter, als die Herkunft erwarten ließ.",
-  mars:    "Er macht aus dieser Geburt eine, die sich durchsetzen muss und es auch tut. Nichts kommt hier von selbst, und das ist die Sache nicht.",
-  sonne:   "Er macht aus dieser Geburt eine, die gesehen werden will und gesehen wird. Die Mitte ist hier nicht verhandelbar.",
-  venus:   "Sie macht aus dieser Geburt eine, in der das Verbindende mehr wiegt als das Trennende. Was hier gelingt, gelingt mit anderen.",
-  merkur:  "Er macht aus dieser Geburt eine, die über das Wort geht. Was hier geschieht, geschieht durch Reden, Schreiben, Vermitteln.",
-  mond:    "Er macht aus dieser Geburt eine, die sich wandelt und darin treu bleibt. Sie trägt weiter, was sie empfangen hat."
-};
+const ROLLE = new Proxy({}, { get: (_, k) => rt("alm." + String(k)) });
+
 
 function zeichne() {
   const ziel = $("#afCikti");
@@ -175,44 +172,34 @@ function zeichne() {
   ziel.hidden = false;
 
   if (!a) {
-    ziel.appendChild(el("p", "kucukNot",
-      "Dafür fehlen die Geburtsangaben — Datum, Uhrzeit und der Ort mit gesuchten Koordinaten."));
+    ziel.appendChild(el("p", "kucukNot", rt("fehlt.geburt")));
     return;
   }
 
   const s = a.sieger, pl = s.planet;
   const kasten = el("div", "afKasten");
-  kasten.appendChild(el("div", "kalanBaslik", "Der Herr deiner Geburt"));
+  kasten.appendChild(el("div", "kalanBaslik", rt("alm.titel")));
   kasten.appendChild(el("div", "buyukToplam", `${PLANET[s.key].g} ${PLANET[s.key].name}`));
-  kasten.appendChild(el("div", "kucukNot",
-    `${s.total} Punkte — ${s.wuerde} aus den Würden, ${s.ort} aus seinem eigenen Ort, ` +
-    `${s.zeit} aus Tag und Stunde`));
+  kasten.appendChild(el("div", "kucukNot", rt("alm.punkte", s.total, s.wuerde, s.ort, s.zeit)));
   const satz = el("p");
   satz.innerHTML = ROLLE[s.key] +
-    (pl ? ` Er selbst steht bei dir in ${ZEICHEN[pl.zeichen].glyph} ${ZEICHEN[pl.zeichen].name}, ` +
-          `im ${pl.haus}. Feld — ${HAUS[pl.haus - 1]}. Dort ist der Ort, an dem sich diese ` +
-          `Geburt am deutlichsten zeigt.` : "");
+    (pl ? rt("alm.ort", `${ZEICHEN[pl.zeichen].glyph} ${ZEICHEN[pl.zeichen].name}`,
+             pl.haus, HAUS[pl.haus - 1]) : "");
   kasten.appendChild(satz);
   if (a.knapp) {
     const k = el("p", "kucukNot");
     k.innerHTML = a.gleich
-      ? `Hier steht es <b>gleich</b>: ${grossMitArtikel(PLANET[a.zweiter.key].name)} kommt auf ` +
-        `dieselben ${a.zweiter.total} Punkte. Den Ausschlag gibt, dass ` +
-        `${mitArtikel(PLANET[a.sieger.key].name)} mehr davon aus den Würden hat ` +
-        `(${a.sieger.wuerde} gegen ${a.zweiter.wuerde}) — die sind die eigentliche ` +
-        `Herrschaft, Tag und Stunde nur Zugabe. Bonatti rät bei so engem Stand ohnehin, ` +
-        `beide zu lesen: Der Zweite sagt dann, wie der Erste zu Werke geht.`
-      : `Es ist knapp: ${grossMitArtikel(PLANET[a.zweiter.key].name)} kommt auf ` +
-        `${a.zweiter.total} Punkte. Bonatti rät bei so engem Stand, beide zu lesen — ` +
-        `der Zweite sagt dann, wie der Erste zu Werke geht.`;
+      ? rt("alm.gleich", grossMitArtikel(PLANET[a.zweiter.key].name), a.zweiter.total,
+           mitArtikel(PLANET[a.sieger.key].name), a.sieger.wuerde, a.zweiter.wuerde)
+      : rt("alm.knapp", grossMitArtikel(PLANET[a.zweiter.key].name), a.zweiter.total);
     kasten.appendChild(k);
   }
   ziel.appendChild(kasten);
 
   /* Die fünf Stellen, über die gerechnet wird. */
-  ziel.appendChild(el("h3", null, "Die fünf Stellen"));
+  ziel.appendChild(el("h3", null, rt("alm.stellen")));
   const tf = el("table", "afTafel");
-  tf.innerHTML = "<thead><tr><th>Stelle</th><th>steht bei</th><th>wer dort Würde hat</th></tr></thead>";
+  tf.innerHTML = `<thead><tr><th>${rt("alm.tab.stelle")}</th><th>${rt("alm.tab.steht")}</th><th>${rt("alm.tab.wuerde")}</th></tr></thead>`;
   const tb = el("tbody");
   a.stellen.forEach(st => {
     const tr = el("tr");
@@ -225,12 +212,11 @@ function zeichne() {
   ziel.appendChild(tf);
 
   ziel.appendChild(el("p", "kucukNot",
-    `Dazu: Geboren an einem ${WOCHE[new Date(a.radix.profil.datum).getDay()]} — der Tag gehört ` +
-    `${PLANET[a.tagherr].name} (7 Punkte); die Geburtsstunde gehört ${PLANET[a.stundenherr].name} ` +
-    `(6 Punkte).`));
+    rt("alm.tagStunde", WOCHE[new Date(a.radix.profil.datum).getDay()],
+       PLANET[a.tagherr].name, PLANET[a.stundenherr].name)));
 
   /* Die Rangliste. */
-  ziel.appendChild(el("h3", null, "Die Rangliste"));
+  ziel.appendChild(el("h3", null, rt("alm.rangliste")));
   const liste = el("div", "afListe");
   const hoechst = a.rangliste[0].total || 1;
   a.rangliste.forEach((x, i) => {
@@ -246,12 +232,7 @@ function zeichne() {
   });
   ziel.appendChild(liste);
 
-  ziel.appendChild(el("p", "kucukNot",
-    "Gerechnet nach Abraham Ibn Ezra (Sefer ha-Moladot, 12. Jh.), wie Guido Bonatti " +
-    "das Verfahren im Liber Astronomiae übernimmt: Würden über die fünf Stellen, dazu " +
-    "der eigene Ort nach Ibn Ezras Gewichtung der zwölf Felder, dazu Herr des Tages und " +
-    "Herr der Stunde. Die Syzygie vor der Geburt ist hier über die mittleren Bewegungen " +
-    "genähert, nicht exakt gesucht — auf das Zeichen kommt es an, und das trifft sie."));
+  ziel.appendChild(el("p", "kucukNot", rt("alm.note")));
 }
 
 $("#afBerechnen")?.addEventListener("click", zeichne);
@@ -259,3 +240,5 @@ if ($("#afCikti")) {
   window.addEventListener("load", () => setTimeout(zeichne, 300));
   window.addEventListener("profil-geaendert", () => setTimeout(zeichne, 200));
 }
+
+window.addEventListener("sprache-geaendert", () => setTimeout(zeichne, 80));

@@ -7,8 +7,8 @@
    Maske erscheint — und erst eine ausgefüllte Maske öffnet die Reiter
    des jeweiligen Weges.
    --------------------------------------------------------------------- */
-import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=182";
-import { t } from "./sprachen.js?v=182";
+import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=195";
+import { t } from "./sprachen.js?v=195";
 
 const HEIM = "bProfil";
 const SPEICHER = "oracle-weg";
@@ -192,13 +192,16 @@ function feldVon(b) {
   const k = document.createElement("button");
   k.type = "button";
   k.className = "wegFeld";
-  const t = document.createElement("span");
-  t.className = "wegName";
-  t.textContent = b.textContent;
+  /* Nicht t nennen: t ist die Übersetzungsfunktion. */
+  const name = document.createElement("span");
+  name.className = "wegName";
+  const schluessel = "nav." + b.dataset.bolum;
+  const uebersetzt = t(schluessel);
+  name.textContent = uebersetzt && uebersetzt !== schluessel ? uebersetzt : b.textContent;
   const u = document.createElement("span");
   u.className = "wegWorum";
   u.textContent = WORUM[b.dataset.bolum] || "";
-  k.append(t, u);
+  k.append(name, u);
   k.addEventListener("click", () => { b.click(); window.scrollTo({ top: 0, behavior: "smooth" }); });
   return k;
 }

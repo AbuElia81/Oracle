@@ -9,10 +9,10 @@
 
    Häuser im Ganzzeichen, wie überall auf dieser Seite.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=182";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=195";
 import { berechneGeburt, planetenPositionen, julianischesDatum,
          aszendent, medium, schiefeDerEkliptik, siderischeZeitGreenwich,
-         norm360 } from "./astro.js?v=182";
+         norm360 } from "./astro.js?v=195";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -448,3 +448,28 @@ document.querySelector('nav#reiter button[data-bolum="bHoroskop"]')
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", zeichne);
 } else { zeichne(); }
+
+/* ------------------------------------------------------- die Sprachschalter
+   Planeten-, Zeichen- und Feldernamen stecken in fast jedem Satz. Sie
+   werden hier beim Sprachwechsel ausgetauscht, nicht neu importiert —
+   die Objekte bleiben dieselben, nur ihre Namensfelder wechseln. */
+import { PLANET_NAME_IT, PLANET_ARTIKEL_IT, ZEICHEN_NAME_IT, HAUS_IT } from "./namen-it.js?v=195";
+import { aktuelleSprache } from "./sprachen.js?v=195";
+
+const PLANET_NAME_DE  = Object.fromEntries(REIHE.map(k => [k, PLANET[k].name]));
+const ARTIKEL_DE      = { ...ARTIKEL };
+const ZEICHEN_NAME_DE = ZEICHEN.map(z => z.name);
+const HAUS_DE         = [...HAUS];
+
+export function setzeNamenSprache(code) {
+  const it = code === "it";
+  REIHE.forEach(k => { PLANET[k].name = it ? PLANET_NAME_IT[k] : PLANET_NAME_DE[k]; });
+  Object.keys(ARTIKEL).forEach(k => delete ARTIKEL[k]);
+  Object.assign(ARTIKEL, it ? PLANET_ARTIKEL_IT : ARTIKEL_DE);
+  ZEICHEN.forEach((z, i) => { z.name = it ? ZEICHEN_NAME_IT[i] : ZEICHEN_NAME_DE[i]; });
+  HAUS.forEach((_, i) => { HAUS[i] = it ? HAUS_IT[i] : HAUS_DE[i]; });
+  zwischenspeicher = null;          /* die Radix neu bilden lassen */
+}
+
+setzeNamenSprache(aktuelleSprache());
+window.addEventListener("sprache-geaendert", e => setzeNamenSprache(e.detail));
