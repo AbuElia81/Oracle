@@ -7,7 +7,7 @@
    Maske erscheint — und erst eine ausgefüllte Maske öffnet die Reiter
    des jeweiligen Weges.
    --------------------------------------------------------------------- */
-import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=146";
+import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=152";
 
 const HEIM = "bProfil";
 const SPEICHER = "oracle-weg";
@@ -119,6 +119,7 @@ const WORUM = {
   bFirdaria:     "Die persische Zählung des Abū Maʿšar: feste Mengen von Jahren, jede unter einer anderen Hand.",
   bVimshottari:  "Das verbreitetste Zeitsystem Indiens, gerechnet vom Stand des Mondes bei deiner Geburt.",
   bSolar:        "Einmal im Jahr kehrt die Sonne auf ihren Geburtsgrad zurück. Was dieses Jahr trägt — in neun Schritten nach Abū Maʿšar.",
+  bRadixdeutung: "Die Geburt als Ganzes, ehe die Zeit anfängt — Sekte, Temperament, der Aufsteigende und sein Herr. Wahlweise nüchtern nach Bonatti oder in Bildern und Fabeln.",
   bAlmutem:      "Der Herr des ganzen Horoskops nach Ibn Ezra und Bonatti — wer über diese Geburt als solche das letzte Wort hat, wenn die einzelnen Zeugen sich widersprechen.",
   bVerteilung:   "Dorotheos' Verteilung durch die Grenzen: Der Aszendent wandert mit der Drehung des Himmels, und jede Grenze dauert so lange, wie sie an deinem Ort zum Aufgehen braucht.",
   bLebensmass:   "Die alte Frage nach dem Maß des Lebens: Hylech und Alcocoden, der Geber und der Hüter.",

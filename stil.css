@@ -1169,3 +1169,94 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
   .afName { flex-basis: 5.8rem; font-size: .85rem; }
   .afTafel { font-size: .8rem; }
 }
+
+/* ------------------------------------------------- Die zwei Brillen */
+.brilleWahl { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.4rem 0; }
+.brilleKarte {
+  position: relative; display: block; text-align: left; cursor: pointer;
+  min-height: 11rem; padding: 7rem 1rem 1rem;
+  border: 1px solid rgba(212,175,110,.25); border-radius: .5rem;
+  background-size: cover; background-position: center; font-family: inherit;
+  color: var(--text); overflow: hidden; transition: border-color .15s;
+}
+.brilleKarte::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(10,12,24,.25) 0%, rgba(10,12,24,.88) 55%, rgba(10,12,24,.96) 100%);
+}
+.brilleKarte > * { position: relative; }
+.brilleKarte:hover { border-color: rgba(212,175,110,.6); }
+.brilleKarte.gewaehlt { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold) inset; }
+.brilleName {
+  display: block; color: var(--gold); font-size: 1.12rem; margin-bottom: .4rem;
+  letter-spacing: .01em;
+}
+.brilleText { display: block; font-size: .86rem; line-height: 1.5; opacity: .82; }
+
+/* Die Deutung selbst */
+.rdTeil { margin: 2.2rem 0; }
+.rdTeil h3 { margin: 0 0 .7rem; }
+.rdTeil p { line-height: 1.75; }
+.rdNummer {
+  float: left; margin: .1rem .8rem 0 0; color: var(--gold); opacity: .45;
+  font-size: .95rem; letter-spacing: .08em;
+}
+.rdTempKasten {
+  text-align: center; padding: 1.2rem; margin: 1rem 0 1.4rem;
+  border: 1px solid rgba(212,175,110,.28); border-radius: .5rem;
+  background: rgba(212,175,110,.045);
+}
+.rdTempName { font-size: 1.7rem; color: var(--gold); margin-bottom: .3rem; }
+.rdWaage { margin-top: 1.1rem; }
+.rdWaageZeile { display: flex; align-items: center; gap: .6rem; margin-bottom: .5rem; }
+.rdPol { font-size: .76rem; opacity: .6; flex: 0 0 3.6rem; }
+.rdPol:first-child { text-align: right; }
+.rdWaageBalken {
+  flex: 1; height: .5rem; position: relative;
+  background: rgba(255,255,255,.07); border-radius: .25rem;
+}
+.rdWaageBalken::after {
+  content: ""; position: absolute; left: 50%; top: -3px; bottom: -3px;
+  width: 1px; background: rgba(255,255,255,.2);
+}
+.rdWaagePunkt {
+  position: absolute; top: 50%; width: .8rem; height: .8rem;
+  margin: -.4rem 0 0 -.4rem; border-radius: 50%; background: var(--gold);
+}
+.rdQual { color: var(--gold); opacity: .8; font-size: .9em; }
+.rdTafel { width: 100%; border-collapse: collapse; font-size: .86rem; margin: .6rem 0 1rem; }
+.rdTafel th {
+  text-align: left; padding: .5rem .35rem; color: var(--gold); font-weight: normal;
+  font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+  border-bottom: 1px solid rgba(212,175,110,.3);
+}
+.rdTafel td { padding: .45rem .35rem; border-bottom: 1px solid rgba(255,255,255,.06); }
+.rdStark td { color: #a8d694; }
+.rdSchwach td { opacity: .6; }
+
+@media (max-width: 680px) {
+  .brilleWahl { grid-template-columns: 1fr; }
+  .brilleKarte { min-height: 9.5rem; padding-top: 5.5rem; }
+  .rdTafel { font-size: .78rem; }
+  .rdTafel th:nth-child(4), .rdTafel td:nth-child(4) { display: none; }
+}
+
+@media (max-width: 680px) {
+  /* Fünf Spalten passen am Telefon nicht nebeneinander, und gequetscht
+     liest sich eine Tabelle schlechter als gar keine. Also wird aus
+     jeder Zeile eine kleine Karte: Planet oben, der Rest darunter. */
+  .rdTafel, .rdTafel tbody, .rdTafel tr, .rdTafel td { display: block; width: auto; }
+  .rdTafel thead { display: none; }
+  .rdTafel tr {
+    padding: .6rem .75rem; margin-bottom: .5rem;
+    border: 1px solid rgba(255,255,255,.09); border-radius: .35rem;
+    background: rgba(255,255,255,.02);
+  }
+  .rdTafel td { border: 0; padding: .1rem 0; }
+  .rdTafel td:first-child { font-size: 1.02rem; color: var(--gold); margin-bottom: .2rem; }
+  .rdTafel td:nth-child(2)::before { content: "in "; opacity: .5; }
+  .rdTafel td:nth-child(3)::before { content: "im "; opacity: .5; }
+  .rdTafel td:nth-child(3)::after  { content: " Feld"; opacity: .5; }
+  .rdTafel td:nth-child(4), .rdTafel td:nth-child(5) { display: inline-block; margin-right: .6rem; opacity: .75; font-size: .92em; }
+  .rdTafel tr.rdStark { border-color: rgba(143,191,122,.45); }
+  .rdTafel tr.rdSchwach { opacity: .62; }
+}

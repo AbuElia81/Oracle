@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Oracle</title>
 <meta name="description" content="Oracle — Orakelrechner nach alten Büchern: das osmanische Yıldıznâme aus Name und Muttername, der Geist des 11. Hauses nach Agrippa, Primärdirektionen, Zodiacal Releasing und Antiszien.">
-<link rel="stylesheet" href="stil.css?v=146">
+<link rel="stylesheet" href="stil.css?v=152">
 </head>
 <body>
 
@@ -35,6 +35,7 @@
   <button data-bolum="bFirdaria" data-gruppe="sterne">Firdaria</button>
   <button data-bolum="bVimshottari" data-gruppe="sterne">Vimshottari</button>
   <button data-bolum="bSolar" data-gruppe="sterne">Jahresumdrehung</button>
+  <button data-bolum="bRadixdeutung" data-gruppe="sterne">Die Deutung</button>
   <button data-bolum="bAlmutem" data-gruppe="sterne">Der Herr der Geburt</button>
   <button data-bolum="bVerteilung" data-gruppe="sterne">Die Verteilung</button>
   <button data-bolum="bLebensmass" data-gruppe="sterne">Das Lebensmaß</button>
@@ -1037,6 +1038,43 @@
 </section>
 
 <!-- ----------------------------------------------------- Das Lebensmaß -->
+<section class="bolum" id="bRadixdeutung" hidden>
+  <div class="appKopf">
+    <h2>Die Deutung</h2>
+    <p class="unterzeile">Die Geburt als Ganzes — durch zwei Brillen gelesen</p>
+  </div>
+
+  <p class="giriş">Alle anderen Abschnitte sagen, <em>wann</em> etwas fällig wird.
+  Dieser sagt, <em>was</em> fällig wird. In der alten Schule steht er vor allen
+  übrigen, und <b>Robert Zoller</b> fasst die Regel in vier Worte: keine Deutung,
+  keine Vorhersage. Wer das Geburtsbild nicht zuerst als Ganzes gelesen hat,
+  bekommt aus den Zeitherren nur einen Kalender ohne Inhalt.</p>
+
+  <p>Dieselben Zahlen lassen sich auf zwei Weisen lesen, und die beiden
+  widersprechen einander. Wähle, durch welche Brille du schauen willst — du
+  kannst jederzeit wechseln.</p>
+
+  <div id="rdWahl" class="brilleWahl">
+    <button type="button" class="brilleKarte" data-brille="mittelalter"
+            style="background-image:url('bilder/brille-mittelalter.jpg')">
+      <span class="brilleName">Die mittelalterliche Brille</span>
+      <span class="brilleText">Was objektiv der Fall ist: Sekte, Temperament, der Herr
+      des Aufsteigenden, wer stark steht und wer schwach. Bonattis Reihenfolge, nüchtern
+      und nachrechenbar.</span>
+    </button>
+    <button type="button" class="brilleKarte" data-brille="mythos"
+            style="background-image:url('bilder/brille-mythos.jpg')">
+      <span class="brilleName">Die mythologische Brille</span>
+      <span class="brilleText">Wovon die Rede ist: dieselben Zahlen als Gestalten, Fabeln
+      und Bilder. Die alte Schule lehnt diese Lesart ab — aber ein Bild merkt man sich,
+      und eine Tabelle nicht.</span>
+    </button>
+  </div>
+
+  <button id="rdBerechnen" class="buyukDugme">Neu rechnen</button>
+  <div id="rdCikti" hidden></div>
+</section>
+
 <section class="bolum" id="bAlmutem" hidden>
   <div class="appKopf">
     <h2>Der Herr der Geburt</h2>
@@ -1120,33 +1158,34 @@
   osmanisch, hellenistisch, arabisch, ägyptisch, lateinisch</p>
 </footer>
 
-<script type="module" src="oracle.js?v=146"></script>
-<script type="module" src="profil.js?v=146"></script>
-<script type="module" src="profil-ui.js?v=146"></script>
-<script type="module" src="zugang.js?v=146"></script>
-<script type="module" src="horoskop.js?v=146"></script>
-<script type="module" src="perioden.js?v=146"></script>
-<script type="module" src="solar.js?v=146"></script>
-<script type="module" src="lebensmass.js?v=146"></script>
-<script type="module" src="leuchten.js?v=146"></script>
-<script type="module" src="elektion.js?v=146"></script>
-<script type="module" src="ramel.js?v=146"></script>
-<script type="module" src="spende.js?v=146"></script>
-<script type="module" src="geist.js?v=146"></script>
-<script type="module" src="geist-profil.js?v=146"></script>
-<script type="module" src="yildiz-profil.js?v=146"></script>
-<script type="module" src="essenz.js?v=146"></script>
-<script type="module" src="auto-rechnen.js?v=146"></script>
-<script type="module" src="deutung.js?v=146"></script>
-<script type="module" src="jahr.js?v=146"></script>
-<script type="module" src="lebensbogen.js?v=146"></script>
-<script type="module" src="zr.js?v=146"></script>
-<script type="module" src="antiszien.js?v=146"></script>
-<script type="module" src="profektionen.js?v=146"></script>
-<script type="module" src="themen.js?v=146"></script>
-<script type="module" src="crosscheck.js?v=146"></script>
-<script type="module" src="planeten.js?v=146"></script>
-<script type="module" src="verteilung.js?v=146"></script>
-<script type="module" src="almutem.js?v=146"></script>
+<script type="module" src="oracle.js?v=152"></script>
+<script type="module" src="profil.js?v=152"></script>
+<script type="module" src="profil-ui.js?v=152"></script>
+<script type="module" src="zugang.js?v=152"></script>
+<script type="module" src="horoskop.js?v=152"></script>
+<script type="module" src="perioden.js?v=152"></script>
+<script type="module" src="solar.js?v=152"></script>
+<script type="module" src="lebensmass.js?v=152"></script>
+<script type="module" src="leuchten.js?v=152"></script>
+<script type="module" src="elektion.js?v=152"></script>
+<script type="module" src="ramel.js?v=152"></script>
+<script type="module" src="spende.js?v=152"></script>
+<script type="module" src="geist.js?v=152"></script>
+<script type="module" src="geist-profil.js?v=152"></script>
+<script type="module" src="yildiz-profil.js?v=152"></script>
+<script type="module" src="essenz.js?v=152"></script>
+<script type="module" src="auto-rechnen.js?v=152"></script>
+<script type="module" src="deutung.js?v=152"></script>
+<script type="module" src="jahr.js?v=152"></script>
+<script type="module" src="lebensbogen.js?v=152"></script>
+<script type="module" src="zr.js?v=152"></script>
+<script type="module" src="antiszien.js?v=152"></script>
+<script type="module" src="profektionen.js?v=152"></script>
+<script type="module" src="themen.js?v=152"></script>
+<script type="module" src="crosscheck.js?v=152"></script>
+<script type="module" src="planeten.js?v=152"></script>
+<script type="module" src="verteilung.js?v=152"></script>
+<script type="module" src="almutem.js?v=152"></script>
+<script type="module" src="radixdeutung.js?v=152"></script>
 </body>
 </html>
