@@ -7,7 +7,7 @@
    Maske erscheint — und erst eine ausgefüllte Maske öffnet die Reiter
    des jeweiligen Weges.
    --------------------------------------------------------------------- */
-import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=138";
+import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=142";
 
 const HEIM = "bProfil";
 const SPEICHER = "oracle-weg";
@@ -119,6 +119,7 @@ const WORUM = {
   bFirdaria:     "Die persische Zählung des Abū Maʿšar: feste Mengen von Jahren, jede unter einer anderen Hand.",
   bVimshottari:  "Das verbreitetste Zeitsystem Indiens, gerechnet vom Stand des Mondes bei deiner Geburt.",
   bSolar:        "Einmal im Jahr kehrt die Sonne auf ihren Geburtsgrad zurück. Was dieses Jahr trägt — in neun Schritten nach Abū Maʿšar.",
+  bVerteilung:   "Dorotheos' Verteilung durch die Grenzen: Der Aszendent wandert mit der Drehung des Himmels, und jede Grenze dauert so lange, wie sie an deinem Ort zum Aufgehen braucht.",
   bLebensmass:   "Die alte Frage nach dem Maß des Lebens: Hylech und Alcocoden, der Geber und der Hüter.",
   bEssenz:       "Alles zusammen, in Bildern statt in Fachsprache — was die einzelnen Künste gemeinsam sagen."
 };

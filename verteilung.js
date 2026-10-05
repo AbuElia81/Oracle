@@ -34,8 +34,8 @@
    ------------------------------------------------------------------------ */
 
 import { norm360, schiefeDerEkliptik, schiefeAufgangsRA, julianischesDatum }
-  from "./astro.js?v=138";
-import { radix, PLANET, REIHE, ZEICHEN, mitArtikel, grossMitArtikel } from "./horoskop.js?v=138";
+  from "./astro.js?v=142";
+import { radix, PLANET, REIHE, ZEICHEN, mitArtikel, grossMitArtikel } from "./horoskop.js?v=142";
 
 /* Die ägyptischen Grenzen — dieselbe Tafel, nach der auch die Würden
    gerechnet werden. [obere Grenze in Grad, Herr] */
@@ -186,4 +186,155 @@ export function verteilungBei(alter) {
   if (!a) return null;
   const naechster = v.abschnitte[v.abschnitte.indexOf(a) + 1] || null;
   return { ...v, laufend: a, naechster };
+}
+
+/* ======================================================================
+   Die Oberfläche.
+   ====================================================================== */
+
+const $ = s => document.querySelector(s);
+const el = (t, c, txt) => { const n = document.createElement(t);
+  if (c) n.className = c; if (txt !== undefined) n.textContent = txt; return n; };
+
+const FARBE = { saturn:"#8f8fa8", jupiter:"#c8a86b", mars:"#c47a6a",
+                sonne:"#d4af6e", venus:"#8fb89a", merkur:"#9aa8c4", mond:"#b8b8c8" };
+
+const WESEN = {
+  saturn:  "Arbeit, Ausdauer, Einsamkeit, alles Langsame und Dauerhafte; alte Dinge und alte Leute",
+  jupiter: "Großzügigkeit, Lehre, Recht, Ansehen, Freiheit; was sich weitet",
+  mars:    "Streit, Antrieb, Risiko, Aufbruch; was schneidet und was treibt",
+  sonne:   "Rang, Stolz, Sichtbarkeit, Väter und Obrigkeit; was ins Licht tritt",
+  venus:   "Liebe, Schönheit, Kunst, Vergnügen, Frieden; was gefällt",
+  merkur:  "Reden, Schreiben, Handel, Lernen, Geschwister; was zwischen Menschen geht",
+  mond:    "Mutter, Volk, Leib, Reisen, Wechsel; was nährt und was sich wandelt"
+};
+
+function alterHeute(p) {
+  if (!p || !p.datum) return null;
+  const [j, m, t] = p.datum.split("-").map(Number);
+  const [st, mi] = (p.zeit || "12:00").split(":").map(Number);
+  return (Date.now() - new Date(j, m - 1, t, st, mi).getTime()) / (365.2422 * 864e5);
+}
+
+function datumBei(p, jahre) {
+  const [j, m, t] = p.datum.split("-").map(Number);
+  const [st, mi] = (p.zeit || "12:00").split(":").map(Number);
+  const d = new Date(new Date(j, m - 1, t, st, mi).getTime() + jahre * 365.2422 * 864e5);
+  return `${String(d.getDate()).padStart(2,"0")}.${String(d.getMonth()+1).padStart(2,"0")}.${d.getFullYear()}`;
+}
+
+function zeichne() {
+  const ziel = $("#vtCikti");
+  if (!ziel) return;
+  const r = radix();
+  if (!r) {
+    ziel.hidden = false;
+    ziel.innerHTML = "";
+    ziel.appendChild(el("p", "kucukNot",
+      "Dafür fehlen die Geburtsangaben — Datum, Uhrzeit und der Ort mit gesuchten Koordinaten."));
+    return;
+  }
+  const v = verteilung(95);
+  if (!v) return;
+  const p = r.profil;
+  const alter = alterHeute(p);
+
+  ziel.hidden = false;
+  ziel.innerHTML = "";
+
+  /* Was dieser Ort aus den Zeichen macht — der eigentliche Witz der Technik. */
+  const kopf = el("div", "vtKopf");
+  const laengstes = v.zeichenZeiten.indexOf(Math.max(...v.zeichenZeiten));
+  const kuerzestes = v.zeichenZeiten.indexOf(Math.min(...v.zeichenZeiten));
+  kopf.innerHTML =
+    `Gerechnet für ${Math.abs(v.breite).toFixed(2)}° ${v.breite >= 0 ? "Nord" : "Süd"}. ` +
+    `An diesem Ort braucht ${ZEICHEN[laengstes].glyph} ${ZEICHEN[laengstes].name} ` +
+    `<b>${v.zeichenZeiten[laengstes].toFixed(1)} Jahre</b> zum Aufgehen und ` +
+    `${ZEICHEN[kuerzestes].glyph} ${ZEICHEN[kuerzestes].name} nur ` +
+    `<b>${v.zeichenZeiten[kuerzestes].toFixed(1)}</b>. ` +
+    `Darum sind die Abschnitte unten so ungleich lang: Sie messen nicht Grade, ` +
+    `sondern die Zeit, die der Himmel über diesem Ort dafür braucht.`;
+  ziel.appendChild(kopf);
+
+  /* Der laufende Abschnitt zuerst. */
+  if (alter != null) {
+    const jetzt = v.abschnitte.find(a => alter >= a.vonJahr && alter < a.bisJahr);
+    if (jetzt) {
+      const k = el("div", "vtJetzt");
+      const f = PLANET[jetzt.herr];
+      k.appendChild(el("div", "kalanBaslik", "Wo du gerade stehst"));
+      k.appendChild(el("div", "buyukToplam", `${f.g} ${f.name}`));
+      k.appendChild(el("div", "kucukNot",
+        `verteilt dir die Jahre ${jetzt.vonJahr.toFixed(1)} bis ${jetzt.bisJahr.toFixed(1)} — ` +
+        `also ${datumBei(p, jetzt.vonJahr)} bis ${datumBei(p, jetzt.bisJahr)}`));
+      const satz = el("p");
+      satz.innerHTML = `Der <b>Verteiler</b> dieses Abschnitts ist ${mitArtikel(f.name)}: ` +
+        `${WESEN[jetzt.herr]}. Das ist das Thema, unter dem diese Jahre stehen. ` +
+        (jetzt.teilhaber
+          ? `Dein <b>Teilhaber</b> ist ${mitArtikel(jetzt.teilhaber.name)} — der Punkt hat ` +
+            `${jetzt.teilhaber.art === "Körper" ? "seinen Körper" : `sein ${jetzt.teilhaber.art}`} ` +
+            `zuletzt überschritten, bei ${jetzt.teilhaber.jahre.toFixed(1)} Jahren. ` +
+            `Von dort kommen die Menschen und die Ereignisse.`
+          : `Einen Teilhaber gibt es hier noch nicht — der Punkt hat seit der Geburt ` +
+            `keinen Körper und keinen Strahl überschritten. Der Verteiler steht allein.`);
+      k.appendChild(satz);
+      if (jetzt.waehrend.length) {
+        const w = el("p", "kucukNot");
+        w.innerHTML = "Noch in diesem Abschnitt kommt dazu: " +
+          jetzt.waehrend.map(x =>
+            `${PLANET[x.key].g} ${x.name} (${x.art}) mit ${x.jahre.toFixed(1)} Jahren`).join(", ") + ".";
+        k.appendChild(w);
+      }
+      ziel.appendChild(k);
+    }
+  }
+
+  /* Die ganze Folge als Balken. */
+  ziel.appendChild(el("h3", null, "Die Folge der Verteiler"));
+  const leiste = el("div", "vtLeiste");
+  const gesamt = v.abschnitte[v.abschnitte.length - 1].bisJahr;
+  v.abschnitte.forEach(a => {
+    const b = el("div", "vtBalken");
+    b.style.flexGrow = String(a.dauer);
+    b.style.background = FARBE[a.herr];
+    b.title = `${PLANET[a.herr].name}: ${a.vonJahr.toFixed(1)}–${a.bisJahr.toFixed(1)} Jahre`;
+    if (alter != null && alter >= a.vonJahr && alter < a.bisJahr) b.classList.add("vtHier");
+    b.textContent = a.dauer > gesamt / 22 ? PLANET[a.herr].g : "";
+    leiste.appendChild(b);
+  });
+  ziel.appendChild(leiste);
+
+  const tabelle = el("table", "vtTafel");
+  tabelle.innerHTML = "<thead><tr><th>Alter</th><th>Jahr</th><th>Verteiler</th>" +
+                      "<th>Grenze</th><th>Teilhaber</th></tr></thead>";
+  const tb = el("tbody");
+  v.abschnitte.forEach(a => {
+    const tr = el("tr");
+    if (alter != null && alter >= a.vonJahr && alter < a.bisJahr) tr.className = "vtZeileHier";
+    const g = PLANET[a.herr];
+    tr.innerHTML =
+      `<td>${a.vonJahr.toFixed(1)}–${a.bisJahr.toFixed(1)}</td>` +
+      `<td>${datumBei(p, a.vonJahr).slice(-4)}</td>` +
+      `<td style="color:${FARBE[a.herr]}">${g.g} ${g.name}</td>` +
+      `<td>${ZEICHEN[a.zeichen].glyph} ${(a.von - a.zeichen*30).toFixed(0)}–${(a.bis - a.zeichen*30).toFixed(0)}°</td>` +
+      `<td>${a.teilhaber ? `${PLANET[a.teilhaber.key].g} ${a.teilhaber.name}` +
+            (a.teilhaber.art !== "Körper" ? ` <span class="vtArt">${a.teilhaber.art}</span>` : "") : "—"}</td>`;
+    tb.appendChild(tr);
+  });
+  tabelle.appendChild(tb);
+  ziel.appendChild(tabelle);
+
+  ziel.appendChild(el("p", "kucukNot",
+    "Dorotheos liest an dieser Tafel auch das Maß des Lebens ab — dort, wo ein Übeltäter " +
+    "verteilt und ein Übeltäter zugleich Teilhaber ist. Diese Lesart steht hier nicht: " +
+    "Sie nennt Jahreszahlen für einen Tod, und das tut diese Seite nicht. " +
+    "Gerechnet wird mit den schiefen Aufstiegen für deine Geburtsbreite, nicht mit einer " +
+    "Klimatafel — geprüft an den Beispielen aus Benjamin Dykes' Werkstattunterlagen zur " +
+    "Verteilung, auf fünf Stellen genau."));
+}
+
+$("#vtBerechnen")?.addEventListener("click", zeichne);
+if ($("#vtCikti")) {
+  window.addEventListener("load", () => setTimeout(zeichne, 300));
+  window.addEventListener("profil-geaendert", () => setTimeout(zeichne, 200));
 }

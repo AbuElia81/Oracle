@@ -6,17 +6,18 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=138";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=138";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=138";
-import { JAHR, profektionJetzt } from "./jahr.js?v=138";
-import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=138";
-import { mondHeute } from "./elektion.js?v=138";
-import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=138";
-import { zrStand } from "./zr.js?v=138";
-import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=138";
-import { jahresUmdrehung } from "./solar.js?v=138";
-import { lebensmass } from "./lebensmass.js?v=138";
+import { cevir, toplam, kalan } from "./ebced.js?v=142";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=142";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=142";
+import { JAHR, profektionJetzt } from "./jahr.js?v=142";
+import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=142";
+import { mondHeute } from "./elektion.js?v=142";
+import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=142";
+import { zrStand } from "./zr.js?v=142";
+import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=142";
+import { jahresUmdrehung } from "./solar.js?v=142";
+import { lebensmass } from "./lebensmass.js?v=142";
+import { verteilungBei } from "./verteilung.js?v=142";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -246,6 +247,8 @@ function schreibe(zielWahl) {
   let fd = null, vd = null, sr = null, lm = null;
   try { sr = jahresUmdrehung(); } catch (e) {}
   try { lm = lebensmass(); } catch (e) {}
+  let vt = null;
+  try { vt = alter != null ? verteilungBei(alter) : null; } catch (e) {}
   try { fd = firdariaJetzt(); } catch (e) {}
   try { vd = vimshottariJetzt(); } catch (e) {}
   let mond = null;
@@ -421,7 +424,29 @@ function schreibe(zielWahl) {
                  "Aszendent":"an dir selbst", "ASC":"an dir selbst",
                  "Deszendent":"an deiner Ehe und deinen Verträgen", "DESC":"an deiner Ehe und deinen Verträgen"
                }[dir.signifikator] || `an ${dir.signifikator}`;
-    cikti.appendChild(absatz("Was als Nächstes an die Tür klopft",
+    if (vt && vt.laufend) {
+    const fv = figurVon(vt.laufend.herr);
+    const ft = vt.laufend.teilhaber ? figurVon(vt.laufend.teilhaber.key) : null;
+    cikti.appendChild(absatz("Wer gerade austeilt",
+      `Es gibt eine noch ältere Zählung, und sie ist die einzige, die danach fragt, wo du ` +
+      `geboren bist. Der Punkt, der in deiner Geburtsstunde über den Rand der Welt kam, ` +
+      `wandert mit der Drehung des Himmels weiter, und jedes Stück Weg dauert genau so lange, ` +
+      `wie der Himmel über deinem Geburtsort dafür braucht. Darum sind diese Abschnitte ` +
+      `ungleich lang — an einem anderen Ort geboren, hättest du andere. ` +
+      `Von deinem ${vt.laufend.vonJahr.toFixed(0)}. bis zu deinem ${vt.laufend.bisJahr.toFixed(0)}. ` +
+      `Jahr teilt ${fv.figur} aus: ${fv.pron} ${fv.tut}. ` +
+      (ft
+        ? `Und ${ft.figur} teilt sich die Zeit mit ${fv.dat} — von dort kommen die Menschen ` +
+          `und das, was tatsächlich geschieht, während der erste nur das Thema vorgibt.`
+        : `Teilhaber hat ${fv.pron} keinen: Was in diesen Jahren geschieht, geschieht ohne ` +
+          `zweite Hand.`) +
+      (vt.naechster
+        ? ` Mit ${vt.naechster.vonJahr.toFixed(0)} wechselt das Austeilen an ` +
+          `${figurVon(vt.naechster.herr).akk}.`
+        : "")));
+  }
+
+  cikti.appendChild(absatz("Was als Nächstes an die Tür klopft",
       `Die älteste aller Zählungen rechnet mit der Drehung der Erde selbst: ein Grad für ein ` +
       `Lebensjahr. Nach ihr klopft ${wann}, mit ${komma(dir.alter)} Jahren, ${wer} ${wo}. ` +
       `Das sagt nicht, was geschieht — nur, wann ein Thema fällig wird. Ob geöffnet wird und wer ` +

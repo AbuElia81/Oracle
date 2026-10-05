@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Oracle</title>
 <meta name="description" content="Oracle — Orakelrechner nach alten Büchern: das osmanische Yıldıznâme aus Name und Muttername, der Geist des 11. Hauses nach Agrippa, Primärdirektionen, Zodiacal Releasing und Antiszien.">
-<link rel="stylesheet" href="stil.css?v=138">
+<link rel="stylesheet" href="stil.css?v=142">
 </head>
 <body>
 
@@ -35,6 +35,7 @@
   <button data-bolum="bFirdaria" data-gruppe="sterne">Firdaria</button>
   <button data-bolum="bVimshottari" data-gruppe="sterne">Vimshottari</button>
   <button data-bolum="bSolar" data-gruppe="sterne">Jahresumdrehung</button>
+  <button data-bolum="bVerteilung" data-gruppe="sterne">Die Verteilung</button>
   <button data-bolum="bLebensmass" data-gruppe="sterne">Das Lebensmaß</button>
   <button data-bolum="bEssenz" data-gruppe="beide">Die Essenz</button>
 </nav>
@@ -1035,6 +1036,30 @@
 </section>
 
 <!-- ----------------------------------------------------- Das Lebensmaß -->
+<section class="bolum" id="bVerteilung" hidden>
+  <div class="appKopf">
+    <h2>Die Verteilung</h2>
+    <p class="unterzeile">Durch die Grenzen — qisma, jārbakhtār, distributio per fines</p>
+  </div>
+
+  <p class="giriş">Die eigentliche Zeitherren-Technik des <b>Dorotheos von Sidon</b>
+  (<em>Carmen Astrologicum</em>, 1. Jahrhundert), über das Pahlavi ins Arabische
+  gekommen und bei <b>ʿUmar al-Tabarī</b> und <b>Abū Maʿšar</b> ausgebaut. Sie
+  arbeitet anders als alles andere auf dieser Seite: Nicht ein Zeichen pro Jahr
+  wie die Profektion, nicht feste Mengen wie die Firdaria — sondern der
+  Aszendent wandert mit der Drehung des Himmels durch die fünf Grenzen jedes
+  Zeichens, und jede Grenze dauert so lange, wie sie an deinem Geburtsort
+  wirklich zum Aufgehen braucht.</p>
+
+  <p>Der <b>Verteiler</b> ist der Herr der Grenze, in der der Punkt gerade steht:
+  Er gibt das Hauptthema. Der <b>Teilhaber</b> ist der Planet, dessen Körper oder
+  Strahl der Punkt zuletzt überschritten hat: Er gibt die Menschen, die
+  Ereignisse, das Getane. Ein Abschnitt heißt also immer mit zwei Namen.</p>
+
+  <button id="vtBerechnen" class="buyukDugme">Neu rechnen</button>
+  <div id="vtCikti" hidden></div>
+</section>
+
 <section class="bolum" id="bLebensmass" hidden>
   <div class="appKopf">
     <h2>Das Lebensmaß</h2>
@@ -1070,31 +1095,32 @@
   osmanisch, hellenistisch, arabisch, ägyptisch, lateinisch</p>
 </footer>
 
-<script type="module" src="oracle.js?v=138"></script>
-<script type="module" src="profil.js?v=138"></script>
-<script type="module" src="profil-ui.js?v=138"></script>
-<script type="module" src="zugang.js?v=138"></script>
-<script type="module" src="horoskop.js?v=138"></script>
-<script type="module" src="perioden.js?v=138"></script>
-<script type="module" src="solar.js?v=138"></script>
-<script type="module" src="lebensmass.js?v=138"></script>
-<script type="module" src="leuchten.js?v=138"></script>
-<script type="module" src="elektion.js?v=138"></script>
-<script type="module" src="ramel.js?v=138"></script>
-<script type="module" src="spende.js?v=138"></script>
-<script type="module" src="geist.js?v=138"></script>
-<script type="module" src="geist-profil.js?v=138"></script>
-<script type="module" src="yildiz-profil.js?v=138"></script>
-<script type="module" src="essenz.js?v=138"></script>
-<script type="module" src="auto-rechnen.js?v=138"></script>
-<script type="module" src="deutung.js?v=138"></script>
-<script type="module" src="jahr.js?v=138"></script>
-<script type="module" src="lebensbogen.js?v=138"></script>
-<script type="module" src="zr.js?v=138"></script>
-<script type="module" src="antiszien.js?v=138"></script>
-<script type="module" src="profektionen.js?v=138"></script>
-<script type="module" src="themen.js?v=138"></script>
-<script type="module" src="crosscheck.js?v=138"></script>
-<script type="module" src="planeten.js?v=138"></script>
+<script type="module" src="oracle.js?v=142"></script>
+<script type="module" src="profil.js?v=142"></script>
+<script type="module" src="profil-ui.js?v=142"></script>
+<script type="module" src="zugang.js?v=142"></script>
+<script type="module" src="horoskop.js?v=142"></script>
+<script type="module" src="perioden.js?v=142"></script>
+<script type="module" src="solar.js?v=142"></script>
+<script type="module" src="lebensmass.js?v=142"></script>
+<script type="module" src="leuchten.js?v=142"></script>
+<script type="module" src="elektion.js?v=142"></script>
+<script type="module" src="ramel.js?v=142"></script>
+<script type="module" src="spende.js?v=142"></script>
+<script type="module" src="geist.js?v=142"></script>
+<script type="module" src="geist-profil.js?v=142"></script>
+<script type="module" src="yildiz-profil.js?v=142"></script>
+<script type="module" src="essenz.js?v=142"></script>
+<script type="module" src="auto-rechnen.js?v=142"></script>
+<script type="module" src="deutung.js?v=142"></script>
+<script type="module" src="jahr.js?v=142"></script>
+<script type="module" src="lebensbogen.js?v=142"></script>
+<script type="module" src="zr.js?v=142"></script>
+<script type="module" src="antiszien.js?v=142"></script>
+<script type="module" src="profektionen.js?v=142"></script>
+<script type="module" src="themen.js?v=142"></script>
+<script type="module" src="crosscheck.js?v=142"></script>
+<script type="module" src="planeten.js?v=142"></script>
+<script type="module" src="verteilung.js?v=142"></script>
 </body>
 </html>

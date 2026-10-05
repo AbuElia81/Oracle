@@ -10,8 +10,8 @@
    Innerhalb eines Jahres profizieren die zwölf Monate auf dieselbe Weise
    weiter, beim Zeichen des Jahres beginnend.
    --------------------------------------------------------------------- */
-import { berechneGeburt, norm360 } from "./astro.js?v=138";
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=138";
+import { berechneGeburt, norm360 } from "./astro.js?v=142";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=142";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -92,16 +92,26 @@ function zeigeAlter(alterJahre) {
   const jahr = Math.floor(alterJahre);
   const monatAnteil = alterJahre - jahr;
   const monat = Math.floor(monatAnteil * 12);
+  /* Dorotheos und ʿUmar al-Tabarī zählen weiter hinunter: Wie das Jahr
+     durch zwölf Monate läuft, läuft der Monat durch zwölf Tagesabschnitte
+     von je gut zweieinhalb Tagen. */
+  const tagAnteil = monatAnteil * 12 - monat;
+  const tag = Math.floor(tagAnteil * 12);
 
   const profSign = (ASC_SIGN + jahr) % 12;
   const herr = DOMIZIL[profSign];
   const profMonatSign = (profSign + monat) % 12;
   const herrMonat = DOMIZIL[profMonatSign];
+  const profTagSign = (profMonatSign + tag) % 12;
+  const herrTag = DOMIZIL[profTagSign];
 
   $("#pfAblesung").innerHTML =
-    `<b>Alter ${jahr} Jahre, Monat ${monat + 1}</b><br>` +
+    `<b>Alter ${jahr} Jahre, Monat ${monat + 1}, Abschnitt ${tag + 1}</b><br>` +
     `Jahr: ${ZEICHEN[profSign].glyph} ${ZEICHEN[profSign].name} — Herr des Jahres ${PLANETEN[herr].g} ${PLANETEN[herr].name} · ` +
-    `Monat: ${ZEICHEN[profMonatSign].glyph} ${ZEICHEN[profMonatSign].name} (${PLANETEN[herrMonat].g} ${PLANETEN[herrMonat].name})`;
+    `Monat: ${ZEICHEN[profMonatSign].glyph} ${ZEICHEN[profMonatSign].name} (${PLANETEN[herrMonat].g} ${PLANETEN[herrMonat].name}) · ` +
+    `Tage: ${ZEICHEN[profTagSign].glyph} ${ZEICHEN[profTagSign].name} (${PLANETEN[herrTag].g} ${PLANETEN[herrTag].name})` +
+    `<br><span class="kucukNot">Ein solcher Tagesabschnitt dauert gut zweieinhalb Tage — ` +
+    `ein Zwölftel des profizierten Monats.</span>`;
 
   $("#pfRad").innerHTML = baueRad(ASC_SIGN, profSign);
 

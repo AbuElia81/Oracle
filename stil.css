@@ -1098,3 +1098,43 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
   #eCikti .ratWort, #eStartCikti .ratWort, .ratWort { font-size: 1.08rem; }
   #eCikti > h3, #eStartCikti > h3, .jahrFach > h3 { margin-top: 2.1rem; }
 }
+
+/* ------------------------------------------- Die Verteilung durch die Grenzen */
+.vtKopf {
+  border-left: 3px solid var(--gold); padding: .7rem 0 .7rem 1rem;
+  margin: 1.2rem 0 1.6rem; line-height: 1.6;
+}
+.vtJetzt {
+  text-align: center; padding: 1.3rem 1.1rem; margin: 1.4rem 0;
+  border: 1px solid rgba(212,175,110,.3); border-radius: .5rem;
+  background: rgba(212,175,110,.05);
+}
+.vtJetzt p { text-align: left; margin-top: 1rem; line-height: 1.7; }
+
+.vtLeiste {
+  display: flex; height: 2.4rem; margin: 1rem 0 1.6rem;
+  border-radius: .3rem; overflow: hidden;
+  border: 1px solid rgba(255,255,255,.1);
+}
+.vtBalken {
+  min-width: 3px; display: flex; align-items: center; justify-content: center;
+  font-size: .78rem; color: rgba(0,0,0,.65);
+  border-right: 1px solid rgba(0,0,0,.25);
+}
+.vtBalken.vtHier { outline: 2px solid #fff; outline-offset: -2px; z-index: 1; }
+
+.vtTafel { width: 100%; border-collapse: collapse; font-size: .88rem; margin: .5rem 0 1rem; }
+.vtTafel th {
+  text-align: left; padding: .5rem .4rem; color: var(--gold);
+  font-weight: normal; font-size: .76rem; letter-spacing: .1em; text-transform: uppercase;
+  border-bottom: 1px solid rgba(212,175,110,.3);
+}
+.vtTafel td { padding: .45rem .4rem; border-bottom: 1px solid rgba(255,255,255,.06); }
+.vtZeileHier { background: rgba(212,175,110,.1); }
+.vtArt { opacity: .55; font-size: .8em; }
+
+@media (max-width: 560px) {
+  .vtTafel { font-size: .8rem; }
+  .vtTafel th:nth-child(2), .vtTafel td:nth-child(2) { display: none; }
+  .vtTafel th, .vtTafel td { padding: .4rem .25rem; }
+}
