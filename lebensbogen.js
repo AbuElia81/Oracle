@@ -3,9 +3,9 @@
    Nutzt das gemeinsame Geburtsprofil (profil.js) und die Himmelsmechanik aus
    astro.js; die Bogen-Mathematik selbst steht in direktionen.js.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=160";
-import { berechneGeburt } from "./astro.js?v=160";
-import { berechneDirektionen, PLANETEN, PLANETEN_REIHE, ACHSEN } from "./direktionen.js?v=160";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=163";
+import { berechneGeburt } from "./astro.js?v=163";
+import { berechneDirektionen, PLANETEN, PLANETEN_REIHE, ACHSEN } from "./direktionen.js?v=163";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -123,7 +123,8 @@ function berechneUndZeige() {
 
   const direktionen = berechneDirektionen(geburt, {
     aspektSchluessel, mitAchsen: $("#lbAchsen").checked, mitPlanetZuPlanet: $("#lbPlanetZuPlanet").checked,
-    mitKonvers: $("#lbKonvers").checked, schluessel, maxAlter
+    mitKonvers: $("#lbKonvers").checked, schluessel, maxAlter,
+    verfahren: ($("#lbVerfahren") && $("#lbVerfahren").value) || "pol"
   });
 
   cikti.hidden = false;

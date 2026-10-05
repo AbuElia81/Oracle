@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Oracle</title>
 <meta name="description" content="Oracle — Orakelrechner nach alten Büchern: das osmanische Yıldıznâme aus Name und Muttername, der Geist des 11. Hauses nach Agrippa, Primärdirektionen, Zodiacal Releasing und Antiszien.">
-<link rel="stylesheet" href="stil.css?v=160">
+<link rel="stylesheet" href="stil.css?v=163">
 </head>
 <body>
 
@@ -558,6 +558,14 @@
 
   <button id="lbBerechnen" class="buyukDugme">Lebensbogen berechnen</button>
 
+  <label class="alan lbVerfahrenWahl">
+    <span>Planet zu Planet rechnen</span>
+    <select id="lbVerfahren">
+      <option value="pol">unter dem Pol (Alcabitius — klassisch)</option>
+      <option value="tierkreis">im Tierkreis (vereinfacht)</option>
+    </select>
+  </label>
+
   <div id="lbCikti" hidden></div>
 
   <h3>Wie dieser Teil rechnet</h3>
@@ -565,11 +573,16 @@
   Auf- bzw. Untergangsrektaszension jedes Promissors (Ptolemäus' eigenes
   Verfahren, mit der wirklichen Deklination — schon die volle "mundane"
   Fassung dieses Teils, kein Häusersystem nötig). Direktionen zwischen zwei
-  Planeten sind hier <b>vereinfacht "im Tierkreis"</b> gerechnet: der
-  Aspektpunkt als Punkt der Ekliptik mit Breite null, der Bogen als einfache
-  Differenz der Rektaszensionen — nicht die volle Häusertrisektion nach
-  Regiomontanus (geschlossen lösbar) oder Placidus (iterativ), die diese
-  Seite nicht umsetzt. Als konvers zeigt diese Seite 360° minus den direkten
+  Planeten laufen standardmäßig <b>unter dem Pol des Signifikators</b>, der
+  klassischen Rechnung: Jeder Signifikator bekommt je nach Stand zwischen
+  Horizont und Meridian einen eigenen Pol — null am Meridian, die volle
+  geographische Breite am Horizont —, und unter diesem Pol wird der Bogen
+  genommen. Das ist das Verfahren, das zu den Quadrantenhäusern nach
+  <b>Alcabitius</b> (al-Qabīṣī, 10. Jh.) gehört, die diese Seite dafür
+  rechnet. Zum Vergleich lässt sich oben auf die alte Vereinfachung "im
+  Tierkreis" umstellen: Aspektpunkt ohne Breite, Bogen als bloße Differenz
+  der Rektaszensionen. Die Ergebnisse unterscheiden sich spürbar, und die
+  Polrechnung ist die historisch richtige. Als konvers zeigt diese Seite 360° minus den direkten
   Bogen — die gebräuchliche praktische Umsetzung, nicht in jeder Nuance jede
   historische Definition.</p>
   <p class="kucukNot">Ein Nachbau einer historischen Rechentechnik zum
@@ -1205,36 +1218,37 @@
   osmanisch, hellenistisch, arabisch, ägyptisch, lateinisch</p>
 </footer>
 
-<script type="module" src="oracle.js?v=160"></script>
-<script type="module" src="profil.js?v=160"></script>
-<script type="module" src="profil-ui.js?v=160"></script>
-<script type="module" src="zugang.js?v=160"></script>
-<script type="module" src="horoskop.js?v=160"></script>
-<script type="module" src="perioden.js?v=160"></script>
-<script type="module" src="solar.js?v=160"></script>
-<script type="module" src="lebensmass.js?v=160"></script>
-<script type="module" src="leuchten.js?v=160"></script>
-<script type="module" src="elektion.js?v=160"></script>
-<script type="module" src="ramel.js?v=160"></script>
-<script type="module" src="spende.js?v=160"></script>
-<script type="module" src="geist.js?v=160"></script>
-<script type="module" src="geist-profil.js?v=160"></script>
-<script type="module" src="yildiz-profil.js?v=160"></script>
-<script type="module" src="essenz.js?v=160"></script>
-<script type="module" src="auto-rechnen.js?v=160"></script>
-<script type="module" src="deutung.js?v=160"></script>
-<script type="module" src="jahr.js?v=160"></script>
-<script type="module" src="lebensbogen.js?v=160"></script>
-<script type="module" src="zr.js?v=160"></script>
-<script type="module" src="antiszien.js?v=160"></script>
-<script type="module" src="profektionen.js?v=160"></script>
-<script type="module" src="themen.js?v=160"></script>
-<script type="module" src="crosscheck.js?v=160"></script>
-<script type="module" src="planeten.js?v=160"></script>
-<script type="module" src="verteilung.js?v=160"></script>
-<script type="module" src="almutem.js?v=160"></script>
-<script type="module" src="radixdeutung.js?v=160"></script>
-<script type="module" src="werk.js?v=160"></script>
-<script type="module" src="punkte.js?v=160"></script>
+<script type="module" src="oracle.js?v=163"></script>
+<script type="module" src="profil.js?v=163"></script>
+<script type="module" src="profil-ui.js?v=163"></script>
+<script type="module" src="zugang.js?v=163"></script>
+<script type="module" src="horoskop.js?v=163"></script>
+<script type="module" src="perioden.js?v=163"></script>
+<script type="module" src="solar.js?v=163"></script>
+<script type="module" src="lebensmass.js?v=163"></script>
+<script type="module" src="leuchten.js?v=163"></script>
+<script type="module" src="elektion.js?v=163"></script>
+<script type="module" src="ramel.js?v=163"></script>
+<script type="module" src="spende.js?v=163"></script>
+<script type="module" src="geist.js?v=163"></script>
+<script type="module" src="geist-profil.js?v=163"></script>
+<script type="module" src="yildiz-profil.js?v=163"></script>
+<script type="module" src="essenz.js?v=163"></script>
+<script type="module" src="auto-rechnen.js?v=163"></script>
+<script type="module" src="deutung.js?v=163"></script>
+<script type="module" src="jahr.js?v=163"></script>
+<script type="module" src="lebensbogen.js?v=163"></script>
+<script type="module" src="zr.js?v=163"></script>
+<script type="module" src="antiszien.js?v=163"></script>
+<script type="module" src="profektionen.js?v=163"></script>
+<script type="module" src="themen.js?v=163"></script>
+<script type="module" src="crosscheck.js?v=163"></script>
+<script type="module" src="planeten.js?v=163"></script>
+<script type="module" src="verteilung.js?v=163"></script>
+<script type="module" src="almutem.js?v=163"></script>
+<script type="module" src="radixdeutung.js?v=163"></script>
+<script type="module" src="werk.js?v=163"></script>
+<script type="module" src="punkte.js?v=163"></script>
+<script type="module" src="haeuser.js?v=163"></script>
 </body>
 </html>

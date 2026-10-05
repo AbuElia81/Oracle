@@ -17,7 +17,8 @@
    Transparenzabschnitt der Seite.
    --------------------------------------------------------------------- */
 
-import { rad, grad, norm360, schiefeAufgangsRA, schiefeUntergangsRA } from "./astro.js?v=160";
+import { rad, grad, norm360, schiefeAufgangsRA, schiefeUntergangsRA } from "./astro.js?v=163";
+import { bogenUnterPol, deklination, raAusLaenge } from "./haeuser.js?v=163";
 
 export const PLANETEN = {
   sonne:{name:"Sonne", g:"☉"}, mond:{name:"Mond", g:"☽"}, merkur:{name:"Merkur", g:"☿"},
@@ -70,17 +71,39 @@ function arcZuAchse(promissor, achse, geburt) {
 }
 
 /* ------------------------------------------------------- Planet zu Planet
-   ("im Tierkreis", vereinfacht: Aspektpunkt auf der Ekliptik, Breite 0). */
+
+   Zwei Wege stehen zur Wahl:
+
+   "im Tierkreis" — die Vereinfachung, mit der diese Seite angefangen hat:
+   Der Aspektpunkt wird als Ekliptikpunkt ohne Breite behandelt und der
+   Bogen schlicht in Rektaszension gemessen. Schnell, aber sie unterschlägt,
+   dass ein Punkt je nach Stand zwischen Horizont und Meridian anders
+   gerichtet wird.
+
+   "unter dem Pol" — die klassische Rechnung, die Quadrantenhäuser
+   voraussetzt. Jeder Signifikator bekommt seinen eigenen Pol, zwischen
+   null am Meridian und der vollen geographischen Breite am Horizont, und
+   unter diesem Pol wird der Bogen genommen. Das ist das Verfahren, das
+   Alcabitius' Häuser mit den Direktionen verbindet. */
 function arcZuAspektpunkt(promissor, signifikatorLaenge, offsetGrad, schiefeGrad) {
   const raZiel = eklZuRektaszension(norm360(signifikatorLaenge + offsetGrad), schiefeGrad);
   const direkt = norm360(raZiel - promissor.rektaszension);
   return { direkt, konvers: norm360(360 - direkt) };
 }
 
+function arcUnterPol(promissor, signifikatorLaenge, offsetGrad, geburt) {
+  const ziel = norm360(signifikatorLaenge + offsetGrad);
+  const sig = { ra: raAusLaenge(ziel, geburt.eps), dek: deklination(ziel, geburt.eps) };
+  const pro = { ra: promissor.rektaszension, dek: promissor.deklination };
+  const b = bogenUnterPol(pro, sig, geburt.ramc, geburt.breite);
+  return b ? { direkt: b.direkt, konvers: b.konvers, pol: b.pol } : null;
+}
+
 /* ---------------------------------------------------- Die volle Liste */
 export function berechneDirektionen(geburt, optionen) {
   const { aspektSchluessel = new Set(["kon","qua","opp"]), mitAchsen = true, mitPlanetZuPlanet = false,
-          mitKonvers = false, schluessel = "ptolemaeus", maxAlter = 100 } = optionen;
+          mitKonvers = false, schluessel = "ptolemaeus", maxAlter = 100,
+          verfahren = "pol" } = optionen;
   const key = SCHLUESSEL[schluessel].grad;
   const ausgabe = [];
 
@@ -118,9 +141,12 @@ export function berechneDirektionen(geburt, optionen) {
         ASPEKTE.forEach(asp => {
           if (!aspektSchluessel.has(asp.key)) return;
           asp.offsets.forEach(off => {
-            const { direkt, konvers } = arcZuAspektpunkt(p, s.laenge, off, geburt.eps);
+            const b = verfahren === "pol"
+              ? arcUnterPol(p, s.laenge, off, geburt)
+              : arcZuAspektpunkt(p, s.laenge, off, geburt.eps);
+            if (!b) return;                       /* unter diesem Pol zirkumpolar */
             const label = `${PLANETEN[sKey].name}${off ? (off > 0 ? " +" + off + "°" : " " + off + "°") : ""}`;
-            push(pKey, label, PLANETEN[sKey].g, asp.zeichen, direkt, konvers);
+            push(pKey, label, PLANETEN[sKey].g, asp.zeichen, b.direkt, b.konvers);
           });
         });
       });

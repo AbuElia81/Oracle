@@ -1315,3 +1315,10 @@ tr.gipfel td { background:rgba(201,162,39,.10); }
     overflow: hidden;
   }
 }
+
+.lbVerfahrenWahl { margin: 1rem 0; max-width: 28rem; }
+.lbVerfahrenWahl select {
+  width: 100%; padding: .5rem .6rem; font-family: inherit; font-size: .92rem;
+  color: var(--schrift); background: var(--kagit2);
+  border: 1px solid var(--linie); border-radius: .3rem;
+}
