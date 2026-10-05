@@ -14,9 +14,9 @@
    Herr beginnt — und wie viel von seiner Zeit schon verbraucht war.
    Gerechnet wird siderisch, nicht tropisch.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=178";
-import { berechneGeburt, norm360 } from "./astro.js?v=178";
-import { zustandVon, ZEICHEN } from "./horoskop.js?v=178";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=182";
+import { berechneGeburt, norm360 } from "./astro.js?v=182";
+import { zustandVon, ZEICHEN } from "./horoskop.js?v=182";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);

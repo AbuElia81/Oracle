@@ -26,9 +26,13 @@
    ------------------------------------------------------------------------ */
 
 import { radix, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel, grossMitArtikel, zustandVon }
-  from "./horoskop.js?v=178";
-import { almutemFiguris } from "./almutem.js?v=178";
-import { FIGUR, BILD, ORT, STAND, figurVon, bildDat } from "./sprache.js?v=178";
+  from "./horoskop.js?v=182";
+import { almutemFiguris } from "./almutem.js?v=182";
+import { FIGUR, BILD, ORT, STAND, figurVon, bildDat } from "./sprache.js?v=182";
+import { d, setzeDeutungSprache } from "./deutung-texte.js?v=182";
+import { aktuelleSprache } from "./sprachen.js?v=182";
+setzeDeutungSprache(aktuelleSprache());
+window.addEventListener("sprache-geaendert", ev => setzeDeutungSprache(ev.detail));
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -50,32 +54,26 @@ const PLANET_NATUR = {
   venus:   [-1,  1], merkur:  [ 0,  0], mond:   [-1,  1]
 };
 
+/* Die vier Mischungen holen ihre Worte erst beim Lesen aus der Textdatei —
+   so steht nach einem Sprachwechsel sofort die andere Fassung da, ohne
+   dass hier etwas neu gebaut werden müsste. */
+function mischung(schluessel) {
+  return {
+    schluessel,
+    get name()    { return d(`temp.${schluessel}.name`); },
+    get saft()    { return d(`temp.${schluessel}.saft`); },
+    get element() { return d(`temp.${schluessel}.element`); },
+    get bild()    { return d(`temp.${schluessel}.bild`); },
+    get text()    { return d(`temp.${schluessel}.text`); },
+    get saftBild(){ return d(`saft.${schluessel}`); }
+  };
+}
+
 const TEMPERAMENT = {
-  "warm-feucht":   { name: "sanguinisch", saft: "Blut", element: "Luft",
-    bild: "Luft und Blut — das rasche, zugewandte, leicht entzündliche Gemüt",
-    text: "Du nimmst schnell auf und gibst schnell weiter. Gesellschaft bekommt dir, " +
-          "Alleinsein zehrt. Was dich reizt, reizt dich sofort und ist ebenso schnell " +
-          "wieder vorbei. Die alten Ärzte hielten diese Mischung für die glücklichste " +
-          "und warnten zugleich vor ihrer Flüchtigkeit: Was leicht kommt, bleibt nicht " +
-          "von selbst." },
-  "warm-trocken":  { name: "cholerisch", saft: "gelbe Galle", element: "Feuer",
-    bild: "Feuer und gelbe Galle — das scharfe, schnelle, auffahrende Gemüt",
-    text: "Du entscheidest, ehe andere fertig überlegt haben, und liegst damit öfter " +
-          "richtig, als die Überlegenden zugeben. Dein Zorn kommt schnell und geht " +
-          "schnell. Die Gefahr dieser Mischung ist nicht die Hitze, sondern die " +
-          "Trockenheit: zu wenig Geduld mit dem, was Zeit braucht." },
-  "kalt-trocken":  { name: "melancholisch", saft: "schwarze Galle", element: "Erde",
-    bild: "Erde und schwarze Galle — das ernste, haltbare, schwer zu bewegende Gemüt",
-    text: "Du prüfst lange und bindest dich dann fest. Was du einmal begriffen hast, " +
-          "verlierst du nicht wieder. Diese Mischung galt den Alten als die der " +
-          "Gelehrten und Handwerker — und als die, die am ehesten in Schwermut kippt, " +
-          "wenn nichts von außen sie wärmt." },
-  "kalt-feucht":   { name: "phlegmatisch", saft: "Schleim", element: "Wasser",
-    bild: "Wasser und Schleim — das ruhige, aufnehmende, nachgiebige Gemüt",
-    text: "Du lässt vieles an dich heran, ohne dich davon umwerfen zu lassen. Wo andere " +
-          "auffahren, wartest du ab, und oft hat sich die Sache dann erledigt. Die " +
-          "Gefahr dieser Mischung ist nicht die Trägheit, sondern das Nachgeben: " +
-          "Du räumst Felder, auf denen du hättest stehen bleiben sollen." }
+  "warm-feucht":  mischung("sanguinisch"),
+  "warm-trocken": mischung("cholerisch"),
+  "kalt-trocken": mischung("melancholisch"),
+  "kalt-feucht":  mischung("phlegmatisch")
 };
 
 export function temperament() {
@@ -216,42 +214,30 @@ export function radixDeutung() {
 function zeichneMittelalter() {
   const ziel = $("#rdCikti");
   if (!ziel) return;
-  const d = radixDeutung();
+  const dt = radixDeutung();
   ziel.innerHTML = "";
   ziel.hidden = false;
-  if (!d) {
+  if (!dt) {
     ziel.appendChild(el("p", "kucukNot",
       "Dafür fehlen die Geburtsangaben — Datum, Uhrzeit und der Ort mit gesuchten Koordinaten."));
     return;
   }
-  const { r, herr, temp, alm } = d;
+  const { r, herr, temp, alm } = dt;
   const nr = n => el("div", "rdNummer", n);
 
   /* ---- 1. Die Sekte ---- */
   const s1 = el("section", "rdTeil");
-  s1.append(nr("I"), el("h3", null, "Die Sekte"));
+  s1.append(nr("I"), el("h3", null, d("rd.1")));
   const p1 = el("p");
-  p1.innerHTML = r.tagGeburt
-    ? `Du bist <b>bei Tag</b> geboren: Die Sonne stand über dem Horizont. Damit gehört ` +
-      `diese Geburt der Tagsekte. Sonne, Jupiter und Saturn treten hier in ihrer ` +
-      `umgänglicheren Gestalt auf, Mond, Venus und Mars in ihrer fordernden. ` +
-      `Der schwerere der beiden Übeltäter ist <b>Saturn</b>, der größere Wohltäter ` +
-      `<b>Venus</b> — nicht Jupiter, wie man meinen würde.`
-    : `Du bist <b>bei Nacht</b> geboren: Die Sonne stand unter dem Horizont. Damit gehört ` +
-      `diese Geburt der Nachtsekte. Mond, Venus und Mars treten hier in ihrer ` +
-      `umgänglicheren Gestalt auf, Sonne, Jupiter und Saturn in ihrer fordernden. ` +
-      `Der schwerere der beiden Übeltäter ist <b>Mars</b>, der größere Wohltäter ` +
-      `<b>Jupiter</b>.`;
+  p1.innerHTML = d(r.tagGeburt ? "sekte.tag" : "sekte.nacht");
   s1.appendChild(p1);
-  s1.appendChild(el("p", "kucukNot",
-    "Dies ist der erste Griff jeder alten Deutung und der folgenreichste: Dieselbe " +
-    "Stellung bedeutet bei Tag etwas anderes als bei Nacht."));
+  s1.appendChild(el("p", "kucukNot", d("sekte.note")));
   ziel.appendChild(s1);
 
   /* ---- 2. Das Temperament ---- */
   if (temp) {
     const s2 = el("section", "rdTeil");
-    s2.append(nr("II"), el("h3", null, "Das Temperament"));
+    s2.append(nr("II"), el("h3", null, d("rd.2")));
     const kasten = el("div", "rdTempKasten");
     kasten.appendChild(el("div", "rdTempName", temp.haupt.name));
     kasten.appendChild(el("div", "kucukNot", temp.haupt.bild));
@@ -271,103 +257,81 @@ function zeichneMittelalter() {
     s2.appendChild(el("p", null, temp.haupt.text));
     if (temp.neben) {
       const n = el("p");
-      n.innerHTML = `Die Mischung ist nicht rein: Auf einer Achse steht es knapp, und darum ` +
-        `läuft <b>${temp.neben.name}</b> mit — ${temp.neben.bild}. Die alten Ärzte nannten ` +
-        `so etwas eine zusammengesetzte Komplexion und hielten sie für den Normalfall.`;
+      n.innerHTML = d("temp.gemischt", temp.neben.name, temp.neben.bild);
       s2.appendChild(n);
     }
     const liste = el("ul", "zeugenListe");
     temp.zeugen.forEach(z => {
       const li = el("li", "z-neutral");
-      const w = z.warm > 0 ? "warm" : z.warm < 0 ? "kalt" : "weder warm noch kalt";
-      const f = z.feucht > 0 ? "feucht" : z.feucht < 0 ? "trocken" : "weder feucht noch trocken";
+      const w = z.warm > 0 ? d("temp.warm") : z.warm < 0 ? d("temp.kalt") : d("temp.wederWarm");
+      const f = z.feucht > 0 ? d("temp.feucht") : z.feucht < 0 ? d("temp.trocken") : d("temp.wederFeucht");
       li.innerHTML = `${z.wer} — <span class="rdQual">${w}, ${f}</span>`;
       liste.appendChild(li);
     });
     s2.appendChild(liste);
-    s2.appendChild(el("p", "kucukNot",
-      "Gerechnet nach den vier Zeugen der Überlieferung: das aufsteigende Zeichen, sein " +
-      "Herr, der Mond nach Zeichen und Phase, die Jahreszeit — dazu, wer im ersten Feld " +
-      "steht. Die Alten lasen daran Leib, Gemüt, Tempo und Krankheitsneigung zugleich; " +
-      "hier steht nur, was das Gemüt betrifft."));
+    s2.appendChild(el("p", "kucukNot", d("temp.note")));
     ziel.appendChild(s2);
   }
 
   /* ---- 3. Der Aufsteigende und sein Herr ---- */
   const s3 = el("section", "rdTeil");
-  s3.append(nr("III"), el("h3", null, "Der Aufsteigende und sein Herr"));
+  s3.append(nr("III"), el("h3", null, d("rd.3")));
   const p3 = el("p");
-  p3.innerHTML = `In der Stunde deiner Geburt stieg ${ZEICHEN[r.ascZeichen].glyph} ` +
-    `<b>${ZEICHEN[r.ascZeichen].name}</b> über den Osthorizont, im ` +
-    `${Math.floor(r.ascGrad) + 1}. Grad. Das aufsteigende Zeichen ist in dieser Lehre ` +
-    `nicht dein Charakter, sondern dein <em>Körper in der Welt</em>: wie du auftrittst, ` +
-    `wie man dich zuerst sieht, was man dir zutraut. ` +
-    (herr
-      ? `Darüber gebietet ${mitArtikel(PLANET[r.herrscher].name)} — und wo der steht, ` +
-        `dorthin zieht dein Leben. ${grossMitArtikel(PLANET[r.herrscher].name)} steht in ` +
-        `${ZEICHEN[herr.zeichen].glyph} ${ZEICHEN[herr.zeichen].name}, im ${herr.haus}. Feld: ` +
-        `${HAUS[herr.haus - 1]}` +
-        (herr.wuerde.stufe !== "—" ? `, und ${herr.wuerde.text}` : "") + `. ` +
-        (WINKEL.includes(herr.haus)
-          ? "Er steht winkelhaft — was er anzeigt, tritt sichtbar und bald ein."
-          : FOLGEND.includes(herr.haus)
-            ? "Er steht folgend — es wirkt, aber mit Verzögerung."
-            : "Er steht kadent — es wirkt mittelbar, oft durch andere hindurch.")
-      : "");
+  p3.innerHTML = d("asc.satz",
+    `${ZEICHEN[r.ascZeichen].glyph} <b>${ZEICHEN[r.ascZeichen].name}</b>`,
+    Math.floor(r.ascGrad) + 1,
+    herr ? mitArtikel(PLANET[r.herrscher].name) : null,
+    herr ? `${ZEICHEN[herr.zeichen].glyph} ${ZEICHEN[herr.zeichen].name}` : "",
+    herr ? herr.haus : "", herr ? HAUS[herr.haus - 1] : "",
+    herr && herr.wuerde.stufe !== "—" ? `, ${herr.wuerde.text}` : "",
+    herr ? d(WINKEL.includes(herr.haus) ? "stellung.winkel"
+            : FOLGEND.includes(herr.haus) ? "stellung.folgend" : "stellung.kadent") : "");
   s3.appendChild(p3);
   ziel.appendChild(s3);
 
   /* ---- 4. Der Herr des Ganzen ---- */
   if (alm) {
     const s4 = el("section", "rdTeil");
-    s4.append(nr("IV"), el("h3", null, "Der Herr des Ganzen"));
+    s4.append(nr("IV"), el("h3", null, d("rd.4")));
     const a = alm.sieger;
     const p4 = el("p");
-    p4.innerHTML = `Über alle fünf Stellen gerechnet führt ` +
-      `<b>${PLANET[a.key].g} ${PLANET[a.key].name}</b> mit ${a.total} Punkten. ` +
-      `Wo die einzelnen Zeugen sich widersprechen, hat er das letzte Wort. ` +
-      (a.key === r.herrscher
-        ? `Er ist zugleich der Herr des Aufsteigenden — das ist der klare Fall: ` +
-          `Diese Geburt hat eine Mitte, und sie ist unstrittig.`
-        : `Er ist nicht der Herr des Aufsteigenden; der ist ` +
-          `${mitArtikel(PLANET[r.herrscher].name)}. Zwei verschiedene also: Der eine sagt, ` +
-          `wie du auftrittst, der andere, worum es in diesem Leben überhaupt geht.`);
+    p4.innerHTML = d("alm.satz", `${PLANET[a.key].g} ${PLANET[a.key].name}`, a.total,
+                     a.key === r.herrscher, mitArtikel(PLANET[r.herrscher].name));
     s4.appendChild(p4);
-    s4.appendChild(el("p", "kucukNot", "Ausführlich im Abschnitt „Der Herr der Geburt“."));
+    s4.appendChild(el("p", "kucukNot", d("alm.mehr")));
     ziel.appendChild(s4);
   }
 
   /* ---- 5. Die Lichter ---- */
   const s5 = el("section", "rdTeil");
-  s5.append(nr("V"), el("h3", null, "Die beiden Lichter"));
-  [["sonne", "Vater, Obrigkeit, Rang, Lebenskraft und alles, was ins Licht tritt"],
-   ["mond",  "Mutter, Leib, Gemüt, das tägliche Leben und alles, was sich wandelt"]].forEach(([k, was]) => {
+  s5.append(nr("V"), el("h3", null, d("rd.5")));
+  [["sonne", d("licht.sonne")], ["mond", d("licht.mond")]].forEach(([k, was]) => {
     const pl = r.planeten[k];
     if (!pl) return;
     const p = el("p");
-    p.innerHTML = `<b>${PLANET[k].g} ${PLANET[k].name}</b> — ${was}. ` +
-      `Bei dir in ${ZEICHEN[pl.zeichen].glyph} ${ZEICHEN[pl.zeichen].name}, im ${pl.haus}. Feld: ` +
-      `${HAUS[pl.haus - 1]}` +
-      (pl.wuerde.stufe !== "—" ? `, und ${pl.wuerde.text}` : "") + ".";
+    p.innerHTML = d("licht.satz", `${PLANET[k].g} ${PLANET[k].name}`, was,
+      `${ZEICHEN[pl.zeichen].glyph} ${ZEICHEN[pl.zeichen].name}`, pl.haus,
+      HAUS[pl.haus - 1], pl.wuerde.stufe !== "—" ? `, ${pl.wuerde.text}` : "");
     s5.appendChild(p);
   });
   ziel.appendChild(s5);
 
   /* ---- 6. Stark und schwach ---- */
   const s6 = el("section", "rdTeil");
-  s6.append(nr("VI"), el("h3", null, "Wer stark steht und wer schwach"));
+  s6.append(nr("VI"), el("h3", null, d("rd.6")));
   const tab = el("table", "rdTafel");
-  tab.innerHTML = "<thead><tr><th>Planet</th><th>Zeichen</th><th>Feld</th>" +
-                  "<th>Würde</th><th>Rolle in dieser Sekte</th></tr></thead>";
+  tab.innerHTML = `<thead><tr><th>${d("tab.planet")}</th><th>${d("tab.zeichen")}</th>` +
+                  `<th>${d("tab.feld")}</th><th>${d("tab.wuerde")}</th>` +
+                  `<th>${d("tab.rolle")}</th></tr></thead>`;
   const tb = el("tbody");
-  d.staerke.forEach((x, i) => {
+  dt.staerke.forEach((x, i) => {
     const tr = el("tr");
     if (i === 0) tr.className = "rdStark";
-    if (i === d.staerke.length - 1) tr.className = "rdSchwach";
-    const rolleWort = x.rolle.art === "wohl" ? (x.rolle.rang === 1 ? "größerer Wohltäter" : "Wohltäter")
-      : x.rolle.art === "uebel" ? (x.rolle.rang === 1 ? "schwererer Übeltäter" : "Übeltäter")
-      : x.rolle.art === "sekte" ? "Licht dieser Sekte"
-      : x.rolle.art === "fremd" ? "Licht der anderen Sekte" : "weder noch";
+    if (i === dt.staerke.length - 1) tr.className = "rdSchwach";
+    const rolleWort = x.rolle.art === "wohl" ? d(x.rolle.rang === 1 ? "rolle.wohlGross" : "rolle.wohl")
+      : x.rolle.art === "uebel" ? d(x.rolle.rang === 1 ? "rolle.uebelGross" : "rolle.uebel")
+      : x.rolle.art === "sekte" ? d("rolle.sekte")
+      : x.rolle.art === "fremd" ? d("rolle.fremd") : d("rolle.keine");
     tr.innerHTML = `<td>${PLANET[x.key].g} ${PLANET[x.key].name}</td>` +
       `<td>${ZEICHEN[x.pl.zeichen].glyph} ${ZEICHEN[x.pl.zeichen].name}</td>` +
       `<td>${x.pl.haus}.</td>` +
@@ -378,65 +342,45 @@ function zeichneMittelalter() {
   tab.appendChild(tb);
   s6.appendChild(tab);
   const p6 = el("p");
-  p6.innerHTML = `Am stärksten steht <b>${PLANET[d.staerkster.key].name}</b>: ` +
-    `Was er anzeigt, bekommst du, ob du willst oder nicht. ` +
-    `Am schwächsten <b>${PLANET[d.schwaechster.key].name}</b> — was er anzeigt, ` +
-    `musst du dir nehmen; es fällt dir nicht zu.`;
+  p6.innerHTML = d("stark.satz", PLANET[dt.staerkster.key].name, PLANET[dt.schwaechster.key].name);
   s6.appendChild(p6);
   ziel.appendChild(s6);
 
   /* ---- 7. Die Winkel ---- */
   const s7 = el("section", "rdTeil");
-  s7.append(nr("VII"), el("h3", null, "Was sofort wirkt"));
+  s7.append(nr("VII"), el("h3", null, d("rd.7")));
   const p7 = el("p");
-  p7.innerHTML = d.winkelhaft.length
-    ? `Winkelhaft — also im 1., 4., 7. oder 10. Feld — stehen ` +
-      `<b>${d.winkelhaft.map(p => p.name).join(", ")}</b>. Was diese anzeigen, tritt sichtbar ` +
-      `ein und braucht keinen Umweg. In der alten Lehre ist das der wichtigste Unterschied ` +
-      `überhaupt: nicht ob ein Planet gut oder schlecht steht, sondern ob er überhaupt ` +
-      `zu Wort kommt.`
-    : `Kein Planet steht winkelhaft. Das ist selten und heißt: In diesem Leben tritt nichts ` +
-      `von selbst ein. Alles geht über Umwege, über andere Menschen, über Geduld.`;
+  p7.innerHTML = dt.winkelhaft.length
+    ? d("winkel.ja", dt.winkelhaft.map(p => p.name).join(", "))
+    : d("winkel.nein");
   s7.appendChild(p7);
-  if (d.kadent.length) {
+  if (dt.kadent.length) {
     const p = el("p");
-    p.innerHTML = `Kadent — im 3., 6., 9. oder 12. Feld — stehen ` +
-      `${d.kadent.map(x => x.name).join(", ")}. Sie wirken mittelbar: durch andere, ` +
-      `im Verborgenen, oder erst auf den zweiten Blick.`;
+    p.innerHTML = d("kadent", dt.kadent.map(x => x.name).join(", "));
     s7.appendChild(p);
   }
   ziel.appendChild(s7);
 
   /* ---- 8. Die Aufnahmen ---- */
   const s8 = el("section", "rdTeil");
-  s8.append(nr("VIII"), el("h3", null, "Wer wen beherbergt"));
-  if (d.aufnahmen.length) {
+  s8.append(nr("VIII"), el("h3", null, d("rd.8")));
+  if (dt.aufnahmen.length) {
     const ul = el("ul", "zeugenListe");
-    d.aufnahmen.forEach(a => {
+    dt.aufnahmen.forEach(a => {
       const li = el("li", a.voll ? "z-gut" : "z-neutral");
-      li.innerHTML = `<b>${PLANET[a.gast].name}</b> steht im Zeichen von ` +
-        `<b>${PLANET[a.wirt].name}</b> (${ZEICHEN[a.zeichen].name}) — ` +
-        (a.voll
-          ? `und beide sehen einander an (${a.sicht}). Das ist eine <b>volle Aufnahme</b>: ` +
-            `Der Wirt nimmt den Gast auf und tut für ihn, was er kann. Die Alten halten das ` +
-            `für den stärksten Zusammenhalt zweier Gestalten im ganzen Horoskop.`
-          : `sie sehen einander aber nicht. Der Gast wohnt beim Wirt, ohne dass der es ` +
-            `bemerkt: Die Hilfe liegt bereit und wird nicht abgerufen.`);
+      li.innerHTML = a.voll
+        ? d("aufnahme.voll", PLANET[a.gast].name, PLANET[a.wirt].name,
+            ZEICHEN[a.zeichen].name, a.sicht)
+        : d("aufnahme.halb", PLANET[a.gast].name, PLANET[a.wirt].name, ZEICHEN[a.zeichen].name);
       ul.appendChild(li);
     });
     s8.appendChild(ul);
   } else {
-    s8.appendChild(el("p", null,
-      "Kein Planet steht im Zeichen eines anderen, der ihn ansieht. Jeder steht für sich."));
+    s8.appendChild(el("p", null, d("aufnahme.keine")));
   }
   ziel.appendChild(s8);
 
-  ziel.appendChild(el("p", "kucukNot",
-    "Die Reihenfolge ist die der mittelalterlichen Schule: erst die Sekte, dann das " +
-    "Temperament, dann der Mensch selbst, dann der Herr des Ganzen, die Lichter, die " +
-    "Stärken, die Winkel und zuletzt die Aufnahmen. Robert Zoller fasst die Regel in " +
-    "vier Worte: keine Deutung, keine Vorhersage. Was hier steht, ist der Inhalt — die " +
-    "Zeittechniken dieser Seite sagen nur, wann davon etwas fällig wird."));
+  ziel.appendChild(el("p", "kucukNot", d("rd.note")));
 }
 
 
@@ -455,25 +399,20 @@ function zeichneMittelalter() {
    Himmel. Welche man aufsetzt, ist eine Entscheidung, keine Wahrheit.
    ====================================================================== */
 
-const SAFT_BILD = {
-  "sanguinisch":   "Luft, die durch ein offenes Fenster streicht: Sie bringt herein, was draußen ist, und nimmt mit, was drinnen war.",
-  "cholerisch":    "Ein Feuer, das sofort brennt, wenn man es anrührt — und das Holz braucht, sonst geht es aus.",
-  "melancholisch": "Erde, in der etwas liegt und wartet. Sie gibt nichts schnell heraus, aber was sie hergibt, ist gewachsen.",
-  "phlegmatisch":  "Wasser, das die Form des Gefäßes annimmt und sich doch nicht ändert."
-};
+
 
 function zeichneMythisch() {
   const ziel = $("#rdCikti");
   if (!ziel) return;
-  const d = radixDeutung();
+  const dt = radixDeutung();
   ziel.innerHTML = "";
   ziel.hidden = false;
-  if (!d) {
+  if (!dt) {
     ziel.appendChild(el("p", "kucukNot",
       "Dafür fehlen die Geburtsangaben — Datum, Uhrzeit und der Ort mit gesuchten Koordinaten."));
     return;
   }
-  const { r, herr, temp, alm } = d;
+  const { r, herr, temp, alm } = dt;
   const fh = herr ? figurVon(r.herrscher) : null;
 
   const absatz = (titel, html) => {
@@ -487,91 +426,46 @@ function zeichneMythisch() {
   };
 
   /* Die Bühne. */
-  absatz("Die Bühne", 
-    `In der Stunde deiner Geburt kam ${BILD[r.ascZeichen]} über den Rand der Welt herauf. ` +
-    `Das ist das Bild, in dem du auftrittst — nicht wer du bist, sondern wie der Vorhang ` +
-    `aufgeht. ` +
-    (r.tagGeburt
-      ? `Es war hell. In einem hellen Stück treten die Lauten zuerst auf, und die Leisen ` +
-        `bekommen ihre Szene später.`
-      : `Es war dunkel. In einem dunklen Stück fängt alles leiser an, und was zählt, ` +
-        `geschieht abseits der Fackeln.`) +
-    (fh ? ` Die Hand, die dieses Stück führt, ist ${fh.figur}: ${fh.pron} ${fh.tut}. ` +
-          `${fh.pron.charAt(0).toUpperCase() + fh.pron.slice(1)} hält sich auf ${ORT[herr.haus - 1]}. ` +
-          `${STAND[herr.wuerde.stufe] || STAND["—"]}` : ""));
+  absatz(d("my.buehne"),
+    d("my.buehne.satz", BILD[r.ascZeichen], r.tagGeburt, fh,
+      herr ? ORT[herr.haus - 1] : "",
+      herr ? (STAND[herr.wuerde.stufe] || STAND["—"]) : ""));
 
   /* Der Stoff, aus dem du gemacht bist. */
   if (temp) {
-    absatz("Der Stoff",
-      `Die alten Ärzte mischten jeden Menschen aus vier Dingen, und bei dir überwiegt ` +
-      `<b>${temp.haupt.element}</b>. ${SAFT_BILD[temp.haupt.name]} ` +
-      `${temp.haupt.text} ` +
-      (temp.neben
-        ? `Rein ist die Mischung nicht — ${temp.neben.element} läuft mit, und das ist ` +
-          `der Normalfall: Niemand ist nur ein Element.`
-        : `Die Mischung ist auffallend deutlich; das ist selten.`));
+    absatz(d("my.stoff"),
+      d("my.stoff.satz", temp.haupt.element, temp.haupt.saftBild, temp.haupt.text,
+        temp.neben ? temp.neben.element : null));
   }
 
   /* Zwei, die das Licht halten. */
   const so = r.planeten.sonne, mo = r.planeten.mond;
   if (so && mo) {
-    absatz("Die beiden Lichter",
-      `Zwei Gestalten halten in jeder Geburt das Licht: ` +
-      `<b>der König im Licht</b> steht bei ${bildDat(so.zeichen)} und ${ORT[so.haus - 1]} — ` +
-      `von dort kommt, was an dir gesehen werden will, und von dort kam auch dein Vater. ` +
-      `<b>Die Wandernde mit den vielen Gesichtern</b> steht bei ${bildDat(mo.zeichen)} und ` +
-      `${ORT[mo.haus - 1]} — von dort kommt, was dich nährt und was sich bei dir ändert, ` +
-      `und von dort kam deine Mutter. ` +
-      `In den alten Büchern ist das kein Vergleich, sondern dieselbe Sache: Was oben ` +
-      `wandert, heißt unten Mutter.`);
+    absatz(d("my.lichter"),
+      d("my.lichter.satz", bildDat(so.zeichen), ORT[so.haus - 1],
+        bildDat(mo.zeichen), ORT[mo.haus - 1]));
   }
 
   /* Der Starke und der Schwache. */
-  const st = figurVon(d.staerkster.key), sw = figurVon(d.schwaechster.key);
-  absatz("Wer das Wort führt und wer schweigt",
-    `Am lautesten spricht ${st.figur} — ${st.pron} ${st.tut}. ` +
-    `${st.pron.charAt(0).toUpperCase() + st.pron.slice(1)} gibt dir ${st.gabe} und nimmt sich ` +
-    `${st.preis}. Was von dort kommt, bekommst du, ob du willst oder nicht. ` +
-    `Am leisesten ${sw.figur} — ${sw.fabel}. ` +
-    `Was von dort kommt, fällt dir nicht zu: Du musst es dir holen, und zwar jedes Mal neu.`);
+  const st = figurVon(dt.staerkster.key), sw = figurVon(dt.schwaechster.key);
+  absatz(d("my.wort"), d("my.wort.satz", st, sw));
 
   /* Die Gastfreundschaften. */
-  if (d.aufnahmen.length) {
-    const volle = d.aufnahmen.filter(a => a.voll);
-    absatz("Wer bei wem zu Gast ist",
+  if (dt.aufnahmen.length) {
+    const volle = dt.aufnahmen.filter(a => a.voll);
+    absatz(d("my.gast"),
       volle.length
-        ? volle.map(a => {
-            const g = figurVon(a.gast), w = figurVon(a.wirt);
-            return `${g.figur.charAt(0).toUpperCase() + g.figur.slice(1)} wohnt im Haus ` +
-                   `${w.dat}, und die beiden sehen einander dabei an. ` +
-                   `In den alten Büchern ist das die stärkste Freundschaft, die zwei ` +
-                   `Gestalten schließen können: Der Wirt tut für den Gast, was er kann, ` +
-                   `und zwar ohne dass man ihn bitten muss.`;
-          }).join(" ")
-        : d.aufnahmen.map(a => {
-            const g = figurVon(a.gast), w = figurVon(a.wirt);
-            return `${g.figur.charAt(0).toUpperCase() + g.figur.slice(1)} wohnt im Haus ` +
-                   `${w.dat} — aber sie sehen einander nicht. Die Gastfreundschaft liegt ` +
-                   `bereit und wird nicht in Anspruch genommen.`;
-          }).join(" "));
+        ? volle.map(a => d("my.gast.voll", figurVon(a.gast).figur, figurVon(a.wirt).dat)).join(" ")
+        : dt.aufnahmen.map(a => d("my.gast.halb", figurVon(a.gast).figur, figurVon(a.wirt).dat)).join(" "));
   }
 
   /* Was das zusammen heißt. */
   if (alm) {
     const fa = figurVon(alm.sieger.key);
-    absatz("Wovon hier die Rede ist",
-      `Rechnet man alles zusammen — jede Stelle, jeden Ort, den Tag und die Stunde —, ` +
-      `so steht am Ende ${fa.figur} obenan. ${fa.fabel.charAt(0).toUpperCase() + fa.fabel.slice(1)}: ` +
-      `Das ist die Fabel, die unter diesem Leben liegt. ` +
-      `Wo sich die einzelnen Zeichen widersprechen, erzählt sie weiter.`);
+    absatz(d("my.rede"), d("my.rede.satz", fa.figur, fa.fabel));
   }
 
-  ziel.appendChild(el("p", "kucukNot",
-    "Dies ist dieselbe Geburt wie nebenan, nur anders gelesen. Die mittelalterliche " +
-    "Schule würde diese Lesart ablehnen: Robert Zoller nennt es eine Verwechslung des " +
-    "Horoskops mit dem Innenleben und besteht darauf, dass die Felder äußere Verhältnisse " +
-    "bezeichnen, nicht Vorstellungen davon. Er hat damit nicht unrecht — aber ein Bild " +
-    "merkt man sich, und eine Tabelle nicht. Darum stehen hier beide."));
+  ziel.appendChild(el("p", "kucukNot", d("my.note")));
 }
 
 /* ------------------------------------------------------- die Umschaltung */
@@ -593,4 +487,7 @@ $("#rdBerechnen")?.addEventListener("click", () => schalteBrille(brille));
 if ($("#rdCikti")) {
   window.addEventListener("load", () => setTimeout(() => schalteBrille(brille), 350));
   window.addEventListener("profil-geaendert", () => setTimeout(() => schalteBrille(brille), 250));
+  /* Nach einem Sprachwechsel muss die gerade offene Brille neu gezeichnet
+     werden — sonst bleibt der alte Text stehen, bis man die Brille wechselt. */
+  window.addEventListener("sprache-geaendert", () => setTimeout(() => schalteBrille(brille), 60));
 }

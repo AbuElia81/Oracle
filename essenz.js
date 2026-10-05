@@ -6,22 +6,22 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=178";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=178";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=178";
-import { JAHR, profektionJetzt } from "./jahr.js?v=178";
-import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=178";
-import { mondHeute } from "./elektion.js?v=178";
-import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=178";
-import { zrStand } from "./zr.js?v=178";
-import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=178";
-import { e, setzeEssenzSprache } from "./essenz-texte.js?v=178";
-import { aktuelleSprache } from "./sprachen.js?v=178";
+import { cevir, toplam, kalan } from "./ebced.js?v=182";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=182";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=182";
+import { JAHR, profektionJetzt } from "./jahr.js?v=182";
+import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=182";
+import { mondHeute } from "./elektion.js?v=182";
+import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=182";
+import { zrStand } from "./zr.js?v=182";
+import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=182";
+import { e, setzeEssenzSprache } from "./essenz-texte.js?v=182";
+import { aktuelleSprache } from "./sprachen.js?v=182";
 setzeEssenzSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeEssenzSprache(ev.detail));
-import { jahresUmdrehung } from "./solar.js?v=178";
-import { lebensmass } from "./lebensmass.js?v=178";
-import { verteilungBei } from "./verteilung.js?v=178";
+import { jahresUmdrehung } from "./solar.js?v=182";
+import { lebensmass } from "./lebensmass.js?v=182";
+import { verteilungBei } from "./verteilung.js?v=182";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -645,3 +645,9 @@ aufProfilAenderung(() => {
     if (b && !b.hidden) schreibe("#eCikti");
   }, 600);
 });
+
+/* Nach einem Sprachwechsel die offene Essenz neu schreiben. */
+window.addEventListener("sprache-geaendert", () => setTimeout(() => {
+  const b = document.getElementById("bEssenz");
+  if (b && !b.hidden) schreibe("#eCikti");
+}, 80));

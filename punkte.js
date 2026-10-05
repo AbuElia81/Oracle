@@ -18,8 +18,8 @@
    Der Punkt des Todes steht nicht dabei.
    ------------------------------------------------------------------------ */
 
-import { radix, PLANET, ZEICHEN, HAUS, mitArtikel } from "./horoskop.js?v=178";
-import { norm360 } from "./astro.js?v=178";
+import { radix, PLANET, ZEICHEN, HAUS, mitArtikel } from "./horoskop.js?v=182";
+import { norm360 } from "./astro.js?v=182";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);

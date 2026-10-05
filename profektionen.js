@@ -10,8 +10,8 @@
    Innerhalb eines Jahres profizieren die zwölf Monate auf dieselbe Weise
    weiter, beim Zeichen des Jahres beginnend.
    --------------------------------------------------------------------- */
-import { berechneGeburt, norm360 } from "./astro.js?v=178";
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=178";
+import { berechneGeburt, norm360 } from "./astro.js?v=182";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=182";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);

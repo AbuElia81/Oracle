@@ -34,8 +34,8 @@
    ------------------------------------------------------------------------ */
 
 import { norm360, schiefeDerEkliptik, schiefeAufgangsRA, julianischesDatum }
-  from "./astro.js?v=178";
-import { radix, PLANET, REIHE, ZEICHEN, mitArtikel, grossMitArtikel } from "./horoskop.js?v=178";
+  from "./astro.js?v=182";
+import { radix, PLANET, REIHE, ZEICHEN, mitArtikel, grossMitArtikel } from "./horoskop.js?v=182";
 
 /* Die ägyptischen Grenzen — dieselbe Tafel, nach der auch die Würden
    gerechnet werden. [obere Grenze in Grad, Herr] */
