@@ -6,10 +6,10 @@
    fertigen Ausgaben der anderen Rechner und schreibt in eigene Kästen
    daneben — an fremden Rechnungen wird nichts geändert.
    --------------------------------------------------------------------- */
-import { leseProfilRoh } from "./profil.js?v=136";
-import { cevir, toplam, kalan } from "./ebced.js?v=136";
-import { BURCLAR } from "./korpus.js?v=136";
-import { sonnenLaenge, julianischesDatum, norm360, berechneGeburt } from "./astro.js?v=136";
+import { leseProfilRoh } from "./profil.js?v=138";
+import { cevir, toplam, kalan } from "./ebced.js?v=138";
+import { BURCLAR } from "./korpus.js?v=138";
+import { sonnenLaenge, julianischesDatum, norm360, berechneGeburt } from "./astro.js?v=138";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);

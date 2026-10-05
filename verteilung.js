@@ -1,0 +1,189 @@
+/* ------------------------------------------------------------------------
+   verteilung.js — die Verteilung durch die Grenzen (distributio per fines,
+   arabisch qisma, persisch jārbakhtār).
+
+   Dies ist die eigentliche Zeitherren-Technik des Dorotheos von Sidon
+   (Carmen Astrologicum, 1. Jh.), über das Pahlavi ins Arabische gekommen
+   und bei ʿUmar al-Tabarī und Abū Maʿšar ausgebaut. Sie arbeitet anders
+   als alles andere auf dieser Seite:
+
+   Nicht ein Zeichen pro Jahr wie bei der Profektion, nicht feste Mengen
+   wie bei der Firdaria — sondern der Aszendent wandert mit der Drehung
+   des Himmels durch die fünf Grenzen jedes Zeichens, und jede Grenze
+   dauert so lange, wie sie zum Aufgehen braucht. Darum sind die
+   Abschnitte ungleich: Ein Zeichen, das am Horizont des Geburtsortes
+   steil aufsteigt, geht schnell vorüber; eines, das flach liegt, dauert.
+   Auf nördlichen Breiten ist der Skorpion lang und der Widder kurz.
+
+     <b>Verteiler</b> (distributor, jārbakhtār): der Herr der Grenze, in
+     der der Punkt gerade steht. Er gibt das Hauptthema des Abschnitts.
+
+     <b>Teilhaber</b> (partner, sharer): der Planet, dessen Körper oder
+     Strahl der Punkt zuletzt überschritten hat. Er gibt die Menschen,
+     die Ereignisse, das Getane.
+
+   Dorotheos misst daran auch die Länge des Lebens: Nicht über die Jahre
+   des Alcocoden, sondern indem er fragt, wann der Verteiler ein Übeltäter
+   wird und zugleich ein Übeltäter als Teilhaber dazutritt. Diese Lesart
+   steht hier nicht — sie nennt Jahreszahlen für einen Tod, und das tut
+   diese Seite nicht.
+
+   Gerechnet wird mit den schiefen Aufstiegen für die Geburtsbreite, nicht
+   mit einer Tabelle für ein Klima: Jede Grenze bekommt die Zeit, die sie
+   an diesem Ort wirklich zum Aufgehen braucht.
+   ------------------------------------------------------------------------ */
+
+import { norm360, schiefeDerEkliptik, schiefeAufgangsRA, julianischesDatum }
+  from "./astro.js?v=138";
+import { radix, PLANET, REIHE, ZEICHEN, mitArtikel, grossMitArtikel } from "./horoskop.js?v=138";
+
+/* Die ägyptischen Grenzen — dieselbe Tafel, nach der auch die Würden
+   gerechnet werden. [obere Grenze in Grad, Herr] */
+export const GRENZEN = [
+  [[6,"jupiter"],[12,"venus"],[20,"merkur"],[25,"mars"],[30,"saturn"]],
+  [[8,"venus"],[14,"merkur"],[22,"jupiter"],[27,"saturn"],[30,"mars"]],
+  [[6,"merkur"],[12,"jupiter"],[17,"venus"],[24,"mars"],[30,"saturn"]],
+  [[7,"mars"],[13,"venus"],[19,"merkur"],[26,"jupiter"],[30,"saturn"]],
+  [[6,"jupiter"],[11,"venus"],[18,"saturn"],[24,"merkur"],[30,"mars"]],
+  [[7,"merkur"],[13,"venus"],[18,"jupiter"],[24,"saturn"],[30,"mars"]],
+  [[6,"saturn"],[11,"merkur"],[19,"jupiter"],[24,"venus"],[30,"mars"]],
+  [[6,"mars"],[14,"venus"],[21,"merkur"],[27,"jupiter"],[30,"saturn"]],
+  [[8,"jupiter"],[14,"venus"],[19,"merkur"],[25,"saturn"],[30,"mars"]],
+  [[7,"merkur"],[14,"jupiter"],[22,"venus"],[26,"saturn"],[30,"mars"]],
+  [[7,"merkur"],[13,"venus"],[20,"jupiter"],[25,"mars"],[30,"saturn"]],
+  [[12,"venus"],[16,"jupiter"],[19,"merkur"],[28,"mars"],[30,"saturn"]]
+];
+
+const rad = d => d * Math.PI / 180;
+const grd = r => r * 180 / Math.PI;
+
+/* Rektaszension und Deklination eines Ekliptikpunktes ohne Breite. */
+function aequator(laenge, eps) {
+  const l = rad(laenge), e = rad(eps);
+  return {
+    ra:  norm360(grd(Math.atan2(Math.sin(l) * Math.cos(e), Math.cos(l)))),
+    dek: grd(Math.asin(Math.sin(e) * Math.sin(l)))
+  };
+}
+
+/* Der schiefe Aufstieg eines Ekliptikgrades an dieser Breite: die
+   Rektaszension, die mit ihm zugleich am Osthorizont steht. Die
+   Differenz zweier solcher Werte ist die Zeit zwischen zwei Aufgängen,
+   in Graden gemessen — und ein Grad gilt für ein Lebensjahr. */
+function aufstieg(laenge, breite, eps) {
+  const { ra, dek } = aequator(laenge, eps);
+  return schiefeAufgangsRA(ra, dek, breite);
+}
+
+/* Wie viele Jahre liegen zwischen zwei Ekliptikgraden? */
+function spanne(von, bis, breite, eps) {
+  return norm360(aufstieg(bis, breite, eps) - aufstieg(von, breite, eps));
+}
+
+/* In welcher Grenze liegt ein Grad? */
+export function grenzeVon(laenge) {
+  const z = Math.floor(norm360(laenge) / 30);
+  const g = norm360(laenge) - z * 30;
+  const liste = GRENZEN[z];
+  let unten = 0;
+  for (const [oben, herr] of liste) {
+    if (g < oben) return { zeichen: z, herr, von: z * 30 + unten, bis: z * 30 + oben };
+    unten = oben;
+  }
+  const letzte = liste[liste.length - 1];
+  return { zeichen: z, herr: letzte[1], von: z * 30 + unten, bis: z * 30 + 30 };
+}
+
+/* Alle Grenzgrenzen ab einem Startgrad, der Reihe nach. */
+function naechsteGrenzen(start, anzahl) {
+  const out = [];
+  let lauf = norm360(start);
+  for (let i = 0; i < anzahl; i++) {
+    const g = grenzeVon(lauf);
+    out.push(g);
+    lauf = norm360(g.bis + 0.0001);
+  }
+  return out;
+}
+
+/* ------------------------------------------------- die Teilhaber-Punkte
+   Der wandernde Punkt trifft unterwegs auf die Körper der Planeten und
+   auf ihre Strahlen — Sextil, Quadrat, Trigon, Opposition. Wen er
+   zuletzt getroffen hat, der ist sein Teilhaber. */
+const STRAHLEN = [
+  { name: "Körper",      versatz: 0 },
+  { name: "Sextil",      versatz: 60 },
+  { name: "Quadrat",     versatz: 90 },
+  { name: "Trigon",      versatz: 120 },
+  { name: "Opposition",  versatz: 180 },
+  { name: "Trigon",      versatz: 240 },
+  { name: "Quadrat",     versatz: 270 },
+  { name: "Sextil",      versatz: 300 }
+];
+
+function alleTreffer(r, breite, eps, start, bisJahre) {
+  const treffer = [];
+  REIHE.forEach(k => {
+    const pl = r.planeten[k];
+    if (!pl) return;
+    STRAHLEN.forEach(s => {
+      const punkt = norm360(pl.laenge + s.versatz);
+      const jahre = spanne(start, punkt, breite, eps);
+      if (jahre <= bisJahre) treffer.push({ key: k, name: pl.name, art: s.name, jahre, punkt });
+    });
+  });
+  return treffer.sort((a, b) => a.jahre - b.jahre);
+}
+
+/* ======================================================================
+   Die Verteilung des Aszendenten über ein Leben.
+   ====================================================================== */
+export function verteilung(bisJahre = 95) {
+  const r = radix();
+  if (!r) return null;
+  const p = r.profil;
+  const [j, m, t] = p.datum.split("-").map(Number);
+  const [st, mi] = p.zeit.split(":").map(Number);
+  const jd = julianischesDatum(j, m, t, st + mi / 60 - p.utc);
+  const eps = schiefeDerEkliptik(jd);
+  const breite = +p.breite;
+
+  const start = r.asc;
+  const roh = naechsteGrenzen(start, 40);
+
+  /* Jede Grenze bekommt ihre Zeit — vom Aszendenten aus gemessen. */
+  const abschnitte = [];
+  let vorher = 0;
+  for (const g of roh) {
+    const bis = spanne(start, g.bis, breite, eps);
+    const von = vorher;
+    if (von >= bisJahre) break;
+    abschnitte.push({ ...g, vonJahr: von, bisJahr: bis, dauer: bis - von });
+    vorher = bis;
+  }
+
+  const treffer = alleTreffer(r, breite, eps, start, bisJahre);
+
+  /* Zu jedem Abschnitt der Teilhaber: der letzte Treffer vor seinem Beginn
+     — und wer währenddessen noch dazukommt. */
+  abschnitte.forEach(a => {
+    const davor = treffer.filter(x => x.jahre <= a.vonJahr + 0.001);
+    a.teilhaber = davor.length ? davor[davor.length - 1] : null;
+    a.waehrend = treffer.filter(x => x.jahre > a.vonJahr && x.jahre < a.bisJahr);
+  });
+
+  return { abschnitte, treffer, asc: start, breite,
+           /* Wie lang ein Grad dieses Zeichens an diesem Ort währt. */
+           zeichenZeiten: Array.from({ length: 12 }, (_, z) =>
+             spanne(z * 30, (z + 1) * 30 - 0.0001, breite, eps)) };
+}
+
+/* Der Stand zu einem bestimmten Alter. */
+export function verteilungBei(alter) {
+  const v = verteilung(Math.max(alter + 5, 95));
+  if (!v) return null;
+  const a = v.abschnitte.find(x => alter >= x.vonJahr && alter < x.bisJahr);
+  if (!a) return null;
+  const naechster = v.abschnitte[v.abschnitte.indexOf(a) + 1] || null;
+  return { ...v, laufend: a, naechster };
+}

@@ -7,7 +7,7 @@
    Maske erscheint — und erst eine ausgefüllte Maske öffnet die Reiter
    des jeweiligen Weges.
    --------------------------------------------------------------------- */
-import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=136";
+import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=138";
 
 const HEIM = "bProfil";
 const SPEICHER = "oracle-weg";
@@ -36,13 +36,15 @@ function schalte() {
   /* Steht schon alles da, bleibt die Maske zugeklappt — die Startseite
      soll die beiden Wege zeigen und sonst nichts. Fehlt noch etwas,
      steht sie offen, denn dann ist sie das Nächste, was zu tun ist. */
+  /* Die Maske wird nur ein einziges Mal von selbst auf- oder zugeklappt:
+     beim ersten Zeichnen, und danach nie wieder. Vorher klappte sie beim
+     Tippen zu — das Profil speichert sich nach einer halben Sekunde von
+     selbst, das löst dieses Schalten aus, und die Maske schloss sich dem
+     Tippenden vor der Nase. Wer sie öffnet, soll sie offen behalten. */
   const rahmen = document.getElementById("maskeRahmen");
-  if (rahmen) {
-    /* Offen, solange für den gewählten Weg noch etwas fehlt — sonst bliebe
-       auch der Hinweis verborgen, der sagt, was fehlt. Ohne Wahl richtet
-       sie sich danach, ob überhaupt schon etwas dasteht. */
-    const soll = weg ? !bereit : !(p && (p.name || p.datum));
-    if (rahmen.open !== soll) rahmen.open = soll;
+  if (rahmen && !rahmen.dataset.gestellt) {
+    rahmen.dataset.gestellt = "1";
+    rahmen.open = weg ? !bereit : !(p && (p.name || p.datum));
   }
   /* Die Angaben stehen jetzt vor der Wahl. Solange kein Weg gewählt ist,
      zeigt die Maske alles — die Zwischenüberschriften sagen ohnehin, was
@@ -84,6 +86,10 @@ document.querySelectorAll("#wahl .wahlKarte").forEach(karte => {
     /* Eine Karte wählt ihren Weg — sie hebt ihn nicht wieder auf.
        Wer wechseln will, drückt die andere. */
     schreib(karte.dataset.weg);
+    /* Der Wegwechsel darf sie öffnen — das ist eine Handlung des Nutzers,
+       keine Nebenwirkung des Speicherns. */
+    const rahmen = document.getElementById("maskeRahmen");
+    if (rahmen && !genug(karte.dataset.weg, leseProfilRoh())) rahmen.open = true;
     schalte();
     /* Nicht gleich in die erste Technik springen: Erst zeigen, was es gibt. */
     const ziel = lies() && genug(lies(), leseProfilRoh())
