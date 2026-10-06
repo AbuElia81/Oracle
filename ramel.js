@@ -21,9 +21,9 @@ const el = (t, c, txt) => { const n = document.createElement(t);
    Rubeus, Fortuna maior und minor, Acquisitio und Amissio, Laetitia und
    Tristitia, Caput und Cauda. Nur Via, Populus, Carcer und Coniunctio
    spiegeln sich selbst. */
-import { FIGUR_IT, RAMEL_ELEMENT_IT, RAMEL_JA_IT, RAMEL_PLANET_IT } from "./ramel-it.js?v=210";
-import { aktuelleSprache } from "./sprachen.js?v=210";
-import { rt, setzeRestSprache } from "./rest-texte.js?v=210";
+import { FIGUR_IT, RAMEL_ELEMENT_IT, RAMEL_JA_IT, RAMEL_PLANET_IT } from "./ramel-it.js?v=211";
+import { aktuelleSprache } from "./sprachen.js?v=211";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=211";
 setzeRestSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 

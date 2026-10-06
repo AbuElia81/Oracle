@@ -22,6 +22,9 @@ export const SPRACHEN = [
   { code: "ar", name: "العربية",   kurz: "AR", rtl: true }
 ];
 
+import { HTML_IT } from "./html-it.js?v=211";
+import { HTML_DE } from "./html-de.js?v=211";
+
 export const WORTE = {
   "kopf.unterzeile": {
     de:"Orakelrechner nach alten Büchern", en:"Oracle calculators from old books",
@@ -178,8 +181,12 @@ export function aktuelleSprache() {
 export function t(schluessel, sprache) {
   const s = sprache || aktuelleSprache();
   const e = WORTE[schluessel];
-  if (!e) return schluessel;
-  return e[s] || e.de || "";
+  if (e) return e[s] || e.de || "";
+  /* Die Rahmentexte der Abschnitte stehen in eigenen Dateien, weil sie
+     lang sind und sonst diese Tafel unlesbar machen würden. */
+  if (s === "it" && HTML_IT[schluessel]) return HTML_IT[schluessel];
+  if (HTML_DE[schluessel]) return HTML_DE[schluessel];
+  return schluessel;
 }
 
 export function setzeSprache(code) {

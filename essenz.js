@@ -6,22 +6,22 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=210";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=210";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=210";
-import { JAHR, profektionJetzt } from "./jahr.js?v=210";
-import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=210";
-import { mondHeute } from "./elektion.js?v=210";
-import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=210";
-import { zrStand } from "./zr.js?v=210";
-import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=210";
-import { e, setzeEssenzSprache } from "./essenz-texte.js?v=210";
-import { aktuelleSprache } from "./sprachen.js?v=210";
+import { cevir, toplam, kalan } from "./ebced.js?v=211";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=211";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=211";
+import { JAHR, profektionJetzt } from "./jahr.js?v=211";
+import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=211";
+import { mondHeute } from "./elektion.js?v=211";
+import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=211";
+import { zrStand } from "./zr.js?v=211";
+import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=211";
+import { e, setzeEssenzSprache } from "./essenz-texte.js?v=211";
+import { aktuelleSprache } from "./sprachen.js?v=211";
 setzeEssenzSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeEssenzSprache(ev.detail));
-import { jahresUmdrehung } from "./solar.js?v=210";
-import { lebensmass } from "./lebensmass.js?v=210";
-import { verteilungBei } from "./verteilung.js?v=210";
+import { jahresUmdrehung } from "./solar.js?v=211";
+import { lebensmass } from "./lebensmass.js?v=211";
+import { verteilungBei } from "./verteilung.js?v=211";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
