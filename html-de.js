@@ -65,5 +65,29 @@ export const HTML_DE = {
   "bLebensmass.titel": "Das Lebensmaß",
   "bLebensmass.unter": "Hylech und Alkochoden — die umstrittenste Technik der Überlieferung",
   "bLebensmass.ein1": "Zuerst wird der Hylech gesucht (arabisch haylāj, griechisch aphetes, „der Loslassende“): jene Stelle des Horoskops, von der das Leben ausgeht. Dann der Alkochoden (kadkhudāh, „der Hausherr“): der Planet, der über dieser Stelle die meiste Würde hat. Er gibt seine Jahre her — seine größten, mittleren oder kleinsten, je nachdem, wie er selbst steht.",
-  "bEssenz.ein1": "Alles, was die einzelnen Abschnitte gefunden haben, in einem Stück gelesen — das Wesen aus dem Namen, der Geist aus dem Himmel der Geburtsstunde, und wo du gerade in der Zeit stehst."
+  "bEssenz.ein1": "Alles, was die einzelnen Abschnitte gefunden haben, in einem Stück gelesen — das Wesen aus dem Namen, der Geist aus dem Himmel der Geburtsstunde, und wo du gerade in der Zeit stehst.",
+
+  /* Was jedes Technikfeld der Wegeliste verspricht. */
+  "worum.bHoroskop": "Der Himmel deiner Geburtsstunde: Aszendent, die sieben Planeten in Zeichen und Feldern, ihre Würden und Winkel. Dazu die zwölf Felder des Lebens, einzeln befragt.",
+  "worum.bYildiz": "Das osmanische Sternbuch. Dein Name und der deiner Mutter werden zu Zahlen, die Summe fällt in ein Fach des Himmels.",
+  "worum.bNiyet": "Die Tafel der Absicht. Nicht die Sache wird gefragt, sondern der Augenblick, in dem du fragst.",
+  "worum.bUyum": "Zwei Menschen, vier Namen. Die Handschriften rechnen beide Summen gegeneinander und lesen die alte Regel der Elemente.",
+  "worum.bMenzil": "Die Wahlastrologie. Wann fängt man etwas an? Der Mond zieht durch achtundzwanzig Herbergen, und jede hat ihr Urteil.",
+  "worum.bRamel": "Die Sandkunst. Sechzehn Figuren aus geraden und ungeraden Punkten, aus vier Müttern wächst ein ganzes Feld.",
+  "worum.bGeist": "Agrippas Geist des elften Hauses — ein Name, der nicht aus deinem Namen kommt, sondern aus fünf Orten deines Himmels.",
+  "worum.bLebensbogen": "Die älteste Vorhersagetechnik des Westens: ein Grad der Himmelsdrehung für ein Lebensjahr.",
+  "worum.bZR": "Die Kapitel deines Lebens, nach Vettius Valens — mit ihren Unterkapiteln, den Höhepunkten und der Stelle, an der ein Faden reißt.",
+  "worum.bAntiszien": "Die Schattenzwillinge: Punkte, die einander nicht ansehen und doch denselben Schatten werfen.",
+  "worum.bProfektionen": "Ein Zeiger, der jedes Jahr ein Feld weiterrückt. Worum es von Geburtstag zu Geburtstag geht — und wer das Jahr führt.",
+  "worum.bFirdaria": "Die persische Zählung des Abū Maʿšar: feste Mengen von Jahren, jede unter einer anderen Hand.",
+  "worum.bVimshottari": "Das verbreitetste Zeitsystem Indiens, gerechnet vom Stand des Mondes bei deiner Geburt.",
+  "worum.bSolar": "Einmal im Jahr kehrt die Sonne auf ihren Geburtsgrad zurück. Was dieses Jahr trägt — in neun Schritten nach Abū Maʿšar.",
+  "worum.bRadixdeutung": "Die Geburt als Ganzes, ehe die Zeit anfängt — Sekte, Temperament, der Aufsteigende und sein Herr. Wahlweise nüchtern nach Bonatti oder in Bildern und Fabeln.",
+  "worum.bAlmutem": "Der Herr des ganzen Horoskops nach Ibn Ezra und Bonatti — wer über diese Geburt als solche das letzte Wort hat, wenn die einzelnen Zeugen sich widersprechen.",
+  "worum.bWerk": "Ptolemäus fragt nicht nach dem Beruf, sondern aus welchem Stoff deine Arbeit ist — durch Hand, Auge oder Wort.",
+  "worum.bLebensalter": "Dorotheos teilt das Leben in drei Teile und gibt jedem einen der drei Herren deines Elements.",
+  "worum.bPunkte": "Gerechnete Stellen, keine Himmelskörper: wo Glück, Geist, Liebe, Vater, Mutter und die übrigen im Horoskop zu liegen kommen.",
+  "worum.bVerteilung": "Dorotheos' Verteilung durch die Grenzen: Der Aszendent wandert mit der Drehung des Himmels, und jede Grenze dauert so lange, wie sie an deinem Ort zum Aufgehen braucht.",
+  "worum.bLebensmass": "Die alte Frage nach dem Maß des Lebens: Hylech und Alcocoden, der Geber und der Hüter.",
+  "worum.bEssenz": "Alles zusammen, in Bildern statt in Fachsprache — was die einzelnen Künste gemeinsam sagen."
 };

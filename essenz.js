@@ -6,22 +6,24 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=212";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=212";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=212";
-import { JAHR, profektionJetzt } from "./jahr.js?v=212";
-import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=212";
-import { mondHeute } from "./elektion.js?v=212";
-import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=212";
-import { zrStand } from "./zr.js?v=212";
-import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=212";
-import { e, setzeEssenzSprache } from "./essenz-texte.js?v=212";
-import { aktuelleSprache } from "./sprachen.js?v=212";
+import { cevir, toplam, kalan } from "./ebced.js?v=221";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=221";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=221";
+import { JAHR, profektionJetzt } from "./jahr.js?v=221";
+import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=221";
+import { mondHeute } from "./elektion.js?v=221";
+import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=221";
+import { zrStand } from "./zr.js?v=221";
+import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=221";
+import { e, setzeEssenzSprache } from "./essenz-texte.js?v=221";
+import { aktuelleSprache } from "./sprachen.js?v=221";
+import { herkunftVon, hUi, setzeHerkunftSprache, HERKUNFT } from "./herkunft.js?v=221";
 setzeEssenzSprache(aktuelleSprache());
-window.addEventListener("sprache-geaendert", ev => setzeEssenzSprache(ev.detail));
-import { jahresUmdrehung } from "./solar.js?v=212";
-import { lebensmass } from "./lebensmass.js?v=212";
-import { verteilungBei } from "./verteilung.js?v=212";
+window.addEventListener("sprache-geaendert", ev => { setzeEssenzSprache(ev.detail); setzeHerkunftSprache(ev.detail); });
+setzeHerkunftSprache(aktuelleSprache());
+import { jahresUmdrehung } from "./solar.js?v=221";
+import { lebensmass } from "./lebensmass.js?v=221";
+import { verteilungBei } from "./verteilung.js?v=221";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -212,12 +214,51 @@ function undListe(teile) {
 /* ------------------------------------------------------------- der Text */
 
 let kapitelZaehler = 0;
+/* Welcher Herkunftseintrag zu einem Absatz gehört, wird über seinen
+   Titel gefunden: Die Titel kommen alle aus derselben Tafel, und so
+   braucht kein einziger Aufruf ein zusätzliches Argument. */
+function schluesselVonTitel(titel) {
+  for (const k of Object.keys(HERKUNFT.de)) if (e(k) === titel) return k;
+  return null;
+}
+
+/* Jeder Absatz bekommt unten eine Zeile, die sich aufklappen lässt: wie
+   die Technik heißt, woher sie stammt, wie gerechnet wird. Zugeklappt
+   sind das drei Worte — die Lesung bleibt eine Lesung, und die Tiefe ist
+   trotzdem einen Klick entfernt. */
+function herkunftZeile(schluessel) {
+  const h = herkunftVon(schluessel);
+  if (!h) return null;
+  const d = el("details", "herkunft");
+  d.appendChild(el("summary", null, hUi("auf")));
+  const k = el("div", "herkunftInhalt");
+  k.appendChild(el("div", "herkunftTechnik", h.technik));
+  const q = el("p", "herkunftZeile");
+  q.innerHTML = `<span class="herkunftSchild">${hUi("quelle")}</span> ${h.quelle}`;
+  k.appendChild(q);
+  const w = el("p", "herkunftZeile");
+  w.innerHTML = `<span class="herkunftSchild">${hUi("wie")}</span> ${h.wie}`;
+  k.appendChild(w);
+  if (h.abschnitt) {
+    const b = el("button", "herkunftKnopf", hUi("mehr"));
+    b.addEventListener("click", () => {
+      const r = document.querySelector(`nav#reiter button[data-bolum="${h.abschnitt}"]`);
+      if (r) { r.click(); window.scrollTo({ top: 0, behavior: "smooth" }); }
+    });
+    k.appendChild(b);
+  }
+  d.appendChild(k);
+  return d;
+}
+
 function absatz(titel, text) {
   const f = document.createDocumentFragment();
   const h = el("h3", null, titel);
   const t = el("p", kapitelZaehler === 0 ? "erstesWort" : null, text);
   kapitelZaehler++;
   f.append(h, t);
+  const hz = herkunftZeile(schluesselVonTitel(titel));
+  if (hz) f.append(hz);
   return f;
 }
 
@@ -375,6 +416,8 @@ function schreibe(zielWahl) {
     pp.innerHTML = teile.join(". ") + e("jahre.schluss");
     cikti.appendChild(el("h3", null, e("titel.jahreFuehrt")));
     cikti.appendChild(pp);
+    const hzj = herkunftZeile("titel.jahreFuehrt");
+    if (hzj) cikti.appendChild(hzj);
   }
 
   if (dir) {
@@ -470,6 +513,8 @@ function schreibe(zielWahl) {
         mond.menzil.iyi.toLowerCase(), mond.menzil.kacin.toLowerCase(), mond.verbrannt);
       jahrFach.appendChild(mp);
     }
+    const hzp = herkunftZeile("titel.jahr");
+    if (hzp) jahrFach.appendChild(hzp);
     return 1;
   }
 
@@ -549,6 +594,8 @@ function schreibe(zielWahl) {
     const ende = el("p", "schlussWort");
     ende.innerHTML = e("schluss");
     kasten.appendChild(ende);
+    const hzz = herkunftZeile("titel.zusammen");
+    if (hzz) kasten.appendChild(hzz);
 
     cikti.appendChild(kasten);
   }
@@ -616,3 +663,24 @@ window.addEventListener("sprache-geaendert", () => setTimeout(() => {
   const b = document.getElementById("bEssenz");
   if (b && !b.hidden) schreibe("#eCikti");
 }, 80));
+
+/* --------------------------------------------------- die Lesung auf der Startseite
+   Dieselbe Essenz, aber dort, wo man sie sucht: gleich nach den Angaben,
+   ohne dass man erst einen von siebzehn Knöpfen finden muss. */
+function schreibeLesung() {
+  const ziel = document.getElementById("lesungCikti");
+  const rahmen = document.getElementById("lesungHeim");
+  if (!ziel || !rahmen || rahmen.hidden) return;
+  schreibe("#lesungCikti");
+}
+
+let lesungUhr = null;
+function lesungNachziehen() {
+  clearTimeout(lesungUhr);
+  lesungUhr = setTimeout(schreibeLesung, 400);
+  [1200, 2600].forEach(ms => setTimeout(schreibeLesung, ms));
+}
+aufProfilAenderung(lesungNachziehen);
+window.addEventListener("sprache-geaendert", () => setTimeout(schreibeLesung, 120));
+if (document.readyState === "complete") lesungNachziehen();
+else window.addEventListener("load", lesungNachziehen);

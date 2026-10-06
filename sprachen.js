@@ -22,8 +22,8 @@ export const SPRACHEN = [
   { code: "ar", name: "العربية",   kurz: "AR", rtl: true }
 ];
 
-import { HTML_IT } from "./html-it.js?v=212";
-import { HTML_DE } from "./html-de.js?v=212";
+import { HTML_IT } from "./html-it.js?v=221";
+import { HTML_DE } from "./html-de.js?v=221";
 
 export const WORTE = {
   "kopf.unterzeile": {
@@ -115,6 +115,9 @@ export const WORTE = {
   "gruppe.zusammen": {
     de:"Alles zusammen", en:"Everything together", tr:"Hepsi birlikte",
     it:"Tutto insieme", es:"Todo junto", fr:"Tout ensemble", ar:"كل ذلك معاً" },
+  "gruppe.weiteres": {
+    de:"Weiteres", en:"Further", tr:"Diğerleri",
+    it:"Altro", es:"Más", fr:"Autres", ar:"المزيد" },
   "gruppe.augenblick": {
     de:"Den Augenblick befragen", en:"Consulting the moment", tr:"Ânı sormak",
     it:"Interrogare l'istante", es:"Consultar el instante",
@@ -133,6 +136,20 @@ export const WORTE = {
     tr:"Yıldızlar — teknikler", it:"Le stelle — le tecniche",
     es:"Las estrellas — las técnicas", fr:"Les étoiles — les techniques",
     ar:"النجوم — الطرق" },
+
+  "lesung.titel": { de:"Deine Lesung", it:"La tua lettura", en:"Your reading",
+    tr:"Okuman", es:"Tu lectura", fr:"Ta lecture", ar:"قراءتك" },
+  "lesung.unter": { de:"Alles, was der Himmel deiner Geburtsstunde hergibt — in einem Stück",
+    it:"Tutto ciò che il cielo della tua ora di nascita dice — in un solo racconto",
+    en:"Everything the sky of your birth hour says — in a single reading",
+    tr:"Doğum saatinin göğü ne veriyorsa — tek parça hâlinde",
+    es:"Todo lo que dice el cielo de tu hora de nacimiento — en una sola lectura",
+    fr:"Tout ce que donne le ciel de ton heure de naissance — d'un seul tenant",
+    ar:"كل ما تقوله سماء ساعة ميلادك — في قراءة واحدة" },
+  "technik.auf": { de:"Die Techniken einzeln", it:"Le tecniche una per una",
+    en:"The techniques one by one", tr:"Teknikler tek tek",
+    es:"Las técnicas una por una", fr:"Les techniques une à une",
+    ar:"الطرق واحدة واحدة" },
 
   "nav.bHoroskop":     { de:"Das Horoskop", it:"L'oroscopo", en:"The chart", tr:"Yıldız haritası", es:"El horóscopo", fr:"L'horoscope", ar:"الطالع" },
   "nav.bRadixdeutung": { de:"Die Deutung", it:"La lettura", en:"The reading", tr:"Yorum", es:"La lectura", fr:"La lecture", ar:"القراءة" },

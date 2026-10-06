@@ -7,8 +7,8 @@
    Maske erscheint — und erst eine ausgefüllte Maske öffnet die Reiter
    des jeweiligen Weges.
    --------------------------------------------------------------------- */
-import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=212";
-import { t } from "./sprachen.js?v=212";
+import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=221";
+import { t } from "./sprachen.js?v=221";
 
 const HEIM = "bProfil";
 const SPEICHER = "oracle-weg";
@@ -72,6 +72,10 @@ function schalte() {
     k.classList.toggle("gewaehlt", k.dataset.weg === weg));
 
   zeichneWege();
+  /* Das Ergebnis steht oben, die Techniken liegen darunter in einem Fach.
+     Co–Star und Chani machen es genauso: erst eine Antwort, dann das Menü. */
+  zeig("#lesungHeim", bereit && weg === "sterne");
+  zeig("#technikFach", bereit);
   /* Das Leuchten steht nicht in der Liste, sondern unten auf der
      Startseite — es ist kein Rechner, sondern ein Blick aufs Ganze. */
   zeig("#leuchtenHeim", genug("sterne", p));
@@ -104,31 +108,8 @@ document.querySelectorAll("#wahl .wahlKarte").forEach(karte => {
 /* ---------------------------------------------- die Techniken des Weges
    Nach der Wahl steht nicht gleich die erste Technik da, sondern die
    Liste aller — als große Felder untereinander, damit man am Telefon
-   sieht, was es gibt, bevor man sich für eines entscheidet. */
-const WORUM = {
-  bHoroskop:     "Der Himmel deiner Geburtsstunde: Aszendent, die sieben Planeten in Zeichen und Feldern, ihre Würden und Winkel. Dazu die zwölf Felder des Lebens, einzeln befragt.",
-  bYildiz:       "Das osmanische Sternbuch. Dein Name und der deiner Mutter werden zu Zahlen, die Summe fällt in ein Fach des Himmels.",
-  bNiyet:        "Die Tafel der Absicht. Nicht die Sache wird gefragt, sondern der Augenblick, in dem du fragst.",
-  bUyum:         "Zwei Menschen, vier Namen. Die Handschriften rechnen beide Summen gegeneinander und lesen die alte Regel der Elemente.",
-  bMenzil:       "Die Wahlastrologie. Wann fängt man etwas an? Der Mond zieht durch achtundzwanzig Herbergen, und jede hat ihr Urteil.",
-  bRamel:        "Die Sandkunst. Sechzehn Figuren aus geraden und ungeraden Punkten, aus vier Müttern wächst ein ganzes Feld.",
-  bGeist:        "Agrippas Geist des elften Hauses — ein Name, der nicht aus deinem Namen kommt, sondern aus fünf Orten deines Himmels.",
-  bLebensbogen:  "Die älteste Vorhersagetechnik des Westens: ein Grad der Himmelsdrehung für ein Lebensjahr.",
-  bZR:           "Die Kapitel deines Lebens, nach Vettius Valens — mit ihren Unterkapiteln, den Höhepunkten und der Stelle, an der ein Faden reißt.",
-  bAntiszien:    "Die Schattenzwillinge: Punkte, die einander nicht ansehen und doch denselben Schatten werfen.",
-  bProfektionen: "Ein Zeiger, der jedes Jahr ein Feld weiterrückt. Worum es von Geburtstag zu Geburtstag geht — und wer das Jahr führt.",
-  bFirdaria:     "Die persische Zählung des Abū Maʿšar: feste Mengen von Jahren, jede unter einer anderen Hand.",
-  bVimshottari:  "Das verbreitetste Zeitsystem Indiens, gerechnet vom Stand des Mondes bei deiner Geburt.",
-  bSolar:        "Einmal im Jahr kehrt die Sonne auf ihren Geburtsgrad zurück. Was dieses Jahr trägt — in neun Schritten nach Abū Maʿšar.",
-  bRadixdeutung: "Die Geburt als Ganzes, ehe die Zeit anfängt — Sekte, Temperament, der Aufsteigende und sein Herr. Wahlweise nüchtern nach Bonatti oder in Bildern und Fabeln.",
-  bAlmutem:      "Der Herr des ganzen Horoskops nach Ibn Ezra und Bonatti — wer über diese Geburt als solche das letzte Wort hat, wenn die einzelnen Zeugen sich widersprechen.",
-  bWerk:         "Ptolemäus fragt nicht nach dem Beruf, sondern aus welchem Stoff deine Arbeit ist — durch Hand, Auge oder Wort.",
-  bLebensalter:  "Dorotheos teilt das Leben in drei Teile und gibt jedem einen der drei Herren deines Elements.",
-  bPunkte:       "Gerechnete Stellen, keine Himmelskörper: wo Glück, Geist, Liebe, Vater, Mutter und die übrigen im Horoskop zu liegen kommen.",
-  bVerteilung:   "Dorotheos' Verteilung durch die Grenzen: Der Aszendent wandert mit der Drehung des Himmels, und jede Grenze dauert so lange, wie sie an deinem Ort zum Aufgehen braucht.",
-  bLebensmass:   "Die alte Frage nach dem Maß des Lebens: Hylech und Alcocoden, der Geber und der Hüter.",
-  bEssenz:       "Alles zusammen, in Bildern statt in Fachsprache — was die einzelnen Künste gemeinsam sagen."
-};
+   sieht, was es gibt, bevor man sich für eines entscheidet. Was jedes
+   Feld verspricht, steht in den Sprachtafeln unter "worum.*". */
 
 function zeichneWege() {
   const liste = document.getElementById("wegListe");
@@ -182,7 +163,7 @@ function zeichneWege() {
   if (rest.length) {
     const h = document.createElement("h4");
     h.className = "wegGruppe";
-    h.textContent = "Weiteres";
+    h.textContent = t("gruppe.weiteres");
     liste.appendChild(h);
     rest.forEach(b => liste.appendChild(feldVon(b)));
   }
@@ -200,7 +181,7 @@ function feldVon(b) {
   name.textContent = uebersetzt && uebersetzt !== schluessel ? uebersetzt : b.textContent;
   const u = document.createElement("span");
   u.className = "wegWorum";
-  u.textContent = WORUM[b.dataset.bolum] || "";
+  u.textContent = t("worum." + b.dataset.bolum);
   k.append(name, u);
   k.addEventListener("click", () => { b.click(); window.scrollTo({ top: 0, behavior: "smooth" }); });
   return k;

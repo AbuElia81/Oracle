@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Oracle</title>
 <meta name="description" content="Oracle — Orakelrechner nach alten Büchern: das osmanische Yıldıznâme aus Name und Muttername, der Geist des 11. Hauses nach Agrippa, Primärdirektionen, Zodiacal Releasing und Antiszien.">
-<link rel="stylesheet" href="stil.css?v=212">
+<link rel="stylesheet" href="stil.css?v=221">
 </head>
 <body>
 
@@ -394,7 +394,20 @@
 
 
 
-  <div id="wegListe" class="wegListe" hidden></div>
+  <!-- Die Lesung: das Ergebnis zuerst, nicht ein Menü. -->
+  <div id="lesungHeim" hidden>
+    <div class="appKopf lesungKopf">
+      <h2 data-t="lesung.titel">Deine Lesung</h2>
+      <p class="unterzeile" data-t="lesung.unter">Alles, was der Himmel deiner Geburtsstunde hergibt — in einem Stück</p>
+    </div>
+    <div id="lesungCikti"></div>
+  </div>
+
+  <!-- Die einzelnen Techniken: eine Ebene tiefer, für wen sie will. -->
+  <details id="technikFach" class="wasIst" hidden>
+    <summary data-t="technik.auf">Die Techniken einzeln</summary>
+    <div id="wegListe" class="wegListe"></div>
+  </details>
 
   <div id="leuchtenHeim" hidden>
   <div class="appKopf">
@@ -1220,38 +1233,38 @@
   osmanisch, hellenistisch, arabisch, ägyptisch, lateinisch</p>
 </footer>
 
-<script type="module" src="sprachen.js?v=212"></script>
-<script type="module" src="oracle.js?v=212"></script>
-<script type="module" src="profil.js?v=212"></script>
-<script type="module" src="profil-ui.js?v=212"></script>
-<script type="module" src="zugang.js?v=212"></script>
-<script type="module" src="horoskop.js?v=212"></script>
-<script type="module" src="perioden.js?v=212"></script>
-<script type="module" src="solar.js?v=212"></script>
-<script type="module" src="lebensmass.js?v=212"></script>
-<script type="module" src="leuchten.js?v=212"></script>
-<script type="module" src="elektion.js?v=212"></script>
-<script type="module" src="ramel.js?v=212"></script>
-<script type="module" src="spende.js?v=212"></script>
-<script type="module" src="geist.js?v=212"></script>
-<script type="module" src="geist-profil.js?v=212"></script>
-<script type="module" src="yildiz-profil.js?v=212"></script>
-<script type="module" src="essenz.js?v=212"></script>
-<script type="module" src="auto-rechnen.js?v=212"></script>
-<script type="module" src="deutung.js?v=212"></script>
-<script type="module" src="jahr.js?v=212"></script>
-<script type="module" src="lebensbogen.js?v=212"></script>
-<script type="module" src="zr.js?v=212"></script>
-<script type="module" src="antiszien.js?v=212"></script>
-<script type="module" src="profektionen.js?v=212"></script>
-<script type="module" src="themen.js?v=212"></script>
-<script type="module" src="crosscheck.js?v=212"></script>
-<script type="module" src="planeten.js?v=212"></script>
-<script type="module" src="verteilung.js?v=212"></script>
-<script type="module" src="almutem.js?v=212"></script>
-<script type="module" src="radixdeutung.js?v=212"></script>
-<script type="module" src="werk.js?v=212"></script>
-<script type="module" src="punkte.js?v=212"></script>
-<script type="module" src="haeuser.js?v=212"></script>
+<script type="module" src="sprachen.js?v=221"></script>
+<script type="module" src="oracle.js?v=221"></script>
+<script type="module" src="profil.js?v=221"></script>
+<script type="module" src="profil-ui.js?v=221"></script>
+<script type="module" src="zugang.js?v=221"></script>
+<script type="module" src="horoskop.js?v=221"></script>
+<script type="module" src="perioden.js?v=221"></script>
+<script type="module" src="solar.js?v=221"></script>
+<script type="module" src="lebensmass.js?v=221"></script>
+<script type="module" src="leuchten.js?v=221"></script>
+<script type="module" src="elektion.js?v=221"></script>
+<script type="module" src="ramel.js?v=221"></script>
+<script type="module" src="spende.js?v=221"></script>
+<script type="module" src="geist.js?v=221"></script>
+<script type="module" src="geist-profil.js?v=221"></script>
+<script type="module" src="yildiz-profil.js?v=221"></script>
+<script type="module" src="essenz.js?v=221"></script>
+<script type="module" src="auto-rechnen.js?v=221"></script>
+<script type="module" src="deutung.js?v=221"></script>
+<script type="module" src="jahr.js?v=221"></script>
+<script type="module" src="lebensbogen.js?v=221"></script>
+<script type="module" src="zr.js?v=221"></script>
+<script type="module" src="antiszien.js?v=221"></script>
+<script type="module" src="profektionen.js?v=221"></script>
+<script type="module" src="themen.js?v=221"></script>
+<script type="module" src="crosscheck.js?v=221"></script>
+<script type="module" src="planeten.js?v=221"></script>
+<script type="module" src="verteilung.js?v=221"></script>
+<script type="module" src="almutem.js?v=221"></script>
+<script type="module" src="radixdeutung.js?v=221"></script>
+<script type="module" src="werk.js?v=221"></script>
+<script type="module" src="punkte.js?v=221"></script>
+<script type="module" src="haeuser.js?v=221"></script>
 </body>
 </html>

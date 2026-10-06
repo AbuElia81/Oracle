@@ -189,5 +189,29 @@ export const HTML_IT = {
 
   "bEssenz.ein1":"Tutto ciò che le singole sezioni hanno trovato, letto in un pezzo solo — " +
     "l'essenza dal nome, lo spirito dal cielo dell'ora di nascita, e dove ti trovi in questo " +
-    "momento nel tempo."
+    "momento nel tempo.",
+
+  /* Che cosa promette ogni campo nella lista delle tecniche. */
+  "worum.bHoroskop": "Il cielo della tua ora di nascita: l'Ascendente, i sette pianeti nei segni e nei campi, le loro dignità e i loro angoli. In più i dodici campi della vita, interrogati uno per uno.",
+  "worum.bYildiz": "Il libro ottomano delle stelle. Il tuo nome e quello di tua madre diventano numeri, e la somma cade in uno scomparto del cielo.",
+  "worum.bNiyet": "La tavola dell'intenzione. Non si interroga la cosa, ma l'istante in cui la chiedi.",
+  "worum.bUyum": "Due persone, quattro nomi. I manoscritti calcolano le due somme l'una contro l'altra e leggono l'antica regola degli elementi.",
+  "worum.bMenzil": "L'astrologia elettiva. Quando si comincia una cosa? La luna attraversa ventotto alberghi, e ciascuno ha la sua sentenza.",
+  "worum.bRamel": "L'arte della sabbia. Sedici figure di punti pari e dispari: da quattro madri cresce un campo intero.",
+  "worum.bGeist": "Lo spirito dell'undicesima casa secondo Agrippa — un nome che non viene dal tuo nome, ma da cinque luoghi del tuo cielo.",
+  "worum.bLebensbogen": "La più antica tecnica predittiva dell'Occidente: un grado di rotazione del cielo per un anno di vita.",
+  "worum.bZR": "I capitoli della tua vita secondo Vettio Valente — con i loro sottocapitoli, i culmini e il punto in cui un filo si spezza.",
+  "worum.bAntiszien": "I gemelli d'ombra: punti che non si guardano e tuttavia gettano la stessa ombra.",
+  "worum.bProfektionen": "Una lancetta che ogni anno avanza di un campo. Di che cosa si tratta da un compleanno all'altro — e chi guida l'anno.",
+  "worum.bFirdaria": "Il computo persiano di Abū Maʿšar: quantità fisse di anni, ciascuna sotto un'altra mano.",
+  "worum.bVimshottari": "Il sistema temporale più diffuso dell'India, calcolato dalla posizione della luna alla tua nascita.",
+  "worum.bSolar": "Una volta l'anno il sole torna al suo grado di nascita. Che cosa porta quest'anno — in nove passi secondo Abū Maʿšar.",
+  "worum.bRadixdeutung": "La nascita nel suo insieme, prima che il tempo cominci — setta, temperamento, l'Ascendente e il suo signore. A scelta sobriamente secondo Bonatti, oppure in immagini e favole.",
+  "worum.bAlmutem": "Il signore dell'intero oroscopo secondo Ibn Ezra e Bonatti — chi ha l'ultima parola su questa nascita quando i singoli testimoni si contraddicono.",
+  "worum.bWerk": "Tolomeo non chiede quale sia il mestiere, ma di quale materia sia fatto il tuo lavoro — per mano, per occhio o per parola.",
+  "worum.bLebensalter": "Doroteo divide la vita in tre parti e dà a ciascuna uno dei tre signori del tuo elemento.",
+  "worum.bPunkte": "Luoghi calcolati, non corpi celesti: dove cadono nell'oroscopo la Fortuna, lo Spirito, l'Amore, il Padre, la Madre e gli altri.",
+  "worum.bVerteilung": "La distribuzione di Doroteo per i termini: l'Ascendente avanza con la rotazione del cielo, e ogni termine dura quanto impiega a sorgere nel tuo luogo.",
+  "worum.bLebensmass": "L'antica domanda sulla misura della vita: hyleg e alcocoden, il datore e il custode.",
+  "worum.bEssenz": "Tutto insieme, in immagini invece che in termini tecnici — ciò che le singole arti dicono concordemente."
 };

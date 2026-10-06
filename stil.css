@@ -1357,3 +1357,68 @@ body.rtl .rdNummer { float: right; margin: .1rem 0 0 .8rem; }
 body.rtl .wasIstKnopf::after { content: "←"; float: left; }
 body.rtl .zeugenListe li { border-left: 0; border-right: 2px solid rgba(255,255,255,.12);
                            padding: .6rem 1rem .6rem .8rem; border-radius: .3rem 0 0 .3rem; }
+
+/* ------------------------------------------- Woher ein Absatz kommt
+   Zugeklappt drei Worte, aufgeklappt die ganze Herleitung. Die Lesung
+   soll eine Lesung bleiben; die Technik steht einen Klick tiefer. */
+.herkunft { margin: -.4rem 0 1.6rem; }
+.herkunft > summary {
+  list-style: none; cursor: pointer; display: inline-block;
+  font-size: .76rem; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--gedaempft); padding: .2rem 0;
+  border-bottom: 1px dotted rgba(139,132,113,.45);
+  transition: color .15s, border-color .15s;
+}
+.herkunft > summary::-webkit-details-marker { display: none; }
+.herkunft > summary::after { content: " ⌄"; letter-spacing: 0; }
+.herkunft[open] > summary::after { content: " ⌃"; }
+.herkunft > summary:hover { color: var(--ton); border-color: rgba(201,162,39,.5); }
+
+.herkunftInhalt {
+  margin-top: .8rem; padding: .9rem 1.1rem;
+  border-left: 2px solid rgba(201,162,39,.3);
+  background: rgba(255,255,255,.022); border-radius: 0 .35rem .35rem 0;
+}
+.herkunftTechnik { color: var(--ton); font-size: 1.02rem; margin-bottom: .6rem; }
+.herkunftZeile { font-size: .9rem !important; line-height: 1.6; margin: .35rem 0; }
+.herkunftSchild {
+  display: inline-block; min-width: 7.5rem;
+  font-size: .74rem; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--gedaempft); vertical-align: top;
+}
+.herkunftKnopf {
+  margin-top: .8rem; padding: .35rem .8rem; cursor: pointer;
+  font-family: inherit; font-size: .82rem; letter-spacing: .03em;
+  color: var(--ton); background: none;
+  border: 1px solid rgba(201,162,39,.3); border-radius: .3rem;
+}
+.herkunftKnopf:hover { background: rgba(201,162,39,.08); }
+.herkunftKnopf::after { content: " →"; }
+
+body.rtl .herkunftInhalt {
+  border-left: 0; border-right: 2px solid rgba(201,162,39,.3);
+  border-radius: .35rem 0 0 .35rem;
+}
+@media (max-width: 520px) {
+  .herkunftSchild { display: block; min-width: 0; margin-bottom: .15rem; }
+}
+
+/* ------------------------------------------------- die Lesung am Anfang
+   Die Lesung ist auf der Startseite kein Unterpunkt mehr, sondern das
+   Erste, was nach den eigenen Angaben kommt. Der Kopf darf darum etwas
+   leiser sein als der einer eigenen Seite — er trennt, er kündigt nicht an. */
+#lesungHeim { margin-top: 2.6rem; }
+.lesungKopf { border-bottom: 0; padding-bottom: 0; margin-bottom: 1.4rem; }
+.lesungKopf h2 { font-size: clamp(1.5rem, 5vw, 2.1rem); }
+/* Ein ganzer Satz verträgt keine Versalien mit Sperrung: hier liest er
+   sich als Zeile Prosa, nicht als Rubrik. */
+.lesungKopf .unterzeile {
+  text-transform: none; letter-spacing: .02em;
+  font-style: italic;
+  font-size: .95rem; line-height: 1.5;
+  max-width: 26rem; margin-inline: auto;
+}
+#lesungCikti > h3:first-child { margin-top: 0; }
+
+#technikFach { margin-top: 2.4rem; }
+#technikFach .wegListe { margin-top: 1rem; }
