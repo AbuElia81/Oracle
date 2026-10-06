@@ -6,24 +6,24 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=221";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=221";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=221";
-import { JAHR, profektionJetzt } from "./jahr.js?v=221";
-import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=221";
-import { mondHeute } from "./elektion.js?v=221";
-import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=221";
-import { zrStand } from "./zr.js?v=221";
-import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=221";
-import { e, setzeEssenzSprache } from "./essenz-texte.js?v=221";
-import { aktuelleSprache } from "./sprachen.js?v=221";
-import { herkunftVon, hUi, setzeHerkunftSprache, HERKUNFT } from "./herkunft.js?v=221";
+import { cevir, toplam, kalan } from "./ebced.js?v=225";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=225";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=225";
+import { JAHR, profektionJetzt } from "./jahr.js?v=225";
+import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=225";
+import { mondHeute } from "./elektion.js?v=225";
+import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=225";
+import { zrStand } from "./zr.js?v=225";
+import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=225";
+import { e, setzeEssenzSprache } from "./essenz-texte.js?v=225";
+import { aktuelleSprache, t } from "./sprachen.js?v=225";
+import { herkunftVon, hUi, setzeHerkunftSprache, HERKUNFT } from "./herkunft.js?v=225";
 setzeEssenzSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => { setzeEssenzSprache(ev.detail); setzeHerkunftSprache(ev.detail); });
 setzeHerkunftSprache(aktuelleSprache());
-import { jahresUmdrehung } from "./solar.js?v=221";
-import { lebensmass } from "./lebensmass.js?v=221";
-import { verteilungBei } from "./verteilung.js?v=221";
+import { jahresUmdrehung } from "./solar.js?v=225";
+import { lebensmass } from "./lebensmass.js?v=225";
+import { verteilungBei } from "./verteilung.js?v=225";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -667,11 +667,57 @@ window.addEventListener("sprache-geaendert", () => setTimeout(() => {
 /* --------------------------------------------------- die Lesung auf der Startseite
    Dieselbe Essenz, aber dort, wo man sie sucht: gleich nach den Angaben,
    ohne dass man erst einen von siebzehn Knöpfen finden muss. */
+/* Ganz gelesen sind das am Telefon zwölf Bildschirme. Darum steht
+   zunächst nur der Auftakt mit den ersten beiden Kapiteln da, und der
+   Rest wartet hinter einem Knopf — die Lesung bleibt vollständig, aber
+   sie fällt einem nicht als Wand entgegen. Wer einmal aufgeklappt hat,
+   bleibt für diesen Besuch aufgeklappt. */
+let lesungOffen = false;
+
+function falteLesung(ziel) {
+  const kinder = [...ziel.children];
+  let zaehler = 0, schnitt = -1;
+  for (let i = 0; i < kinder.length; i++) {
+    if (kinder[i].tagName === "H3" && ++zaehler === 3) { schnitt = i; break; }
+  }
+  if (schnitt < 0) return;
+  /* Manche Abschnitte führen einen Kasten mit Überschrift vor sich her.
+     Der gehört zu dem, was danach kommt, und darf nicht diesseits der
+     Falte stehenbleiben. */
+  while (schnitt > 0 && kinder[schnitt - 1].classList &&
+         kinder[schnitt - 1].classList.contains("essenzKopf")) schnitt--;
+
+  const rest = document.createElement("div");
+  rest.className = "lesungRest";
+  kinder.slice(schnitt).forEach(k => rest.appendChild(k));
+  const uebrig = rest.querySelectorAll("h3").length;
+  rest.hidden = !lesungOffen;
+
+  const knopf = document.createElement("button");
+  knopf.type = "button";
+  knopf.className = "lesungMehr";
+  const beschriften = () => {
+    knopf.textContent = rest.hidden
+      ? t("lesung.weiter").replace("%n", uebrig)
+      : t("lesung.zu");
+    knopf.classList.toggle("offen", !rest.hidden);
+  };
+  beschriften();
+  knopf.addEventListener("click", () => {
+    rest.hidden = !rest.hidden;
+    lesungOffen = !rest.hidden;
+    beschriften();
+  });
+
+  ziel.append(knopf, rest);
+}
+
 function schreibeLesung() {
   const ziel = document.getElementById("lesungCikti");
   const rahmen = document.getElementById("lesungHeim");
   if (!ziel || !rahmen || rahmen.hidden) return;
   schreibe("#lesungCikti");
+  falteLesung(ziel);
 }
 
 let lesungUhr = null;

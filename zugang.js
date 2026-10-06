@@ -7,8 +7,8 @@
    Maske erscheint — und erst eine ausgefüllte Maske öffnet die Reiter
    des jeweiligen Weges.
    --------------------------------------------------------------------- */
-import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=221";
-import { t } from "./sprachen.js?v=221";
+import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=225";
+import { t } from "./sprachen.js?v=225";
 
 const HEIM = "bProfil";
 const SPEICHER = "oracle-weg";
@@ -74,7 +74,11 @@ function schalte() {
   zeichneWege();
   /* Das Ergebnis steht oben, die Techniken liegen darunter in einem Fach.
      Co–Star und Chani machen es genauso: erst eine Antwort, dann das Menü. */
-  zeig("#lesungHeim", bereit && weg === "sterne");
+  /* Die Lesung hängt nicht am gewählten Weg, sondern allein daran, ob
+     Datum, Stunde und Ort dastehen. Sonst sähe sie, wer die Seite frisch
+     öffnet, erst nach einem Klick auf "Die Sterne" — und dann wäre sie
+     wieder eine Technik unter anderen statt das Erste, was da ist. */
+  zeig("#lesungHeim", genug("sterne", p));
   zeig("#technikFach", bereit);
   /* Das Leuchten steht nicht in der Liste, sondern unten auf der
      Startseite — es ist kein Rechner, sondern ein Blick aufs Ganze. */

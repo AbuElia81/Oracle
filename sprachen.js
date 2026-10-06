@@ -22,8 +22,8 @@ export const SPRACHEN = [
   { code: "ar", name: "العربية",   kurz: "AR", rtl: true }
 ];
 
-import { HTML_IT } from "./html-it.js?v=221";
-import { HTML_DE } from "./html-de.js?v=221";
+import { HTML_IT } from "./html-it.js?v=225";
+import { HTML_DE } from "./html-de.js?v=225";
 
 export const WORTE = {
   "kopf.unterzeile": {
@@ -146,6 +146,12 @@ export const WORTE = {
     es:"Todo lo que dice el cielo de tu hora de nacimiento — en una sola lectura",
     fr:"Tout ce que donne le ciel de ton heure de naissance — d'un seul tenant",
     ar:"كل ما تقوله سماء ساعة ميلادك — في قراءة واحدة" },
+  "lesung.weiter": { de:"Weiterlesen — noch %n Abschnitte",
+    it:"Continua a leggere — altri %n capitoli", en:"Read on — %n more sections",
+    tr:"Devamını oku — %n bölüm daha", es:"Seguir leyendo — %n secciones más",
+    fr:"Lire la suite — %n sections de plus", ar:"تابع القراءة — %n أقسام أخرى" },
+  "lesung.zu": { de:"Wieder zuklappen", it:"Richiudi", en:"Collapse again",
+    tr:"Tekrar kapat", es:"Volver a plegar", fr:"Replier", ar:"أغلق مرة أخرى" },
   "technik.auf": { de:"Die Techniken einzeln", it:"Le tecniche una per una",
     en:"The techniques one by one", tr:"Teknikler tek tek",
     es:"Las técnicas una por una", fr:"Les techniques une à une",

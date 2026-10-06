@@ -1422,3 +1422,19 @@ body.rtl .herkunftInhalt {
 
 #technikFach { margin-top: 2.4rem; }
 #technikFach .wegListe { margin-top: 1rem; }
+
+/* Der Knopf, der den Rest der Lesung aufschlägt. Er sitzt mitten im
+   Text und soll nicht wie ein Formularknopf aussehen, sondern wie eine
+   Marke zwischen zwei Seiten. */
+.lesungMehr {
+  display: block; width: 100%; margin: 1.6rem 0 .4rem;
+  padding: .85rem 1rem; cursor: pointer;
+  font-family: inherit; font-size: .95rem; letter-spacing: .04em;
+  color: var(--ton); background: rgba(201,162,39,.05);
+  border: 1px solid rgba(201,162,39,.28); border-radius: .4rem;
+  transition: background .15s, border-color .15s;
+}
+.lesungMehr:hover { background: rgba(201,162,39,.11); border-color: rgba(201,162,39,.45); }
+.lesungMehr::after { content: " ⌄"; }
+.lesungMehr.offen::after { content: " ⌃"; }
+.lesungRest > h3:first-child { margin-top: 1.4rem; }
