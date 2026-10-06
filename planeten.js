@@ -16,6 +16,9 @@
    Deutungen dieser Seite schneller als über jede Definition.
    ------------------------------------------------------------------------ */
 
+import { WANDELSTERNE_IT, PLANETEN_UI_IT } from "./planeten-it.js?v=212";
+import { aktuelleSprache } from "./sprachen.js?v=212";
+
 export const WANDELSTERNE = [
   { key: "saturn", name: "Saturn", glyph: "♄", tr: "Zühal",
     metall: "Blei", tag: "Samstag", natur: "kalt und trocken",
@@ -123,9 +126,34 @@ export const WANDELSTERNE = [
       "Übertragung des Lichts." }
 ];
 
+/* ------------------------------------------------------- die Sprachschalter */
+const DE_FELDER = ["name","metall","tag","natur","farbe","alter","gestalt","bedeutet","gedanke"];
+const WANDEL_DE = WANDELSTERNE.map(p => Object.fromEntries(DE_FELDER.map(f => [f, p[f]])));
+
+const UI_DE = { titel:"Die sieben Wandelsterne", metall:"Metall", tag:"Tag", natur:"Natur",
+  farbe:"Farbe", alter:"Lebensalter", gestalt:"Die Gestalt im Picatrix.",
+  bedeutet:"Was er bedeutet.",
+  note:"Die Bilder sind nach den Beschreibungen des Picatrix angefertigt, nicht aus einer " +
+       "Handschrift abgezeichnet — die mittelalterlichen Abschriften enthalten die Gestalten " +
+       "als Text, nicht als Bild." };
+let UI = UI_DE;
+
+export function setzePlanetenSprache(code) {
+  const it = code === "it";
+  UI = it ? { ...UI_DE, ...PLANETEN_UI_IT } : UI_DE;
+  WANDELSTERNE.forEach((p, i) => {
+    const q = it ? WANDELSTERNE_IT[p.key] : WANDEL_DE[i];
+    if (!q) return;
+    DE_FELDER.forEach(f => { if (q[f] !== undefined) p[f] = q[f]; });
+  });
+}
+
 /* ------------------------------------------------------------- Oberfläche */
 const ziel = document.getElementById("wandelsterne");
-if (ziel) {
+function zeichneSterne() {
+  if (!ziel) return;
+  ziel.innerHTML = "";
+  {
   const el = (tag, cls, txt) => {
     const e = document.createElement(tag);
     if (cls) e.className = cls;
@@ -154,8 +182,8 @@ if (ziel) {
     const text = el("div", "sternText");
 
     const daten = el("div", "sternDaten");
-    [["Metall", p.metall], ["Tag", p.tag], ["Natur", p.natur],
-     ["Farbe", p.farbe], ["Lebensalter", p.alter]].forEach(([k, v]) => {
+    [[UI.metall, p.metall], [UI.tag, p.tag], [UI.natur, p.natur],
+     [UI.farbe, p.farbe], [UI.alter, p.alter]].forEach(([k, v]) => {
       const z = el("div", "sternDatum");
       z.appendChild(el("span", "sternSchild", k));
       z.appendChild(el("span", null, v));
@@ -164,11 +192,11 @@ if (ziel) {
     text.appendChild(daten);
 
     const g = el("p", "sternGestalt");
-    g.innerHTML = `<b>Die Gestalt im Picatrix.</b> ${p.gestalt}`;
+    g.innerHTML = `<b>${UI.gestalt}</b> ${p.gestalt}`;
     text.appendChild(g);
 
     const b = el("p");
-    b.innerHTML = `<b>Was er bedeutet.</b> ${p.bedeutet}`;
+    b.innerHTML = `<b>${UI.bedeutet}</b> ${p.bedeutet}`;
     text.appendChild(b);
 
     const d = el("p", "sternGedanke");
@@ -179,3 +207,11 @@ if (ziel) {
     ziel.appendChild(karte);
   });
 }
+}
+
+setzePlanetenSprache(aktuelleSprache());
+zeichneSterne();
+window.addEventListener("sprache-geaendert", e => {
+  setzePlanetenSprache(e.detail);
+  zeichneSterne();
+});
