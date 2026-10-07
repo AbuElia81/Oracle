@@ -34,6 +34,21 @@ export const T = {
 
     "auftakt.zeile":     name => name ? `Was über ${name} zu sagen ist` : "Was zu sagen ist",
     "daten.uhr":"Uhr", "daten.alter": (n) => ` · heute ${n} Jahre alt`,
+
+    /* Ohne bekannte Geburtsstunde. */
+    "ohneStunde.zeile":"Geburtszeit unbekannt — gerechnet mit 12 Uhr mittags.",
+    "ohneStunde.auf":"Was das heißt",
+    "ohneStunde.wackelt":"<b>Unsicher ist:</b> der Aszendent und damit alle zwölf Felder — " +
+      "er wandert in vierundzwanzig Stunden einmal durch den ganzen Kreis, also kann er " +
+      "jedes Zeichen sein. Mit ihm wackelt, was an den Feldern hängt: in welchem Feld ein " +
+      "Planet steht, die Profektionen, die Direktionen, das Lebensmaß. Auch der Grad des " +
+      "Mondes ist nur auf etwa sechs Grad genau, denn er läuft dreizehn Grad am Tag.",
+    "ohneStunde.steht":"<b>Sicher ist:</b> in welchem Zeichen jeder Planet steht — die " +
+      "langsamen ohnehin, die Sonne fast immer, der Mond meistens. Die Winkel der Planeten " +
+      "untereinander. Deine Sekte, dein Temperament, die Herren der Dreiheiten, der " +
+      "Berufssignifikator. Alles, was aus dem Namen kommt, ist von der Stunde gar nicht " +
+      "berührt. Wenn du die Stunde später erfährst, trag sie nach — die Lesung rechnet " +
+      "sich von selbst neu.",
     "kopf.zeichen":"Dein Zeichen im Yıldıznâme",
     "kopf.element": (element, tabiat) =>
       `ein Zeichen ${element === "Feuer" ? "des Feuers" : element === "Erde" ? "der Erde"
@@ -254,6 +269,20 @@ export const T = {
 
     "auftakt.zeile":     name => name ? `Ciò che si può dire di ${name}` : "Ciò che si può dire",
     "daten.uhr":"", "daten.alter": (n) => ` · oggi ${n} anni`,
+
+    /* Senza l'ora di nascita nota. */
+    "ohneStunde.zeile":"Ora di nascita sconosciuta — calcolato con mezzogiorno.",
+    "ohneStunde.auf":"Che cosa significa",
+    "ohneStunde.wackelt":"<b>È incerto:</b> l'Ascendente e con esso tutti i dodici campi — " +
+      "in ventiquattro ore percorre l'intero cerchio, dunque può essere qualsiasi segno. " +
+      "Con lui vacilla ciò che dipende dai campi: in quale campo si trovi un pianeta, le " +
+      "profezioni, le direzioni, la misura della vita. Anche il grado della luna è esatto " +
+      "solo entro sei gradi circa, poiché essa percorre tredici gradi al giorno.",
+    "ohneStunde.steht":"<b>È certo:</b> in quale segno si trovi ciascun pianeta — i lenti " +
+      "in ogni caso, il sole quasi sempre, la luna il più delle volte. Gli angoli dei " +
+      "pianeti fra loro. La tua setta, il tuo temperamento, i signori delle triplicità, il " +
+      "significatore del mestiere. Tutto ciò che viene dal nome non è toccato affatto " +
+      "dall'ora. Se un giorno verrai a saperla, aggiungila — la lettura si ricalcola da sé.",
     "kopf.zeichen":"Il tuo segno nello Yıldıznâme",
     "kopf.element": (element, tabiat) =>
       `un segno ${element === "Feuer" ? "del fuoco" : element === "Erde" ? "della terra"

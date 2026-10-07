@@ -22,8 +22,8 @@ export const SPRACHEN = [
   { code: "ar", name: "العربية",   kurz: "AR", rtl: true }
 ];
 
-import { HTML_IT } from "./html-it.js?v=229";
-import { HTML_DE } from "./html-de.js?v=229";
+import { HTML_IT } from "./html-it.js?v=230";
+import { HTML_DE } from "./html-de.js?v=230";
 
 export const WORTE = {
   "kopf.unterzeile": {
@@ -148,6 +148,10 @@ export const WORTE = {
     es:"Todo lo que dice el cielo de tu hora de nacimiento — en una sola lectura",
     fr:"Tout ce que donne le ciel de ton heure de naissance — d'un seul tenant",
     ar:"كل ما تقوله سماء ساعة ميلادك — في قراءة واحدة" },
+  "feld.zeitUnbekannt": { de:"Ich kenne meine Geburtszeit nicht",
+    it:"Non conosco la mia ora di nascita", en:"I don't know my birth time",
+    tr:"Doğum saatimi bilmiyorum", es:"No sé mi hora de nacimiento",
+    fr:"Je ne connais pas mon heure de naissance", ar:"لا أعرف ساعة ميلادي" },
   "feld.vonHand": { de:"Koordinaten und Zeitzone von Hand",
     it:"Coordinate e fuso orario a mano", en:"Coordinates and time zone by hand",
     tr:"Koordinat ve saat dilimini elle", es:"Coordenadas y zona horaria a mano",

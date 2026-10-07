@@ -144,8 +144,8 @@ const bildDat_DE = i => {
    Die Exporte sind absichtlich mit let gebunden: ES-Module geben lebende
    Bindungen weiter, darum sehen alle Abschnitte sofort die andere Tafel,
    sobald hier umgehängt wird. */
-import { FIGUR_IT, BILD_IT, ORT_IT, NAEHE_IT, STAND_IT, bildDat_IT } from "./sprache-it.js?v=229";
-import { aktuelleSprache } from "./sprachen.js?v=229";
+import { FIGUR_IT, BILD_IT, ORT_IT, NAEHE_IT, STAND_IT, bildDat_IT } from "./sprache-it.js?v=230";
+import { aktuelleSprache } from "./sprachen.js?v=230";
 
 export let FIGUR = FIGUR_DE, BILD = BILD_DE, ORT = ORT_DE,
            NAEHE = NAEHE_DE, STAND = STAND_DE, bildDat = bildDat_DE;

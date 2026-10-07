@@ -6,24 +6,24 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=229";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=229";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=229";
-import { JAHR, profektionJetzt } from "./jahr.js?v=229";
-import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=229";
-import { mondHeute } from "./elektion.js?v=229";
-import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=229";
-import { zrStand } from "./zr.js?v=229";
-import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=229";
-import { e, setzeEssenzSprache } from "./essenz-texte.js?v=229";
-import { aktuelleSprache, t } from "./sprachen.js?v=229";
-import { herkunftVon, hUi, setzeHerkunftSprache, HERKUNFT } from "./herkunft.js?v=229";
+import { cevir, toplam, kalan } from "./ebced.js?v=230";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=230";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=230";
+import { JAHR, profektionJetzt } from "./jahr.js?v=230";
+import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=230";
+import { mondHeute } from "./elektion.js?v=230";
+import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=230";
+import { zrStand } from "./zr.js?v=230";
+import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=230";
+import { e, setzeEssenzSprache } from "./essenz-texte.js?v=230";
+import { aktuelleSprache, t } from "./sprachen.js?v=230";
+import { herkunftVon, hUi, setzeHerkunftSprache, HERKUNFT } from "./herkunft.js?v=230";
 setzeEssenzSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => { setzeEssenzSprache(ev.detail); setzeHerkunftSprache(ev.detail); });
 setzeHerkunftSprache(aktuelleSprache());
-import { jahresUmdrehung } from "./solar.js?v=229";
-import { lebensmass } from "./lebensmass.js?v=229";
-import { verteilungBei } from "./verteilung.js?v=229";
+import { jahresUmdrehung } from "./solar.js?v=230";
+import { lebensmass } from "./lebensmass.js?v=230";
+import { verteilungBei } from "./verteilung.js?v=230";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -308,6 +308,22 @@ function schreibe(zielWahl) {
   auftakt.appendChild(el("p", "auftaktDaten",
     profilBeschriftung(p).replace(" Uhr", e("daten.uhr") ? " " + e("daten.uhr") : "") +
     (alter != null ? e("daten.alter", alter.toFixed(0)) : "")));
+  /* Wer die Stunde nicht weiß, bekommt die Lesung trotzdem — aber mit
+     einem geraden Wort darüber, was damit wackelt. Das Verschweigen wäre
+     das Unredliche, nicht das Rechnen mit Mittag. */
+  if (p.zeitUnbekannt) {
+    const w = el("div", "ohneStunde");
+    w.appendChild(el("p", "ohneStundeZeile", e("ohneStunde.zeile")));
+    const d = el("details", "ohneStundeFach");
+    d.appendChild(el("summary", null, e("ohneStunde.auf")));
+    const k = el("div", "ohneStundeInhalt");
+    const w1 = el("p"); w1.innerHTML = e("ohneStunde.wackelt"); k.appendChild(w1);
+    const w2 = el("p"); w2.innerHTML = e("ohneStunde.steht"); k.appendChild(w2);
+    d.appendChild(k);
+    w.appendChild(d);
+    auftakt.appendChild(w);
+  }
+
   cikti.appendChild(auftakt);
 
   if (r) {

@@ -1468,3 +1468,42 @@ body.rtl .ortBefund {
   border-left: 0; border-right: 2px solid rgba(201,162,39,.3);
   border-radius: .3rem 0 0 .3rem;
 }
+
+/* ----------------------------------------- Geburtsstunde unbekannt
+   Ein Kästchen in der Maske, und in der Lesung ein gerades Wort darüber,
+   was ohne die Stunde wackelt und was trotzdem steht. */
+.kaestchen {
+  display: flex; align-items: center; gap: .55rem;
+  margin: .2rem 0 .4rem; cursor: pointer;
+  font-size: .9rem; color: var(--gedaempft);
+}
+.kaestchen input { width: 1rem; height: 1rem; accent-color: var(--ton); cursor: pointer; }
+.kaestchen:hover { color: var(--schrift); }
+.alan.stillgelegt { opacity: .45; }
+.alan.stillgelegt input { cursor: not-allowed; }
+
+.ohneStunde { margin-top: 1rem; }
+.ohneStundeZeile {
+  margin: 0; font-size: .88rem; color: #c98f6b; letter-spacing: .02em;
+}
+.ohneStundeFach { margin-top: .3rem; }
+.ohneStundeFach > summary {
+  list-style: none; cursor: pointer; display: inline-block;
+  font-size: .76rem; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--gedaempft); padding: .15rem 0;
+  border-bottom: 1px dotted rgba(139,132,113,.45);
+}
+.ohneStundeFach > summary::-webkit-details-marker { display: none; }
+.ohneStundeFach > summary::after { content: " ⌄"; letter-spacing: 0; }
+.ohneStundeFach[open] > summary::after { content: " ⌃"; }
+.ohneStundeInhalt {
+  margin-top: .7rem; padding: .85rem 1rem; text-align: left;
+  border-left: 2px solid rgba(201,143,107,.35);
+  background: rgba(255,255,255,.022); border-radius: 0 .35rem .35rem 0;
+}
+.ohneStundeInhalt p { font-size: .9rem !important; line-height: 1.65; margin: .4rem 0; }
+.ohneStundeInhalt b { color: var(--ton); font-weight: normal; }
+body.rtl .ohneStundeInhalt {
+  border-left: 0; border-right: 2px solid rgba(201,143,107,.35);
+  border-radius: .35rem 0 0 .35rem;
+}

@@ -8,11 +8,11 @@
    taugt und wovor sie warnt. Dazu treten die klassischen Elektionsregeln —
    zunehmender oder abnehmender Mond, die verbrannte Bahn, die Stunde.
    --------------------------------------------------------------------- */
-import { MENZILLER } from "./korpus.js?v=229";
-import { planetenPositionen, julianischesDatum, norm360, sonnenLaenge } from "./astro.js?v=229";
-import { ZEICHEN, PLANET } from "./horoskop.js?v=229";
-import { rt, setzeRestSprache } from "./rest-texte.js?v=229";
-import { aktuelleSprache } from "./sprachen.js?v=229";
+import { MENZILLER } from "./korpus.js?v=230";
+import { planetenPositionen, julianischesDatum, norm360, sonnenLaenge } from "./astro.js?v=230";
+import { ZEICHEN, PLANET } from "./horoskop.js?v=230";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=230";
+import { aktuelleSprache } from "./sprachen.js?v=230";
 setzeRestSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 

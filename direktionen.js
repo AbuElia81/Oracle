@@ -17,8 +17,8 @@
    Transparenzabschnitt der Seite.
    --------------------------------------------------------------------- */
 
-import { rad, grad, norm360, schiefeAufgangsRA, schiefeUntergangsRA } from "./astro.js?v=229";
-import { bogenUnterPol, deklination, raAusLaenge } from "./haeuser.js?v=229";
+import { rad, grad, norm360, schiefeAufgangsRA, schiefeUntergangsRA } from "./astro.js?v=230";
+import { bogenUnterPol, deklination, raAusLaenge } from "./haeuser.js?v=230";
 
 export const PLANETEN = {
   sonne:{name:"Sonne", g:"☉"}, mond:{name:"Mond", g:"☽"}, merkur:{name:"Merkur", g:"☿"},

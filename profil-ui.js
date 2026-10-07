@@ -1,8 +1,8 @@
 /* ------------------------------------------------------------------------
    profil-ui.js — Bedienung des Reiters "Meine Daten".
    --------------------------------------------------------------------- */
-import { leseProfilRoh, schreibeProfil, loescheProfil } from "./profil.js?v=229";
-import { offsetVon } from "./zeitzone.js?v=229";
+import { leseProfilRoh, schreibeProfil, loescheProfil } from "./profil.js?v=230";
+import { offsetVon } from "./zeitzone.js?v=230";
 
 const $ = s => document.querySelector(s);
 
@@ -60,6 +60,24 @@ function zeitzoneNachziehen(auchSpeichern) {
   if (auchSpeichern && weicht && !utcVonHand) speichern(true);
 }
 
+/* Mittag ist der übliche Behelf: Er hält den Fehler auf höchstens zwölf
+   Stunden und legt die Sonne ungefähr in die Mitte ihres Tageslaufs. */
+const BEHELFSZEIT = "12:00";
+
+function stelleZeitfeld() {
+  const kasten = $("#pZeitUnbekannt"), feld = $("#pZeit");
+  if (!kasten || !feld) return;
+  feld.disabled = kasten.checked;
+  if (kasten.checked) feld.value = BEHELFSZEIT;
+  feld.closest(".alan")?.classList.toggle("stillgelegt", kasten.checked);
+}
+
+$("#pZeitUnbekannt")?.addEventListener("change", () => {
+  stelleZeitfeld();
+  zeitzoneNachziehen(false);
+  speichern(true);
+});
+
 $("#pOrtSuchen").addEventListener("click", async () => {
   const ort = $("#pOrt").value.trim();
   const status = $("#pGeoStatus");
@@ -105,6 +123,7 @@ function fuelleFormular(p) {
   $("#pDatum").value = p.datum || "";
   $("#pZeit").value = p.zeit || "";
   $("#pOrt").value = p.ort || "";
+  if ($("#pZeitUnbekannt")) { $("#pZeitUnbekannt").checked = !!p.zeitUnbekannt; stelleZeitfeld(); }
   $("#pBreite").value = p.breite ?? "";
   $("#pLaenge").value = p.laenge ?? "";
   $("#pUtc").value = p.utc ?? "";
@@ -120,6 +139,7 @@ function sammle() {
     cinsiyet: document.querySelector('input[name="pCinsiyet"]:checked').value,
     datum: $("#pDatum").value,
     zeit: $("#pZeit").value,
+    zeitUnbekannt: !!($("#pZeitUnbekannt") && $("#pZeitUnbekannt").checked),
     ort: $("#pOrt").value.trim(),
     breite: parseFloat($("#pBreite").value),
     laenge: parseFloat($("#pLaenge").value),

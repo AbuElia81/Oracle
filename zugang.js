@@ -7,8 +7,8 @@
    Maske erscheint — und erst eine ausgefüllte Maske öffnet die Reiter
    des jeweiligen Weges.
    --------------------------------------------------------------------- */
-import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=229";
-import { t } from "./sprachen.js?v=229";
+import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=230";
+import { t } from "./sprachen.js?v=230";
 
 const HEIM = "bProfil";
 const SPEICHER = "oracle-weg";
@@ -47,11 +47,12 @@ function schalte() {
     rahmen.dataset.gestellt = "1";
     rahmen.open = weg ? !bereit : !(p && (p.name || p.datum));
   }
-  /* Die Angaben stehen jetzt vor der Wahl. Solange kein Weg gewählt ist,
-     zeigt die Maske alles — die Zwischenüberschriften sagen ohnehin, was
-     wofür gebraucht wird. Nach der Wahl bleibt nur das Nötige stehen. */
+  /* Jede Maske fragt nur, was ihr Weg braucht. Solange nichts gewählt ist,
+     gilt der Weg der Sterne: Die Lesung auf der Startseite hängt an Datum,
+     Stunde und Ort, und wer frisch ankommt, soll vier Felder sehen und
+     nicht dreizehn. Die Namen für das Orakel kommen, wenn man es wählt. */
   zeig("#maskeGemein", true);
-  zeig("#maskeOrakel", weg !== "sterne");
+  zeig("#maskeOrakel", weg === "orakel");
   zeig("#maskeSterne", weg !== "orakel");
   zeig("#speicherBlock", true);
   zeig("#torHinweis", !!weg && !bereit);
