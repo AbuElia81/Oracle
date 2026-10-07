@@ -26,11 +26,11 @@
    ------------------------------------------------------------------------ */
 
 import { radix, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel, grossMitArtikel, zustandVon }
-  from "./horoskop.js?v=256";
-import { almutemFiguris } from "./almutem.js?v=256";
-import { FIGUR, BILD, ORT, STAND, figurVon, bildDat } from "./sprache.js?v=256";
-import { d, setzeDeutungSprache } from "./deutung-texte.js?v=256";
-import { aktuelleSprache } from "./sprachen.js?v=256";
+  from "./horoskop.js?v=259";
+import { almutemFiguris } from "./almutem.js?v=259";
+import { FIGUR, BILD, ORT, STAND, figurVon, bildDat } from "./sprache.js?v=259";
+import { d, setzeDeutungSprache } from "./deutung-texte.js?v=259";
+import { aktuelleSprache } from "./sprachen.js?v=259";
 setzeDeutungSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeDeutungSprache(ev.detail));
 

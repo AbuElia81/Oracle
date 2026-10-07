@@ -292,15 +292,15 @@ export const GUN_ADI = ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","F
    Die Tafeln bleiben dieselben Objekte; nur die Textfelder werden beim
    Sprachwechsel ausgetauscht. So sehen alle Abschnitte sofort die andere
    Sprache, ohne dass irgendwo ein Import umgehängt werden müsste. */
-import { BURC_IT, MENZIL_IT, BURC_GESCHLECHT_IT, UNSUR_IT, UNSUR_TABIAT_IT } from "./korpus-it.js?v=256";
-import { BURC_EN, MENZIL_EN, BURC_GESCHLECHT_EN, UNSUR_EN, UNSUR_TABIAT_EN } from "./korpus-en.js?v=256";
-import { NIYET_IT, UYUM_IT, UNSUR_UYUM_IT } from "./orakel-it.js?v=256";
-import { NIYET_EN, UYUM_EN, UNSUR_UYUM_EN } from "./orakel-en.js?v=256";
-import { ZEICHEN_DE_IT, ELEMENT_DE_IT, PLANET_DE_IT, WOCHENTAG_IT } from "./korpus-it.js?v=256";
-import { ZEICHEN_DE_EN, ELEMENT_DE_EN, PLANET_DE_EN, WOCHENTAG_EN } from "./korpus-en.js?v=256";
-import { BURC_DETAIL_IT, GEZ_IT } from "./yildiz-it.js?v=256";
-import { BURC_DETAIL_EN, GEZ_EN } from "./yildiz-en.js?v=256";
-import { aktuelleSprache } from "./sprachen.js?v=256";
+import { BURC_IT, MENZIL_IT, BURC_GESCHLECHT_IT, UNSUR_IT, UNSUR_TABIAT_IT } from "./korpus-it.js?v=259";
+import { BURC_EN, MENZIL_EN, BURC_GESCHLECHT_EN, UNSUR_EN, UNSUR_TABIAT_EN } from "./korpus-en.js?v=259";
+import { NIYET_IT, UYUM_IT, UNSUR_UYUM_IT } from "./orakel-it.js?v=259";
+import { NIYET_EN, UYUM_EN, UNSUR_UYUM_EN } from "./orakel-en.js?v=259";
+import { ZEICHEN_DE_IT, ELEMENT_DE_IT, PLANET_DE_IT, WOCHENTAG_IT } from "./korpus-it.js?v=259";
+import { ZEICHEN_DE_EN, ELEMENT_DE_EN, PLANET_DE_EN, WOCHENTAG_EN } from "./korpus-en.js?v=259";
+import { BURC_DETAIL_IT, GEZ_IT } from "./yildiz-it.js?v=259";
+import { BURC_DETAIL_EN, GEZ_EN } from "./yildiz-en.js?v=259";
+import { aktuelleSprache } from "./sprachen.js?v=259";
 
 const BURC_DE_TEXTE = BURCLAR.map(b => ({ tabiat: b.tabiat, ogut: b.ogut, erkek: b.erkek, kadin: b.kadin }));
 const UNSUR_DE_TEXTE = UNSURLAR.map(u => ({ metin: u.metin, tabiat: u.tabiat }));

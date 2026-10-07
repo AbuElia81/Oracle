@@ -9,6 +9,12 @@
    folgt der Ganzzeichen-Vereinfachung (zehn Zeichen nach dem Aszendenten).
    --------------------------------------------------------------------- */
 
+import { ZEICHEN as ZEICHEN_BASIS, PLANET } from "./horoskop.js?v=259";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=259";
+import { aktuelleSprache } from "./sprachen.js?v=259";
+setzeRestSprache(aktuelleSprache());
+window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
+
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
   if (c) n.className = c; if (txt !== undefined) n.textContent = txt; return n; };
@@ -147,20 +153,15 @@ function berechneGeburt(jahr, monat, tag, stunde, minute, utcOffset, breite, lae
 }
 
 /* -------------------------------------------------------- Tierkreis, Würden */
-const ZEICHEN = [
-  { name:"Widder", glyph:"♈\ufe0e", el:0 }, { name:"Stier", glyph:"♉\ufe0e", el:1 },
-  { name:"Zwillinge", glyph:"♊\ufe0e", el:2 }, { name:"Krebs", glyph:"♋\ufe0e", el:3 },
-  { name:"Löwe", glyph:"♌\ufe0e", el:0 }, { name:"Jungfrau", glyph:"♍\ufe0e", el:1 },
-  { name:"Waage", glyph:"♎\ufe0e", el:2 }, { name:"Skorpion", glyph:"♏\ufe0e", el:3 },
-  { name:"Schütze", glyph:"♐\ufe0e", el:0 }, { name:"Steinbock", glyph:"♑\ufe0e", el:1 },
-  { name:"Wassermann", glyph:"♒\ufe0e", el:2 }, { name:"Fische", glyph:"♓\ufe0e", el:3 }
-];
+/* Nur das Element gehört dieser Datei; Name und Glyphe kommen aus
+   horoskop.js und wechseln dort mit der Sprache. */
+const ZEICHEN = [0,1,2,3,0,1,2,3,0,1,2,3].map((el, i) => ({
+  el,
+  get name()  { return ZEICHEN_BASIS[i].name; },
+  get glyph() { return ZEICHEN_BASIS[i].glyph; }
+}));
 
-const PLANETEN = {
-  sonne:{name:"Sonne", g:"☉"}, mond:{name:"Mond", g:"☽"}, merkur:{name:"Merkur", g:"☿"},
-  venus:{name:"Venus", g:"♀"}, mars:{name:"Mars", g:"♂"}, jupiter:{name:"Jupiter", g:"♃"},
-  saturn:{name:"Saturn", g:"♄"}
-};
+const PLANETEN = PLANET;
 const PLANETEN_REIHE = ["sonne","mond","merkur","venus","mars","jupiter","saturn"];
 
 const DOMIZIL = ["mars","venus","merkur","mond","sonne","merkur","venus","mars","jupiter","saturn","saturn","jupiter"];
@@ -432,7 +433,7 @@ $("#gBerechnen").addEventListener("click", () => {
 
   /* Die fünf hylegischen Örter, in Agrippas Reihenfolge. */
   const oerter = [
-    { kuerzel:"Aszendent",   glyph:"ASC", farbe:"var(--ton-hell)", laenge: geburt.asc },
+    { get kuerzel() { return rt("achse.asc"); }, glyph:"ASC", farbe:"var(--ton-hell)", laenge: geburt.asc },
     { kuerzel:"Sonne",       glyph:"☉",  farbe:"#e7c65c",          laenge: geburt.sonne.laenge },
     { kuerzel:"Mond",        glyph:"☽",  farbe:"#cfd6e6",          laenge: geburt.mond },
     { kuerzel:"Glückspunkt", glyph:"⊗",  farbe:"#7fb08a",          laenge: geburt.fortuna },
@@ -489,7 +490,7 @@ $("#gBerechnen").addEventListener("click", () => {
   cikti.appendChild(nameBox);
 
   cikti.appendChild(el("p", "kucukNot",
-    `Aszendent ${ZEICHEN[ascSign].glyph} ${ZEICHEN[ascSign].name} ${ascGrad.toFixed(1)}° · ` +
+    `${rt("achse.asc")} ${ZEICHEN[ascSign].glyph} ${ZEICHEN[ascSign].name} ${ascGrad.toFixed(1)}° · ` +
     `${geburt.tagGeburt ? "Taggeburt" : "Nachtgeburt"} (Sonnenhöhe ${geburt.sonnenhoehe.toFixed(1)}°) · ` +
     `Buchstabenkreis mit ${alphabet.length} Sektoren zu je ${(360 / alphabet.length).toFixed(2)}°`));
 

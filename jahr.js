@@ -6,10 +6,11 @@
    fertigen Ausgaben der anderen Rechner und schreibt in eigene Kästen
    daneben — an fremden Rechnungen wird nichts geändert.
    --------------------------------------------------------------------- */
-import { leseProfilRoh } from "./profil.js?v=256";
-import { cevir, toplam, kalan } from "./ebced.js?v=256";
-import { BURCLAR } from "./korpus.js?v=256";
-import { sonnenLaenge, julianischesDatum, norm360, berechneGeburt } from "./astro.js?v=256";
+import { leseProfilRoh } from "./profil.js?v=259";
+import { cevir, toplam, kalan } from "./ebced.js?v=259";
+import { BURCLAR } from "./korpus.js?v=259";
+import { sonnenLaenge, julianischesDatum, norm360, berechneGeburt } from "./astro.js?v=259";
+import { ZEICHEN as ZEICHEN_BASIS, PLANET } from "./horoskop.js?v=259";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -86,10 +87,10 @@ function yildizJahr(kasten) {
    weiter. Das Zeichen, auf das er fällt, gibt dem Jahr sein Thema, und sein
    Herrscher ist der Herr des Jahres. Wird hier eigens gerechnet, weil die
    Tafel im Abschnitt an ihrem Schieber hängt — der steht auf Alter null. */
-const ZEICHEN_NAMEN = ["Widder","Stier","Zwillinge","Krebs","Löwe","Jungfrau",
-                       "Waage","Skorpion","Schütze","Steinbock","Wassermann","Fische"];
-const DOMIZIL = ["Mars","Venus","Merkur","Mond","Sonne","Merkur",
-                 "Venus","Mars","Jupiter","Saturn","Saturn","Jupiter"];
+/* Namen aus horoskop.js statt aus einer eigenen, eingefrorenen Kopie. */
+const zeichenName = i => ZEICHEN_BASIS[i].name;
+const DOMIZIL_KEY = ["mars","venus","merkur","mond","sonne","merkur",
+                     "venus","mars","jupiter","saturn","saturn","jupiter"];
 const HAUSTHEMA = [
   "Leib, Auftreten, das eigene Vorhaben",
   "Besitz, Einkommen, was man in der Hand hat",
@@ -121,9 +122,9 @@ export function profektionJetzt() {
   const haus = (alter % 12) + 1;
   return {
     alter, haus, zeichen,
-    name: ZEICHEN_NAMEN[zeichen], glyph: GLYPHEN[zeichen],
-    herr: DOMIZIL[zeichen], thema: HAUSTHEMA[haus - 1],
-    ascName: ZEICHEN_NAMEN[ascZeichen]
+    name: zeichenName(zeichen), glyph: GLYPHEN[zeichen],
+    herr: PLANET[DOMIZIL_KEY[zeichen]].name, thema: HAUSTHEMA[haus - 1],
+    ascName: zeichenName(ascZeichen)
   };
 }
 

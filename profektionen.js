@@ -10,25 +10,23 @@
    Innerhalb eines Jahres profizieren die zwölf Monate auf dieselbe Weise
    weiter, beim Zeichen des Jahres beginnend.
    --------------------------------------------------------------------- */
-import { berechneGeburt, norm360 } from "./astro.js?v=256";
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=256";
+import { berechneGeburt, norm360 } from "./astro.js?v=259";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=259";
+import { ZEICHEN, PLANET } from "./horoskop.js?v=259";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=259";
+import { aktuelleSprache } from "./sprachen.js?v=259";
+setzeRestSprache(aktuelleSprache());
+window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
   if (c) n.className = c; if (txt !== undefined) n.textContent = txt; return n; };
 const rad = d => d * Math.PI / 180;
 
-const ZEICHEN = [
-  { name:"Widder", glyph:"♈" }, { name:"Stier", glyph:"♉" }, { name:"Zwillinge", glyph:"♊" },
-  { name:"Krebs", glyph:"♋" }, { name:"Löwe", glyph:"♌" }, { name:"Jungfrau", glyph:"♍" },
-  { name:"Waage", glyph:"♎" }, { name:"Skorpion", glyph:"♏" }, { name:"Schütze", glyph:"♐" },
-  { name:"Steinbock", glyph:"♑" }, { name:"Wassermann", glyph:"♒" }, { name:"Fische", glyph:"♓" }
-];
+/* Zeichen- und Planetennamen kommen aus horoskop.js. Eine eigene Kopie
+   hier bliebe beim Sprachwechsel stehen und wäre für immer deutsch. */
 const DOMIZIL = ["mars","venus","merkur","mond","sonne","merkur","venus","mars","jupiter","saturn","saturn","jupiter"];
-const PLANETEN = {
-  sonne:{name:"Sonne", g:"☉"}, mond:{name:"Mond", g:"☽"}, merkur:{name:"Merkur", g:"☿"},
-  venus:{name:"Venus", g:"♀"}, mars:{name:"Mars", g:"♂"}, jupiter:{name:"Jupiter", g:"♃"}, saturn:{name:"Saturn", g:"♄"}
-};
+const PLANETEN = PLANET;
 const FARBEN = { sonne:"#e7c65c", mond:"#cfd6e6", merkur:"#9fbfa8", venus:"#e0a6c2", mars:"#c96a4a", jupiter:"#7fa6d6", saturn:"#8b8471" };
 const HAUSNAMEN = ["I. Leib und Leben","II. Habe","III. Geschwister und Wege","IV. Haus und Wurzel",
   "V. Kinder und Freude","VI. Krankheit und Dienst","VII. Partner und offene Gegner","VIII. Tod und das Fremde",
@@ -193,7 +191,7 @@ function berechne() {
 
   cikti.hidden = false;
   cikti.innerHTML = "";
-  cikti.appendChild(el("p", "kucukNot", `Aszendent (Jahr 0) — ${ZEICHEN[ASC_SIGN].glyph} ${ZEICHEN[ASC_SIGN].name}. Ganzzeichen-Häuser.`));
+  cikti.appendChild(el("p", "kucukNot", rt("pf.kopf", rt("achse.asc"), ZEICHEN[ASC_SIGN].glyph, ZEICHEN[ASC_SIGN].name)));
 
   const zlKutu = el("div", "zeitleisteKutu");
   const zlDiv = el("div"); zlDiv.id = "pfZeitleiste";

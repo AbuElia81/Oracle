@@ -8,6 +8,8 @@
 
 export const R = {
   de: {
+    "pf.kopf": (asc, glyph, zeichen) => `${asc} (Jahr 0) — ${glyph} ${zeichen}. Ganzzeichen-Häuser.`,
+    "achse.asc":"Aszendent", "achse.mc":"MC", "achse.desc":"Deszendent", "achse.ic":"IC",
     /* ----------------------------------------- Zodiacal Releasing */
     "zr.los.fortuna":"Los des Glücks", "zr.los.geist":"Los des Geistes",
     "zr.tag":"Taggeburt", "zr.nacht":"Nachtgeburt", "zr.keiner":"keiner",
@@ -331,6 +333,8 @@ export const R = {
   },
 
   it: {
+    "pf.kopf": (asc, glyph, zeichen) => `${asc} (anno 0) — ${glyph} ${zeichen}. Case di segno intero.`,
+    "achse.asc":"Ascendente", "achse.mc":"MC", "achse.desc":"Discendente", "achse.ic":"IC",
     /* ----------------------------------------- Zodiacal Releasing */
     "zr.los.fortuna":"Sorte della Fortuna", "zr.los.geist":"Sorte dello Spirito",
     "zr.tag":"nascita diurna", "zr.nacht":"nascita notturna", "zr.keiner":"nessuno",
@@ -644,6 +648,8 @@ export const R = {
   },
 
   en: {
+    "pf.kopf": (asc, glyph, zeichen) => `${asc} (year 0) — ${glyph} ${zeichen}. Whole-sign houses.`,
+    "achse.asc":"Ascendant", "achse.mc":"MC", "achse.desc":"Descendant", "achse.ic":"IC",
     /* ----------------------------------------- Zodiacal Releasing */
     "zr.los.fortuna":"Lot of Fortune", "zr.los.geist":"Lot of Spirit",
     "zr.tag":"day birth", "zr.nacht":"night birth", "zr.keiner":"none",

@@ -10,24 +10,25 @@
    — entgegengesetzte Deklination, Tag und Nacht vertauscht.
    Formel: kontra(λ) = 360° − λ = antiszion(λ) + 180°.
    --------------------------------------------------------------------- */
-import { julianischesDatum, schiefeDerEkliptik, sonnenLaenge, berechneGeburt, norm360, rad, grad } from "./astro.js?v=256";
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=256";
+import { julianischesDatum, schiefeDerEkliptik, sonnenLaenge, berechneGeburt, norm360, rad, grad } from "./astro.js?v=259";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=259";
+import { ZEICHEN, PLANET } from "./horoskop.js?v=259";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=259";
+import { aktuelleSprache } from "./sprachen.js?v=259";
+setzeRestSprache(aktuelleSprache());
+window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
   if (c) n.className = c; if (txt !== undefined) n.textContent = txt; return n; };
 
-const ZEICHEN = [
-  { name:"Widder", glyph:"♈" }, { name:"Stier", glyph:"♉" }, { name:"Zwillinge", glyph:"♊" },
-  { name:"Krebs", glyph:"♋" }, { name:"Löwe", glyph:"♌" }, { name:"Jungfrau", glyph:"♍" },
-  { name:"Waage", glyph:"♎" }, { name:"Skorpion", glyph:"♏" }, { name:"Schütze", glyph:"♐" },
-  { name:"Steinbock", glyph:"♑" }, { name:"Wassermann", glyph:"♒" }, { name:"Fische", glyph:"♓" }
-];
-const PLANETEN = {
-  sonne:{name:"Sonne", g:"☉"}, mond:{name:"Mond", g:"☽"}, merkur:{name:"Merkur", g:"☿"},
-  venus:{name:"Venus", g:"♀"}, mars:{name:"Mars", g:"♂"}, jupiter:{name:"Jupiter", g:"♃"},
-  saturn:{name:"Saturn", g:"♄"}, asc:{name:"Aszendent", g:"ASC"}, mc:{name:"MC", g:"MC"}
-};
+/* Zeichen- und Planetennamen kommen aus horoskop.js. Eine eigene Kopie
+   hier bliebe beim Sprachwechsel stehen und wäre für immer deutsch. */
+/* Aszendent und MC stehen nicht in PLANET; sie bekommen ihren Namen aus
+   der Sprachtafel und werden bei jedem Zugriff frisch gelesen. */
+const PLANETEN = new Proxy({}, { get: (_, k) =>
+  k === "asc" ? { get name() { return rt("achse.asc"); }, g:"ASC" } :
+  k === "mc"  ? { get name() { return rt("achse.mc"); },  g:"MC"  } : PLANET[k] });
 const PLANETEN_REIHE = ["sonne","mond","merkur","venus","mars","jupiter","saturn","asc","mc"];
 const FARBEN = {
   sonne:"#e7c65c", mond:"#cfd6e6", merkur:"#9fbfa8", venus:"#e0a6c2",

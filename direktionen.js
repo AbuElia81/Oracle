@@ -17,17 +17,27 @@
    Transparenzabschnitt der Seite.
    --------------------------------------------------------------------- */
 
-import { rad, grad, norm360, schiefeAufgangsRA, schiefeUntergangsRA } from "./astro.js?v=256";
-import { bogenUnterPol, deklination, raAusLaenge } from "./haeuser.js?v=256";
+import { rad, grad, norm360, schiefeAufgangsRA, schiefeUntergangsRA } from "./astro.js?v=259";
+import { bogenUnterPol, deklination, raAusLaenge } from "./haeuser.js?v=259";
+import { PLANET } from "./horoskop.js?v=259";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=259";
+import { aktuelleSprache } from "./sprachen.js?v=259";
+setzeRestSprache(aktuelleSprache());
+window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 
-export const PLANETEN = {
-  sonne:{name:"Sonne", g:"☉"}, mond:{name:"Mond", g:"☽"}, merkur:{name:"Merkur", g:"☿"},
-  venus:{name:"Venus", g:"♀"}, mars:{name:"Mars", g:"♂"}, jupiter:{name:"Jupiter", g:"♃"},
-  saturn:{name:"Saturn", g:"♄"}, asc:{name:"Aszendent", g:"ASC"}, mc:{name:"MC", g:"MC"}
-};
+/* Die Namen kommen aus horoskop.js und wechseln dort mit der Sprache;
+   Aszendent und MC holen ihren aus der Sprachtafel. */
+export const PLANETEN = new Proxy({}, { get: (_, k) =>
+  k === "asc" ? { get name() { return rt("achse.asc"); }, g:"ASC" } :
+  k === "mc"  ? { get name() { return rt("achse.mc"); },  g:"MC"  } : PLANET[k] });
 export const PLANETEN_REIHE = ["sonne","mond","merkur","venus","mars","jupiter","saturn","asc","mc"];
 
-export const ACHSEN = { asc:{name:"Aszendent", g:""}, mc:{name:"MC", g:""}, desc:{name:"Deszendent", g:""}, ic:{name:"IC", g:""} };
+export const ACHSEN = {
+  asc:  { get name() { return rt("achse.asc"); },  g:"" },
+  mc:   { get name() { return rt("achse.mc"); },   g:"" },
+  desc: { get name() { return rt("achse.desc"); }, g:"" },
+  ic:   { get name() { return rt("achse.ic"); },   g:"" }
+};
 
 export const ASPEKTE = [
   { key:"kon", name:"Konjunktion", zeichen:"☌", offsets:[0], standard:true },
