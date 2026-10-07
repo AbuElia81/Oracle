@@ -10,8 +10,8 @@
    — entgegengesetzte Deklination, Tag und Nacht vertauscht.
    Formel: kontra(λ) = 360° − λ = antiszion(λ) + 180°.
    --------------------------------------------------------------------- */
-import { julianischesDatum, schiefeDerEkliptik, sonnenLaenge, berechneGeburt, norm360, rad, grad } from "./astro.js?v=225";
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=225";
+import { julianischesDatum, schiefeDerEkliptik, sonnenLaenge, berechneGeburt, norm360, rad, grad } from "./astro.js?v=229";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=229";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);

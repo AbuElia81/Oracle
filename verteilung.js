@@ -34,10 +34,10 @@
    ------------------------------------------------------------------------ */
 
 import { norm360, schiefeDerEkliptik, schiefeAufgangsRA, julianischesDatum }
-  from "./astro.js?v=225";
-import { radix, PLANET, REIHE, ZEICHEN, mitArtikel, grossMitArtikel } from "./horoskop.js?v=225";
-import { rt, setzeRestSprache } from "./rest-texte.js?v=225";
-import { aktuelleSprache } from "./sprachen.js?v=225";
+  from "./astro.js?v=229";
+import { radix, PLANET, REIHE, ZEICHEN, mitArtikel, grossMitArtikel } from "./horoskop.js?v=229";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=229";
+import { aktuelleSprache } from "./sprachen.js?v=229";
 setzeRestSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 

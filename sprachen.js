@@ -22,8 +22,8 @@ export const SPRACHEN = [
   { code: "ar", name: "العربية",   kurz: "AR", rtl: true }
 ];
 
-import { HTML_IT } from "./html-it.js?v=225";
-import { HTML_DE } from "./html-de.js?v=225";
+import { HTML_IT } from "./html-it.js?v=229";
+import { HTML_DE } from "./html-de.js?v=229";
 
 export const WORTE = {
   "kopf.unterzeile": {
@@ -80,10 +80,12 @@ export const WORTE = {
   "feld.ort": {
     de:"Geburtsort", en:"Place of birth", tr:"Doğum yeri", it:"Luogo di nascita",
     es:"Lugar de nacimiento", fr:"Lieu de naissance", ar:"مكان الميلاد" },
+  /* Gesucht werden nicht mehr bloß Koordinaten, sondern auch die Zeitzone
+     und der Abstand zur Weltzeit, den der Ort an diesem Tag hatte. */
   "knopf.koordinaten": {
-    de:"Koordinaten suchen", en:"Find coordinates", tr:"Koordinat ara",
-    it:"Cerca coordinate", es:"Buscar coordenadas", fr:"Chercher les coordonnées",
-    ar:"ابحث عن الإحداثيات" },
+    de:"Ort suchen", en:"Find place", tr:"Yer ara",
+    it:"Cerca luogo", es:"Buscar lugar", fr:"Chercher le lieu",
+    ar:"ابحث عن المكان" },
   "knopf.speichern": {
     de:"Speichern", en:"Save", tr:"Kaydet", it:"Salva", es:"Guardar",
     fr:"Enregistrer", ar:"احفظ" },
@@ -146,6 +148,10 @@ export const WORTE = {
     es:"Todo lo que dice el cielo de tu hora de nacimiento — en una sola lectura",
     fr:"Tout ce que donne le ciel de ton heure de naissance — d'un seul tenant",
     ar:"كل ما تقوله سماء ساعة ميلادك — في قراءة واحدة" },
+  "feld.vonHand": { de:"Koordinaten und Zeitzone von Hand",
+    it:"Coordinate e fuso orario a mano", en:"Coordinates and time zone by hand",
+    tr:"Koordinat ve saat dilimini elle", es:"Coordenadas y zona horaria a mano",
+    fr:"Coordonnées et fuseau horaire à la main", ar:"الإحداثيات والمنطقة الزمنية يدوياً" },
   "lesung.weiter": { de:"Weiterlesen — noch %n Abschnitte",
     it:"Continua a leggere — altri %n capitoli", en:"Read on — %n more sections",
     tr:"Devamını oku — %n bölüm daha", es:"Seguir leyendo — %n secciones más",

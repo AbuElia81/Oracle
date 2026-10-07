@@ -1,7 +1,8 @@
 /* ------------------------------------------------------------------------
    profil-ui.js — Bedienung des Reiters "Meine Daten".
    --------------------------------------------------------------------- */
-import { leseProfilRoh, schreibeProfil, loescheProfil } from "./profil.js?v=225";
+import { leseProfilRoh, schreibeProfil, loescheProfil } from "./profil.js?v=229";
+import { offsetVon } from "./zeitzone.js?v=229";
 
 const $ = s => document.querySelector(s);
 
@@ -14,6 +15,51 @@ async function ortSuchen(name) {
   return { breite: parseFloat(daten[0].lat), laenge: parseFloat(daten[0].lon), anzeige: daten[0].display_name };
 }
 
+/* Aus Koordinaten, Datum und Stunde den Abstand zur Weltzeit setzen und
+   in einem Satz anzeigen, was dabei herauskam. Der Abstand hängt am Datum
+   — Sommerzeit —, darum läuft das auch, wenn das Datum nachträglich
+   geändert wird, und nicht nur beim Suchen des Ortes. */
+/* Wer den Offset selbst eintippt, soll ihn behalten dürfen — auch über
+   das Speichern hinweg. Alles andere wird gerechnet. */
+let utcVonHand = false;
+
+function alsAbstand(stundenbruch) {
+  const vorzeichen = stundenbruch < 0 ? "\u2212" : "+";
+  const stunden = Math.floor(Math.abs(stundenbruch));
+  const minuten = Math.round((Math.abs(stundenbruch) - stunden) * 60);
+  return `UTC${vorzeichen}${stunden}${minuten ? ":" + String(minuten).padStart(2, "0") : ""}`;
+}
+
+function zeitzoneNachziehen(auchSpeichern) {
+  const befund = $("#pOrtBefund");
+  const breite = parseFloat($("#pBreite").value);
+  const laenge = parseFloat($("#pLaenge").value);
+  const datum = $("#pDatum").value;
+  if (isNaN(breite) || isNaN(laenge) || !datum) { if (befund) befund.hidden = true; return; }
+
+  const z = offsetVon(breite, laenge, datum, $("#pZeit").value || "12:00");
+  if (!z) { if (befund) befund.hidden = true; return; }
+
+  const vorher = parseFloat($("#pUtc").value);
+  const weicht = !isNaN(vorher) && Math.abs(vorher - z.offset) > 0.01;
+  if (!utcVonHand) $("#pUtc").value = z.offset;
+
+  if (befund) {
+    befund.hidden = false;
+    befund.innerHTML = `${breite.toFixed(2)}° / ${laenge.toFixed(2)}° · ` +
+      `<b>${z.zone}</b> · ${utcVonHand && weicht ? alsAbstand(vorher) : alsAbstand(z.offset)}` +
+      (utcVonHand && weicht
+        ? ` <span class="ortAbweicht">von Hand — gerechnet wäre ${alsAbstand(z.offset)}</span>`
+        : "");
+  }
+
+  /* Ein gespeichertes Profil kann aus der Zeit stammen, in der der Offset
+     noch aus der Länge geschätzt wurde. Steht dort etwas anderes, als die
+     Zeitzonentafel sagt, wird es stillschweigend richtiggestellt — sonst
+     rechnete die Lesung weiter mit der falschen Stunde. */
+  if (auchSpeichern && weicht && !utcVonHand) speichern(true);
+}
+
 $("#pOrtSuchen").addEventListener("click", async () => {
   const ort = $("#pOrt").value.trim();
   const status = $("#pGeoStatus");
@@ -24,21 +70,28 @@ $("#pOrtSuchen").addEventListener("click", async () => {
     const treffer = await ortSuchen(ort);
     $("#pBreite").value = treffer.breite.toFixed(4);
     $("#pLaenge").value = treffer.laenge.toFixed(4);
-
-    /* Der UTC-Offset lässt sich aus der Länge schätzen — auf die Sommerzeit
-       kann das nicht Rücksicht nehmen, darum steht es als Vorschlag da. */
-    let zusatz = "";
-    if (!$("#pUtc").value) {
-      $("#pUtc").value = Math.round(treffer.laenge / 15);
-      zusatz = ` · UTC-Offset auf ${Math.round(treffer.laenge / 15)} geschätzt — bei Sommerzeit eins mehr`;
-    }
+    utcVonHand = false;
+    zeitzoneNachziehen();
     $("#pBreite").dispatchEvent(new Event("input", { bubbles: true }));
-    status.textContent = "Gefunden: " + treffer.anzeige + zusatz;
+    status.textContent = "Gefunden: " + treffer.anzeige;
     status.classList.add("ok");
   } catch (e) {
     status.textContent = e.message || "Die Suche ist fehlgeschlagen.";
     status.classList.add("fehler");
   }
+});
+
+/* Enter im Ortsfeld soll suchen und nicht die Seite neu laden. */
+$("#pOrt").addEventListener("keydown", ev => {
+  if (ev.key === "Enter") { ev.preventDefault(); $("#pOrtSuchen").click(); }
+});
+
+["pDatum", "pZeit", "pBreite", "pLaenge"].forEach(id =>
+  $("#" + id)?.addEventListener("change", () => zeitzoneNachziehen(false)));
+
+$("#pUtc")?.addEventListener("input", () => {
+  utcVonHand = $("#pUtc").value.trim() !== "";
+  zeitzoneNachziehen(false);
 });
 
 function fuelleFormular(p) {
@@ -71,6 +124,7 @@ function sammle() {
     breite: parseFloat($("#pBreite").value),
     laenge: parseFloat($("#pLaenge").value),
     utc: parseFloat($("#pUtc").value),
+    utcVonHand: !!utcVonHand,
     gespeichertAm: new Date().toISOString()
   };
 }
@@ -217,6 +271,8 @@ $("#pDatei")?.addEventListener("change", e => {
       if (!hatNamen && !hatGeburt) throw new Error("keine brauchbaren Angaben darin");
 
       fuelleFormular(d);
+      utcVonHand = !!d.utcVonHand;
+      zeitzoneNachziehen(true);
       speichern(true);
       status.textContent = "Eingelesen — alle Abschnitte rechnen jetzt damit.";
       status.classList.add("ok");
@@ -235,3 +291,11 @@ $("#pDatei")?.addEventListener("change", e => {
 });
 
 zeigeGespeichert();
+
+/* Erst ganz zum Schluss, wenn alle Tafeln dieser Datei stehen: Was im
+   Speicher liegt, kann aus der Zeit stammen, in der der Abstand zur
+   Weltzeit noch aus dem Längengrad geschätzt wurde. Das wird hier
+   stillschweigend richtiggestellt. */
+const __gespeichert = leseProfilRoh();
+utcVonHand = !!(__gespeichert && __gespeichert.utcVonHand);
+zeitzoneNachziehen(true);
