@@ -371,6 +371,188 @@ export const D = {
       "vita interiore e insiste sul fatto che i campi designano rapporti esterni, non " +
       "rappresentazioni di essi. In questo non ha torto — ma un'immagine la si ricorda, una " +
       "tabella no. Per questo stanno qui tutte e due."
+  },
+
+  en: {
+    "temp.sanguinisch.name":"sanguine", "temp.sanguinisch.saft":"blood",
+    "temp.sanguinisch.element":"Air",
+    "temp.sanguinisch.bild":"air and blood — the quick, outgoing, easily kindled temper",
+    "temp.sanguinisch.text":
+      "You take in quickly and pass on quickly. Company suits you, being alone wears you down. " +
+      "What provokes you provokes you at once and is as quickly over. The old physicians held " +
+      "this mixture the happiest and warned at the same time of its fleetingness: what comes " +
+      "easily does not stay of itself.",
+    "temp.cholerisch.name":"choleric", "temp.cholerisch.saft":"yellow bile",
+    "temp.cholerisch.element":"Fire",
+    "temp.cholerisch.bild":"fire and yellow bile — the sharp, quick, flaring temper",
+    "temp.cholerisch.text":
+      "You decide before others have finished considering, and are right more often than the " +
+      "considerers admit. Your anger comes quickly and goes quickly. The danger of this mixture " +
+      "is not the heat but the dryness: too little patience with what takes time.",
+    "temp.melancholisch.name":"melancholic", "temp.melancholisch.saft":"black bile",
+    "temp.melancholisch.element":"Earth",
+    "temp.melancholisch.bild":"earth and black bile — the serious, durable, hard-to-move temper",
+    "temp.melancholisch.text":
+      "You test long and then bind yourself fast. What you have once grasped you do not lose " +
+      "again. The old writers held this mixture to be that of scholars and craftsmen — and the " +
+      "one most apt to tip into melancholy when nothing from outside warms it.",
+    "temp.phlegmatisch.name":"phlegmatic", "temp.phlegmatisch.saft":"phlegm",
+    "temp.phlegmatisch.element":"Water",
+    "temp.phlegmatisch.bild":"water and phlegm — the calm, receptive, yielding temper",
+    "temp.phlegmatisch.text":
+      "You let much come close without being overturned by it. Where others flare up you wait, " +
+      "and often the matter has settled itself by then. The danger of this mixture is not " +
+      "sloth but giving way: you clear fields on which you should have stayed standing.",
+
+    "saft.sanguinisch":"Air passing through an open window: it brings in what is outside, and takes away what was in.",
+    "saft.cholerisch":"A fire that burns the moment it is touched — and needs wood, or it goes out.",
+    "saft.melancholisch":"Earth with something lying in it, waiting. It gives nothing up quickly, but what it gives up has grown.",
+    "saft.phlegmatisch":"Water that takes the shape of the vessel and yet does not change.",
+
+    "rd.1":"The sect", "rd.2":"The temperament",
+    "rd.3":"The rising sign and its lord", "rd.4":"The lord of the whole",
+    "rd.5":"The two lights", "rd.6":"Who stands strong and who weak",
+    "rd.7":"What takes effect at once", "rd.8":"Who lodges whom",
+
+    "sekte.tag": "You were born <b>by day</b>: the sun stood above the horizon. This birth " +
+      "therefore belongs to the diurnal sect. Sun, Jupiter and Saturn appear here in their more " +
+      "agreeable shape, Moon, Venus and Mars in their demanding one. The heavier of the two " +
+      "malefics is <b>Saturn</b>, the greater benefic <b>Venus</b> — not Jupiter, as one might think.",
+    "sekte.nacht": "You were born <b>by night</b>: the sun stood below the horizon. This birth " +
+      "therefore belongs to the nocturnal sect. Moon, Venus and Mars appear here in their more " +
+      "agreeable shape, Sun, Jupiter and Saturn in their demanding one. The heavier of the two " +
+      "malefics is <b>Mars</b>, the greater benefic <b>Jupiter</b>.",
+    "sekte.note":"This is the first move of every old reading and the most consequential: the " +
+      "same position means something else by day than by night.",
+
+    "temp.gemischt": (name, bild) =>
+      `The mixture is not pure: on one axis it stands close, and so <b>${name}</b> runs along ` +
+      `with it — ${bild}. The old physicians called such a thing a compound complexion and held ` +
+      `it to be the normal case.`,
+    "temp.note":"Reckoned by the four witnesses of the tradition: the rising sign, its lord, the " +
+      "moon by sign and phase, the season — along with whoever stands in the first field. The " +
+      "old writers read body, temper, pace and liability to illness from it all at once; here " +
+      "stands only what concerns the temper.",
+    "temp.warm":"warm", "temp.kalt":"cold", "temp.feucht":"moist", "temp.trocken":"dry",
+    "temp.wederWarm":"neither warm nor cold", "temp.wederFeucht":"neither moist nor dry",
+
+    "winkel.ja": (namen) =>
+      `Angular — that is, in the 1st, 4th, 7th or 10th field — stand <b>${namen}</b>. What ` +
+      `these indicate comes about visibly and needs no detour. In the old teaching this is the ` +
+      `most important distinction of all: not whether a planet stands well or badly, but ` +
+      `whether it gets a word in at all.`,
+    "winkel.nein":"No planet stands angular. That is rare, and it means: in this life nothing " +
+      "comes about of itself. Everything goes by detours, through other people, through patience.",
+    "kadent": (namen) =>
+      `Cadent — in the 3rd, 6th, 9th or 12th field — stand ${namen}. They work indirectly: ` +
+      `through others, in hiding, or only at second glance.`,
+    "aufnahme.keine":"No planet stands in the sign of another that looks at it. Each stands for itself.",
+
+    "rd.note":"The order is that of the medieval school: first the sect, then the temperament, " +
+      "then the person, then the lord of the whole, the lights, the strengths, the angles and " +
+      "last the receptions. Robert Zoller puts the rule in four words: no delineation, no " +
+      "prediction. What stands here is the content — the time techniques on this site say only " +
+      "when something of it falls due.",
+
+    "asc.satz": (bild, grad, herrName, herrZeichen, herrHaus, hausOrt, wuerde, stellung) =>
+      `In the hour of your birth ${bild} rose over the eastern horizon, in the ${grad}th ` +
+      `degree. In this teaching the rising sign is not your character but your <em>body in the ` +
+      `world</em>: how you come on, how you are first seen, what people credit you with. ` +
+      (herrName
+        ? `Over it ${herrName} has command — and where he stands, there your life pulls. He ` +
+          `stands in ${herrZeichen}, in the ${herrHaus}th field: ${hausOrt}${wuerde}. ${stellung}`
+        : ""),
+    "stellung.winkel":"He stands angular — what he indicates comes about visibly and soon.",
+    "stellung.folgend":"He stands succedent — it works, but with a delay.",
+    "stellung.kadent":"He stands cadent — it works indirectly, often through other people.",
+
+    "alm.satz": (planet, punkte, gleich, ascHerr) =>
+      `Reckoned over all five places, <b>${planet}</b> leads with ${punkte} points. Where the ` +
+      `single witnesses contradict each other, he has the last word. ` +
+      (gleich
+        ? `He is at the same time the lord of the rising sign — that is the clear case: this ` +
+          `birth has a centre, and it is undisputed.`
+        : `He is not the lord of the rising sign; that is ${ascHerr}. Two different ones, then: ` +
+          `the one says how you come on, the other what this life is about at all.`),
+    "alm.mehr":"At length in the section \"The lord of the nativity\".",
+
+    "licht.sonne":"father, authority, rank, vital force and everything that steps into the light",
+    "licht.mond":"mother, body, temper, daily life and everything that changes",
+    "licht.satz": (name, was, zeichen, haus, ort, wuerde) =>
+      `<b>${name}</b> — ${was}. With you in ${zeichen}, in the ${haus}th field: ${ort}${wuerde}.`,
+
+    "tab.planet":"Planet", "tab.zeichen":"Sign", "tab.feld":"Field",
+    "tab.wuerde":"Dignity", "tab.rolle":"Role in this sect",
+    "rolle.wohlGross":"greater benefic", "rolle.wohl":"benefic",
+    "rolle.uebelGross":"heavier malefic", "rolle.uebel":"malefic",
+    "rolle.sekte":"light of this sect", "rolle.fremd":"light of the other sect",
+    "rolle.keine":"neither",
+    "stark.satz": (stark, schwach) =>
+      `Strongest stands <b>${stark}</b>: what he indicates you get, whether you want it or not. ` +
+      `Weakest <b>${schwach}</b> — what he indicates you have to take; it does not fall to you.`,
+
+    "aufnahme.voll": (gast, wirt, zeichen, sicht) =>
+      `<b>${gast}</b> stands in the sign of <b>${wirt}</b> (${zeichen}) — and the two look at ` +
+      `each other (${sicht}). That is a <b>full reception</b>: the host takes the guest in and ` +
+      `does for him what he can. The old writers hold this to be the strongest tie between two ` +
+      `figures in the whole chart.`,
+    "aufnahme.halb": (gast, wirt, zeichen) =>
+      `<b>${gast}</b> stands in the sign of <b>${wirt}</b> (${zeichen}) — but they do not look ` +
+      `at each other. The guest lodges with the host without the host noticing: the help lies ` +
+      `ready and is not called upon.`,
+
+    "my.buehne.satz": (bild, hell, fh, ort, stand) =>
+      `In the hour of your birth ${bild} came up over the edge of the world. That is the image ` +
+      `in which you make your entrance — not who you are, but how the curtain goes up. ` +
+      (hell
+        ? `It was light. In a bright piece the loud ones come on first, and the quiet ones get ` +
+          `their scene later.`
+        : `It was dark. In a dark piece everything begins more quietly, and what counts happens ` +
+          `away from the torches.`) +
+      (fh ? ` The hand directing this piece is ${fh.figur}: ${fh.pron} ${fh.tut}. ` +
+            `${fh.pron.charAt(0).toUpperCase() + fh.pron.slice(1)} keeps ${ort}. ${stand}` : ""),
+    "my.stoff.satz": (element, saftBild, text, neben) =>
+      `The old physicians mixed every person out of four things, and in you <b>${element}</b> ` +
+      `predominates. ${saftBild} ${text} ` +
+      (neben
+        ? `The mixture is not pure — ${neben} runs along with it, and that is the normal case: ` +
+          `nobody is only one element.`
+        : `The mixture is strikingly clear; that is rare.`),
+    "my.lichter.satz": (soBild, soOrt, moBild, moOrt) =>
+      `Two figures hold the light in every birth: <b>the king in the light</b> stands at ` +
+      `${soBild} and ${soOrt} — from there comes what wants to be seen in you, and from there ` +
+      `came your father too. <b>The wanderer with the many faces</b> stands at ${moBild} and ` +
+      `${moOrt} — from there comes what nourishes you and what changes in you, and from there ` +
+      `came your mother. In the old books that is no comparison but the same thing: what ` +
+      `wanders above is called mother below.`,
+    "my.wort.satz": (st, sw) =>
+      `Loudest speaks ${st.figur} — ${st.pron} ${st.tut}. ` +
+      `${st.pron.charAt(0).toUpperCase() + st.pron.slice(1)} gives you ${st.gabe} and takes ` +
+      `${st.preis}. What comes from there you get, whether you want it or not. ` +
+      `Most quietly ${sw.figur} — ${sw.fabel}. What comes from there does not fall to you: you ` +
+      `have to fetch it, and fetch it afresh every time.`,
+    "my.gast.voll": (gast, wirt) =>
+      `${gast.charAt(0).toUpperCase() + gast.slice(1)} lodges in the house of ${wirt}, and the ` +
+      `two look at each other while doing so. In the old books that is the strongest friendship ` +
+      `two figures can make: the host does for the guest what he can, and without having to be ` +
+      `asked.`,
+    "my.gast.halb": (gast, wirt) =>
+      `${gast.charAt(0).toUpperCase() + gast.slice(1)} lodges in the house of ${wirt} — but they ` +
+      `do not look at each other. The hospitality lies ready and is not taken up.`,
+    "my.rede.satz": (figur, fabel) =>
+      `Reckon everything together — every place, every position, the day and the hour — and at ` +
+      `the end ${figur} stands at the head. ${fabel.charAt(0).toUpperCase() + fabel.slice(1)}: ` +
+      `that is the fable lying under this life. Where the single signs contradict each other, ` +
+      `it goes on telling.`,
+
+    "my.buehne":"The stage", "my.stoff":"The stuff", "my.lichter":"The two lights",
+    "my.wort":"Who speaks and who is silent", "my.gast":"Who is guest with whom",
+    "my.rede":"What is being talked about here",
+    "my.note":"This is the same birth as next door, only read differently. The medieval school " +
+      "would reject this reading: Robert Zoller calls it a confusion of the chart with the " +
+      "inner life and insists that the fields denote outward circumstances, not notions of " +
+      "them. He is not wrong about that — but an image is remembered, and a table is not. So " +
+      "both stand here."
   }
 };
 
