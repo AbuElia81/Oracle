@@ -77,3 +77,49 @@ export const PUNKT_EN = {
   reise: { name:"Journey",
     was:"The going away and the foreign country: where setting out leads." }
 };
+
+/* What each planet signifies, in one half-sentence. */
+export const PLANET_WAS_EN = {
+  sonne:"your will and your standing",
+  mond:"your temper and your need",
+  merkur:"your thinking and your speaking",
+  venus:"what you love and what you find beautiful",
+  mars:"your drive and your anger",
+  jupiter:"your trust and your measure",
+  saturn:"your seriousness and your limit"
+};
+
+/* The manner of each sign. */
+export const ART_EN = [
+  "straightforward and quick", "steadfast and sensuous", "mobile and curious",
+  "sensitive and sheltering", "generous and mindful of effect", "testing and exact",
+  "weighing and bent on balance", "unconditional and deep", "far-reaching and convinced",
+  "serious and built to last", "self-willed and matter-of-fact", "permeable and compassionate"
+];
+
+/* The dignities in plain words. */
+export const WUERDE_TEXT_EN = {
+  "Domizil":"in its own sign — has what it needs and works unhindered",
+  "Erhöhung":"exalted — is esteemed here beyond its own measure",
+  "Exil":"in exile — has to work against the grain here",
+  "Fall":"in fall — comes into its own here only with difficulty",
+  "—":"without particular dignity — works here according to circumstance"
+};
+
+/* The tone of each aspect. */
+export const ASPEKT_TON_EN = {
+  "Konjunktion":"fused", "Sextil":"as an opportunity", "Quadrat":"under tension",
+  "Trigon":"lightly", "Opposition":"facing each other"
+};
+
+/* The eight phases of the moon. */
+export const PHASEN_EN = [
+  "new moon — a beginning nobody has noticed yet",
+  "waxing crescent — the plan takes shape, against resistance",
+  "first quarter — now it must be decided",
+  "waxing gibbous — building out, pace, becoming visible",
+  "full moon — it stands in the light, and one also sees what is missing",
+  "waning gibbous — harvest, passing on, spreading",
+  "last quarter — the matter is checked over and set straight",
+  "waning crescent — letting go, clearing up, preparing for the next"
+];

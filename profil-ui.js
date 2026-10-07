@@ -1,8 +1,8 @@
 /* ------------------------------------------------------------------------
    profil-ui.js — Bedienung des Reiters "Meine Daten".
    --------------------------------------------------------------------- */
-import { leseProfilRoh, schreibeProfil, loescheProfil } from "./profil.js?v=261";
-import { offsetVon } from "./zeitzone.js?v=261";
+import { leseProfilRoh, schreibeProfil, loescheProfil } from "./profil.js?v=268";
+import { offsetVon } from "./zeitzone.js?v=268";
 
 const $ = s => document.querySelector(s);
 

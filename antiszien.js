@@ -10,11 +10,11 @@
    — entgegengesetzte Deklination, Tag und Nacht vertauscht.
    Formel: kontra(λ) = 360° − λ = antiszion(λ) + 180°.
    --------------------------------------------------------------------- */
-import { julianischesDatum, schiefeDerEkliptik, sonnenLaenge, berechneGeburt, norm360, rad, grad } from "./astro.js?v=261";
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=261";
-import { ZEICHEN, PLANET } from "./horoskop.js?v=261";
-import { rt, setzeRestSprache } from "./rest-texte.js?v=261";
-import { aktuelleSprache } from "./sprachen.js?v=261";
+import { julianischesDatum, schiefeDerEkliptik, sonnenLaenge, berechneGeburt, norm360, rad, grad } from "./astro.js?v=268";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=268";
+import { ZEICHEN, PLANET } from "./horoskop.js?v=268";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=268";
+import { aktuelleSprache } from "./sprachen.js?v=268";
 setzeRestSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 

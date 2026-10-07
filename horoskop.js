@@ -9,10 +9,10 @@
 
    Häuser im Ganzzeichen, wie überall auf dieser Seite.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=261";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=268";
 import { berechneGeburt, planetenPositionen, julianischesDatum,
          aszendent, medium, schiefeDerEkliptik, siderischeZeitGreenwich,
-         norm360 } from "./astro.js?v=261";
+         norm360 } from "./astro.js?v=268";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -49,12 +49,13 @@ export function grossMitArtikel(name) {
   return t.charAt(0).toUpperCase() + t.slice(1);
 }
 
-const ART = [
+const ART_DE = [
   "geradeheraus und schnell", "beharrlich und sinnlich", "beweglich und neugierig",
   "empfindsam und schützend", "großzügig und auf Wirkung bedacht", "prüfend und genau",
   "abwägend und auf Ausgleich bedacht", "unbedingt und tief", "weit ausholend und überzeugt",
   "ernst und auf Dauer angelegt", "eigenwillig und sachlich", "durchlässig und mitfühlend"
 ];
+let ART = ART_DE;
 
 export const HAUS = [
   "am eigenen Leib und im Auftreten", "beim Besitz und beim Einkommen",
@@ -69,21 +70,67 @@ const DOMIZIL   = ["mars","venus","merkur","mond","sonne","merkur","venus","mars
 const EXALT     = { sonne:0, mond:1, jupiter:3, merkur:5, saturn:6, mars:9, venus:11 };
 const FALL      = { sonne:6, mond:7, jupiter:9, merkur:11, saturn:0, mars:3, venus:5 };
 
+/* Die Stufe ist der sprachfeste Schlüssel, der Text hängt an der Sprache.
+   Als Getter, damit ein Umschalten auch schon gerechnete Würden erreicht. */
+const WUERDE_TEXT_DE = {
+  "Domizil":"in eigenem Zeichen — hat, was nötig ist, und wirkt ungehindert",
+  "Erhöhung":"erhöht — wird hier über das eigene Maß hinaus geachtet",
+  "Exil":"im Exil — muss hier gegen den Strich arbeiten",
+  "Fall":"im Fall — kommt hier schwer zu seinem Recht",
+  "—":"ohne besondere Würde — wirkt hier nach den Umständen"
+};
+let WUERDE_TEXT = WUERDE_TEXT_DE;
+
 function wuerde(planetKey, zeichen) {
-  if (DOMIZIL[zeichen] === planetKey) return { stufe:"Domizil", text:"in eigenem Zeichen — hat, was nötig ist, und wirkt ungehindert" };
-  if (EXALT[planetKey] === zeichen)   return { stufe:"Erhöhung", text:"erhöht — wird hier über das eigene Maß hinaus geachtet" };
-  if (DOMIZIL[(zeichen + 6) % 12] === planetKey) return { stufe:"Exil", text:"im Exil — muss hier gegen den Strich arbeiten" };
-  if (FALL[planetKey] === zeichen)    return { stufe:"Fall", text:"im Fall — kommt hier schwer zu seinem Recht" };
-  return { stufe:"—", text:"ohne besondere Würde — wirkt hier nach den Umständen" };
+  const stufe =
+    DOMIZIL[zeichen] === planetKey ? "Domizil" :
+    EXALT[planetKey] === zeichen ? "Erhöhung" :
+    DOMIZIL[(zeichen + 6) % 12] === planetKey ? "Exil" :
+    FALL[planetKey] === zeichen ? "Fall" : "—";
+  return { stufe, get text() { return WUERDE_TEXT[stufe]; } };
 }
 
-const ASPEKTE = [
-  { name:"Konjunktion", winkel:0,   ton:"verschmolzen" },
-  { name:"Sextil",      winkel:60,  ton:"als Gelegenheit" },
-  { name:"Quadrat",     winkel:90,  ton:"unter Spannung" },
-  { name:"Trigon",      winkel:120, ton:"leichthin" },
-  { name:"Opposition",  winkel:180, ton:"einander gegenüber" }
+const ASPEKT_TON_DE = {
+  "Konjunktion":"verschmolzen", "Sextil":"als Gelegenheit", "Quadrat":"unter Spannung",
+  "Trigon":"leichthin", "Opposition":"einander gegenüber"
+};
+let ASPEKT_TON = ASPEKT_TON_DE;
+
+const PHASEN_DE = [
+  "Neumond — ein Anfang, der noch niemandem auffällt",
+  "zunehmende Sichel — das Vorhaben nimmt Gestalt an, gegen Widerstand",
+  "erstes Viertel — jetzt muss entschieden werden",
+  "zunehmender Dreiviertelmond — Ausbau, Tempo, Sichtbarwerden",
+  "Vollmond — es steht im Licht, und man sieht auch, was fehlt",
+  "abnehmender Dreiviertelmond — Ernte, Weitergabe, Verbreitung",
+  "letztes Viertel — die Sache wird überprüft und zurechtgerückt",
+  "abnehmende Sichel — Loslassen, Aufräumen, Vorbereitung auf das Nächste"
 ];
+let PHASEN = PHASEN_DE;
+
+/* Die wenigen Bindewörter des Zustandssatzes. */
+const SATZ_WORT_DE = { steht:"steht bei dir in", haus: n => `im ${n}. Haus`,
+  ohneWuerde:"ohne besondere Würde",
+  stufe: { Domizil:"Domizil", "Erhöhung":"Erhöhung", Exil:"Exil", Fall:"Fall" } };
+const SATZ_WORT_IT = { steht:"sta presso di te in", haus: n => `nella ${n}ª casa`,
+  ohneWuerde:"senza dignità particolare",
+  stufe: { Domizil:"domicilio", "Erhöhung":"esaltazione", Exil:"esilio", Fall:"caduta" } };
+const SATZ_WORT_EN = { steht:"stands with you in",
+  haus: n => `in the ${englischeOrdnung(n)} house`, ohneWuerde:"without particular dignity",
+  stufe: { Domizil:"domicile", "Erhöhung":"exaltation", Exil:"exile", Fall:"fall" } };
+
+/* 1st, 2nd, 3rd, 4th — und 11th bis 13th trotz der Endziffern. */
+function englischeOrdnung(n) {
+  const z = Math.abs(Math.round(Number(n))), zehner = z % 100, einer = z % 10;
+  return n + ((zehner >= 11 && zehner <= 13) ? "th"
+    : einer === 1 ? "st" : einer === 2 ? "nd" : einer === 3 ? "rd" : "th");
+}
+let SATZ_WORT = SATZ_WORT_DE;
+const ASPEKTE = [
+  { name:"Konjunktion", winkel:0   }, { name:"Sextil", winkel:60  },
+  { name:"Quadrat",     winkel:90  }, { name:"Trigon", winkel:120 },
+  { name:"Opposition",  winkel:180 }
+].map(a => ({ ...a, get ton() { return ASPEKT_TON[a.name]; } }));
 
 function aspektZwischen(a, b, orbis) {
   /* ((a-b+540) mod 360) - 180 bringt die Differenz nach (-180,180];
@@ -167,8 +214,14 @@ export function zustandVon(nameOderKey) {
     zeichenName: ZEICHEN[pl.zeichen].name,
     zeichenGlyph: ZEICHEN[pl.zeichen].glyph,
     hausOrt: HAUS[pl.haus - 1],
-    satz: `${pl.name} steht bei dir in ${ZEICHEN[pl.zeichen].glyph} ${ZEICHEN[pl.zeichen].name} ` +
-          `im ${pl.haus}. Haus (${pl.wuerde.stufe === "—" ? "ohne besondere Würde" : pl.wuerde.stufe})`
+    /* Als Getter, damit der Satz die Sprache zeigt, die beim Lesen gilt,
+       und nicht die, die beim Rechnen galt. */
+    get satz() {
+      return `${pl.name} ${SATZ_WORT.steht} ${ZEICHEN[pl.zeichen].glyph} ` +
+             `${ZEICHEN[pl.zeichen].name}, ${SATZ_WORT.haus(pl.haus)} ` +
+             `(${pl.wuerde.stufe === "—" ? SATZ_WORT.ohneWuerde
+                  : (SATZ_WORT.stufe[pl.wuerde.stufe] || pl.wuerde.stufe)})`;
+    }
   };
 }
 
@@ -244,16 +297,6 @@ export function progression() {
   };
   const sonne = machen("sonne"), mond = machen("mond");
   const phase = norm360(pos.mond.laenge - pos.sonne.laenge);
-  const PHASEN = [
-    "Neumond — ein Anfang, der noch niemandem auffällt",
-    "zunehmende Sichel — das Vorhaben nimmt Gestalt an, gegen Widerstand",
-    "erstes Viertel — jetzt muss entschieden werden",
-    "zunehmender Dreiviertelmond — Ausbau, Tempo, Sichtbarwerden",
-    "Vollmond — es steht im Licht, und man sieht auch, was fehlt",
-    "abnehmender Dreiviertelmond — Ernte, Weitergabe, Verbreitung",
-    "letztes Viertel — die Sache wird überprüft und zurechtgerückt",
-    "abnehmende Sichel — Loslassen, Aufräumen, Vorbereitung auf das Nächste"
-  ];
   return { alter, sonne, mond, phase, phaseText: PHASEN[Math.floor(phase / 45) % 8],
            asc: pAsc, ascZeichen: Math.floor(norm360(pAsc) / 30) };
 }
@@ -453,11 +496,14 @@ if (document.readyState === "loading") {
    Planeten-, Zeichen- und Feldernamen stecken in fast jedem Satz. Sie
    werden hier beim Sprachwechsel ausgetauscht, nicht neu importiert —
    die Objekte bleiben dieselben, nur ihre Namensfelder wechseln. */
-import { PLANET_NAME_IT, PLANET_ARTIKEL_IT, ZEICHEN_NAME_IT, HAUS_IT } from "./namen-it.js?v=261";
-import { PLANET_NAME_EN, PLANET_ARTIKEL_EN, ZEICHEN_NAME_EN, HAUS_EN } from "./namen-en.js?v=261";
-import { aktuelleSprache } from "./sprachen.js?v=261";
+import { PLANET_NAME_IT, PLANET_ARTIKEL_IT, ZEICHEN_NAME_IT, HAUS_IT,
+         PLANET_WAS_IT, ART_IT, WUERDE_TEXT_IT, ASPEKT_TON_IT, PHASEN_IT } from "./namen-it.js?v=268";
+import { PLANET_NAME_EN, PLANET_ARTIKEL_EN, ZEICHEN_NAME_EN, HAUS_EN,
+         PLANET_WAS_EN, ART_EN, WUERDE_TEXT_EN, ASPEKT_TON_EN, PHASEN_EN } from "./namen-en.js?v=268";
+import { aktuelleSprache } from "./sprachen.js?v=268";
 
 const PLANET_NAME_DE  = Object.fromEntries(REIHE.map(k => [k, PLANET[k].name]));
+const PLANET_WAS_DE   = Object.fromEntries(REIHE.map(k => [k, PLANET[k].was]));
 const ARTIKEL_DE      = { ...ARTIKEL };
 const ZEICHEN_NAME_DE = ZEICHEN.map(z => z.name);
 const HAUS_DE         = [...HAUS];
@@ -465,12 +511,17 @@ const HAUS_DE         = [...HAUS];
 export function setzeNamenSprache(code) {
   /* Eine Tafel statt einer Weiche — eine weitere Sprache ist eine Zeile. */
   const NAMEN = {
-    de: { planet: PLANET_NAME_DE, artikel: ARTIKEL_DE, zeichen: ZEICHEN_NAME_DE, haus: HAUS_DE },
-    it: { planet: PLANET_NAME_IT, artikel: PLANET_ARTIKEL_IT, zeichen: ZEICHEN_NAME_IT, haus: HAUS_IT },
-    en: { planet: PLANET_NAME_EN, artikel: PLANET_ARTIKEL_EN, zeichen: ZEICHEN_NAME_EN, haus: HAUS_EN }
+    de: { planet: PLANET_NAME_DE, artikel: ARTIKEL_DE, zeichen: ZEICHEN_NAME_DE, haus: HAUS_DE,
+          was: PLANET_WAS_DE, art: ART_DE, wuerde: WUERDE_TEXT_DE, ton: ASPEKT_TON_DE, phasen: PHASEN_DE , satzwort: SATZ_WORT_DE },
+    it: { planet: PLANET_NAME_IT, artikel: PLANET_ARTIKEL_IT, zeichen: ZEICHEN_NAME_IT, haus: HAUS_IT,
+          was: PLANET_WAS_IT, art: ART_IT, wuerde: WUERDE_TEXT_IT, ton: ASPEKT_TON_IT, phasen: PHASEN_IT , satzwort: SATZ_WORT_IT },
+    en: { planet: PLANET_NAME_EN, artikel: PLANET_ARTIKEL_EN, zeichen: ZEICHEN_NAME_EN, haus: HAUS_EN,
+          was: PLANET_WAS_EN, art: ART_EN, wuerde: WUERDE_TEXT_EN, ton: ASPEKT_TON_EN, phasen: PHASEN_EN , satzwort: SATZ_WORT_EN }
   };
   const n = NAMEN[code] || NAMEN.de;
-  REIHE.forEach(k => { PLANET[k].name = n.planet[k]; });
+  REIHE.forEach(k => { PLANET[k].name = n.planet[k]; PLANET[k].was = n.was[k]; });
+  ART = n.art; WUERDE_TEXT = n.wuerde; ASPEKT_TON = n.ton; PHASEN = n.phasen;
+  SATZ_WORT = n.satzwort;
   Object.keys(ARTIKEL).forEach(k => delete ARTIKEL[k]);
   Object.assign(ARTIKEL, n.artikel);
   ZEICHEN.forEach((z, i) => { z.name = n.zeichen[i]; });

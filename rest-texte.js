@@ -8,6 +8,59 @@
 
 export const R = {
   de: {
+    "pd.kopf": (profil, sekte, erster) =>
+      `Für: ${profil} · ${sekte} — darum beginnt die Reihe mit ${erster}.`,
+    "pd.deinFirdar":"Dein Firdar",
+    "pd.spanne": (von, bis) => `${von} bis ${bis} Jahre`,
+    "pd.unter": (g, name) => ` · Unterperiode ${g} ${name}`,
+    "pd.verhandelt": (was) => `Was in dieser Zeit verhandelt wird: ${was}.`,
+    "pd.darin": (name, was, bis) =>
+      `Darin führt gerade ${name} — ${was} —, bis ${bis} Jahren. Der große Herr gibt das Thema, der kleine den Ton.`,
+    "pd.durchlaufen":"Die fünfundsiebzig Jahre der Firdaria sind durchlaufen. Die Perser ließen " +
+      "die Reihe danach von vorn beginnen; hier endet sie.",
+    "pd.tab.herr":"Herr", "pd.tab.jahre":"Jahre", "pd.tab.von":"Von", "pd.tab.bis":"Bis",
+    "pd.tab.datum":"Datum", "pd.tab.beginnt":"Beginnt", "pd.tab.maha":"Mahadasha",
+    "pd.fdNote":"Fünfundsiebzig Jahre auf neun Herren, in fester Folge und fester Länge — die " +
+      "Firdaria fragt weder nach Zeichen noch nach Häusern, nur danach, ob die Sonne bei der " +
+      "Geburt über dem Horizont stand. Die beiden Mondknoten am Ende führen keine Unterperioden.",
+    "pd.amHoroskop": (rolle, glyph, zeichen, haus, ort) =>
+      `${rolle} steht bei dir in ${glyph} ${zeichen}, im ${haus}. Haus — ${ort}. Dort spielt sich ab, was diese Zeit bringt.`,
+    "pd.rolleFd": (name) => `${name}, der Herr dieser Jahre,`,
+    "pd.vdKopf": (profil, glyph, grad, ayanamsa) =>
+      `Für: ${profil} · Mond siderisch auf ${glyph} ${grad}° · Ayanamsa ${ayanamsa}°`,
+    "pd.mondhaus":"Mondhaus der Geburt",
+    "pd.mondhausNot": (nr, g, herr, rest) =>
+      `${nr}. von 27 · Herr ${g} ${herr} · bei der Geburt waren davon noch ${rest} Jahre übrig`,
+    "pd.maha": (g, name, was, von, bis, datum) =>
+      `<b>Mahadasha:</b> ${g} ${name} — ${was}. Von ${von} bis ${bis} Jahren, also bis ${datum}.`,
+    "pd.antar": (g, name, was, datum) =>
+      `<b>Antardasha:</b> ${g} ${name} — ${was}. Bis ${datum}. ` +
+      `Die große Periode sagt, worum es geht; die kleine, woran man es merkt.`,
+    "pd.rest":" (Rest)",
+    "pd.vdNote":"Hundertzwanzig Jahre auf neun Herren. Welcher beginnt und wie viel von seiner " +
+      "Zeit schon verbraucht war, hängt allein daran, wo der Mond bei der Geburt in seinen " +
+      "siebenundzwanzig Häusern stand. Gerechnet wird siderisch nach Lahiri — der Ayanamsa hier " +
+      "genähert, auf wenige Bogenminuten genau; bei einem Mondhaus von 13°20′ fällt das nicht ins Gewicht.",
+    /* ------------------------------- Firdaria und Vimshottari */
+    "fd.sonne":"Ansehen, Amt, das Hervortreten; auch der Vater",
+    "fd.venus":"Bindung, Kunst, Genuss, Geld, das über Menschen kommt",
+    "fd.merkur":"Lernen, Schrift, Handel, Wege, Verhandlung",
+    "fd.mond":"Haus, Familie, Gemüt, Wechsel; auch die Mutter",
+    "fd.saturn":"Ernst, Verzicht, Verantwortung, das Langsame und Bleibende",
+    "fd.jupiter":"Erweiterung, Gönner, Recht, Reise, Zuwachs",
+    "fd.mars":"Streit, Arbeit, Schnitt, Entschluss, Gefahr durch Hitze",
+    "fd.kopf":"Eintritt, Zuwachs, Anschluss — eine Tür geht auf",
+    "fd.schwanz":"Austritt, Abbau, Loslassen — eine Tür geht zu",
+    "fd.name.kopf":"Mondknoten (aufsteigend)", "fd.name.schwanz":"Mondknoten (absteigend)",
+    "vd.ketu":"Loslassen, Rückzug, das Unfertige; was man nicht mehr braucht",
+    "vd.venus":"Genuss, Kunst, Bindung, Wohlstand, das Angenehme",
+    "vd.sonne":"Amt, Vater, Ansehen, Selbstbehauptung",
+    "vd.mond":"Mutter, Gemüt, Heim, Empfinden, Wechsel",
+    "vd.mars":"Tatkraft, Streit, Geschwister, Land, Blut",
+    "vd.rahu":"Hunger nach Neuem, Fremdes, Aufstieg mit Beigeschmack",
+    "vd.jupiter":"Lehre, Kinder, Glaube, Segen, Weite",
+    "vd.saturn":"Mühe, Dauer, Alter, Dienst, das Erarbeitete",
+    "vd.merkur":"Rede, Rechnung, Handel, Verstand, Geschick",
     /* ------------------------------------------ Die Jahresumdrehung */
     "sr.wuerde.Domizil":"in eigenem Zeichen, stark",
     "sr.wuerde.Erhöhung":"erhöht, über sein Maß geachtet",
@@ -416,6 +469,59 @@ export const R = {
   },
 
   it: {
+    "pd.kopf": (profil, sekte, erster) =>
+      `Per: ${profil} · ${sekte} — perciò la serie comincia con ${erster}.`,
+    "pd.deinFirdar":"Il tuo firdar",
+    "pd.spanne": (von, bis) => `da ${von} a ${bis} anni`,
+    "pd.unter": (g, name) => ` · sottoperiodo ${g} ${name}`,
+    "pd.verhandelt": (was) => `Ciò che si tratta in questo tempo: ${was}.`,
+    "pd.darin": (name, was, bis) =>
+      `Dentro conduce ora ${name} — ${was} —, fino ai ${bis} anni. Il grande signore dà il tema, il piccolo il tono.`,
+    "pd.durchlaufen":"I settantacinque anni della firdaria sono conclusi. I persiani facevano " +
+      "ricominciare la serie da capo; qui finisce.",
+    "pd.tab.herr":"Signore", "pd.tab.jahre":"Anni", "pd.tab.von":"Da", "pd.tab.bis":"A",
+    "pd.tab.datum":"Data", "pd.tab.beginnt":"Comincia", "pd.tab.maha":"Mahadasha",
+    "pd.fdNote":"Settantacinque anni su nove signori, in ordine e durata fissi — la firdaria " +
+      "non chiede né segni né case, solo se il sole alla nascita stesse sopra l'orizzonte. I due " +
+      "nodi lunari alla fine non hanno sottoperiodi.",
+    "pd.amHoroskop": (rolle, glyph, zeichen, haus, ort) =>
+      `${rolle} sta presso di te in ${glyph} ${zeichen}, nella ${haus}ª casa — ${ort}. Lì si svolge ciò che questo tempo porta.`,
+    "pd.rolleFd": (name) => `${name}, signore di questi anni,`,
+    "pd.vdKopf": (profil, glyph, grad, ayanamsa) =>
+      `Per: ${profil} · Luna siderale a ${glyph} ${grad}° · Ayanamsa ${ayanamsa}°`,
+    "pd.mondhaus":"Casa lunare della nascita",
+    "pd.mondhausNot": (nr, g, herr, rest) =>
+      `${nr}ª di 27 · signore ${g} ${herr} · alla nascita ne restavano ancora ${rest} anni`,
+    "pd.maha": (g, name, was, von, bis, datum) =>
+      `<b>Mahadasha:</b> ${g} ${name} — ${was}. Da ${von} a ${bis} anni, dunque fino al ${datum}.`,
+    "pd.antar": (g, name, was, datum) =>
+      `<b>Antardasha:</b> ${g} ${name} — ${was}. Fino al ${datum}. ` +
+      `Il periodo grande dice di che cosa si tratti; il piccolo, da che cosa lo si noti.`,
+    "pd.rest":" (resto)",
+    "pd.vdNote":"Centoventi anni su nove signori. Quale cominci e quanto del suo tempo fosse " +
+      "già consumato dipende unicamente da dove stesse la luna alla nascita fra le sue " +
+      "ventisette case. Si calcola siderale secondo Lahiri — l'ayanamsa qui approssimato, " +
+      "esatto a pochi primi d'arco; con una casa lunare di 13°20′ non ha peso.",
+    /* ------------------------------- Firdaria e Vimshottari */
+    "fd.sonne":"considerazione, carica, il farsi avanti; anche il padre",
+    "fd.venus":"legame, arte, piacere, denaro che viene tramite persone",
+    "fd.merkur":"apprendere, scrittura, commercio, strade, trattativa",
+    "fd.mond":"casa, famiglia, animo, mutamento; anche la madre",
+    "fd.saturn":"serietà, rinuncia, responsabilità, ciò che è lento e duraturo",
+    "fd.jupiter":"ampliamento, protettori, diritto, viaggio, accrescimento",
+    "fd.mars":"lite, lavoro, taglio, decisione, pericolo per il calore",
+    "fd.kopf":"ingresso, accrescimento, aggregazione — una porta si apre",
+    "fd.schwanz":"uscita, riduzione, lasciar andare — una porta si chiude",
+    "fd.name.kopf":"Nodo lunare (ascendente)", "fd.name.schwanz":"Nodo lunare (discendente)",
+    "vd.ketu":"lasciar andare, ritiro, l'incompiuto; ciò di cui non si ha più bisogno",
+    "vd.venus":"piacere, arte, legame, benessere, ciò che è gradevole",
+    "vd.sonne":"carica, padre, considerazione, affermazione di sé",
+    "vd.mond":"madre, animo, casa, sentire, mutamento",
+    "vd.mars":"energia, lite, fratelli, terra, sangue",
+    "vd.rahu":"fame di nuovo, l'estraneo, ascesa con retrogusto",
+    "vd.jupiter":"dottrina, figli, fede, benedizione, ampiezza",
+    "vd.saturn":"fatica, durata, vecchiaia, servizio, ciò che si è guadagnato",
+    "vd.merkur":"parola, calcolo, commercio, intelletto, destrezza",
     /* ------------------------------------------ La rivoluzione solare */
     "sr.wuerde.Domizil":"nel proprio segno, forte",
     "sr.wuerde.Erhöhung":"esaltato, stimato oltre la propria misura",
@@ -813,6 +919,59 @@ export const R = {
   },
 
   en: {
+    "pd.kopf": (profil, sekte, erster) =>
+      `For: ${profil} · ${sekte} — so the series begins with ${erster}.`,
+    "pd.deinFirdar":"Your firdar",
+    "pd.spanne": (von, bis) => `${von} to ${bis} years`,
+    "pd.unter": (g, name) => ` · sub-period ${g} ${name}`,
+    "pd.verhandelt": (was) => `What is being dealt with in this time: ${was}.`,
+    "pd.darin": (name, was, bis) =>
+      `Within it ${name} is leading just now — ${was} —, until ${bis} years. The great lord gives the theme, the small one the tone.`,
+    "pd.durchlaufen":"The seventy-five years of the firdaria have run their course. The Persians " +
+      "let the series begin again from the start; here it ends.",
+    "pd.tab.herr":"Lord", "pd.tab.jahre":"Years", "pd.tab.von":"From", "pd.tab.bis":"To",
+    "pd.tab.datum":"Date", "pd.tab.beginnt":"Begins", "pd.tab.maha":"Mahadasha",
+    "pd.fdNote":"Seventy-five years across nine lords, in a fixed order and fixed lengths — the " +
+      "firdaria asks after neither signs nor houses, only whether the sun stood above the " +
+      "horizon at the birth. The two lunar nodes at the end carry no sub-periods.",
+    "pd.amHoroskop": (rolle, glyph, zeichen, haus, ort) =>
+      `${rolle} stands with you in ${glyph} ${zeichen}, in the ${haus} house — ${ort}. That is where what this time brings plays out.`,
+    "pd.rolleFd": (name) => `${name}, the lord of these years,`,
+    "pd.vdKopf": (profil, glyph, grad, ayanamsa) =>
+      `For: ${profil} · Moon sidereal at ${glyph} ${grad}° · ayanamsa ${ayanamsa}°`,
+    "pd.mondhaus":"Lunar house of the birth",
+    "pd.mondhausNot": (nr, g, herr, rest) =>
+      `${nr} of 27 · lord ${g} ${herr} · at the birth ${rest} years of it were still left`,
+    "pd.maha": (g, name, was, von, bis, datum) =>
+      `<b>Mahadasha:</b> ${g} ${name} — ${was}. From ${von} to ${bis} years, that is until ${datum}.`,
+    "pd.antar": (g, name, was, datum) =>
+      `<b>Antardasha:</b> ${g} ${name} — ${was}. Until ${datum}. ` +
+      `The great period says what it is about; the small one, what you notice it by.`,
+    "pd.rest":" (remainder)",
+    "pd.vdNote":"A hundred and twenty years across nine lords. Which one begins, and how much of " +
+      "its time was already spent, hangs solely on where the moon stood at the birth among its " +
+      "twenty-seven houses. The reckoning is sidereal after Lahiri — the ayanamsa approximated " +
+      "here, exact to a few arc minutes; with a lunar house of 13°20′ that carries no weight.",
+    /* ------------------------------- Firdaria and Vimshottari */
+    "fd.sonne":"standing, office, coming forward; the father too",
+    "fd.venus":"attachment, art, enjoyment, money that comes by way of people",
+    "fd.merkur":"learning, writing, trade, roads, negotiation",
+    "fd.mond":"house, family, temper, change; the mother too",
+    "fd.saturn":"seriousness, renunciation, responsibility, what is slow and lasting",
+    "fd.jupiter":"widening, patrons, law, travel, increase",
+    "fd.mars":"strife, work, the cut, decision, danger from heat",
+    "fd.kopf":"entry, increase, joining — a door opens",
+    "fd.schwanz":"exit, reduction, letting go — a door closes",
+    "fd.name.kopf":"Lunar node (ascending)", "fd.name.schwanz":"Lunar node (descending)",
+    "vd.ketu":"letting go, withdrawal, the unfinished; what one no longer needs",
+    "vd.venus":"enjoyment, art, attachment, prosperity, what is agreeable",
+    "vd.sonne":"office, father, standing, self-assertion",
+    "vd.mond":"mother, temper, home, feeling, change",
+    "vd.mars":"energy, strife, siblings, land, blood",
+    "vd.rahu":"hunger for the new, the foreign, ascent with an aftertaste",
+    "vd.jupiter":"teaching, children, faith, blessing, breadth",
+    "vd.saturn":"toil, duration, age, service, what has been worked for",
+    "vd.merkur":"speech, reckoning, trade, intellect, dexterity",
     /* ------------------------------------------ The solar revolution */
     "sr.wuerde.Domizil":"in its own sign, strong",
     "sr.wuerde.Erhöhung":"exalted, esteemed beyond its measure",
@@ -1241,4 +1400,16 @@ export function zahl(n, stellen = 1) {
 export function aspektName(deutsch) {
   const w = rt("aspekt." + deutsch);
   return w && w !== "aspekt." + deutsch ? w : deutsch;
+}
+
+/* Englische Ordnungszahl: 1st, 2nd, 3rd, 4th — und 11th bis 13th trotz
+   der Endziffern. Deutsch und Italienisch brauchen keine Regel, darum
+   steht dort nur das Suffix. */
+export function ordnung(n) {
+  const z = Math.abs(Math.round(Number(n)));
+  if (aktiv !== "en") return aktiv === "it" ? `${n}ª` : `${n}.`;
+  const zehner = z % 100, einer = z % 10;
+  const endung = (zehner >= 11 && zehner <= 13) ? "th"
+    : einer === 1 ? "st" : einer === 2 ? "nd" : einer === 3 ? "rd" : "th";
+  return `${n}${endung}`;
 }

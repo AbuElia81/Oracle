@@ -17,11 +17,11 @@
    Transparenzabschnitt der Seite.
    --------------------------------------------------------------------- */
 
-import { rad, grad, norm360, schiefeAufgangsRA, schiefeUntergangsRA } from "./astro.js?v=261";
-import { bogenUnterPol, deklination, raAusLaenge } from "./haeuser.js?v=261";
-import { PLANET } from "./horoskop.js?v=261";
-import { rt, setzeRestSprache } from "./rest-texte.js?v=261";
-import { aktuelleSprache } from "./sprachen.js?v=261";
+import { rad, grad, norm360, schiefeAufgangsRA, schiefeUntergangsRA } from "./astro.js?v=268";
+import { bogenUnterPol, deklination, raAusLaenge } from "./haeuser.js?v=268";
+import { PLANET } from "./horoskop.js?v=268";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=268";
+import { aktuelleSprache } from "./sprachen.js?v=268";
 setzeRestSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 

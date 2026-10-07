@@ -14,26 +14,31 @@
    Herr beginnt — und wie viel von seiner Zeit schon verbraucht war.
    Gerechnet wird siderisch, nicht tropisch.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=261";
-import { berechneGeburt, norm360 } from "./astro.js?v=261";
-import { zustandVon, ZEICHEN } from "./horoskop.js?v=261";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=268";
+import { berechneGeburt, norm360 } from "./astro.js?v=268";
+import { zustandVon, ZEICHEN } from "./horoskop.js?v=268";
+import { rt, zahl, ordnung, setzeRestSprache } from "./rest-texte.js?v=268";
+import { aktuelleSprache } from "./sprachen.js?v=268";
+import { PLANET } from "./horoskop.js?v=268";
+setzeRestSprache(aktuelleSprache());
+window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
   if (c) n.className = c; if (txt !== undefined) n.textContent = txt; return n; };
 
 /* --------------------------------------------------------------- Firdaria */
-const F_PLANET = {
-  sonne:   { name:"Sonne",   g:"☉", jahre:10, was:"Ansehen, Amt, das Hervortreten; auch der Vater" },
-  venus:   { name:"Venus",   g:"♀", jahre:8,  was:"Bindung, Kunst, Genuss, Geld, das über Menschen kommt" },
-  merkur:  { name:"Merkur",  g:"☿", jahre:13, was:"Lernen, Schrift, Handel, Wege, Verhandlung" },
-  mond:    { name:"Mond",    g:"☽", jahre:9,  was:"Haus, Familie, Gemüt, Wechsel; auch die Mutter" },
-  saturn:  { name:"Saturn",  g:"♄", jahre:11, was:"Ernst, Verzicht, Verantwortung, das Langsame und Bleibende" },
-  jupiter: { name:"Jupiter", g:"♃", jahre:12, was:"Erweiterung, Gönner, Recht, Reise, Zuwachs" },
-  mars:    { name:"Mars",    g:"♂", jahre:7,  was:"Streit, Arbeit, Schnitt, Entschluss, Gefahr durch Hitze" },
-  kopf:    { name:"Mondknoten (aufsteigend)", g:"☊", jahre:3, was:"Eintritt, Zuwachs, Anschluss — eine Tür geht auf" },
-  schwanz: { name:"Mondknoten (absteigend)",  g:"☋", jahre:2, was:"Austritt, Abbau, Loslassen — eine Tür geht zu" }
-};
+/* Jahre und Glyphe sind sprachfest; Name und Bedeutung werden bei jedem
+   Zugriff aus den Sprachtafeln gelesen, damit ein Wechsel sie erreicht.
+   Die Mondknoten haben keinen Eintrag in PLANET und einen eigenen Namen. */
+const F_JAHRE = { sonne:10, venus:8, merkur:13, mond:9, saturn:11, jupiter:12, mars:7, kopf:3, schwanz:2 };
+const F_GLYPH = { sonne:"☉", venus:"♀", merkur:"☿", mond:"☽", saturn:"♄",
+                  jupiter:"♃", mars:"♂", kopf:"☊", schwanz:"☋" };
+const F_PLANET = Object.fromEntries(Object.keys(F_JAHRE).map(k => [k, {
+  g: F_GLYPH[k], jahre: F_JAHRE[k],
+  get name() { return (k === "kopf" || k === "schwanz") ? rt("fd.name." + k) : PLANET[k].name; },
+  get was()  { return rt("fd." + k); }
+}]));
 const F_TAG   = ["sonne","venus","merkur","mond","saturn","jupiter","mars","kopf","schwanz"];
 const F_NACHT = ["mond","saturn","jupiter","mars","sonne","venus","merkur","kopf","schwanz"];
 
@@ -64,17 +69,17 @@ export function firdaria(alterJetzt, tagGeburt) {
 }
 
 /* ---------------------------------------------------------- Vimshottari */
-const V_HERR = {
-  ketu:    { name:"Ketu",    g:"☋", jahre:7,  was:"Loslassen, Rückzug, das Unfertige; was man nicht mehr braucht" },
-  venus:   { name:"Shukra",  g:"♀", jahre:20, was:"Genuss, Kunst, Bindung, Wohlstand, das Angenehme" },
-  sonne:   { name:"Surya",   g:"☉", jahre:6,  was:"Amt, Vater, Ansehen, Selbstbehauptung" },
-  mond:    { name:"Chandra", g:"☽", jahre:10, was:"Mutter, Gemüt, Heim, Empfinden, Wechsel" },
-  mars:    { name:"Mangala", g:"♂", jahre:7,  was:"Tatkraft, Streit, Geschwister, Land, Blut" },
-  rahu:    { name:"Rahu",    g:"☊", jahre:18, was:"Hunger nach Neuem, Fremdes, Aufstieg mit Beigeschmack" },
-  jupiter: { name:"Guru",    g:"♃", jahre:16, was:"Lehre, Kinder, Glaube, Segen, Weite" },
-  saturn:  { name:"Shani",   g:"♄", jahre:19, was:"Mühe, Dauer, Alter, Dienst, das Erarbeitete" },
-  merkur:  { name:"Budha",   g:"☿", jahre:17, was:"Rede, Rechnung, Handel, Verstand, Geschick" }
-};
+/* Die indischen Namen bleiben: Ketu, Shukra, Surya und die übrigen sind
+   die Namen dieser Lehre und keine Übersetzung der römischen Planeten. */
+const V_JAHRE = { ketu:7, venus:20, sonne:6, mond:10, mars:7, rahu:18, jupiter:16, saturn:19, merkur:17 };
+const V_NAME  = { ketu:"Ketu", venus:"Shukra", sonne:"Surya", mond:"Chandra", mars:"Mangala",
+                  rahu:"Rahu", jupiter:"Guru", saturn:"Shani", merkur:"Budha" };
+const V_GLYPH = { ketu:"☋", venus:"♀", sonne:"☉", mond:"☽", mars:"♂",
+                  rahu:"☊", jupiter:"♃", saturn:"♄", merkur:"☿" };
+const V_HERR = Object.fromEntries(Object.keys(V_JAHRE).map(k => [k, {
+  name: V_NAME[k], g: V_GLYPH[k], jahre: V_JAHRE[k],
+  get was() { return rt("vd." + k); }
+}]));
 const V_FOLGE = ["ketu","venus","sonne","mond","mars","rahu","jupiter","saturn","merkur"];
 const V_GESAMT = 120;
 
@@ -175,7 +180,8 @@ function datumBei(profil, alterJahre) {
   const d = new Date(new Date(j, m - 1, t).getTime() + alterJahre * 365.2425 * 864e5);
   return `${d.getDate()}. ${MONATE[d.getMonth()]} ${d.getFullYear()}`;
 }
-const komma = n => n.toFixed(1).replace(".", ",");
+/* Zahlen schreibt zahl() je nach Sprache. */
+const komma = zahl;
 
 /* Den laufenden Herrn am Geburtshoroskop festmachen — dieselbe Logik wie
    bei den übrigen Zeittechniken: Die Technik sagt wann, das Horoskop was. */
@@ -183,14 +189,13 @@ function amHoroskop(schluessel, rolle) {
   if (["kopf","schwanz","rahu","ketu"].includes(schluessel)) return null;
   const z = zustandVon(schluessel);
   if (!z) return null;
-  return `${rolle} steht bei dir in ${z.zeichenGlyph} ${z.zeichenName}, im ${z.haus}. Haus — ` +
-         `${z.hausOrt}. Dort spielt sich ab, was diese Zeit bringt.`;
+  return rt("pd.amHoroskop", rolle, z.zeichenGlyph, z.zeichenName, ordnung(z.haus), z.hausOrt);
 }
 
 function leerHinweis(ziel) {
   ziel.innerHTML = "";
-  const w = el("p", "kucukNot", "Noch keine Geburtsangaben hinterlegt. ");
-  const b = el("button", "knopfKlein", "Zur Dateneingabe");
+  const w = el("p", "kucukNot", rt("keineAngaben"));
+  const b = el("button", "knopfKlein", rt("zurEingabe"));
   b.addEventListener("click", zurDateneingabe);
   w.appendChild(b);
   ziel.appendChild(w);
@@ -208,35 +213,33 @@ function zeichneFirdaria() {
   ziel.hidden = false;
   ziel.innerHTML = "";
   ziel.appendChild(el("p", "kucukNot",
-    `Für: ${profilBeschriftung(b.profil)} · ${b.geburt.tagGeburt ? "Taggeburt" : "Nachtgeburt"} — ` +
-    `darum beginnt die Reihe mit ${f.gross[0].name}.`));
+    rt("pd.kopf", profilBeschriftung(b.profil),
+       rt(b.geburt.tagGeburt ? "zr.tag" : "zr.nacht"), f.gross[0].name)));
 
   if (f.laufend) {
     const k = el("div", "geistName");
     k.innerHTML =
-      `<div class="kalanBaslik">Dein Firdar</div>` +
+      `<div class="kalanBaslik">${rt("pd.deinFirdar")}</div>` +
       `<div class="buyukToplam"><span class="glyph">${f.laufend.g}</span> ${f.laufend.name}</div>` +
-      `<div class="kucukNot">${komma(f.laufend.anfang)} bis ${komma(f.laufend.ende)} Jahre` +
-      (f.laufendUnter ? ` · Unterperiode ${f.laufendUnter.g} ${f.laufendUnter.name}` : "") + `</div>`;
+      `<div class="kucukNot">${rt("pd.spanne", zahl(f.laufend.anfang), zahl(f.laufend.ende))}` +
+      (f.laufendUnter ? rt("pd.unter", f.laufendUnter.g, f.laufendUnter.name) : "") + `</div>`;
     ziel.appendChild(k);
 
-    ziel.appendChild(el("p", null, `Was in dieser Zeit verhandelt wird: ${f.laufend.was}.`));
+    ziel.appendChild(el("p", null, rt("pd.verhandelt", f.laufend.was)));
     if (f.laufendUnter && f.laufendUnter.key !== f.laufend.key) {
       ziel.appendChild(el("p", null,
-        `Darin führt gerade ${f.laufendUnter.name} — ${f.laufendUnter.was} —, ` +
-        `bis ${komma(f.laufendUnter.ende)} Jahren. Der große Herr gibt das Thema, der kleine den Ton.`));
+        rt("pd.darin", f.laufendUnter.name, f.laufendUnter.was, zahl(f.laufendUnter.ende))));
     }
-    const fest = amHoroskop(f.laufend.key, `${f.laufend.name}, der Herr dieser Jahre,`);
+    const fest = amHoroskop(f.laufend.key, rt("pd.rolleFd", f.laufend.name));
     if (fest) ziel.appendChild(el("p", null, fest));
   } else {
-    ziel.appendChild(el("p", null,
-      "Die fünfundsiebzig Jahre der Firdaria sind durchlaufen. Die Perser ließen die Reihe " +
-      "danach von vorn beginnen; hier endet sie."));
+    ziel.appendChild(el("p", null, rt("pd.durchlaufen")));
   }
 
   const kutu = el("div", "tabloKutu");
   const tab = el("table", "wuerdeTablo periodenTablo");
-  tab.innerHTML = "<thead><tr><th>Herr</th><th>Jahre</th><th>Von</th><th>Bis</th><th>Datum</th></tr></thead>";
+  tab.innerHTML = `<thead><tr><th>${rt("pd.tab.herr")}</th><th>${rt("pd.tab.jahre")}</th>` +
+    `<th>${rt("pd.tab.von")}</th><th>${rt("pd.tab.bis")}</th><th>${rt("pd.tab.datum")}</th></tr></thead>`;
   const tb = el("tbody");
   f.gross.forEach(g => {
     const tr = el("tr", g === f.laufend ? "sieger" : null);
@@ -251,10 +254,7 @@ function zeichneFirdaria() {
   kutu.appendChild(tab);
   ziel.appendChild(kutu);
 
-  ziel.appendChild(el("p", "kucukNot",
-    "Fünfundsiebzig Jahre auf neun Herren, in fester Folge und fester Länge — die Firdaria " +
-    "fragt weder nach Zeichen noch nach Häusern, nur danach, ob die Sonne bei der Geburt " +
-    "über dem Horizont stand. Die beiden Mondknoten am Ende führen keine Unterperioden."));
+  ziel.appendChild(el("p", "kucukNot", rt("pd.fdNote")));
 }
 
 /* ---------------------------------------------------------- Vimshottari */
@@ -269,28 +269,26 @@ function zeichneVimshottari() {
   ziel.innerHTML = "";
   const sidZeichen = Math.floor(v.siderisch / 30);
   ziel.appendChild(el("p", "kucukNot",
-    `Für: ${profilBeschriftung(b.profil)} · Mond siderisch auf ${ZEICHEN[sidZeichen].glyph} ` +
-    `${(v.siderisch - sidZeichen * 30).toFixed(1)}° · Ayanamsa ${ayanamsa(b.jahr).toFixed(2)}°`));
+    rt("pd.vdKopf", profilBeschriftung(b.profil), ZEICHEN[sidZeichen].glyph,
+       zahl(v.siderisch - sidZeichen * 30), zahl(ayanamsa(b.jahr), 2))));
 
   const k = el("div", "geistName");
   k.innerHTML =
-    `<div class="kalanBaslik">Mondhaus der Geburt</div>` +
+    `<div class="kalanBaslik">${rt("pd.mondhaus")}</div>` +
     `<div class="buyukToplam">${v.nakshatra}</div>` +
-    `<div class="kucukNot">${v.nakshatraNr}. von 27 · Herr ${v.startHerr.g} ${v.startHerr.name} · ` +
-    `bei der Geburt waren davon noch ${komma(v.restBeiGeburt)} Jahre übrig</div>`;
+    `<div class="kucukNot">${rt("pd.mondhausNot", ordnung(v.nakshatraNr), v.startHerr.g,
+       v.startHerr.name, zahl(v.restBeiGeburt))}</div>`;
   ziel.appendChild(k);
 
   if (v.laufend) {
     const p1 = el("p");
-    p1.innerHTML = `<b>Mahadasha:</b> ${v.laufend.g} ${v.laufend.name} — ${v.laufend.was}. ` +
-      `Von ${komma(v.laufend.anfang)} bis ${komma(v.laufend.ende)} Jahren, also bis ` +
-      `${datumBei(b.profil, v.laufend.ende)}.`;
+    p1.innerHTML = rt("pd.maha", v.laufend.g, v.laufend.name, v.laufend.was,
+      zahl(v.laufend.anfang), zahl(v.laufend.ende), datumBei(b.profil, v.laufend.ende));
     ziel.appendChild(p1);
     if (v.laufendUnter) {
       const p2 = el("p");
-      p2.innerHTML = `<b>Antardasha:</b> ${v.laufendUnter.g} ${v.laufendUnter.name} — ` +
-        `${v.laufendUnter.was}. Bis ${datumBei(b.profil, v.laufendUnter.ende)}. ` +
-        `Die große Periode sagt, worum es geht; die kleine, woran man es merkt.`;
+      p2.innerHTML = rt("pd.antar", v.laufendUnter.g, v.laufendUnter.name,
+        v.laufendUnter.was, datumBei(b.profil, v.laufendUnter.ende));
       ziel.appendChild(p2);
     }
     const fest = amHoroskop(v.laufend.key, `${v.laufend.name}`);
@@ -299,12 +297,13 @@ function zeichneVimshottari() {
 
   const kutu = el("div", "tabloKutu");
   const tab = el("table", "wuerdeTablo periodenTablo");
-  tab.innerHTML = "<thead><tr><th>Mahadasha</th><th>Jahre</th><th>Von</th><th>Bis</th><th>Beginnt</th></tr></thead>";
+  tab.innerHTML = `<thead><tr><th>${rt("pd.tab.maha")}</th><th>${rt("pd.tab.jahre")}</th>` +
+    `<th>${rt("pd.tab.von")}</th><th>${rt("pd.tab.bis")}</th><th>${rt("pd.tab.beginnt")}</th></tr></thead>`;
   const tb = el("tbody");
   v.maha.forEach(m => {
     const tr = el("tr", m === v.laufend ? "sieger" : null);
     tr.appendChild(el("td", null, `${m.g} ${m.name}`));
-    tr.appendChild(el("td", null, komma(m.laenge) + (m.angebrochen ? " (Rest)" : "")));
+    tr.appendChild(el("td", null, zahl(m.laenge) + (m.angebrochen ? rt("pd.rest") : "")));
     tr.appendChild(el("td", null, komma(m.anfang)));
     tr.appendChild(el("td", null, komma(m.ende)));
     tr.appendChild(el("td", null, datumBei(b.profil, m.anfang)));
@@ -314,14 +313,11 @@ function zeichneVimshottari() {
   kutu.appendChild(tab);
   ziel.appendChild(kutu);
 
-  ziel.appendChild(el("p", "kucukNot",
-    "Hundertzwanzig Jahre auf neun Herren. Welcher beginnt und wie viel von seiner Zeit schon " +
-    "verbraucht war, hängt allein daran, wo der Mond bei der Geburt in seinen siebenundzwanzig " +
-    "Häusern stand. Gerechnet wird siderisch nach Lahiri — der Ayanamsa hier genähert, auf " +
-    "wenige Bogenminuten genau; bei einem Mondhaus von 13°20′ fällt das nicht ins Gewicht."));
+  ziel.appendChild(el("p", "kucukNot", rt("pd.vdNote")));
 }
 
 function zeichne() { zeichneFirdaria(); zeichneVimshottari(); }
+window.addEventListener("sprache-geaendert", () => setTimeout(zeichne, 0));
 
 $("#fdBerechnen")?.addEventListener("click", zeichneFirdaria);
 $("#vdBerechnen")?.addEventListener("click", zeichneVimshottari);

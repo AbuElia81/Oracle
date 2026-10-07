@@ -75,3 +75,49 @@ export const PUNKT_IT = {
   reise: { name:"Viaggio",
     was:"L'andarsene e la terra straniera: dove il partire conduce." }
 };
+
+/* Che cosa significa ciascun pianeta, in mezza frase. */
+export const PLANET_WAS_IT = {
+  sonne:"la tua volontà e il tuo rango",
+  mond:"il tuo animo e il tuo bisogno",
+  merkur:"il tuo pensare e il tuo parlare",
+  venus:"ciò che ami e ciò che trovi bello",
+  mars:"il tuo impulso e la tua collera",
+  jupiter:"la tua fiducia e la tua misura",
+  saturn:"la tua serietà e il tuo limite"
+};
+
+/* Il modo di ciascun segno. */
+export const ART_IT = [
+  "schietto e rapido", "tenace e sensuale", "mobile e curioso",
+  "sensibile e protettivo", "generoso e attento all'effetto", "attento e preciso",
+  "ponderato e teso all'equilibrio", "assoluto e profondo", "ampio e convinto",
+  "serio e fatto per durare", "indipendente e concreto", "permeabile e compassionevole"
+];
+
+/* Le dignità in parole piane. */
+export const WUERDE_TEXT_IT = {
+  "Domizil":"nel proprio segno — ha ciò che serve e agisce senza ostacoli",
+  "Erhöhung":"esaltato — è qui stimato oltre la propria misura",
+  "Exil":"in esilio — qui deve lavorare controcorrente",
+  "Fall":"in caduta — qui fatica a ottenere il suo diritto",
+  "—":"senza dignità particolare — agisce qui secondo le circostanze"
+};
+
+/* Il tono di ciascun aspetto. */
+export const ASPEKT_TON_IT = {
+  "Konjunktion":"fusi", "Sextil":"come occasione", "Quadrat":"in tensione",
+  "Trigon":"con leggerezza", "Opposition":"l'uno di fronte all'altro"
+};
+
+/* Le otto fasi della luna. */
+export const PHASEN_IT = [
+  "luna nuova — un inizio che ancora nessuno nota",
+  "falce crescente — il proposito prende forma, contro resistenza",
+  "primo quarto — ora bisogna decidere",
+  "gibbosa crescente — ampliamento, ritmo, farsi vedere",
+  "luna piena — sta nella luce, e si vede anche ciò che manca",
+  "gibbosa calante — raccolto, trasmissione, diffusione",
+  "ultimo quarto — la cosa viene verificata e rimessa a posto",
+  "falce calante — lasciar andare, riordinare, prepararsi al prossimo"
+];
