@@ -168,6 +168,84 @@ export const HERKUNFT = {
           "indipendentemente: Zodiacal Releasing, profezione, firdaria e vimshottari. Se più " +
           "di uno nomina lo stesso pianeta, in questa dottrina conta più di ogni singola " +
           "affermazione." }
+  },
+
+  en: {
+    "titel.anfang": { technik:"The Ascendant and its lord", abschnitt:"bHoroskop",
+      quelle:"Hellenistic, since Ptolemy",
+      wie:"From date, time and place the degree is calculated that rose over the eastern " +
+          "horizon in your hour of birth. The lord of its sign is called the ruler of the " +
+          "chart; where he stands counts as the direction of the life. Along with the sect: " +
+          "whether the sun stood above or below the horizon." },
+    "titel.zwei": { technik:"The closest aspect", abschnitt:"bHoroskop",
+      quelle:"Ptolemy, Tetrabiblos I",
+      wie:"Of all the angles between any two planets the closest is taken — conjunction, " +
+          "sextile, square, trine or opposition, with an orb of six to eight degrees." },
+    "titel.werDuBist": { technik:"Yıldıznâme — the star book", abschnitt:"bYildiz",
+      quelle:"Ottoman, after an Arabic model",
+      wie:"Your name and your mother's are written in Arabic, their letters added up by the " +
+          "abjad and the sum divided by twelve. The remainder names the sign." },
+    "titel.herberge": { technik:"The twenty-eight lunar mansions", abschnitt:"bMenzil",
+      quelle:"Arabic — manāzil al-qamar",
+      wie:"The same name-sum, divided by twenty-eight. The remainder names the lodging in " +
+          "which the moon stands on its way — each has a judgment of its own." },
+    "titel.gegeben": { technik:"The ruling star of the sign", abschnitt:"bYildiz",
+      quelle:"Ottoman",
+      wie:"Each sign has a planet assigned to it. What it gives and what it takes has stood " +
+          "in the tables, in the same words, for centuries." },
+    "titel.geist": { technik:"The name of the spirit after Agrippa", abschnitt:"bGeist",
+      quelle:"Cornelius Agrippa, De Occulta Philosophia III, 26",
+      wie:"Five places of the birth sky — Ascendant, Sun, Moon, Lot of Fortune, and the last " +
+          "meeting of sun and moon before the birth — are laid on the circle of the Hebrew " +
+          "letters. Each gives a letter; together they make a name." },
+    "titel.kapitel": { technik:"Zodiacal Releasing", abschnitt:"bZR",
+      quelle:"Vettius Valens, 2nd century",
+      wie:"From the Lot of Fortune the twelve signs are released one after another, each for " +
+          "as many years as its lord carries lesser years. The same count repeats itself more " +
+          "finely within every stretch — hence chapters, sub-chapters and months." },
+    "titel.strecken": { technik:"The peaks and the loosing of the bond", abschnitt:"bZR",
+      quelle:"Vettius Valens",
+      wie:"If a stretch falls in one of the angular signs counted from the Lot of Fortune, it " +
+          "counts as loud. And where the count reaches the end of a round of signs, it jumps " +
+          "back — that is the loosing of the bond, the most conspicuous place in a life." },
+    "titel.jahreFuehrt": { technik:"Firdaria and Vimshottari", abschnitt:"bFirdaria",
+      quelle:"Persian-Arabic and Indian",
+      wie:"Two reckonings that count off no signs but hand out fixed quantities of years: " +
+          "seventy-five across nine lords in Abū Maʿšar, a hundred and twenty across nine in " +
+          "the Indian. Which comes first is decided there by the sect, here by where the moon " +
+          "stood at birth." },
+    "titel.austeilt": { technik:"Distribution through the bounds", abschnitt:"bVerteilung",
+      quelle:"Dorotheus of Sidon, 1st century",
+      wie:"The Ascendant travels with the turning of the sky through the five bounds of each " +
+          "sign. Each bound lasts as long as it actually needs to rise at your birthplace — " +
+          "hence the stretches are of unequal length, and hence this is the only technique " +
+          "that asks for the place." },
+    "titel.klopft": { technik:"Primary directions", abschnitt:"bLebensbogen",
+      quelle:"Ptolemy, Tetrabiblos III",
+      wie:"It is not the planets that move but the whole sky that turns about the world axis. " +
+          "One degree of this turning counts for one year of life. When a point reaches the " +
+          "place of another in the course of it, that means: here a theme falls due." },
+    "titel.verborgen": { technik:"Antiscia — the shadow twins", abschnitt:"bAntiszien",
+      quelle:"Hellenistic",
+      wie:"Two points mirrored about the solstice axis have the same solar declination: at " +
+          "both of them the sun throws a noon shadow of equal length. They work together " +
+          "although no aspect stands between them." },
+    "titel.jahr": { technik:"Profection, solar revolution and transits", abschnitt:"bProfektionen",
+      quelle:"Hellenistic and Arabic",
+      wie:"Three techniques for the same year: the profection moves on one sign with every " +
+          "birthday. The solar revolution sets a chart for the moment the sun returns to its " +
+          "birth degree. The transits show where the slow planets actually stand just now." },
+    "titel.geber": { technik:"Hyleg and alcocoden", abschnitt:"bLebensmass",
+      quelle:"Arabic, after a Greek model",
+      wie:"First the place from which the life proceeds is sought — Sun, Moon, syzygy or " +
+          "Ascendant, whichever stands in one of the places of life. Then the planet that has " +
+          "the most dignity over that place." },
+    "titel.zusammen": { technik:"The synopsis", abschnitt:null,
+      quelle:"No single technique",
+      wie:"Here only what the four time-lord systems say independently of one another is " +
+          "compared: Zodiacal Releasing, profection, firdaria and vimshottari. If several " +
+          "name the same planet, that counts for more in this teaching than any single " +
+          "statement." }
   }
 };
 
@@ -175,7 +253,9 @@ export const HERKUNFT_UI = {
   de: { auf:"Woher das kommt", quelle:"Quelle", wie:"Wie gerechnet wird",
         mehr:"Zum ganzen Abschnitt" },
   it: { auf:"Da dove viene", quelle:"Fonte", wie:"Come si calcola",
-        mehr:"Alla sezione completa" }
+        mehr:"Alla sezione completa" },
+  en: { auf:"Where this comes from", quelle:"Source", wie:"How it is calculated",
+        mehr:"To the full section" }
 };
 
 let aktiv = "de";

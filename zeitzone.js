@@ -13,7 +13,7 @@
    einführte, und dass die Türkei 1981 auf UTC+3 stand. Es fehlte nur das
    Stück vom Ort zum Namen der Zone — das steht jetzt in tz-tafel.js.
    ------------------------------------------------------------------------ */
-import { tzlookup } from "./tz-tafel.js?v=244";
+import { tzlookup } from "./tz-tafel.js?v=245";
 
 export function zoneVon(breite, laenge) {
   const b = parseFloat(breite), l = parseFloat(laenge);
