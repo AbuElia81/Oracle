@@ -22,8 +22,8 @@ export const SPRACHEN = [
   { code: "ar", name: "العربية",   kurz: "AR", rtl: true }
 ];
 
-import { HTML_IT } from "./html-it.js?v=230";
-import { HTML_DE } from "./html-de.js?v=230";
+import { HTML_IT } from "./html-it.js?v=233";
+import { HTML_DE } from "./html-de.js?v=233";
 
 export const WORTE = {
   "kopf.unterzeile": {
@@ -148,6 +148,35 @@ export const WORTE = {
     es:"Todo lo que dice el cielo de tu hora de nacimiento — en una sola lectura",
     fr:"Tout ce que donne le ciel de ton heure de naissance — d'un seul tenant",
     ar:"كل ما تقوله سماء ساعة ميلادك — في قراءة واحدة" },
+  /* Der Kasten für den, der noch nichts eingetragen hat. */
+  "heute.marke": { de:"Heute", it:"Oggi", en:"Today", tr:"Bugün",
+    es:"Hoy", fr:"Aujourd'hui", ar:"اليوم" },
+  "heute.mond": {
+    de:"Der Mond steht in der %n. Herberge, %h — %u.",
+    it:"La luna sta nella %n\u00aa stazione, %h — %u.",
+    en:"The moon stands in mansion %n, %h — %u.",
+    tr:"Ay %n. menzilde, %h — %u.",
+    es:"La luna está en la %n.\u00aa mansión, %h — %u.",
+    fr:"La lune est dans la %n\u1d49 demeure, %h — %u.",
+    ar:"القمر في المنزلة %n، %h — %u." },
+  "heute.gut": { de:"Gut dafür", it:"Buono per", en:"Good for", tr:"İyi gelir",
+    es:"Bueno para", fr:"Bon pour", ar:"جيد لـ" },
+  "heute.meiden": { de:"Zu meiden", it:"Da evitare", en:"To avoid", tr:"Kaçın",
+    es:"A evitar", fr:"À éviter", ar:"تجنب" },
+  "heute.zunehmend": { de:"Zunehmender Mond", it:"Luna crescente", en:"Waxing moon",
+    tr:"Büyüyen ay", es:"Luna creciente", fr:"Lune croissante", ar:"قمر متزايد" },
+  "heute.abnehmend": { de:"Abnehmender Mond", it:"Luna calante", en:"Waning moon",
+    tr:"Küçülen ay", es:"Luna menguante", fr:"Lune décroissante", ar:"قمر متناقص" },
+  "heute.verbrannt": { de:"verbrannt", it:"combusta", en:"combust", tr:"yanık",
+    es:"combusta", fr:"combuste", ar:"محترق" },
+  "heute.locken": {
+    de:"Das gilt für alle. Was für dich gilt, steht in deiner Geburtsstunde — trag sie unten ein.",
+    it:"Questo vale per tutti. Ciò che vale per te sta nella tua ora di nascita — inseriscila qui sotto.",
+    en:"That holds for everyone. What holds for you is in your hour of birth — enter it below.",
+    tr:"Bu herkes için geçerli. Senin için geçerli olan doğum saatinde — aşağıya gir.",
+    es:"Eso vale para todos. Lo que vale para ti está en tu hora de nacimiento — ponla abajo.",
+    fr:"Cela vaut pour tous. Ce qui vaut pour toi est dans ton heure de naissance — inscris-la ci-dessous.",
+    ar:"هذا للجميع. أما ما يخصك فهو في ساعة ميلادك — أدخلها أدناه." },
   "feld.zeitUnbekannt": { de:"Ich kenne meine Geburtszeit nicht",
     it:"Non conosco la mia ora di nascita", en:"I don't know my birth time",
     tr:"Doğum saatimi bilmiyorum", es:"No sé mi hora de nacimiento",

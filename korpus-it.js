@@ -34,7 +34,13 @@ export const BURC_IT = [
     ogut:"Scrivi ciò che sai la mattina, prima che il giorno te lo tolga a forza di parole." }
 ];
 
-/* Le ventotto stazioni della luna. */
+/* Le ventotto stazioni della luna.
+
+   Questa tavola traduce la tedesca voce per voce. Una versione
+   precedente si era allontanata dall'originale: dalla settima stazione
+   in poi dava giudizi propri, e dalla ventesima era sfalsata di un
+   posto, cosicché il lettore italiano trovava il verdetto della
+   stazione sbagliata — talvolta l'opposto di quello tedesco. */
 export const MENZIL_IT = [
   { hukum:"Partenza. Il primo di tutto.", iyi:"viaggio, inizio, prendere medicine", kacin:"nozze, patti di lunga durata" },
   { hukum:"Ventre nascosto; poca benedizione, molta scorta.", iyi:"nascondere, custodire, risparmiare", kacin:"cominciare cose grandi, presentare richieste" },
@@ -42,28 +48,28 @@ export const MENZIL_IT = [
   { hukum:"Il Seguace. Lite alle spalle.", iyi:"lavori di terra, tracciare confini", kacin:"matrimonio, compagnia, viaggi" },
   { hukum:"Ritorno e ritrovamento.", iyi:"ritorno a casa, studio, rinnovare alleanze", kacin:"mettere piede in terra nuova" },
   { hukum:"Segno di strada e di raccolto.", iyi:"viaggio, semina, raccolto, messaggio", kacin:"nozze" },
-  { hukum:"Braccio teso; ciò che si dà, torna.", iyi:"doni, prestiti, amicizia", kacin:"trattenere, nascondere" },
-  { hukum:"Nuvola sottile; promessa senza pioggia.", iyi:"aspettare, osservare", kacin:"firmare, impegnarsi" },
-  { hukum:"Occhio del leone — sguardo che pesa.", iyi:"farsi avanti, chiedere udienza", kacin:"nascondersi, mentire" },
-  { hukum:"Fronte; ciò che si vede per primo.", iyi:"presentarsi, cariche, onori", kacin:"segreti" },
-  { hukum:"Criniera; forza mostrata.", iyi:"difendersi, affermarsi", kacin:"supplicare" },
-  { hukum:"Coda del leone — la fine della forza.", iyi:"concludere, incassare", kacin:"nuove imprese" },
-  { hukum:"Cane che latra; voce senza morso.", iyi:"avvertire, annunciare", kacin:"minacciare sul serio" },
-  { hukum:"Spiga — la stazione più benedetta di tutte.", iyi:"ogni cosa che debba durare", kacin:"nulla" },
-  { hukum:"Ala; ciò che porta sopra.", iyi:"viaggi, trasferimenti, studio", kacin:"restare fermi" },
-  { hukum:"Pinze aperte; presa che non chiude.", iyi:"trattare, mediare", kacin:"concludere" },
-  { hukum:"Corona — misura e giudizio.", iyi:"contratti, matrimonio, giudizio", kacin:"violenza" },
-  { hukum:"Cuore dello scorpione; ciò che brucia dentro.", iyi:"guarire, purificare", kacin:"vendetta, parole dure" },
-  { hukum:"Pungiglione; fine e inizio insieme.", iyi:"rompere ciò che va rotto", kacin:"legarsi" },
-  { hukum:"Deserto; molto spazio, poca acqua.", iyi:"ritirarsi, meditare", kacin:"affari" },
-  { hukum:"Struzzi che partono.", iyi:"viaggio, fuga, cambiamento", kacin:"costruire" },
-  { hukum:"Terra vuota; nulla di ciò che si cerca.", iyi:"riposare", kacin:"cercare, chiedere" },
-  { hukum:"Fortuna del macellaio; guadagno duro.", iyi:"lavoro pesante, commercio", kacin:"delicatezze" },
-  { hukum:"Fortuna delle fortune — la più favorevole di tutte.", iyi:"ogni cosa, soprattutto nozze e alleanze", kacin:"nulla" },
-  { hukum:"Fortuna dei tendaggi; ciò che accade al riparo.", iyi:"cose domestiche, nozze discrete", kacin:"pubblicità" },
-  { hukum:"Primo attingere; l'acqua sale.", iyi:"cominciare, chiedere", kacin:"finire" },
-  { hukum:"Secondo attingere; l'acqua trabocca.", iyi:"generosità, perdono", kacin:"trattenere" },
-  { hukum:"Fune del pozzo — ciò che lega e tira su.", iyi:"concludere, portare a casa", kacin:"cominciare qualcosa di nuovo" }
+  { hukum:"Il braccio; prende e dà.", iyi:"guadagno, amicizia, viaggio, medicine", kacin:"cercare lite" },
+  { hukum:"L'affetto — e il suo rovescio, il legame contro voglia.", iyi:"amore, amicizia, guarigione", kacin:"liberare prigionieri, contrarre debiti" },
+  { hukum:"Lo sguardo che separa. Stazione infelice.", iyi:"sciogliere, finire, separare", kacin:"costruire, sposarsi, seminare" },
+  { hukum:"La fronte del leone. Benevolenza dall'alto.", iyi:"costruire, chiedere ai potenti, amore", kacin:"nascondere, fuggire" },
+  { hukum:"Ascesa, considerazione, una buona parola al momento giusto.", iyi:"viaggio, carica, commercio, alleanza", kacin:"cominciare inimicizie" },
+  { hukum:"La svolta. Ciò che qui comincia finisce altrimenti.", iyi:"liberare, mietere, comprare e vendere", kacin:"matrimonio, legami di lunga durata" },
+  { hukum:"Chi chiama. Guadagno da lontano, discordia da vicino.", iyi:"viaggio, semina, guadagno", kacin:"società, cassa comune" },
+  { hukum:"L'Elevato. Concordia e guarigione.", iyi:"guarigione, matrimonio, riconciliazione, costruire", kacin:"viaggio per acqua" },
+  { hukum:"La coperta; ciò che qui accade resta coperto.", iyi:"scavare, cercare, viaggiare, guarire", kacin:"comparire in pubblico, querele" },
+  { hukum:"Le chele. Stazione infelice, separazione.", iyi:"divorziare, separare, dividere i nemici", kacin:"matrimonio, alleanza, commercio" },
+  { hukum:"La corona. Amicizia che regge.", iyi:"amore, alleanza, commercio, richieste", kacin:"vendetta, lite" },
+  { hukum:"Il cuore dello scorpione. Ora tagliente.", iyi:"vincere i nemici, sciogliere ciò che è fermo", kacin:"viaggio, matrimonio, nuovo inizio" },
+  { hukum:"Il pungiglione levato. Legare e assediare.", iyi:"conservare, chiudere, tener duro", kacin:"viaggio, semina, dare fiducia" },
+  { hukum:"Il branco degli struzzi. Domare ciò che è selvatico.", iyi:"caccia, domare, educare, fare del bene", kacin:"fuggire, nascondersi" },
+  { hukum:"Il luogo vuoto. Fondamento per il nuovo.", iyi:"costruire, seminare, matrimonio, porre la prima pietra", kacin:"viaggio, cambiare luogo" },
+  { hukum:"Fortuna di chi scanna — sciogliere con un taglio.", iyi:"guarire, liberare, sciogliere contratti", kacin:"stringere alleanze" },
+  { hukum:"Fortuna di chi inghiotte. A doppio taglio.", iyi:"guarire, riprendersi ciò che è proprio, condurre acque", kacin:"matrimonio, affidare" },
+  { hukum:"Fortuna delle fortune — la stazione più favorevole di tutte.", iyi:"ogni cosa buona: matrimonio, commercio, viaggio, richieste, cominciare", kacin:"nulla" },
+  { hukum:"Fortuna delle tende; ciò che è nascosto, anche il nascosto che nuoce.", iyi:"nascondere, conservare, cose segrete", kacin:"cose pubbliche, medicine, matrimonio" },
+  { hukum:"Il primo versatoio. L'afflusso comincia.", iyi:"guadagno, alleanza, raccolto, comprare", kacin:"esitare" },
+  { hukum:"Il secondo versatoio. Ciò che era in sospeso arriva.", iyi:"commercio, ritorno, esigere, raccolto", kacin:"nuovi debiti" },
+  { hukum:"Il ventre del pesce. Fine e ritorno a casa.", iyi:"ritorno a casa, matrimonio, commercio, conclusione", kacin:"andare lontano" }
 ];
 
 /* Uomo e donna per ciascun segno — le vecchie carte li distinguono. */

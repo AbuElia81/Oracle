@@ -1507,3 +1507,38 @@ body.rtl .ohneStundeInhalt {
   border-left: 0; border-right: 2px solid rgba(201,143,107,.35);
   border-radius: .35rem 0 0 .35rem;
 }
+
+/* ------------------------------------------------ der Himmel von heute
+   Was ein Fremder sieht, ehe er irgendetwas eingetragen hat. Er soll
+   nicht wie ein Formularkopf wirken, sondern wie eine Tafel, die schon
+   dastand, als man hereinkam. */
+#heuteHeim {
+  margin: 0 0 2.2rem; padding: 1.3rem 1.3rem 1.1rem;
+  text-align: center;
+  border: 1px solid rgba(201,162,39,.22); border-radius: .5rem;
+  background: rgba(255,255,255,.02);
+}
+.heuteMarke {
+  margin: 0 0 .7rem; font-size: .72rem; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--gedaempft);
+}
+.heuteSatz { margin: 0; font-size: 1.08rem; line-height: 1.6; }
+.heuteSatz b { color: var(--ton); font-weight: normal; }
+.heuteRat { margin: .7rem 0 0; font-size: .9rem; color: var(--gedaempft); }
+.heuteSchild {
+  font-size: .7rem; letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(201,162,39,.75); margin-right: .35rem;
+}
+.heuteTrenner { margin: 0 .55rem; opacity: .4; }
+.heuteLauf {
+  margin: .5rem 0 0; font-size: .78rem; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--gedaempft);
+}
+.heuteLocken {
+  margin: 1rem 0 0; padding-top: .9rem; font-size: .88rem; font-style: italic;
+  color: var(--gedaempft); border-top: 1px solid rgba(201,162,39,.15);
+}
+@media (max-width: 520px) {
+  #heuteHeim { padding: 1.1rem 1rem 1rem; }
+  .heuteRat .heuteTrenner { display: block; height: 0; margin: .4rem 0; overflow: hidden; }
+}

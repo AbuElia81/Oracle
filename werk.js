@@ -20,11 +20,11 @@
    ------------------------------------------------------------------------ */
 
 import { radix, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel, grossMitArtikel }
-  from "./horoskop.js?v=230";
-import { norm360 } from "./astro.js?v=230";
-import { rt, setzeRestSprache } from "./rest-texte.js?v=230";
-import { ELEMENT_NAME_IT } from "./namen-it.js?v=230";
-import { aktuelleSprache } from "./sprachen.js?v=230";
+  from "./horoskop.js?v=233";
+import { norm360 } from "./astro.js?v=233";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=233";
+import { ELEMENT_NAME_IT } from "./namen-it.js?v=233";
+import { aktuelleSprache } from "./sprachen.js?v=233";
 setzeRestSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 
