@@ -78,10 +78,16 @@ export const T = {
       `Das ist kein Handel, den man ausschlagen könnte — es ist dieselbe Eigenschaft, ` +
       `von zwei Seiten gesehen.`,
 
-    "klopft": (jahre, alter, f, ort) =>
+    "klopft.achse.mc":() => "die Achse deines Amtes",
+    "klopft.achse.asc":(rein) => rein === "ASC" ? "die Achse deiner Person" : rein,
+    "klopft.wo": (achse, roh) => ({ mc:"an deinem Ruf", ic:"an deinem Haus und deiner Herkunft",
+      asc:"an dir selbst", desc:"an deiner Ehe und deinen Verträgen" }[achse] || `an ${roh}`),
+    "klopft": (jahre, monate, alter, f, ort) =>
       `Die älteste aller Zählungen rechnet mit der Drehung der Erde selbst: ein Grad für ` +
-      `ein Lebensjahr. Nach ihr klopft in gut ${jahre} Jahren, mit ${alter} Jahren, ` +
-      `${f} an ${ort}. Das sagt nicht, was geschieht — nur, wann ein Thema fällig wird. ` +
+      `ein Lebensjahr. Nach ihr klopft ` +
+      (monate ? `in ${monate} Monaten` : `in gut ${jahre.toFixed(0)} Jahren`) +
+      `, mit ${alter.toFixed(1).replace(".", ",")} Jahren, ` +
+      `${f} ${ort}. Das sagt nicht, was geschieht — nur, wann ein Thema fällig wird. ` +
       `Ob geöffnet wird und wer davorsteht, steht auf einem anderen Blatt.`,
 
     "austeilt": (von, bis, fv, ft, naechsterAlter, naechsterFigur) =>
@@ -310,9 +316,15 @@ export const T = {
       `Ti dà ${f.gabe}. E in cambio si prende ${f.preis}. ` +
       `Non è un patto che si possa rifiutare — è la stessa qualità, vista da due lati.`,
 
-    "klopft": (jahre, alter, f, ort) =>
+    "klopft.achse.mc":() => "l'asse della tua carica",
+    "klopft.achse.asc":(rein) => rein === "ASC" ? "l'asse della tua persona" : rein,
+    "klopft.wo": (achse, roh) => ({ mc:"alla tua reputazione", ic:"alla tua casa e alla tua origine",
+      asc:"a te stesso", desc:"al tuo matrimonio e ai tuoi contratti" }[achse] || `a ${roh}`),
+    "klopft": (jahre, monate, alter, f, ort) =>
       `Il più antico di tutti i calcoli lavora con la rotazione stessa della terra: un grado ` +
-      `per un anno di vita. Secondo esso, fra circa ${jahre} anni, ai tuoi ${alter}, ` +
+      `per un anno di vita. Secondo esso, ` +
+      (monate ? `fra ${monate} mesi` : `fra circa ${jahre.toFixed(0)} anni`) +
+      `, ai tuoi ${alter.toFixed(1).replace(".", ",")}, ` +
       `${f} busserà ${ort}. Questo non dice che cosa accadrà — solo quando un tema viene a ` +
       `scadenza. Se si apra, e chi stia davanti alla porta, è un altro foglio.`,
 
@@ -476,6 +488,243 @@ export const T = {
       "Nessuna di queste arti predice il futuro, e nessuna è usata qui a quel modo. " +
       "Danno temi, scadenze e tonalità — dicono <em>di che cosa si tratta</em> e " +
       "<em>quando è il momento</em>, non che cosa ne verrà. Questo non sta in nessuna tavola."
+  },
+
+  en: {
+    "titel.anfang":      "What you begin with",
+    "titel.zwei":        "Two who cannot let go of each other",
+    "titel.werDuBist":   "Who you are",
+    "titel.herberge":    "Your lodging",
+    "titel.gegeben":     "What is given you and what is taken",
+    "titel.geist":       "The good spirit",
+    "titel.kapitel":     "The chapter you are reading now",
+    "titel.strecken":    "Loud stretches and quiet ones",
+    "titel.jahre":       "Who leads your years",
+    "titel.jahreFuehrt": "Who leads your years",
+    "titel.austeilt":    "Who is dealing just now",
+    "titel.klopft":      "What knocks next",
+    "titel.verborgen":   "What runs along in hiding",
+    "titel.geber":       "The giver of life",
+    "titel.rat":         "The counsel",
+    "titel.zusammen":    "What all this comes to",
+    "titel.fehlt":       "What is still missing here",
+    "titel.jahr":        jahr => `This year — ${jahr}`,
+
+    "auftakt.zeile":     name => name ? `What there is to say about ${name}` : "What there is to say",
+    "daten.uhr":"", "daten.alter": (n) => ` · ${n} years old today`,
+
+    /* Without a known hour of birth. */
+    "ohneStunde.zeile":"Hour of birth unknown — calculated with noon.",
+    "ohneStunde.auf":"What that means",
+    "ohneStunde.wackelt":"<b>Uncertain:</b> the Ascendant, and with it all twelve fields — " +
+      "it travels the whole circle once in twenty-four hours, so it could be any sign. With " +
+      "it goes everything that hangs on the fields: which field a planet stands in, the " +
+      "profections, the directions, the measure of life. The moon's degree, too, is only " +
+      "good to about six degrees, since it runs thirteen degrees a day.",
+    "ohneStunde.steht":"<b>Certain:</b> which sign each planet stands in — the slow ones in " +
+      "any case, the sun almost always, the moon most of the time. The angles of the planets " +
+      "to one another. Your sect, your temperament, the lords of the triplicities, the " +
+      "significator of work. Everything that comes from the name is untouched by the hour. " +
+      "If you learn the hour later, enter it — the reading recalculates itself.",
+    "kopf.zeichen":"Your sign in the Yıldıznâme",
+    "kopf.element": (key, tabiat) =>
+      `a sign of ${ {feuer:"fire", erde:"earth", luft:"air", wasser:"water"}[key] || "water"} — ${tabiat}`,
+    "auftakt.text":      "Four traditions that never read one another have been laid over " +
+      "each other here — one from Greece, one from Persia, one from India, one from the " +
+      "Ottoman book of the stars. What follows is not their sum, but the place where they touch.",
+
+    "anfang": (bild, hell, fh, ort, stand) =>
+      `In the hour of your birth, ${bild} rose over the edge of the world. ` +
+      `It was ${hell ? "day" : "night"} — the sun stood ${hell ? "above" : "below"} the ` +
+      `horizon, and that decides who enters your life quietly and who loudly. ` +
+      (fh ? `The one who leads is ${fh.figur} — ${fh.pron} ${fh.tut}. ` +
+            `${gross(fh.pron)} keeps ${ort}. ${stand} ` +
+            `That is where your life pulls, before any reckoning has said a word about it.` : ""),
+
+    "zwei": (a, b, naehe) =>
+      `${gross(a.figur)} and ${b.figur} ${naehe}. ` +
+      `The one ${a.tut}, the other ${b.tut}. That is the streak running through everything ` +
+      `you meet — you will find it again in every story of your life.`,
+
+    "gegeben": (f) =>
+      `Over your sign stands ${f.figur}: ${f.fabel}. ` +
+      `${gross(f.pron)} gives you ${f.gabe}. And takes ${f.preis} for it. ` +
+      `This is not a bargain one could decline — it is the same quality, seen from two sides.`,
+
+    "klopft.achse.mc":() => "the axis of your office",
+    "klopft.achse.asc":(rein) => rein === "ASC" ? "the axis of your person" : rein,
+    "klopft.wo": (achse, roh) => ({ mc:"at your reputation", ic:"at your house and your origin",
+      asc:"at you yourself", desc:"at your marriage and your contracts" }[achse] || `at ${roh}`),
+    "klopft": (jahre, monate, alter, f, ort) =>
+      `The oldest reckoning of all works with the turning of the earth itself: one degree for ` +
+      `one year of life. By it, ` +
+      (monate ? `in ${monate} months` : `in a good ${jahre.toFixed(0)} years`) +
+      `, at ${alter.toFixed(1)}, ${f} will knock ${ort}. ` +
+      `That does not say what happens — only when a theme falls due. Whether the door opens, ` +
+      `and who is standing outside it, is another matter.`,
+
+    "austeilt": (von, bis, fv, ft, naechsterAlter, naechsterFigur) =>
+      `There is an older reckoning still, and it is the only one that asks where you were born. ` +
+      `The point that came over the edge of the world in your hour of birth travels on with the ` +
+      `turning of the sky, and each stretch of the way lasts exactly as long as the sky above ` +
+      `your birthplace needs for it. That is why these stretches are of unequal length — born ` +
+      `elsewhere, you would have had others. ` +
+      `From your ${von}th to your ${bis}th year, ${fv.figur} deals: ${fv.pron} ${fv.tut}. ` +
+      (ft ? `And ${ft.figur} shares the time with ${fv.dat} — from there come the people and ` +
+            `what actually happens, while the first only sets the theme.`
+          : `${gross(fv.pron)} has no partner: what happens in these years happens without a ` +
+            `second hand.`) +
+      (naechsterAlter != null
+        ? ` At ${naechsterAlter} the dealing passes to ${naechsterFigur}.` : ""),
+
+    "geist": (name) =>
+      `This name does not come from your name but from the sky itself: from the place that rose ` +
+      `over the edge of the world in your hour of birth, from where the sun and the moon stood, ` +
+      `from the place where fortune falls to you, and from the last time sun and moon came ` +
+      `together before you were born. Five places, one name. The old writers set it where the ` +
+      `Greeks house the good daimon — Socrates' voice, which never drove him to anything but ` +
+      `only held him back when he was about to harm himself. Not a stranger watching over you: ` +
+      `the name of what in you is on your side.`,
+
+    "strecken": (laut, naechste, riss) =>
+      (laut
+        ? `You are on a loud stretch just now — one of those on which it is decided how you are ` +
+          `seen and what you are taken for. `
+        : `You are on a quiet stretch just now. That is not bad news: on the quiet stretches, ` +
+          `what later looks like sudden success on the loud ones is prepared. `) +
+      (naechste ? `The next loud one begins at ${naechste}. ` : "") +
+      (riss ? `And at about ${riss} a thread breaks: what carried until then stops carrying, and ` +
+              `life starts again somewhere else entirely. The old books hold such places to be ` +
+              `the most important in a life.` : ""),
+
+    "verborgen.ja": (namen) =>
+      `There ${namen.length === 1 ? "is a pair" : "are several pairs"} in your sky that do not ` +
+      `look at each other and yet throw the same shadow: mirror one half of the year onto the ` +
+      `other — summer onto winter, longest day onto shortest — and they come to stand exactly ` +
+      `one above the other. The same height in the sky, the same length of day, and still no ` +
+      `glance passes from one to the other: ${namen.join("; ")}. ` +
+      `Like Castor and Polydeuces, of whom only ever one was above while the other stayed below, ` +
+      `and who yet never did anything apart: these pairs work together without it being noticed ` +
+      `from outside. They are the places where something happens to you that will not let itself ` +
+      `be explained afterwards.`,
+    "verborgen.nein":
+      "Mirror one half of the year onto the other, and nothing in you falls together. " +
+      "Nothing runs along in hiding with you: what works, also shows.",
+
+    "fehlt.zahl": (n) => {
+      const Z = { 1:"One section stands", 2:"Two sections stand",
+                  3:"Three sections stand", 4:"Four sections stand" };
+      return `${Z[n] || n + " sections stand"} ready and ${n === 1 ? "needs" : "need"} ` +
+             `only something from you:`;
+    },
+
+    "kapitel": (von, bis, bild1, herr, l2von, l2bis, bild2, bild3) =>
+      `Your life does not fall into years but into chapters, and one of them has run since your ` +
+      `${von}th year and runs on until your ${bis}th. Its image is ${bild1}, and it stands under ` +
+      `${herr}. ` +
+      (bild2 ? `Within it lies a smaller chapter, the years ${l2von} to ${l2bis}: ${bild2}. ` : "") +
+      (bild3 ? `And over these months lies a light of its own again: ${bild3}. ` : "") +
+      `The chapter says what it is about at all; the sub-chapter, in which key; the months, what ` +
+      `you are noticing it by right now.`,
+
+    "werDuBist": (tabiat, geschlecht, element, elementText) =>
+      `${tabiat} ${geschlecht} Your element is ${element}: ${elementText}`,
+    "element.feuer":"fire", "element.erde":"earth",
+    "element.luft":"air", "element.wasser":"water",
+    "herberge": (nr, name, urteil, gut, meide) =>
+      `The moon passes through twenty-eight lodgings in a good twenty-seven days, and the sum of ` +
+      `your name falls on the ${nr}th, ${name}: ${urteil} ` +
+      `Favourable for ${gut}; avoid ${meide}.`,
+
+    "jahre.persisch": (herr, unter) =>
+      `A Persian reckoning gives these years to ${herr}` +
+      (unter ? `, and within them ${unter} is leading just now` : ""),
+    "jahre.indisch": (herr, unter) =>
+      `An Indian one, which starts from where the moon stood at your birth, names ${herr}` +
+      (unter ? ` and within that ${unter}` : ""),
+    "jahre.schluss":". Neither counts off constellations; they hand out fixed quantities of " +
+      "years — and still land on the same times as the rest.",
+
+    "jahr.zeiger": (ort, fh) =>
+      `Every year a pointer moves on by one field, and this year it stands ${ort}. That is what ` +
+      `it is about, from birthday to birthday. The hand leading the year is ${fh.figur} — ` +
+      `${fh.pron} ${fh.tut}.`,
+    "jahr.sonne": (tag, monat, jahr, ort, stuetzen) =>
+      `On ${monat} ${tag}, ${jahr}, the sun stood again exactly where it stood at your birth — ` +
+      `that is the turn of the year these books count, not the first of January. The year's ` +
+      `centre of gravity falls ${ort}. ` +
+      (stuetzen >= 2 ? `The signs support one another: a <b>loud year</b>, in which one notices what is happening.`
+       : stuetzen === 1 ? `A single support: the year speaks, but at half voice.`
+       : `Nothing supports anything: a <b>quiet year</b>. Something happens, but below the ` +
+         `surface, and one recognises it only later.`),
+    "jahr.transit": (ft, woran) =>
+      `Of the slow travellers, ${ft.figur} stands closest to you just now: ${ft.pron} ${ft.tut} ` +
+      `— and in doing so touches ${woran}.`,
+    "jahr.achse":"one of your axes",
+    "jahr.traegt": (was) => `what carries ${was} in you`,
+    "jahr.progression": (sonne, mond, phase) =>
+      `Your inner weather — a reckoning that takes each day after your birth for a whole year of ` +
+      `life — stands at ${sonne}, and the light that waxes and wanes in it, at ${mond}. ${phase}.`,
+    "jahr.mond": (nr, name, urteil, zu, gut, meide, verbrannt) =>
+      `And for today: the moon is in its ${nr}th lodging, ${name} — ${urteil} — and is ` +
+      `${zu ? "waxing" : "waning"}. Favourable for ${gut}; avoid ${meide}.` +
+      (verbrannt ? " It stands on the burnt way besides — begin nothing today that is meant to last." : ""),
+    "monate":["January","February","March","April","May","June","July","August","September","October","November","December"],
+
+    "geber": (flamme, huetet, pron, ort) =>
+      `The old writers asked: where in this sky burns the flame from which a life takes its ` +
+      `warmth? In you it burns at ${flamme}. And who keeps this flame? ${huetet} — and ${pron} ` +
+      `keeps it ${ort}. From there your strength takes its colouring; as with Meleager, whose ` +
+      `life hung on a brand his mother pulled from the fire and put away: there is a place where ` +
+      `a life lies particularly close to itself. How many years are counted from it stands in ` +
+      `its own chapter and stays there — the traditions do not agree among themselves, and a ` +
+      `number here would be a false certainty.`,
+
+    "zus.bleibend": (name, element, herr, bild, figur, pron, steht, ort) =>
+      (name ? `In the name lies ${name} — a sign ${element}, under ${herr}. ` : "") +
+      (bild ? `In the hour of your birth, ${bild} came up over the edge of the world, and the ` +
+              `hand that leads it is ${figur}: ${pron} stands at ${steht}, and keeps ${ort}. ` : "") +
+      `That is the part that does not change. It runs along under everything — the reckonings ` +
+      `further down say only what weather is passing over it just now.`,
+    "zus.element.feuer":"of fire", "zus.element.erde":"of earth",
+    "zus.element.luft":"of air", "zus.element.wasser":"of water",
+
+    "offen.niyet":["Niyet — the question","a question in one sentence; the answer hangs also on the hour in which you ask"],
+    "offen.uyum":["İsim uyumu","the name of a second person and that of their mother"],
+    "offen.raml":["ʿIlm al-Raml","a question — the sand answers the moment, not the life"],
+    "offen.zeit":["The right moment","something you mean to begin; then it tests the moon's standing against it"],
+
+    "zus.einig": (anzahl, davon, akk, quellen, fo) =>
+      `And now the curious thing. ${gross(anzahl)} old reckonings speak here that never read one ` +
+      `another — from Persia, from Greece, from India —, and ${davon} of them point to <b>the ` +
+      `same hand</b>, namely to ${akk} — ${quellen}. ` +
+      `It is like the blind men in the fable feeling the same elephant: each takes hold of ` +
+      `something different, and in the end they are all talking about one animal. When strangers ` +
+      `from different countries say the same thing independently, it is worth listening. ` +
+      `${gross(fo.pron)} ${fo.tut}. For that ${fo.pron} gives you ${fo.gabe} — and takes ` +
+      `${fo.preis}.`,
+    "zus.uneinig": (liste) =>
+      `This time the reckonings do not say the same thing. Each names a different hand: ${liste}. ` +
+      `None has the upper hand — a stretch like a road with several lanes, on which it has not ` +
+      `yet been decided which will be the main one. That is no defect: it means that more than ` +
+      `one thing is growing at a time.`,
+    "zus.nennt": (quelle, akk) => `${gross(quelle)} names ${akk}`,
+    "zus.hand": (zeichen, ort, stand) =>
+      `And this hand is no stranger to you. It stood there already in the hour of your birth, ` +
+      `at ${zeichen} — and its place is ${ort}. There, and nowhere else, will it be decided in ` +
+      `these years what they bring. ${stand}`,
+    "zahlwort":{1:"one",2:"two",3:"three",4:"four"},
+    "quelle.zr":"the table of chapters",
+    "quelle.prof":"the pointer that moves on one field each year",
+    "quelle.fd":"a Persian reckoning",
+    "quelle.vd":"an Indian reckoning",
+    "und":"and",
+
+    "rat.schild":        "The counsel",
+    "schluss":
+      "None of these arts foretells the future, and none is used that way here. " +
+      "They give themes, due dates and keys — they say <em>what it is about</em> and " +
+      "<em>when it is due</em>, not what will come of it. That stands in no table."
   }
 };
 

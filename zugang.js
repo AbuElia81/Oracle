@@ -7,8 +7,8 @@
    Maske erscheint — und erst eine ausgefüllte Maske öffnet die Reiter
    des jeweiligen Weges.
    --------------------------------------------------------------------- */
-import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=235";
-import { t } from "./sprachen.js?v=235";
+import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=238";
+import { t } from "./sprachen.js?v=238";
 
 const HEIM = "bProfil";
 const SPEICHER = "oracle-weg";

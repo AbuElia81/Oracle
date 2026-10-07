@@ -6,24 +6,24 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=235";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=235";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=235";
-import { JAHR, profektionJetzt } from "./jahr.js?v=235";
-import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=235";
-import { mondHeute } from "./elektion.js?v=235";
-import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=235";
-import { zrStand } from "./zr.js?v=235";
-import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=235";
-import { e, setzeEssenzSprache } from "./essenz-texte.js?v=235";
-import { aktuelleSprache, t } from "./sprachen.js?v=235";
-import { herkunftVon, hUi, setzeHerkunftSprache, HERKUNFT } from "./herkunft.js?v=235";
+import { cevir, toplam, kalan } from "./ebced.js?v=238";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=238";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=238";
+import { JAHR, profektionJetzt } from "./jahr.js?v=238";
+import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=238";
+import { mondHeute } from "./elektion.js?v=238";
+import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=238";
+import { zrStand } from "./zr.js?v=238";
+import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=238";
+import { e, setzeEssenzSprache } from "./essenz-texte.js?v=238";
+import { aktuelleSprache, t } from "./sprachen.js?v=238";
+import { herkunftVon, hUi, setzeHerkunftSprache, HERKUNFT } from "./herkunft.js?v=238";
 setzeEssenzSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => { setzeEssenzSprache(ev.detail); setzeHerkunftSprache(ev.detail); });
 setzeHerkunftSprache(aktuelleSprache());
-import { jahresUmdrehung } from "./solar.js?v=235";
-import { lebensmass } from "./lebensmass.js?v=235";
-import { verteilungBei } from "./verteilung.js?v=235";
+import { jahresUmdrehung } from "./solar.js?v=238";
+import { lebensmass } from "./lebensmass.js?v=238";
+import { verteilungBei } from "./verteilung.js?v=238";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -436,19 +436,20 @@ function schreibe(zielWahl) {
   }
 
   if (dir) {
+    /* Die Frist, der Anklopfende und die Achse wurden hier früher auf
+       Deutsch zusammengebaut und fertig in den Satz gereicht — auf
+       Englisch stand dann "in a good in gut 6 Jahren years". Jetzt geht
+       nur Gerechnetes hinaus, und jede Sprachtafel formuliert selbst. */
     const jahre = dir.alter - alter;
-    const wann = jahre < 1
-      ? `in ${Math.max(1, Math.round(jahre * 12))} Monaten`
-      : `in gut ${jahre.toFixed(0)} Jahren`;
-    const schl = { "Mars":"der Schmied", "Sonne":"der König", "Mond":"die Wandernde",
-                   "Merkur":"der Bote", "Venus":"die Gärtnerin", "Jupiter":"der Gastgeber",
-                   "Saturn":"der Alte", "MC":"die Achse deines Amtes", "ASC":"die Achse deiner Person" };
+    const monate = jahre < 1 ? Math.max(1, Math.round(jahre * 12)) : null;
+    const PLANETSCHLUESSEL = { "Mars":"mars", "Sonne":"sonne", "Mond":"mond", "Merkur":"merkur",
+                               "Venus":"venus", "Jupiter":"jupiter", "Saturn":"saturn" };
     const rein = String(dir.promissor || "").replace(/[^A-Za-zÄÖÜäöüß ]/g, "").trim().split(/\s+/)[0];
-    const wer = schl[rein] || rein || dir.promissor;
-    const wo = { "MC":"an deinem Ruf", "IC":"an deinem Haus und deiner Herkunft",
-                 "Aszendent":"an dir selbst", "ASC":"an dir selbst",
-                 "Deszendent":"an deiner Ehe und deinen Verträgen", "DESC":"an deiner Ehe und deinen Verträgen"
-               }[dir.signifikator] || `an ${dir.signifikator}`;
+    const werKey = PLANETSCHLUESSEL[rein] || null;
+    const wer = werKey ? figurVon(werKey).kurz : e("klopft.achse." + (rein === "MC" ? "mc" : "asc"), rein);
+    const ACHSE = { "MC":"mc", "IC":"ic", "Aszendent":"asc", "ASC":"asc",
+                    "Deszendent":"desc", "DESC":"desc" }[dir.signifikator] || null;
+    const wo = e("klopft.wo", ACHSE, dir.signifikator);
     if (vt && vt.laufend) {
     const fv = figurVon(vt.laufend.herr);
     const ft = vt.laufend.teilhaber ? figurVon(vt.laufend.teilhaber.key) : null;
@@ -458,7 +459,8 @@ function schreibe(zielWahl) {
         vt.naechster ? figurVon(vt.naechster.herr).akk : null)));
   }
 
-  cikti.appendChild(absatz(e("titel.klopft"), e("klopft", wann, komma(dir.alter), wer, wo)));
+  cikti.appendChild(absatz(e("titel.klopft"),
+    e("klopft", jahre, monate, dir.alter, wer, wo)));
   }
 
   if (anti) {
