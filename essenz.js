@@ -6,24 +6,24 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=233";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=233";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=233";
-import { JAHR, profektionJetzt } from "./jahr.js?v=233";
-import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=233";
-import { mondHeute } from "./elektion.js?v=233";
-import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=233";
-import { zrStand } from "./zr.js?v=233";
-import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=233";
-import { e, setzeEssenzSprache } from "./essenz-texte.js?v=233";
-import { aktuelleSprache, t } from "./sprachen.js?v=233";
-import { herkunftVon, hUi, setzeHerkunftSprache, HERKUNFT } from "./herkunft.js?v=233";
+import { cevir, toplam, kalan } from "./ebced.js?v=235";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=235";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=235";
+import { JAHR, profektionJetzt } from "./jahr.js?v=235";
+import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=235";
+import { mondHeute } from "./elektion.js?v=235";
+import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=235";
+import { zrStand } from "./zr.js?v=235";
+import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=235";
+import { e, setzeEssenzSprache } from "./essenz-texte.js?v=235";
+import { aktuelleSprache, t } from "./sprachen.js?v=235";
+import { herkunftVon, hUi, setzeHerkunftSprache, HERKUNFT } from "./herkunft.js?v=235";
 setzeEssenzSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => { setzeEssenzSprache(ev.detail); setzeHerkunftSprache(ev.detail); });
 setzeHerkunftSprache(aktuelleSprache());
-import { jahresUmdrehung } from "./solar.js?v=233";
-import { lebensmass } from "./lebensmass.js?v=233";
-import { verteilungBei } from "./verteilung.js?v=233";
+import { jahresUmdrehung } from "./solar.js?v=235";
+import { lebensmass } from "./lebensmass.js?v=235";
+import { verteilungBei } from "./verteilung.js?v=235";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -347,14 +347,13 @@ function schreibe(zielWahl) {
       el("div", "kalanBaslik", e("kopf.zeichen")),
       el("div", "buyukToplam", `${sb.burc.tr} — ${sb.burc.de}`),
       el("div", "kucukNot",
-        e("kopf.element", sb.unsur.de, sb.unsur.tabiat))
+        e("kopf.element", sb.unsur.key, sb.unsur.tabiat))
     );
     cikti.appendChild(kopf);
 
     cikti.appendChild(absatz(e("titel.werDuBist"),
       e("werDuBist", sb.burc.tabiat, sb.kadin ? sb.burc.kadin : sb.burc.erkek,
-        e(sb.unsur.de === "Feuer" ? "element.feuer" : sb.unsur.de === "Erde" ? "element.erde"
-          : sb.unsur.de === "Luft" ? "element.luft" : "element.wasser"),
+        e("element." + (sb.unsur.key || "wasser")),
         sb.unsur.metin)));
 
     if (sb.menzil) {
@@ -566,8 +565,7 @@ function schreibe(zielWahl) {
       const satz = el("p");
       satz.innerHTML = e("zus.bleibend",
         sb ? sb.burc.tr : null,
-        sb ? e(sb.unsur.de === "Feuer" ? "zus.element.feuer" : sb.unsur.de === "Erde" ? "zus.element.erde"
-              : sb.unsur.de === "Luft" ? "zus.element.luft" : "zus.element.wasser") : "",
+        sb ? e("zus.element." + (sb.unsur.key || "wasser")) : "",
         sb ? sb.herr.tr : "",
         (r && hp) ? BILD[r.ascZeichen] : null,
         (r && hp) ? figurVon(r.herrscher).figur : "",

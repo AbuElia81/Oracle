@@ -144,24 +144,32 @@ const bildDat_DE = i => {
    Die Exporte sind absichtlich mit let gebunden: ES-Module geben lebende
    Bindungen weiter, darum sehen alle Abschnitte sofort die andere Tafel,
    sobald hier umgehängt wird. */
-import { FIGUR_IT, BILD_IT, ORT_IT, NAEHE_IT, STAND_IT, bildDat_IT } from "./sprache-it.js?v=233";
-import { aktuelleSprache } from "./sprachen.js?v=233";
+import { FIGUR_IT, BILD_IT, ORT_IT, NAEHE_IT, STAND_IT, bildDat_IT } from "./sprache-it.js?v=235";
+import { FIGUR_EN, BILD_EN, ORT_EN, NAEHE_EN, STAND_EN, bildDat_EN } from "./sprache-en.js?v=235";
+import { aktuelleSprache } from "./sprachen.js?v=235";
 
 export let FIGUR = FIGUR_DE, BILD = BILD_DE, ORT = ORT_DE,
            NAEHE = NAEHE_DE, STAND = STAND_DE, bildDat = bildDat_DE;
 
+/* Eine Tafel statt einer Weiche: Eine weitere Sprache ist eine Datei und
+   eine Zeile hier, nicht ein weiteres Fragezeichen in sechs Zuweisungen. */
+const TAFELN = {
+  de: { FIGUR: FIGUR_DE, BILD: BILD_DE, ORT: ORT_DE,
+        NAEHE: NAEHE_DE, STAND: STAND_DE, bildDat: bildDat_DE },
+  it: { FIGUR: FIGUR_IT, BILD: BILD_IT, ORT: ORT_IT,
+        NAEHE: NAEHE_IT, STAND: STAND_IT, bildDat: bildDat_IT },
+  en: { FIGUR: FIGUR_EN, BILD: BILD_EN, ORT: ORT_EN,
+        NAEHE: NAEHE_EN, STAND: STAND_EN, bildDat: bildDat_EN }
+};
+
 /* Welche Sprachen haben eine eigene Bildersprache? Die übrigen fallen
    auf Deutsch zurück, bis sie übersetzt sind. */
-export const TEXTSPRACHEN = ["de", "it"];
+export const TEXTSPRACHEN = Object.keys(TAFELN);
 
 export function setzeTextsprache(code) {
-  const it = code === "it";
-  FIGUR = it ? FIGUR_IT : FIGUR_DE;
-  BILD  = it ? BILD_IT  : BILD_DE;
-  ORT   = it ? ORT_IT   : ORT_DE;
-  NAEHE = it ? NAEHE_IT : NAEHE_DE;
-  STAND = it ? STAND_IT : STAND_DE;
-  bildDat = it ? bildDat_IT : bildDat_DE;
+  const t = TAFELN[code] || TAFELN.de;
+  FIGUR = t.FIGUR; BILD = t.BILD; ORT = t.ORT;
+  NAEHE = t.NAEHE; STAND = t.STAND; bildDat = t.bildDat;
 }
 
 setzeTextsprache(aktuelleSprache());

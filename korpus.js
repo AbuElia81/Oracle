@@ -9,14 +9,18 @@
    --------------------------------------------------------------------- */
 
 /* --------------------------------------------------------- vier Elemente */
+/* key bleibt in jeder Sprache stehen. Vorher wurde auf den Anzeigenamen
+   verglichen — der wechselt aber mit der Sprache, und auf Italienisch
+   fiel darum jedes Zeichen in den letzten Zweig: "un segno dell'acqua",
+   auch beim Steinbock, der im selben Satz "freddo e secco" hieß. */
 export const UNSURLAR = [
-  { tr:"Ateş", ar:"نار", de:"Feuer", tabiat:"heiß und trocken",
+  { key:"feuer", tr:"Ateş", ar:"نار", de:"Feuer", tabiat:"heiß und trocken",
     metin:"Was im Feuer steht, geht voran, ehe es bedacht hat. Der Anfang gelingt dir leichter als das Ende; such dir Menschen, die zu Ende bringen." },
-  { tr:"Toprak", ar:"تراب", de:"Erde", tabiat:"kalt und trocken",
+  { key:"erde", tr:"Toprak", ar:"تراب", de:"Erde", tabiat:"kalt und trocken",
     metin:"Was in der Erde steht, hält und trägt. Du sammelst langsam und verlierst selten; die Gefahr ist, dass du sitzen bleibst, wo du längst fertig bist." },
-  { tr:"Hava", ar:"هواء", de:"Luft", tabiat:"warm und feucht",
+  { key:"luft", tr:"Hava", ar:"هواء", de:"Luft", tabiat:"warm und feucht",
     metin:"Was in der Luft steht, verbindet. Dir gehört das Wort und der Weg zwischen den Menschen; hüte dich, überall zu sein und nirgends zu bleiben." },
-  { tr:"Su", ar:"ماء", de:"Wasser", tabiat:"kalt und feucht",
+  { key:"wasser", tr:"Su", ar:"ماء", de:"Wasser", tabiat:"kalt und feucht",
     metin:"Was im Wasser steht, nimmt die Form dessen an, was es umgibt. Du spürst früher als du weißt; achte darauf, wessen Gefäß du gerade bist." }
 ];
 
@@ -288,11 +292,11 @@ export const GUN_ADI = ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","F
    Die Tafeln bleiben dieselben Objekte; nur die Textfelder werden beim
    Sprachwechsel ausgetauscht. So sehen alle Abschnitte sofort die andere
    Sprache, ohne dass irgendwo ein Import umgehängt werden müsste. */
-import { BURC_IT, MENZIL_IT, BURC_GESCHLECHT_IT, UNSUR_IT, UNSUR_TABIAT_IT } from "./korpus-it.js?v=233";
-import { NIYET_IT, UYUM_IT, UNSUR_UYUM_IT } from "./orakel-it.js?v=233";
-import { ZEICHEN_DE_IT, ELEMENT_DE_IT, PLANET_DE_IT, WOCHENTAG_IT } from "./korpus-it.js?v=233";
-import { BURC_DETAIL_IT, GEZ_IT } from "./yildiz-it.js?v=233";
-import { aktuelleSprache } from "./sprachen.js?v=233";
+import { BURC_IT, MENZIL_IT, BURC_GESCHLECHT_IT, UNSUR_IT, UNSUR_TABIAT_IT } from "./korpus-it.js?v=235";
+import { NIYET_IT, UYUM_IT, UNSUR_UYUM_IT } from "./orakel-it.js?v=235";
+import { ZEICHEN_DE_IT, ELEMENT_DE_IT, PLANET_DE_IT, WOCHENTAG_IT } from "./korpus-it.js?v=235";
+import { BURC_DETAIL_IT, GEZ_IT } from "./yildiz-it.js?v=235";
+import { aktuelleSprache } from "./sprachen.js?v=235";
 
 const BURC_DE_TEXTE = BURCLAR.map(b => ({ tabiat: b.tabiat, ogut: b.ogut, erkek: b.erkek, kadin: b.kadin }));
 const UNSUR_DE_TEXTE = UNSURLAR.map(u => ({ metin: u.metin, tabiat: u.tabiat }));

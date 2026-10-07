@@ -50,9 +50,10 @@ export const T = {
       "berührt. Wenn du die Stunde später erfährst, trag sie nach — die Lesung rechnet " +
       "sich von selbst neu.",
     "kopf.zeichen":"Dein Zeichen im Yıldıznâme",
-    "kopf.element": (element, tabiat) =>
-      `ein Zeichen ${element === "Feuer" ? "des Feuers" : element === "Erde" ? "der Erde"
-        : element === "Luft" ? "der Luft" : "des Wassers"} — ${tabiat}`,
+    /* key statt Anzeigename: der wechselt mit der Sprache. */
+    "kopf.element": (key, tabiat) =>
+      `ein Zeichen ${ {feuer:"des Feuers", erde:"der Erde", luft:"der Luft",
+                       wasser:"des Wassers"}[key] || "des Wassers"} — ${tabiat}`,
     "auftakt.text":      "Vier Überlieferungen, die einander nie gelesen haben, sind hier " +
       "übereinandergelegt worden — eine aus Griechenland, eine aus Persien, eine aus Indien, " +
       "eine aus dem osmanischen Buch der Sterne. Was folgt, ist nicht ihre Summe, sondern " +
@@ -284,9 +285,9 @@ export const T = {
       "significatore del mestiere. Tutto ciò che viene dal nome non è toccato affatto " +
       "dall'ora. Se un giorno verrai a saperla, aggiungila — la lettura si ricalcola da sé.",
     "kopf.zeichen":"Il tuo segno nello Yıldıznâme",
-    "kopf.element": (element, tabiat) =>
-      `un segno ${element === "Feuer" ? "del fuoco" : element === "Erde" ? "della terra"
-        : element === "Luft" ? "dell'aria" : "dell'acqua"} — ${tabiat}`,
+    "kopf.element": (key, tabiat) =>
+      `un segno ${ {feuer:"del fuoco", erde:"della terra", luft:"dell'aria",
+                    wasser:"dell'acqua"}[key] || "dell'acqua"} — ${tabiat}`,
     "auftakt.text":      "Quattro tradizioni che non si sono mai lette a vicenda sono state " +
       "qui sovrapposte — una dalla Grecia, una dalla Persia, una dall'India, una dal libro " +
       "ottomano delle stelle. Ciò che segue non è la loro somma, ma il punto in cui si toccano.",
