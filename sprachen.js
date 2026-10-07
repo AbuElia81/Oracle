@@ -22,8 +22,9 @@ export const SPRACHEN = [
   { code: "ar", name: "العربية",   kurz: "AR", rtl: true }
 ];
 
-import { HTML_IT } from "./html-it.js?v=245";
-import { HTML_DE } from "./html-de.js?v=245";
+import { HTML_IT } from "./html-it.js?v=246";
+import { HTML_EN } from "./html-en.js?v=246";
+import { HTML_DE } from "./html-de.js?v=246";
 
 export const WORTE = {
   "kopf.unterzeile": {
@@ -246,7 +247,9 @@ export function t(schluessel, sprache) {
   if (e) return e[s] || e.de || "";
   /* Die Rahmentexte der Abschnitte stehen in eigenen Dateien, weil sie
      lang sind und sonst diese Tafel unlesbar machen würden. */
-  if (s === "it" && HTML_IT[schluessel]) return HTML_IT[schluessel];
+  const RAHMEN = { it: HTML_IT, en: HTML_EN };
+  const eigen = RAHMEN[s];
+  if (eigen && eigen[schluessel]) return eigen[schluessel];
   if (HTML_DE[schluessel]) return HTML_DE[schluessel];
   return schluessel;
 }
