@@ -16,8 +16,9 @@
    Deutungen dieser Seite schneller als über jede Definition.
    ------------------------------------------------------------------------ */
 
-import { WANDELSTERNE_IT, PLANETEN_UI_IT } from "./planeten-it.js?v=238";
-import { aktuelleSprache } from "./sprachen.js?v=238";
+import { WANDELSTERNE_IT, PLANETEN_UI_IT } from "./planeten-it.js?v=244";
+import { WANDELSTERNE_EN, PLANETEN_UI_EN } from "./planeten-en.js?v=244";
+import { aktuelleSprache } from "./sprachen.js?v=244";
 
 export const WANDELSTERNE = [
   { key: "saturn", name: "Saturn", glyph: "♄", tr: "Zühal",
@@ -139,10 +140,14 @@ const UI_DE = { titel:"Die sieben Wandelsterne", metall:"Metall", tag:"Tag", nat
 let UI = UI_DE;
 
 export function setzePlanetenSprache(code) {
-  const it = code === "it";
-  UI = it ? { ...UI_DE, ...PLANETEN_UI_IT } : UI_DE;
+  const SPRACHEN = {
+    it: { ui: PLANETEN_UI_IT, sterne: WANDELSTERNE_IT },
+    en: { ui: PLANETEN_UI_EN, sterne: WANDELSTERNE_EN }
+  };
+  const L = SPRACHEN[code] || null;
+  UI = L ? { ...UI_DE, ...L.ui } : UI_DE;
   WANDELSTERNE.forEach((p, i) => {
-    const q = it ? WANDELSTERNE_IT[p.key] : WANDEL_DE[i];
+    const q = L ? L.sterne[p.key] : WANDEL_DE[i];
     if (!q) return;
     DE_FELDER.forEach(f => { if (q[f] !== undefined) p[f] = q[f]; });
   });

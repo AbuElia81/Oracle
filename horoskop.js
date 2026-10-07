@@ -9,10 +9,10 @@
 
    Häuser im Ganzzeichen, wie überall auf dieser Seite.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=238";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=244";
 import { berechneGeburt, planetenPositionen, julianischesDatum,
          aszendent, medium, schiefeDerEkliptik, siderischeZeitGreenwich,
-         norm360 } from "./astro.js?v=238";
+         norm360 } from "./astro.js?v=244";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -453,8 +453,9 @@ if (document.readyState === "loading") {
    Planeten-, Zeichen- und Feldernamen stecken in fast jedem Satz. Sie
    werden hier beim Sprachwechsel ausgetauscht, nicht neu importiert —
    die Objekte bleiben dieselben, nur ihre Namensfelder wechseln. */
-import { PLANET_NAME_IT, PLANET_ARTIKEL_IT, ZEICHEN_NAME_IT, HAUS_IT } from "./namen-it.js?v=238";
-import { aktuelleSprache } from "./sprachen.js?v=238";
+import { PLANET_NAME_IT, PLANET_ARTIKEL_IT, ZEICHEN_NAME_IT, HAUS_IT } from "./namen-it.js?v=244";
+import { PLANET_NAME_EN, PLANET_ARTIKEL_EN, ZEICHEN_NAME_EN, HAUS_EN } from "./namen-en.js?v=244";
+import { aktuelleSprache } from "./sprachen.js?v=244";
 
 const PLANET_NAME_DE  = Object.fromEntries(REIHE.map(k => [k, PLANET[k].name]));
 const ARTIKEL_DE      = { ...ARTIKEL };
@@ -462,12 +463,18 @@ const ZEICHEN_NAME_DE = ZEICHEN.map(z => z.name);
 const HAUS_DE         = [...HAUS];
 
 export function setzeNamenSprache(code) {
-  const it = code === "it";
-  REIHE.forEach(k => { PLANET[k].name = it ? PLANET_NAME_IT[k] : PLANET_NAME_DE[k]; });
+  /* Eine Tafel statt einer Weiche — eine weitere Sprache ist eine Zeile. */
+  const NAMEN = {
+    de: { planet: PLANET_NAME_DE, artikel: ARTIKEL_DE, zeichen: ZEICHEN_NAME_DE, haus: HAUS_DE },
+    it: { planet: PLANET_NAME_IT, artikel: PLANET_ARTIKEL_IT, zeichen: ZEICHEN_NAME_IT, haus: HAUS_IT },
+    en: { planet: PLANET_NAME_EN, artikel: PLANET_ARTIKEL_EN, zeichen: ZEICHEN_NAME_EN, haus: HAUS_EN }
+  };
+  const n = NAMEN[code] || NAMEN.de;
+  REIHE.forEach(k => { PLANET[k].name = n.planet[k]; });
   Object.keys(ARTIKEL).forEach(k => delete ARTIKEL[k]);
-  Object.assign(ARTIKEL, it ? PLANET_ARTIKEL_IT : ARTIKEL_DE);
-  ZEICHEN.forEach((z, i) => { z.name = it ? ZEICHEN_NAME_IT[i] : ZEICHEN_NAME_DE[i]; });
-  HAUS.forEach((_, i) => { HAUS[i] = it ? HAUS_IT[i] : HAUS_DE[i]; });
+  Object.assign(ARTIKEL, n.artikel);
+  ZEICHEN.forEach((z, i) => { z.name = n.zeichen[i]; });
+  HAUS.forEach((_, i) => { HAUS[i] = n.haus[i]; });
   zwischenspeicher = null;          /* die Radix neu bilden lassen */
 }
 

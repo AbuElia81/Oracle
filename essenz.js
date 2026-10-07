@@ -6,24 +6,24 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=238";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=238";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=238";
-import { JAHR, profektionJetzt } from "./jahr.js?v=238";
-import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=238";
-import { mondHeute } from "./elektion.js?v=238";
-import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=238";
-import { zrStand } from "./zr.js?v=238";
-import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=238";
-import { e, setzeEssenzSprache } from "./essenz-texte.js?v=238";
-import { aktuelleSprache, t } from "./sprachen.js?v=238";
-import { herkunftVon, hUi, setzeHerkunftSprache, HERKUNFT } from "./herkunft.js?v=238";
+import { cevir, toplam, kalan } from "./ebced.js?v=244";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=244";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=244";
+import { JAHR, profektionJetzt } from "./jahr.js?v=244";
+import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=244";
+import { mondHeute } from "./elektion.js?v=244";
+import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=244";
+import { zrStand } from "./zr.js?v=244";
+import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=244";
+import { e, setzeEssenzSprache } from "./essenz-texte.js?v=244";
+import { aktuelleSprache, t } from "./sprachen.js?v=244";
+import { herkunftVon, hUi, setzeHerkunftSprache, HERKUNFT } from "./herkunft.js?v=244";
 setzeEssenzSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => { setzeEssenzSprache(ev.detail); setzeHerkunftSprache(ev.detail); });
 setzeHerkunftSprache(aktuelleSprache());
-import { jahresUmdrehung } from "./solar.js?v=238";
-import { lebensmass } from "./lebensmass.js?v=238";
-import { verteilungBei } from "./verteilung.js?v=238";
+import { jahresUmdrehung } from "./solar.js?v=244";
+import { lebensmass } from "./lebensmass.js?v=244";
+import { verteilungBei } from "./verteilung.js?v=244";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -381,7 +381,7 @@ function schreibe(zielWahl) {
     const l1 = zr.L1, l2 = zr.L2, l3 = zr.L3;
     const bildVon = txt => {
       const i = ZEICHEN.findIndex(z => txt && txt.includes(z.name));
-      return i >= 0 ? BILD[i] : "ein eigenes Bild";
+      return i >= 0 ? BILD[i] : e("kapitel.eigenesBild");
     };
     cikti.appendChild(absatz(e("titel.kapitel"),
       e("kapitel", l1.von.toFixed(0), l1.bis.toFixed(0), bildVon(l1.zeichen),
@@ -465,9 +465,22 @@ function schreibe(zielWahl) {
 
   if (anti) {
     if (anti.funde.length) {
+      /* Die Antiszien-Tafel liefert ihre Namen auf Deutsch. Hier werden sie
+         in die gewählte Sprache zurückgeholt, und auch das "und" zwischen
+         ihnen kommt aus der Sprachtafel — sonst stand im englischen Text
+         "Merkur und Mars". */
+      const DEUTSCH_ZU_KEY = { Sonne:"sonne", Mond:"mond", Merkur:"merkur", Venus:"venus",
+                               Mars:"mars", Jupiter:"jupiter", Saturn:"saturn" };
+      const uebersetze = w => {
+        const k = DEUTSCH_ZU_KEY[w];
+        if (k && PLANET[k]) return PLANET[k].name;
+        if (w === "Aszendent" || w === "ASC") return e("achse.asc");
+        if (w === "MC") return e("achse.mc");
+        return w;
+      };
       const namen = anti.funde.map(f => {
         const n = [...new Set((f.match(/(Sonne|Mond|Merkur|Venus|Mars|Jupiter|Saturn|Aszendent|ASC|MC)/g) || []))];
-        return n.slice(0, 2).join(" und ");
+        return n.slice(0, 2).map(uebersetze).join(" " + e("und") + " ");
       }).filter(Boolean);
       cikti.appendChild(absatz(e("titel.verborgen"), e("verborgen.ja", namen)));
     } else {

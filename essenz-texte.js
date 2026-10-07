@@ -31,6 +31,9 @@ export const T = {
     "titel.zusammen":    "Was das zusammen ergibt",
     "titel.fehlt":       "Was hier noch fehlt",
     "titel.jahr":        jahr => `Dieses Jahr — ${jahr}`,
+    "kapitel.eigenesBild":"ein eigenes Bild",
+    "achse.asc":"der Aszendent", "achse.mc":"das Medium Coeli",
+    "ordnung": n => `${n}.`,
 
     "auftakt.zeile":     name => name ? `Was über ${name} zu sagen ist` : "Was zu sagen ist",
     "daten.uhr":"Uhr", "daten.alter": (n) => ` · heute ${n} Jahre alt`,
@@ -273,6 +276,9 @@ export const T = {
     "titel.zusammen":    "Che cosa dà tutto questo insieme",
     "titel.fehlt":       "Che cosa manca ancora qui",
     "titel.jahr":        jahr => `Quest'anno — ${jahr}`,
+    "kapitel.eigenesBild":"un'immagine propria",
+    "achse.asc":"l'Ascendente", "achse.mc":"il Medio Cielo",
+    "ordnung": n => `${n}\u00ba`,
 
     "auftakt.zeile":     name => name ? `Ciò che si può dire di ${name}` : "Ciò che si può dire",
     "daten.uhr":"", "daten.alter": (n) => ` · oggi ${n} anni`,
@@ -509,6 +515,16 @@ export const T = {
     "titel.zusammen":    "What all this comes to",
     "titel.fehlt":       "What is still missing here",
     "titel.jahr":        jahr => `This year — ${jahr}`,
+    "kapitel.eigenesBild":"an image of its own",
+    "achse.asc":"the Ascendant", "achse.mc":"the Midheaven",
+    /* 1st, 2nd, 3rd, 4th — und 11th bis 13th trotz der Endziffern. */
+    "ordnung": n => {
+      const z = Math.abs(Math.round(Number(n)));
+      const zehner = z % 100, einer = z % 10;
+      const endung = (zehner >= 11 && zehner <= 13) ? "th"
+        : einer === 1 ? "st" : einer === 2 ? "nd" : einer === 3 ? "rd" : "th";
+      return `${n}${endung}`;
+    },
 
     "auftakt.zeile":     name => name ? `What there is to say about ${name}` : "What there is to say",
     "daten.uhr":"", "daten.alter": (n) => ` · ${n} years old today`,
@@ -569,7 +585,7 @@ export const T = {
       `turning of the sky, and each stretch of the way lasts exactly as long as the sky above ` +
       `your birthplace needs for it. That is why these stretches are of unequal length — born ` +
       `elsewhere, you would have had others. ` +
-      `From your ${von}th to your ${bis}th year, ${fv.figur} deals: ${fv.pron} ${fv.tut}. ` +
+      `From your ${ord(von)} to your ${ord(bis)} year, ${fv.figur} deals: ${fv.pron} ${fv.tut}. ` +
       (ft ? `And ${ft.figur} shares the time with ${fv.dat} — from there come the people and ` +
             `what actually happens, while the first only sets the theme.`
           : `${gross(fv.pron)} has no partner: what happens in these years happens without a ` +
@@ -620,7 +636,7 @@ export const T = {
 
     "kapitel": (von, bis, bild1, herr, l2von, l2bis, bild2, bild3) =>
       `Your life does not fall into years but into chapters, and one of them has run since your ` +
-      `${von}th year and runs on until your ${bis}th. Its image is ${bild1}, and it stands under ` +
+      `${ord(von)} year and runs on until your ${ord(bis)}. Its image is ${bild1}, and it stands under ` +
       `${herr}. ` +
       (bild2 ? `Within it lies a smaller chapter, the years ${l2von} to ${l2bis}: ${bild2}. ` : "") +
       (bild3 ? `And over these months lies a light of its own again: ${bild3}. ` : "") +
@@ -633,7 +649,7 @@ export const T = {
     "element.luft":"air", "element.wasser":"water",
     "herberge": (nr, name, urteil, gut, meide) =>
       `The moon passes through twenty-eight lodgings in a good twenty-seven days, and the sum of ` +
-      `your name falls on the ${nr}th, ${name}: ${urteil} ` +
+      `your name falls on the ${ord(nr)}, ${name}: ${urteil} ` +
       `Favourable for ${gut}; avoid ${meide}.`,
 
     "jahre.persisch": (herr, unter) =>
@@ -666,7 +682,7 @@ export const T = {
       `Your inner weather — a reckoning that takes each day after your birth for a whole year of ` +
       `life — stands at ${sonne}, and the light that waxes and wanes in it, at ${mond}. ${phase}.`,
     "jahr.mond": (nr, name, urteil, zu, gut, meide, verbrannt) =>
-      `And for today: the moon is in its ${nr}th lodging, ${name} — ${urteil} — and is ` +
+      `And for today: the moon is in its ${ord(nr)} lodging, ${name} — ${urteil} — and is ` +
       `${zu ? "waxing" : "waning"}. Favourable for ${gut}; avoid ${meide}.` +
       (verbrannt ? " It stands on the burnt way besides — begin nothing today that is meant to last." : ""),
     "monate":["January","February","March","April","May","June","July","August","September","October","November","December"],
@@ -729,6 +745,17 @@ export const T = {
 };
 
 function gross(w) { return String(w || "").charAt(0).toUpperCase() + String(w || "").slice(1); }
+
+/* Englische Ordnungszahl: 1st, 2nd, 3rd, 4th — und 11th bis 13th trotz
+   der Endziffern. Im Deutschen und Italienischen steht sie in der Tafel
+   selbst, hier braucht sie eine Regel. */
+function ord(n) {
+  const z = Math.abs(Math.round(Number(n)));
+  const zehner = z % 100, einer = z % 10;
+  const endung = (zehner >= 11 && zehner <= 13) ? "th"
+    : einer === 1 ? "st" : einer === 2 ? "nd" : einer === 3 ? "rd" : "th";
+  return `${n}${endung}`;
+}
 
 let aktiv = "de";
 export function setzeEssenzSprache(code) { aktiv = T[code] ? code : "de"; }

@@ -292,11 +292,15 @@ export const GUN_ADI = ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","F
    Die Tafeln bleiben dieselben Objekte; nur die Textfelder werden beim
    Sprachwechsel ausgetauscht. So sehen alle Abschnitte sofort die andere
    Sprache, ohne dass irgendwo ein Import umgehängt werden müsste. */
-import { BURC_IT, MENZIL_IT, BURC_GESCHLECHT_IT, UNSUR_IT, UNSUR_TABIAT_IT } from "./korpus-it.js?v=238";
-import { NIYET_IT, UYUM_IT, UNSUR_UYUM_IT } from "./orakel-it.js?v=238";
-import { ZEICHEN_DE_IT, ELEMENT_DE_IT, PLANET_DE_IT, WOCHENTAG_IT } from "./korpus-it.js?v=238";
-import { BURC_DETAIL_IT, GEZ_IT } from "./yildiz-it.js?v=238";
-import { aktuelleSprache } from "./sprachen.js?v=238";
+import { BURC_IT, MENZIL_IT, BURC_GESCHLECHT_IT, UNSUR_IT, UNSUR_TABIAT_IT } from "./korpus-it.js?v=244";
+import { BURC_EN, MENZIL_EN, BURC_GESCHLECHT_EN, UNSUR_EN, UNSUR_TABIAT_EN } from "./korpus-en.js?v=244";
+import { NIYET_IT, UYUM_IT, UNSUR_UYUM_IT } from "./orakel-it.js?v=244";
+import { NIYET_EN, UYUM_EN, UNSUR_UYUM_EN } from "./orakel-en.js?v=244";
+import { ZEICHEN_DE_IT, ELEMENT_DE_IT, PLANET_DE_IT, WOCHENTAG_IT } from "./korpus-it.js?v=244";
+import { ZEICHEN_DE_EN, ELEMENT_DE_EN, PLANET_DE_EN, WOCHENTAG_EN } from "./korpus-en.js?v=244";
+import { BURC_DETAIL_IT, GEZ_IT } from "./yildiz-it.js?v=244";
+import { BURC_DETAIL_EN, GEZ_EN } from "./yildiz-en.js?v=244";
+import { aktuelleSprache } from "./sprachen.js?v=244";
 
 const BURC_DE_TEXTE = BURCLAR.map(b => ({ tabiat: b.tabiat, ogut: b.ogut, erkek: b.erkek, kadin: b.kadin }));
 const UNSUR_DE_TEXTE = UNSURLAR.map(u => ({ metin: u.metin, tabiat: u.tabiat }));
@@ -313,46 +317,63 @@ const GEZ_DE_DETAIL   = GEZEGENLER.map(g => ({ maden:g.maden, renk:g.renk, tabia
 const MENZIL_DE_TEXTE = MENZILLER.map(m => ({ hukum: m.hukum, iyi: m.iyi, kacin: m.kacin }));
 
 export function setzeKorpusSprache(code) {
-  const it = code === "it";
+  /* Eine Tafel je Sprache statt einer Weiche: Eine weitere Sprache ist
+     eine Datei und ein Eintrag hier. Fehlt ein Stück, bleibt Deutsch. */
+  const SPRACHEN = {
+    de: { burc:BURC_DE_TEXTE, geschlecht:null, niyet:NIYET_DE, uyum:UYUM_DE,
+          unsurUyum:UNSUR_UYUM_DE, zeichen:BURC_DE_NAMEN, detail:BURC_DE_DETAIL,
+          planet:null, wochentag:null, gez:GEZ_DE_DETAIL, element:UNSUR_DE_NAMEN,
+          unsurText:null, unsurTabiat:null, menzil:MENZIL_DE_TEXTE },
+    it: { burc:BURC_IT, geschlecht:BURC_GESCHLECHT_IT, niyet:NIYET_IT, uyum:UYUM_IT,
+          unsurUyum:UNSUR_UYUM_IT, zeichen:ZEICHEN_DE_IT, detail:BURC_DETAIL_IT,
+          planet:PLANET_DE_IT, wochentag:WOCHENTAG_IT, gez:GEZ_IT, element:ELEMENT_DE_IT,
+          unsurText:UNSUR_IT, unsurTabiat:UNSUR_TABIAT_IT, menzil:MENZIL_IT },
+    en: { burc:BURC_EN, geschlecht:BURC_GESCHLECHT_EN, niyet:NIYET_EN, uyum:UYUM_EN,
+          unsurUyum:UNSUR_UYUM_EN, zeichen:ZEICHEN_DE_EN, detail:BURC_DETAIL_EN,
+          planet:PLANET_DE_EN, wochentag:WOCHENTAG_EN, gez:GEZ_EN, element:ELEMENT_DE_EN,
+          unsurText:UNSUR_EN, unsurTabiat:UNSUR_TABIAT_EN, menzil:MENZIL_EN }
+  };
+  const L = SPRACHEN[code] || SPRACHEN.de;
+
   BURCLAR.forEach((b, i) => {
-    const q = it ? BURC_IT[i] : BURC_DE_TEXTE[i];
+    const q = L.burc[i];
     if (!q) return;
     b.tabiat = q.tabiat; b.ogut = q.ogut;
-    const g = it ? BURC_GESCHLECHT_IT[i] : q;
+    const g = (L.geschlecht || L.burc)[i];
     if (g) { b.erkek = g.erkek; b.kadin = g.kadin; }
   });
   NIYET.forEach((n, i) => {
-    const q = it ? NIYET_IT[i] : NIYET_DE[i];
+    const q = L.niyet[i];
     if (q) { n.de = q.de; n.metin = q.metin; }
   });
   UYUM.forEach((u, i) => {
-    const q = it ? UYUM_IT[i] : UYUM_DE[i];
+    const q = L.uyum[i];
     if (q) { u.hukum = q.hukum; u.metin = q.metin; }
   });
   Object.keys(UNSUR_UYUM).forEach(k => {
-    const q = it ? UNSUR_UYUM_IT[k] : UNSUR_UYUM_DE[k];
+    const q = L.unsurUyum[k];
     if (q) { UNSUR_UYUM[k][0] = q[0]; UNSUR_UYUM[k][1] = q[1]; }
   });
   BURCLAR.forEach((b, i) => {
-    b.de = it ? ZEICHEN_DE_IT[i] : BURC_DE_NAMEN[i];
-    const q = it ? BURC_DETAIL_IT[i] : BURC_DE_DETAIL[i];
+    b.de = L.zeichen[i];
+    const q = L.detail[i];
     if (q) { b.tas=q.tas; b.maden=q.maden; b.renk=q.renk;
              b.gun=q.gun; b.kotugun=q.kotugun; b.is=q.is; b.hastalik=q.hastalik; }
   });
   GEZEGENLER.forEach((g, i) => {
-    g.de  = it ? (PLANET_DE_IT[i] || g.de) : GEZ_DE_NAMEN[i].de;
-    g.gun = it ? (WOCHENTAG_IT[GEZ_DE_NAMEN[i].gun] || g.gun) : GEZ_DE_NAMEN[i].gun;
-    const q = it ? GEZ_IT[i] : GEZ_DE_DETAIL[i];
+    g.de  = L.planet ? (L.planet[i] || g.de) : GEZ_DE_NAMEN[i].de;
+    g.gun = L.wochentag ? (L.wochentag[GEZ_DE_NAMEN[i].gun] || g.gun) : GEZ_DE_NAMEN[i].gun;
+    const q = L.gez[i];
     if (q) { g.maden=q.maden; g.renk=q.renk; g.tabiat=q.tabiat;
              g.armagan=q.armagan; g.tehlike=q.tehlike; }
   });
   UNSURLAR.forEach((u, i) => {
-    u.de = it ? ELEMENT_DE_IT[i] : UNSUR_DE_NAMEN[i];
-    u.metin  = it ? (UNSUR_IT[i] || u.metin) : UNSUR_DE_TEXTE[i].metin;
-    u.tabiat = it ? (UNSUR_TABIAT_IT[i] || u.tabiat) : UNSUR_DE_TEXTE[i].tabiat;
+    u.de = L.element[i];
+    u.metin  = L.unsurText ? (L.unsurText[i] || u.metin) : UNSUR_DE_TEXTE[i].metin;
+    u.tabiat = L.unsurTabiat ? (L.unsurTabiat[i] || u.tabiat) : UNSUR_DE_TEXTE[i].tabiat;
   });
   MENZILLER.forEach((m, i) => {
-    const q = it ? MENZIL_IT[i] : MENZIL_DE_TEXTE[i];
+    const q = L.menzil[i];
     if (!q) return;
     m.hukum = q.hukum; m.iyi = q.iyi; m.kacin = q.kacin;
   });

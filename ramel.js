@@ -21,9 +21,10 @@ const el = (t, c, txt) => { const n = document.createElement(t);
    Rubeus, Fortuna maior und minor, Acquisitio und Amissio, Laetitia und
    Tristitia, Caput und Cauda. Nur Via, Populus, Carcer und Coniunctio
    spiegeln sich selbst. */
-import { FIGUR_IT, RAMEL_ELEMENT_IT, RAMEL_JA_IT, RAMEL_PLANET_IT } from "./ramel-it.js?v=238";
-import { aktuelleSprache } from "./sprachen.js?v=238";
-import { rt, setzeRestSprache } from "./rest-texte.js?v=238";
+import { FIGUR_IT, RAMEL_ELEMENT_IT, RAMEL_JA_IT, RAMEL_PLANET_IT } from "./ramel-it.js?v=244";
+import { FIGUR_EN, RAMEL_ELEMENT_EN, RAMEL_JA_EN, RAMEL_PLANET_EN } from "./ramel-en.js?v=244";
+import { aktuelleSprache } from "./sprachen.js?v=244";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=244";
 setzeRestSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 
@@ -403,14 +404,19 @@ $("#rmFrage")?.addEventListener("keydown", e => { if (e.key === "Enter") { e.pre
 const FIGUR_DE_TEXTE = FIGUREN.map(f => ({ de:f.de, text:f.text, frage:f.frage, el:f.el, ja:f.ja, planet:f.planet }));
 
 export function setzeRamelSprache(code) {
-  const it = code === "it";
+  const SPRACHEN = {
+    it: { figur:FIGUR_IT, element:RAMEL_ELEMENT_IT, ja:RAMEL_JA_IT, planet:RAMEL_PLANET_IT },
+    en: { figur:FIGUR_EN, element:RAMEL_ELEMENT_EN, ja:RAMEL_JA_EN, planet:RAMEL_PLANET_EN }
+  };
+  const L = SPRACHEN[code] || null;
   FIGUREN.forEach((f, i) => {
-    const q = it ? FIGUR_IT[i] : FIGUR_DE_TEXTE[i];
+    const d = FIGUR_DE_TEXTE[i];
+    const q = L ? L.figur[i] : d;
     if (!q) return;
     f.de = q.de; f.text = q.text; f.frage = q.frage;
-    f.el = it ? (RAMEL_ELEMENT_IT[FIGUR_DE_TEXTE[i].el] || f.el) : FIGUR_DE_TEXTE[i].el;
-    f.ja = it ? (RAMEL_JA_IT[FIGUR_DE_TEXTE[i].ja] || f.ja) : FIGUR_DE_TEXTE[i].ja;
-    f.planet = it ? (RAMEL_PLANET_IT[FIGUR_DE_TEXTE[i].planet] || f.planet) : FIGUR_DE_TEXTE[i].planet;
+    f.el     = L ? (L.element[d.el] || d.el)    : d.el;
+    f.ja     = L ? (L.ja[d.ja] || d.ja)         : d.ja;
+    f.planet = L ? (L.planet[d.planet] || d.planet) : d.planet;
   });
 }
 

@@ -18,11 +18,12 @@
    Der Punkt des Todes steht nicht dabei.
    ------------------------------------------------------------------------ */
 
-import { radix, PLANET, ZEICHEN, HAUS, mitArtikel } from "./horoskop.js?v=238";
-import { norm360 } from "./astro.js?v=238";
-import { rt, setzeRestSprache } from "./rest-texte.js?v=238";
-import { PUNKT_IT } from "./namen-it.js?v=238";
-import { aktuelleSprache } from "./sprachen.js?v=238";
+import { radix, PLANET, ZEICHEN, HAUS, mitArtikel } from "./horoskop.js?v=244";
+import { norm360 } from "./astro.js?v=244";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=244";
+import { PUNKT_IT } from "./namen-it.js?v=244";
+import { PUNKT_EN } from "./namen-en.js?v=244";
+import { aktuelleSprache } from "./sprachen.js?v=244";
 setzeRestSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 
@@ -92,7 +93,8 @@ export const PUNKTE = [
 
 /* Name und Beschreibung jedes Punktes hängen an der Sprache. */
 function punktText(p, sprache) {
-  const q = sprache === "it" ? PUNKT_IT[p.key] : null;
+  const TAFELN = { it: PUNKT_IT, en: PUNKT_EN };
+  const q = (TAFELN[sprache] || {})[p.key] || null;
   return { name: q ? q.name : p.name, was: q ? q.was : p.was };
 }
 
