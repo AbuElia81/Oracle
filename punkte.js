@@ -18,12 +18,12 @@
    Der Punkt des Todes steht nicht dabei.
    ------------------------------------------------------------------------ */
 
-import { radix, PLANET, ZEICHEN, HAUS, mitArtikel } from "./horoskop.js?v=249";
-import { norm360 } from "./astro.js?v=249";
-import { rt, setzeRestSprache } from "./rest-texte.js?v=249";
-import { PUNKT_IT } from "./namen-it.js?v=249";
-import { PUNKT_EN } from "./namen-en.js?v=249";
-import { aktuelleSprache } from "./sprachen.js?v=249";
+import { radix, PLANET, ZEICHEN, HAUS, mitArtikel } from "./horoskop.js?v=250";
+import { norm360 } from "./astro.js?v=250";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=250";
+import { PUNKT_IT } from "./namen-it.js?v=250";
+import { PUNKT_EN } from "./namen-en.js?v=250";
+import { aktuelleSprache } from "./sprachen.js?v=250";
 setzeRestSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 

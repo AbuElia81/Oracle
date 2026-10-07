@@ -437,6 +437,225 @@ export const R = {
     "ek.stationText": (nr, tr, ar, urteil, gut, meide) =>
       `<b>${nr}. ${tr}</b> (${ar}) — ${urteil} Favorevole a: ${gut}. Evita: ${meide}.`,
     "ek.dafuer":"Che cosa parla a favore e che cosa contro"
+  },
+
+  en: {
+    /* ------------------------------------------------- The work */
+    "werk.merkur.kurz":"by the word and the number",
+    "werk.merkur.feld":"Writing, reckoning, teaching, trading, mediating, interpreting — " +
+      "everything that goes back and forth between people and has to be exact in doing so. " +
+      "Ptolemy names scribes, merchants, reckoners, astrologers, orators; the Arabs add " +
+      "translators and messengers.",
+    "werk.venus.kurz":"by the eye and the hand",
+    "werk.venus.feld":"Making what pleases: music, painting, ornament, clothes, sweet scent, " +
+      "gardens, hospitality. Ptolemy names musicians, painters, mixers of unguents, weavers — " +
+      "all whose work is measured by whether it has turned out beautiful.",
+    "werk.mars.kurz":"by fire and iron",
+    "werk.mars.feld":"Everything that cuts and shapes: metalwork, building, surgery, weapons, " +
+      "fire, slaughter. Ptolemy names smiths, surgeons, soldiers, cooks, stonemasons — work in " +
+      "which something gives way because it is forced to.",
+
+    "werk.paar.merkurVenus":"Word and beauty together: music with words, poetry, the teaching " +
+      "of beautiful things, trade in art, everything performed. Ptolemy expressly names here " +
+      "those who stand on stages.",
+    "werk.paar.marsMerkur":"Word and iron together: sharp, contentious speech — law, litigation, " +
+      "criticism, surgery with teaching, engineering with calculation. What is at stake here is " +
+      "work that separates and must be exact in doing so.",
+    "werk.paar.marsVenus":"Beauty and iron together: work on material that calls for strength " +
+      "and taste at once — sculpture, smithing, dyeing, cookery, every craft whose result is " +
+      "looked at.",
+
+    "werk.titel":"The lord of your work",
+    "werk.keiner.titel":"No lord of the work",
+    "werk.keiner.text":"None of the three — Mercury, Venus, Mars — rises in the morning before " +
+      "the sun, stands at the midheaven, or in its sign. Ptolemy says for this case that the " +
+      "person is assigned to no particular work: they then live not by a craft but by what " +
+      "falls to them — from origin, office or property. The Arabs read it more mildly: the work " +
+      "is not laid down beforehand and is therefore free.",
+    "werk.geteilt": (a, b, text) =>
+      `<b>Two share the precedence:</b> ${a} and ${b} come to the same. Ptolemy has sentences ` +
+      `of his own for this case — ${text}`,
+    "werk.ort": (zeichen, haus, ort) =>
+      `With you he stands in ${zeichen}, in the ${haus}th field — ${ort}. The sign says in what ` +
+      `kind of material the work is done, the field says on whose commission.`,
+    "werk.wie":"How it was calculated",
+    "werk.grund.morgens": (grad) => `rises in the morning before the sun (${grad}° ahead of it)`,
+    "werk.grund.verbrannt": (grad) => `stands too near the sun (${grad}°) — combust, does not count`,
+    "werk.grund.zehntes":"stands in the tenth field, at the midheaven",
+    "werk.grund.mcZeichen":"stands in the sign of the midheaven",
+    "werk.grund.mcHerr":"is lord of the midheaven",
+    "werk.grund.winkel":"stands angular",
+    "werk.grund.keine":"none of the conditions met",
+    "werk.note":"After Ptolemy (Tetrabiblos IV.4): sought are the planet that rises in the " +
+      "morning before the sun, and the one at the midheaven. Only Mercury, Venus and Mars count " +
+      "as lords of the work — all bringing-forth, he says, goes by hand, eye or word. The other " +
+      "four give rank and circumstance, not the work itself.",
+
+    /* ------------------------------------- The three ages of life */
+    "alter.kopf": (element, tag) =>
+      `Your rising sign belongs to the element ${element}. You were born ${tag ? "by day" : "by night"}, ` +
+      `so ${tag ? "the lord of the day" : "the lord of the night"} leads the first third.`,
+    "alter.spanne": (von, bis) => `${von}–${bis} years`,
+    "alter.satz": (rang, herr, zeichen, haus, stellung, wuerde) =>
+      `The ${rang} third stands under ${herr}. ${herr} stands in ${zeichen}, in the ${haus}th ` +
+      `field, and ${stellung}${wuerde}.`,
+    "alter.erste":"first", "alter.zweite":"second", "alter.dritte":"third",
+    "alter.winkel":"stands angular — this third works visibly and brings things forth",
+    "alter.folgend":"stands succedent — this third carries, but more slowly",
+    "alter.kadent":"stands cadent — this third goes by detours and through other people",
+    "alter.jetzt":"This is where you stand now",
+    "alter.note":"After Dorotheus (Carmen Astrologicum I): each element has three lords — one " +
+      "for the day, one for the night, and a third whom the Arabic tradition calls the partner. " +
+      "The life falls into three parts, and as the lord in question stands, so his third runs. " +
+      "The thirds are reckoned here on seventy-five years; the old texts set for this the years " +
+      "the measure of life yields. It is the simplest division of time in the tradition and at " +
+      "the same time the coarsest — it gives a tendency, not a date.",
+
+    /* --------------------------------------- The Arabic parts */
+    "pkt.tag":"You were born by day — the parts are reckoned in their basic form.",
+    "pkt.nacht":"You were born by night — most of the parts are therefore reversed. That is no " +
+      "trick: the Lot of Fortune measures the way from the sun to the moon, and by night the " +
+      "moon leads.",
+    "pkt.gruppe1":"The seven hermetic",
+    "pkt.gruppe2":"The parts of circumstance",
+    "pkt.gedreht":"reversed by night",
+    "pkt.feld": (n) => `${n}th field`,
+    "pkt.satz": (was, ort, herr, herrHaus, wuerde) =>
+      `${was} With you this place falls ${ort}. Over it ${herr} has command` +
+      (herrHaus ? `, and he stands in the ${herrHaus}th field${wuerde}.` : "."),
+    "pkt.note":"A part is no heavenly body but a calculated place: one takes the distance " +
+      "between two places of the chart and lays it off once more from the Ascendant. Bonatti " +
+      "lists ninety-seven of them; here stand the seven hermetic ones — one to each wandering " +
+      "star — and those most often asked after in practice. The part of death is not among them.",
+
+    /* ------------------------------------------ The distribution */
+    "vt.saturn":"work, endurance, solitude, everything slow and lasting; old things and old people",
+    "vt.jupiter":"generosity, teaching, law, standing, freedom; what widens",
+    "vt.mars":"strife, drive, risk, setting out; what cuts and what pushes",
+    "vt.sonne":"rank, pride, visibility, fathers and authority; what steps into the light",
+    "vt.venus":"love, beauty, art, pleasure, peace; what pleases",
+    "vt.merkur":"speaking, writing, trade, learning, siblings; what goes between people",
+    "vt.mond":"mother, the people, the body, travel, change; what nourishes and what alters",
+    "vt.kopf": (breite, nord, lang, langJahre, kurz, kurzJahre) =>
+      `Reckoned for ${breite}° ${nord ? "North" : "South"}. At this place ${lang} needs ` +
+      `<b>${langJahre} years</b> to rise, and ${kurz} only <b>${kurzJahre}</b>. ` +
+      `That is why the stretches below are so unequal in length: they measure not degrees but ` +
+      `the time the sky above this place needs for them.`,
+    "vt.jetzt":"Where you stand now",
+    "vt.spanne": (von, bis, vonDatum, bisDatum) =>
+      `distributes to you the years ${von} to ${bis} — that is ${vonDatum} to ${bisDatum}`,
+    "vt.satz": (verteiler, wesen, teilhaber, art, jahre) =>
+      `The <b>distributor</b> of this stretch is ${verteiler}: ${wesen}. That is the theme ` +
+      `under which these years stand. ` +
+      (teilhaber
+        ? `Your <b>partner</b> is ${teilhaber} — the point last crossed ${art}, at ${jahre} ` +
+          `years. From there come the people and the events.`
+        : `There is no partner here yet — since the birth the point has crossed no body and no ` +
+          `ray. The distributor stands alone.`),
+    "vt.koerper":"its body",
+    "vt.strahl": (art) => `its ${art}`,
+    "vt.waehrend": (liste) => `Still within this stretch there comes: ${liste}.`,
+    "vt.folge":"The succession of distributors",
+    "vt.tab.alter":"Age", "vt.tab.jahr":"Year", "vt.tab.verteiler":"Distributor",
+    "vt.tab.grenze":"Bound", "vt.tab.teilhaber":"Partner",
+    "vt.note":"Dorotheus reads the measure of life off this table as well — there, where a " +
+      "malefic distributes and a malefic is at the same time partner. That reading does not " +
+      "stand here: it names years for a death, and this site does not do that. The reckoning " +
+      "uses the oblique ascensions for your birth latitude, not a table of climates — checked " +
+      "against the examples in Benjamin Dykes' workshop material on distribution, to five places.",
+
+    /* ------------------------------------- The lord of the nativity */
+    "alm.saturn":"He makes of this birth one that takes long and then stays. What counts here counts only late — and then not a little.",
+    "alm.jupiter":"He makes of this birth one that is given room. It goes further than the origin led one to expect.",
+    "alm.mars":"He makes of this birth one that has to assert itself, and does. Nothing here comes of itself, and that is not the trouble.",
+    "alm.sonne":"He makes of this birth one that wants to be seen and is seen. The centre is not negotiable here.",
+    "alm.venus":"She makes of this birth one in which what joins weighs more than what divides. What succeeds here succeeds with others.",
+    "alm.merkur":"He makes of this birth one that goes by way of the word. What happens here happens through speaking, writing, mediating.",
+    "alm.mond":"He makes of this birth one that changes and stays faithful in doing so. It carries on what it has received.",
+    "alm.titel":"The lord of your nativity",
+    "alm.punkte": (gesamt, wuerde, ort, zeit) =>
+      `${gesamt} points — ${wuerde} from the dignities, ${ort} from his own place, ${zeit} from day and hour`,
+    "alm.ort": (zeichen, haus, ort) =>
+      ` He himself stands with you in ${zeichen}, in the ${haus}th field — ${ort}. That is the ` +
+      `place where this birth shows itself most plainly.`,
+    "alm.gleich": (zweiter, punkte, sieger, w1, w2) =>
+      `Here it stands <b>equal</b>: ${zweiter} comes to the same ${punkte} points. The decision ` +
+      `goes on ${sieger} having more of them from the dignities (${w1} against ${w2}) — those ` +
+      `are the real rulership, day and hour only an addition. With so close a standing Bonatti ` +
+      `advises reading both anyway: the second then says how the first goes to work.`,
+    "alm.knapp": (zweiter, punkte) =>
+      `It is close: ${zweiter} comes to ${punkte} points. With so close a standing Bonatti ` +
+      `advises reading both — the second then says how the first goes to work.`,
+    "alm.stellen":"The five places",
+    "alm.tab.stelle":"Place", "alm.tab.steht":"stands at", "alm.tab.wuerde":"who has dignity there",
+    "alm.rangliste":"The ranking",
+    "alm.tagStunde": (tag, tagherr, stundenherr) =>
+      `Along with that: born on a ${tag} — the day belongs to ${tagherr} (7 points); the hour of ` +
+      `birth belongs to ${stundenherr} (6 points).`,
+    "alm.note":"Reckoned after Abraham Ibn Ezra (Sefer ha-Moladot, 12th century), as Guido " +
+      "Bonatti takes the procedure over in the Liber Astronomiae: dignities over the five " +
+      "places, with the planet's own place by Ibn Ezra's weighting of the twelve fields, and " +
+      "the lord of the day and the lord of the hour. The syzygy before the birth is approximated " +
+      "here by the mean motions, not sought exactly — what matters is the sign, and that it hits.",
+    "alm.stelle.sonne":"the Sun", "alm.stelle.mond":"the Moon",
+    "alm.stelle.asc":"the Ascendant", "alm.stelle.fortuna":"the Lot of Fortune",
+    "alm.stelle.syzygie":"the syzygy before the birth",
+    "wuerde.Zeichen":"Domicile", "wuerde.Erhöhung":"Exaltation", "wuerde.Triplizität":"Triplicity",
+    "wuerde.Grenze":"Bound", "wuerde.Gesicht":"Face",
+
+    "fehlt.geburt":"For that the birth data are missing — date, time, and the place with coordinates looked up.",
+
+    "ny.frage":"The question first.",
+    "ny.stunde": (tag, nr, planet, deutsch, soru, name, stunde, summe, rest) =>
+      `${tag}, ${nr}th hour after sunrise — it belongs to ${planet} (${deutsch}). ` +
+      `Question ${soru} + name ${name} + hour ${stunde} = ${summe}, divided by twelve: remainder ${rest}.`,
+    "ny.note":"The same question gets a different answer at a different hour. That is no " +
+      "weakness of the table but its point: what is asked is not the matter but the moment.",
+    "uy.beide":"Both names and both mothers.",
+    "uy.rechnung": (a, b, summe, rest) =>
+      `${a} + ${b} = ${summe}, divided by twelve: remainder ${rest}.`,
+    "wochentage":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+    "yz.restNull":"A remainder of zero counts as the last compartment — the compartments are " +
+      "counted from one. That sign and element name the same element is no accident: twelve is " +
+      "divisible by four.",
+    "yz.gemuet":"Mizaç — the temper", "yz.frau":"For the woman", "yz.mann":"For the man",
+    "yz.element":"Element", "yz.stern": (tr) => `Star of the sum — ${tr}`,
+    "yz.sternText": (gibt, nimmt, tag, metall, zahl, anrufung) =>
+      `It gives: ${gibt}. It takes: ${nimmt}. Its day is ${tag}, its metal ${metall}, ` +
+      `its number ${zahl}, its invocation ${anrufung}.`,
+    "yz.erwerb":"Livelihood and office", "yz.ehe":"Marriage",
+    "yz.eheText": (liste) =>
+      `These suit you: ${liste}. The books advise against the sign that stands opposite you in ` +
+      `the circle — unless you have married it already; then it is the task and not the mistake.`,
+    "yz.krankheit":"Illness",
+    "yz.herberge": (nr, tr) => `Lunar mansion ${nr} — ${tr}`,
+    "yz.herbergeText": (ar, urteil, gut, meide) =>
+      `${ar} — ${urteil} Favourable for: ${gut}. Avoid: ${meide}.`,
+    "yz.rat":"The counsel",
+    "rm.frage":"The question first — without intent the sand is silent.",
+    "rm.ueberspringen":"Skip",
+    "rm.richter":"The judge — قاضي",
+    "rm.zeugen":"The two witnesses",
+    "rm.zeugenText":"The right-hand witness speaks of what has been and what goes out from you; " +
+      "the left-hand of what is coming and what comes to meet you. The judge arises out of both.",
+    "rm.rechts":"Right witness · what has been", "rm.links":"Left witness · what is coming",
+    "rm.mutter": (n) => `${n}th mother`,
+    "ek.art":["Travel and setting out","Marriage, love and reconciliation","Trade, purchase and contract",
+              "Building, founding and beginning","Healing and health",
+              "Learning, writing and lecturing","Sowing, planting and harvesting",
+              "Ending, parting and clearing up","Strife, law and authorities","Petitioning and approaching"],
+    "ek.vorhaben":"What you mean to do",
+    "ek.gut":"A good moment", "ek.brauchbar":"Usable",
+    "ek.weder":"Neither", "ek.nicht":"Better not today",
+    "ek.mond": (zeichen, nr, name, zu) =>
+      `The moon stands in ${zeichen}, station ${nr} — ${name}, and is ${zu ? "waxing" : "waning"}.`,
+    "ek.unklar":"I could not reliably make out what kind of undertaking this is — the judgment " +
+      "therefore rests only on the moon's general standing. Say a little more concretely what it " +
+      "is about (travel, marry, buy, build, heal, learn, sow, end).",
+    "ek.station":"Today's station",
+    "ek.stationText": (nr, tr, ar, urteil, gut, meide) =>
+      `<b>${nr}. ${tr}</b> (${ar}) — ${urteil} Favourable for: ${gut}. Avoid: ${meide}.`,
+    "ek.dafuer":"What speaks for it and what against"
   }
 };
 
