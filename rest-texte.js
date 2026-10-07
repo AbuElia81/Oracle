@@ -8,6 +8,89 @@
 
 export const R = {
   de: {
+    /* ------------------------------------------ Die Jahresumdrehung */
+    "sr.wuerde.Domizil":"in eigenem Zeichen, stark",
+    "sr.wuerde.Erhöhung":"erhöht, über sein Maß geachtet",
+    "sr.wuerde.Exil":"im Exil, gegen den Strich arbeitend",
+    "sr.wuerde.Fall":"im Fall, schwer zu seinem Recht kommend",
+    "sr.wuerde.—":"ohne besondere Würde",
+    "sr.kopfTitel":"Die Umdrehung dieses Jahres",
+    "sr.kopfDatum": (tag, monat, jahr) => `${tag}. ${monat} ${jahr}`,
+    "sr.kopfNot": (uhr, alter, bisTag, bisMonat, bisJahr) =>
+      `${uhr} Weltzeit · dein ${alter}. Lebensjahr · gültig bis ${bisTag}. ${bisMonat} ${bisJahr}`,
+    "sr.monate":["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"],
+    "sr.s1":"Das Geburtshoroskop stellen",
+    "sr.s1Text": (ascGlyph, asc, mcGlyph, mc, herr, stand) =>
+      `${ascGlyph} ${asc} steigt auf, das MC in ${mcGlyph} ${mc}. Herr des Horoskops ist ${herr}${stand}`,
+    "sr.s1Stand": (glyph, zeichen, haus, wuerde) => `, in ${glyph} ${zeichen}, ${haus}. Haus, ${wuerde}.`,
+    "sr.s2":"Die Sekte ansehen",
+    "sr.s2Tag":"Eine <b>Taggeburt</b>: Die Sonne stand über dem Horizont. Die Partei des Tages führt — " +
+      "Sonne, Jupiter und Saturn gelten hier als die gefälligeren, Mond, Venus und Mars als die fordernderen.",
+    "sr.s2Nacht":"Eine <b>Nachtgeburt</b>: Die Sonne stand unter dem Horizont. Die Partei der Nacht führt — " +
+      "Mond, Venus und Mars gelten hier als die gefälligeren, Sonne, Jupiter und Saturn als die fordernderen.",
+    "sr.s3":"Das Zeichen des Jahres finden",
+    "sr.s3Text": (asc, alter, glyph, zeichen, haus, hausOrt) =>
+      `${asc} ist seit der Geburt ${alter} Zeichen weitergerückt und steht im <b>${glyph} ${zeichen}</b>. ` +
+      `Damit ist dein <b>${haus}. Haus</b> das Haus des Jahres: ${hausOrt}.`,
+    "sr.s4":"Den Herrn des Jahres bezeichnen",
+    "sr.s4Text": (glyph, herr, natal) =>
+      `Herrscher dieses Zeichens und damit <b>Herr des Jahres</b> ist ${glyph} ${herr}.${natal}`,
+    "sr.s4Natal": (glyph, zeichen, haus, wuerde) =>
+      ` Er steht in der Geburt in ${glyph} ${zeichen}, ${haus}. Haus, ${wuerde}.`,
+    "sr.s5":"Firdar und Teilhaber bestimmen",
+    "sr.s5Firdar": (herr) => `Die Firdaria gibt diese Jahre <b>${herr}</b>`,
+    "sr.s5Durch":"Die Firdaria ist durchlaufen",
+    "sr.s5Teilhaber": (herr) => `, und innerhalb davon führt gerade <b>${herr}</b> als Teilhaber.`,
+    "sr.s5Schluss":" Der große Herr gibt das Thema, der Teilhaber den Ton.",
+    "sr.rolleFirdar":"Der Firdar", "sr.rolleTeilhaber":"Der Teilhaber",
+    "sr.nichtPruefbar": (rolle) => `${rolle}: nicht zu prüfen.`,
+    "sr.s6":"Stehen sie winkelhaft zum Zeichen des Jahres?",
+    "sr.s6Zeile": (rolle, name, nr, winkelhaft) =>
+      `<b>${rolle} ${name}</b> steht im ${nr}. Zeichen vom Zeichen des Jahres aus — ` +
+      (winkelhaft
+        ? `<span class="srJa">winkelhaft</span>. Das ist die starke Stellung: Was er bringt, kommt an.`
+        : `<span class="srNein">nicht winkelhaft</span>. Er wirkt, aber mittelbar.`),
+    "sr.s7":"Sind sie mit dem Herrn des Jahres verbunden?",
+    "sr.s7Ist": (rolle, name) =>
+      `<b>${rolle} ${name}</b> <em>ist</em> der Herr des Jahres — die stärkste Verbindung, die es gibt.`,
+    "sr.s7Zeile": (rolle, name, sicht) =>
+      `<b>${rolle} ${name}</b> und der Herr des Jahres: ` +
+      (sicht
+        ? `<span class="srJa">${sicht}</span> — sie sehen einander, die Aussagen greifen ineinander.`
+        : `<span class="srNein">in Abwendung</span> — sie sehen einander nicht; jeder spricht für sich.`),
+    "sr.s8":"Ihren Zustand im Geburtshoroskop prüfen",
+    "sr.s8Zeile": (g, name, glyph, zeichen, haus, hausOrt, wuerde) =>
+      `<b>${g} ${name}</b>: ${glyph} ${zeichen}, ${haus}. Haus — ${hausOrt}; ${wuerde}.`,
+    "sr.s9":"Ihren Zustand in der Jahresumdrehung prüfen",
+    "sr.s9Asc": (asc, glyph, zeichen, haus, hausOrt) =>
+      `${asc} der Umdrehung steht in ${glyph} ${zeichen} — das fällt in dein <b>${haus}. Geburtshaus</b>, ` +
+      `${hausOrt}. Dort liegt in diesem Jahr der Schwerpunkt.`,
+    "sr.s9Zeile": (g, name, glyph, zeichen, grad, haus, hausOrt) =>
+      `<b>${g} ${name}</b>: in der Umdrehung ${glyph} ${zeichen} ${grad}°, ${haus}. Haus des Jahreshoroskops — ${hausOrt}.`,
+    "sr.leer":"—",
+    "sr.deutung":"Und jetzt die Deutung",
+    "sr.deutungSatz": (glyph, zeichen, haus, hausOrt, herr, natal) =>
+      `Das Jahr steht unter ${glyph} ${zeichen} und damit über deinem ${haus}. Haus: ${hausOrt}. ` +
+      `Sein Herr ist ${herr}${natal}`,
+    "sr.deutungNatal": (hausOrt) => `, der in der Geburt ${hausOrt} steht — dort wird das Thema ausgetragen.`,
+    "sr.einig.firdarWinkel":"der Firdar steht winkelhaft",
+    "sr.einig.teilhaberWinkel":"der Teilhaber steht winkelhaft",
+    "sr.einig.firdarSieht":"der Firdar sieht den Herrn des Jahres",
+    "sr.einig.teilhaberSieht":"der Teilhaber sieht ihn",
+    "sr.sprechend": (liste) =>
+      `Die Zeichen stimmen überein: ${liste}. Wenn Firdar, Teilhaber und Herr des Jahres einander ` +
+      `sehen und winkelhaft stehen, gilt das Jahr in dieser Schule als <b>sprechend</b> — was es ` +
+      `bringt, kommt deutlich und ist zu erkennen.`,
+    "sr.halblaut": (eine) =>
+      `Nur eine Stütze: ${eine}. Das Jahr spricht, aber halblaut — es braucht Aufmerksamkeit, ` +
+      `um bemerkt zu werden.`,
+    "sr.still":"Weder Firdar noch Teilhaber stehen winkelhaft zum Zeichen des Jahres, und keiner " +
+      "sieht den Herrn des Jahres. Abū Maʿšar liest das als ein <b>stilles Jahr</b>: Es geschieht " +
+      "etwas, aber unterhalb der Schwelle, und es zeigt sich erst später.",
+    "sr.schlusswort":"Die Reihenfolge ist die der persischen Schule: erst die Geburt, dann die " +
+      "Sekte, dann das Zeichen des Jahres und sein Herr, dann Firdar und Teilhaber, dann deren " +
+      "Stellung — und erst ganz zuletzt die Deutung. Wer sie umdreht und mit der Deutung " +
+      "anfängt, findet immer etwas, aber nicht das, was dasteht.",
     "pf.kopf": (asc, glyph, zeichen) => `${asc} (Jahr 0) — ${glyph} ${zeichen}. Ganzzeichen-Häuser.`,
     "achse.asc":"Aszendent", "achse.mc":"MC", "achse.desc":"Deszendent", "achse.ic":"IC",
     /* ----------------------------------------- Zodiacal Releasing */
@@ -333,6 +416,88 @@ export const R = {
   },
 
   it: {
+    /* ------------------------------------------ La rivoluzione solare */
+    "sr.wuerde.Domizil":"nel proprio segno, forte",
+    "sr.wuerde.Erhöhung":"esaltato, stimato oltre la propria misura",
+    "sr.wuerde.Exil":"in esilio, costretto a lavorare controcorrente",
+    "sr.wuerde.Fall":"in caduta, a fatica riconosciuto",
+    "sr.wuerde.—":"senza dignità particolare",
+    "sr.kopfTitel":"La rivoluzione di quest'anno",
+    "sr.kopfDatum": (tag, monat, jahr) => `${tag} ${monat} ${jahr}`,
+    "sr.kopfNot": (uhr, alter, bisTag, bisMonat, bisJahr) =>
+      `${uhr} tempo universale · il tuo ${alter}º anno di vita · valido fino al ${bisTag} ${bisMonat} ${bisJahr}`,
+    "sr.monate":["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"],
+    "sr.s1":"Erigere il tema di nascita",
+    "sr.s1Text": (ascGlyph, asc, mcGlyph, mc, herr, stand) =>
+      `${ascGlyph} ${asc} sorge, il MC in ${mcGlyph} ${mc}. Signore del tema è ${herr}${stand}`,
+    "sr.s1Stand": (glyph, zeichen, haus, wuerde) => `, in ${glyph} ${zeichen}, ${haus}ª casa, ${wuerde}.`,
+    "sr.s2":"Osservare la setta",
+    "sr.s2Tag":"Una <b>nascita diurna</b>: il sole stava sopra l'orizzonte. Guida la parte del giorno — " +
+      "Sole, Giove e Saturno valgono qui come i più accomodanti, Luna, Venere e Marte come i più esigenti.",
+    "sr.s2Nacht":"Una <b>nascita notturna</b>: il sole stava sotto l'orizzonte. Guida la parte della notte — " +
+      "Luna, Venere e Marte valgono qui come i più accomodanti, Sole, Giove e Saturno come i più esigenti.",
+    "sr.s3":"Trovare il segno dell'anno",
+    "sr.s3Text": (asc, alter, glyph, zeichen, haus, hausOrt) =>
+      `L'${asc} è avanzato di ${alter} segni dalla nascita e sta in <b>${glyph} ${zeichen}</b>. ` +
+      `Così la tua <b>${haus}ª casa</b> è la casa dell'anno: ${hausOrt}.`,
+    "sr.s4":"Designare il signore dell'anno",
+    "sr.s4Text": (glyph, herr, natal) =>
+      `Signore di questo segno, e dunque <b>signore dell'anno</b>, è ${glyph} ${herr}.${natal}`,
+    "sr.s4Natal": (glyph, zeichen, haus, wuerde) =>
+      ` Nella nascita sta in ${glyph} ${zeichen}, ${haus}ª casa, ${wuerde}.`,
+    "sr.s5":"Determinare il firdar e il compagno",
+    "sr.s5Firdar": (herr) => `La firdaria affida questi anni a <b>${herr}</b>`,
+    "sr.s5Durch":"La firdaria è conclusa",
+    "sr.s5Teilhaber": (herr) => `, e al loro interno conduce in questo momento <b>${herr}</b> come compagno.`,
+    "sr.s5Schluss":" Il grande signore dà il tema, il compagno il tono.",
+    "sr.rolleFirdar":"Il firdar", "sr.rolleTeilhaber":"Il compagno",
+    "sr.nichtPruefbar": (rolle) => `${rolle}: non verificabile.`,
+    "sr.s6":"Stanno angolari al segno dell'anno?",
+    "sr.s6Zeile": (rolle, name, nr, winkelhaft) =>
+      `<b>${rolle} ${name}</b> sta nel ${nr}º segno a partire dal segno dell'anno — ` +
+      (winkelhaft
+        ? `<span class="srJa">angolare</span>. È la posizione forte: ciò che porta arriva.`
+        : `<span class="srNein">non angolare</span>. Agisce, ma per vie indirette.`),
+    "sr.s7":"Sono legati al signore dell'anno?",
+    "sr.s7Ist": (rolle, name) =>
+      `<b>${rolle} ${name}</b> <em>è</em> il signore dell'anno — il legame più forte che esista.`,
+    "sr.s7Zeile": (rolle, name, sicht) =>
+      `<b>${rolle} ${name}</b> e il signore dell'anno: ` +
+      (sicht
+        ? `<span class="srJa">${sicht}</span> — si vedono, e le indicazioni si incastrano.`
+        : `<span class="srNein">in avversione</span> — non si vedono; ciascuno parla per sé.`),
+    "sr.s8":"Verificare il loro stato nel tema di nascita",
+    "sr.s8Zeile": (g, name, glyph, zeichen, haus, hausOrt, wuerde) =>
+      `<b>${g} ${name}</b>: ${glyph} ${zeichen}, ${haus}ª casa — ${hausOrt}; ${wuerde}.`,
+    "sr.s9":"Verificare il loro stato nella rivoluzione",
+    "sr.s9Asc": (asc, glyph, zeichen, haus, hausOrt) =>
+      `L'${asc} della rivoluzione sta in ${glyph} ${zeichen} — e cade nella tua <b>${haus}ª casa ` +
+      `natale</b>, ${hausOrt}. Lì sta quest'anno il baricentro.`,
+    "sr.s9Zeile": (g, name, glyph, zeichen, grad, haus, hausOrt) =>
+      `<b>${g} ${name}</b>: nella rivoluzione ${glyph} ${zeichen} ${grad}°, ${haus}ª casa del tema annuale — ${hausOrt}.`,
+    "sr.leer":"—",
+    "sr.deutung":"E ora la lettura",
+    "sr.deutungSatz": (glyph, zeichen, haus, hausOrt, herr, natal) =>
+      `L'anno sta sotto ${glyph} ${zeichen} e dunque sopra la tua ${haus}ª casa: ${hausOrt}. ` +
+      `Il suo signore è ${herr}${natal}`,
+    "sr.deutungNatal": (hausOrt) => `, che nella nascita sta ${hausOrt} — lì il tema viene portato avanti.`,
+    "sr.einig.firdarWinkel":"il firdar sta angolare",
+    "sr.einig.teilhaberWinkel":"il compagno sta angolare",
+    "sr.einig.firdarSieht":"il firdar vede il signore dell'anno",
+    "sr.einig.teilhaberSieht":"il compagno lo vede",
+    "sr.sprechend": (liste) =>
+      `I segni concordano: ${liste}. Quando firdar, compagno e signore dell'anno si vedono e ` +
+      `stanno angolari, questa scuola considera l'anno <b>parlante</b> — ciò che porta arriva ` +
+      `chiaro e si lascia riconoscere.`,
+    "sr.halblaut": (eine) =>
+      `Un solo sostegno: ${eine}. L'anno parla, ma a mezza voce — ci vuole attenzione per accorgersene.`,
+    "sr.still":"Né il firdar né il compagno stanno angolari al segno dell'anno, e nessuno dei due " +
+      "vede il signore dell'anno. Abū Maʿšar lo legge come un <b>anno silenzioso</b>: qualcosa " +
+      "accade, ma sotto la soglia, e si mostra solo più tardi.",
+    "sr.schlusswort":"L'ordine è quello della scuola persiana: prima la nascita, poi la setta, " +
+      "poi il segno dell'anno e il suo signore, poi firdar e compagno, poi la loro posizione — " +
+      "e solo alla fine la lettura. Chi la rovescia e comincia dalla lettura trova sempre " +
+      "qualcosa, ma non ciò che è scritto.",
     "pf.kopf": (asc, glyph, zeichen) => `${asc} (anno 0) — ${glyph} ${zeichen}. Case di segno intero.`,
     "achse.asc":"Ascendente", "achse.mc":"MC", "achse.desc":"Discendente", "achse.ic":"IC",
     /* ----------------------------------------- Zodiacal Releasing */
@@ -648,6 +813,88 @@ export const R = {
   },
 
   en: {
+    /* ------------------------------------------ The solar revolution */
+    "sr.wuerde.Domizil":"in its own sign, strong",
+    "sr.wuerde.Erhöhung":"exalted, esteemed beyond its measure",
+    "sr.wuerde.Exil":"in exile, working against the grain",
+    "sr.wuerde.Fall":"in fall, coming into its own only with difficulty",
+    "sr.wuerde.—":"without particular dignity",
+    "sr.kopfTitel":"This year's revolution",
+    "sr.kopfDatum": (tag, monat, jahr) => `${monat} ${tag}, ${jahr}`,
+    "sr.kopfNot": (uhr, alter, bisTag, bisMonat, bisJahr) =>
+      `${uhr} universal time · your ${alter}th year of life · valid until ${bisMonat} ${bisTag}, ${bisJahr}`,
+    "sr.monate":["January","February","March","April","May","June","July","August","September","October","November","December"],
+    "sr.s1":"Cast the birth chart",
+    "sr.s1Text": (ascGlyph, asc, mcGlyph, mc, herr, stand) =>
+      `${ascGlyph} ${asc} is rising, the MC in ${mcGlyph} ${mc}. The lord of the chart is ${herr}${stand}`,
+    "sr.s1Stand": (glyph, zeichen, haus, wuerde) => `, in ${glyph} ${zeichen}, ${haus}th house, ${wuerde}.`,
+    "sr.s2":"Look at the sect",
+    "sr.s2Tag":"A <b>day birth</b>: the sun stood above the horizon. The party of the day leads — " +
+      "Sun, Jupiter and Saturn count here as the more agreeable, Moon, Venus and Mars as the more demanding.",
+    "sr.s2Nacht":"A <b>night birth</b>: the sun stood below the horizon. The party of the night leads — " +
+      "Moon, Venus and Mars count here as the more agreeable, Sun, Jupiter and Saturn as the more demanding.",
+    "sr.s3":"Find the sign of the year",
+    "sr.s3Text": (asc, alter, glyph, zeichen, haus, hausOrt) =>
+      `The ${asc} has moved on ${alter} signs since the birth and stands in <b>${glyph} ${zeichen}</b>. ` +
+      `So your <b>${haus}th house</b> is the house of the year: ${hausOrt}.`,
+    "sr.s4":"Name the lord of the year",
+    "sr.s4Text": (glyph, herr, natal) =>
+      `The ruler of this sign, and so the <b>lord of the year</b>, is ${glyph} ${herr}.${natal}`,
+    "sr.s4Natal": (glyph, zeichen, haus, wuerde) =>
+      ` In the birth it stands in ${glyph} ${zeichen}, ${haus}th house, ${wuerde}.`,
+    "sr.s5":"Determine the firdar and the partner",
+    "sr.s5Firdar": (herr) => `The firdaria gives these years to <b>${herr}</b>`,
+    "sr.s5Durch":"The firdaria has run its course",
+    "sr.s5Teilhaber": (herr) => `, and within them <b>${herr}</b> is leading just now as partner.`,
+    "sr.s5Schluss":" The great lord gives the theme, the partner the tone.",
+    "sr.rolleFirdar":"The firdar", "sr.rolleTeilhaber":"The partner",
+    "sr.nichtPruefbar": (rolle) => `${rolle}: not to be checked.`,
+    "sr.s6":"Do they stand angular to the sign of the year?",
+    "sr.s6Zeile": (rolle, name, nr, winkelhaft) =>
+      `<b>${rolle} ${name}</b> stands in the ${nr}th sign counted from the sign of the year — ` +
+      (winkelhaft
+        ? `<span class="srJa">angular</span>. That is the strong position: what it brings arrives.`
+        : `<span class="srNein">not angular</span>. It works, but indirectly.`),
+    "sr.s7":"Are they connected with the lord of the year?",
+    "sr.s7Ist": (rolle, name) =>
+      `<b>${rolle} ${name}</b> <em>is</em> the lord of the year — the strongest connection there is.`,
+    "sr.s7Zeile": (rolle, name, sicht) =>
+      `<b>${rolle} ${name}</b> and the lord of the year: ` +
+      (sicht
+        ? `<span class="srJa">${sicht}</span> — they see each other, and the statements mesh.`
+        : `<span class="srNein">in aversion</span> — they do not see each other; each speaks for itself.`),
+    "sr.s8":"Check their condition in the birth chart",
+    "sr.s8Zeile": (g, name, glyph, zeichen, haus, hausOrt, wuerde) =>
+      `<b>${g} ${name}</b>: ${glyph} ${zeichen}, ${haus}th house — ${hausOrt}; ${wuerde}.`,
+    "sr.s9":"Check their condition in the solar revolution",
+    "sr.s9Asc": (asc, glyph, zeichen, haus, hausOrt) =>
+      `The ${asc} of the revolution stands in ${glyph} ${zeichen} — that falls in your <b>${haus}th ` +
+      `natal house</b>, ${hausOrt}. That is where this year's weight lies.`,
+    "sr.s9Zeile": (g, name, glyph, zeichen, grad, haus, hausOrt) =>
+      `<b>${g} ${name}</b>: in the revolution ${glyph} ${zeichen} ${grad}°, ${haus}th house of the year's chart — ${hausOrt}.`,
+    "sr.leer":"—",
+    "sr.deutung":"And now the reading",
+    "sr.deutungSatz": (glyph, zeichen, haus, hausOrt, herr, natal) =>
+      `The year stands under ${glyph} ${zeichen} and so over your ${haus}th house: ${hausOrt}. ` +
+      `Its lord is ${herr}${natal}`,
+    "sr.deutungNatal": (hausOrt) => `, which in the birth stands ${hausOrt} — that is where the theme is played out.`,
+    "sr.einig.firdarWinkel":"the firdar stands angular",
+    "sr.einig.teilhaberWinkel":"the partner stands angular",
+    "sr.einig.firdarSieht":"the firdar sees the lord of the year",
+    "sr.einig.teilhaberSieht":"the partner sees it",
+    "sr.sprechend": (liste) =>
+      `The signs agree: ${liste}. When firdar, partner and lord of the year see each other and ` +
+      `stand angular, this school counts the year as <b>speaking</b> — what it brings comes ` +
+      `plainly and can be recognised.`,
+    "sr.halblaut": (eine) =>
+      `Only one support: ${eine}. The year speaks, but at half voice — it needs attention to be noticed.`,
+    "sr.still":"Neither firdar nor partner stands angular to the sign of the year, and neither " +
+      "sees the lord of the year. Abū Maʿšar reads that as a <b>quiet year</b>: something happens, " +
+      "but below the threshold, and it shows itself only later.",
+    "sr.schlusswort":"The order is that of the Persian school: first the birth, then the sect, " +
+      "then the sign of the year and its lord, then firdar and partner, then their standing — " +
+      "and only at the very end the reading. Whoever turns it round and begins with the reading " +
+      "always finds something, but not what is there.",
     "pf.kopf": (asc, glyph, zeichen) => `${asc} (year 0) — ${glyph} ${zeichen}. Whole-sign houses.`,
     "achse.asc":"Ascendant", "achse.mc":"MC", "achse.desc":"Descendant", "achse.ic":"IC",
     /* ----------------------------------------- Zodiacal Releasing */

@@ -13,12 +13,15 @@
    dann ihr Zustand in der Geburt und in der Umdrehung — und erst danach
    die Deutung.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=259";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=261";
 import { berechneGeburt, planetenPositionen, julianischesDatum, sonnenLaenge,
          siderischeZeitGreenwich, schiefeDerEkliptik, aszendent, medium,
-         norm360 } from "./astro.js?v=259";
-import { radix, zustandVon, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel } from "./horoskop.js?v=259";
-import { firdaria } from "./perioden.js?v=259";
+         norm360 } from "./astro.js?v=261";
+import { radix, zustandVon, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel } from "./horoskop.js?v=261";
+import { firdaria } from "./perioden.js?v=261";
+import { rt, zahl, aspektName, setzeRestSprache } from "./rest-texte.js?v=261";
+import { aktuelleSprache } from "./sprachen.js?v=261";
+setzeRestSprache(aktuelleSprache());
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -26,9 +29,6 @@ const el = (t, c, txt) => { const n = document.createElement(t);
 
 const DOMIZIL = ["mars","venus","merkur","mond","sonne","merkur",
                  "venus","mars","jupiter","saturn","saturn","jupiter"];
-const komma = n => n.toFixed(1).replace(".", ",");
-const MONATE = ["Januar","Februar","März","April","Mai","Juni","Juli",
-                "August","September","Oktober","November","Dezember"];
 
 /* Julianisches Datum zurück in den Kalender (Meeus, Kap. 7). */
 function jdZuDatum(jd) {
@@ -142,13 +142,9 @@ export function jahresUmdrehung() {
 
 /* ========================================================== Darstellung */
 
-const WUERDE_WORT = {
-  "Domizil":"in eigenem Zeichen, stark",
-  "Erhöhung":"erhöht, über sein Maß geachtet",
-  "Exil":"im Exil, gegen den Strich arbeitend",
-  "Fall":"im Fall, schwer zu seinem Recht kommend",
-  "—":"ohne besondere Würde"
-};
+/* Würdeworte und Monatsnamen stehen in der Sprachtafel. */
+const wuerdeWort = stufe => rt("sr.wuerde." + stufe);
+const monat = i => rt("sr.monate")[i];
 
 function schritt(nr, titel, inhalt) {
   const d = el("div", "srSchritt");
@@ -170,8 +166,8 @@ function zeichne() {
   ziel.innerHTML = "";
 
   if (!u) {
-    const w = el("p", "kucukNot", "Noch keine Geburtsangaben hinterlegt. ");
-    const b = el("button", "knopfKlein", "Zur Dateneingabe");
+    const w = el("p", "kucukNot", rt("keineAngaben"));
+    const b = el("button", "knopfKlein", rt("zurEingabe"));
     b.addEventListener("click", zurDateneingabe);
     w.appendChild(b);
     ziel.append(w); ziel.hidden = false;
@@ -181,134 +177,109 @@ function zeichne() {
 
   const z = u.zeitpunkt;
   const naechst = jdZuDatum(u.naechsteJd);
-  ziel.appendChild(el("p", "kucukNot", "Für: " + profilBeschriftung(u.profil)));
+  ziel.appendChild(el("p", "kucukNot", rt("fuer") + profilBeschriftung(u.profil)));
 
   const kopf = el("div", "geistName");
   kopf.innerHTML =
-    `<div class="kalanBaslik">Die Umdrehung dieses Jahres</div>` +
-    `<div class="buyukToplam">${z.tag}. ${MONATE[z.monat - 1]} ${z.jahr}</div>` +
-    `<div class="kucukNot">${String(z.stunde).padStart(2,"0")}:${String(z.minute).padStart(2,"0")} Weltzeit ` +
-    `· dein ${u.alter + 1}. Lebensjahr · gültig bis ${naechst.tag}. ${MONATE[naechst.monat - 1]} ${naechst.jahr}</div>`;
+    `<div class="kalanBaslik">${rt("sr.kopfTitel")}</div>` +
+    `<div class="buyukToplam">${rt("sr.kopfDatum", z.tag, monat(z.monat - 1), z.jahr)}</div>` +
+    `<div class="kucukNot">${rt("sr.kopfNot",
+       `${String(z.stunde).padStart(2,"0")}:${String(z.minute).padStart(2,"0")}`,
+       u.alter + 1, naechst.tag, monat(naechst.monat - 1), naechst.jahr)}</div>`;
   ziel.appendChild(kopf);
 
   /* --- 1. Das Geburtshoroskop --- */
   const r = u.radix;
   const hp = r.planeten[r.herrscher];
-  ziel.appendChild(schritt(1, "Das Geburtshoroskop stellen",
-    `${ZEICHEN[r.ascZeichen].glyph} ${ZEICHEN[r.ascZeichen].name} steigt auf, das MC in ` +
-    `${ZEICHEN[r.mcZeichen].glyph} ${ZEICHEN[r.mcZeichen].name}. Herr des Horoskops ist ` +
-    `${mitArtikel(r.herrscher)}` +
-    (hp ? `, in ${ZEICHEN[hp.zeichen].glyph} ${ZEICHEN[hp.zeichen].name}, ${hp.haus}. Haus, ` +
-          `${WUERDE_WORT[hp.wuerde.stufe]}.` : ".")));
+  ziel.appendChild(schritt(1, rt("sr.s1"),
+    rt("sr.s1Text", ZEICHEN[r.ascZeichen].glyph, ZEICHEN[r.ascZeichen].name,
+       ZEICHEN[r.mcZeichen].glyph, ZEICHEN[r.mcZeichen].name, mitArtikel(r.herrscher),
+       hp ? rt("sr.s1Stand", ZEICHEN[hp.zeichen].glyph, ZEICHEN[hp.zeichen].name,
+               hp.haus, wuerdeWort(hp.wuerde.stufe)) : ".")));
 
   /* --- 2. Die Sekte --- */
-  ziel.appendChild(schritt(2, "Die Sekte ansehen",
-    u.sekte === "Tag"
-      ? "Eine <b>Taggeburt</b>: Die Sonne stand über dem Horizont. Die Partei des Tages führt — " +
-        "Sonne, Jupiter und Saturn gelten hier als die gefälligeren, Mond, Venus und Mars als die fordernderen."
-      : "Eine <b>Nachtgeburt</b>: Die Sonne stand unter dem Horizont. Die Partei der Nacht führt — " +
-        "Mond, Venus und Mars gelten hier als die gefälligeren, Sonne, Jupiter und Saturn als die fordernderen."));
+  ziel.appendChild(schritt(2, rt("sr.s2"), rt(u.sekte === "Tag" ? "sr.s2Tag" : "sr.s2Nacht")));
 
   /* --- 3. und 4. Zeichen und Herr des Jahres --- */
-  ziel.appendChild(schritt(3, "Das Zeichen des Jahres finden",
-    `Der Aszendent ist seit der Geburt ${u.alter} Zeichen weitergerückt und steht im ` +
-    `<b>${ZEICHEN[u.jahrZeichen].glyph} ${ZEICHEN[u.jahrZeichen].name}</b>. Damit ist dein ` +
-    `<b>${u.jahrHaus}. Haus</b> das Haus des Jahres: ${HAUS[u.jahrHaus - 1]}.`));
+  ziel.appendChild(schritt(3, rt("sr.s3"),
+    rt("sr.s3Text", rt("achse.asc"), u.alter, ZEICHEN[u.jahrZeichen].glyph,
+       ZEICHEN[u.jahrZeichen].name, u.jahrHaus, HAUS[u.jahrHaus - 1])));
 
   const hj = u.herrBefund;
-  ziel.appendChild(schritt(4, "Den Herrn des Jahres bezeichnen",
-    `Herrscher dieses Zeichens und damit <b>Herr des Jahres</b> ist ` +
-    `${PLANET[u.herrDesJahres].g} ${mitArtikel(u.herrDesJahres)}.` +
-    (hj ? ` Er steht in der Geburt in ${ZEICHEN[hj.natal.zeichen].glyph} ` +
-          `${ZEICHEN[hj.natal.zeichen].name}, ${hj.natal.haus}. Haus, ` +
-          `${WUERDE_WORT[hj.natal.wuerde.stufe]}.` : "")));
+  ziel.appendChild(schritt(4, rt("sr.s4"),
+    rt("sr.s4Text", PLANET[u.herrDesJahres].g, mitArtikel(u.herrDesJahres),
+       hj ? rt("sr.s4Natal", ZEICHEN[hj.natal.zeichen].glyph, ZEICHEN[hj.natal.zeichen].name,
+               hj.natal.haus, wuerdeWort(hj.natal.wuerde.stufe)) : "")));
 
   /* --- 5. Firdar und Teilhaber --- */
   const fd = u.firdar, tb = u.teilhaber;
-  ziel.appendChild(schritt(5, "Firdar und Teilhaber bestimmen",
-    (fd ? `Die Firdaria gibt diese Jahre <b>${mitArtikel(fd.key)}</b>` : "Die Firdaria ist durchlaufen") +
-    (tb ? `, und innerhalb davon führt gerade <b>${mitArtikel(tb.key)}</b> als Teilhaber.` : ".") +
-    ` Der große Herr gibt das Thema, der Teilhaber den Ton.`));
+  ziel.appendChild(schritt(5, rt("sr.s5"),
+    (fd ? rt("sr.s5Firdar", mitArtikel(fd.key)) : rt("sr.s5Durch")) +
+    (tb ? rt("sr.s5Teilhaber", mitArtikel(tb.key)) : ".") + rt("sr.s5Schluss")));
 
   /* --- 6. Winkelhaft zum Zeichen des Jahres? --- */
-  const winkelZeile = (b, rolle) => {
-    if (!b) return `${rolle}: nicht zu prüfen.`;
-    return `<b>${rolle} ${b.name}</b> steht im ${b.vomJahrZeichen}. Zeichen vom Zeichen des Jahres aus — ` +
-      (b.winkelhaft
-        ? `<span class="srJa">winkelhaft</span>. Das ist die starke Stellung: Was er bringt, kommt an.`
-        : `<span class="srNein">nicht winkelhaft</span>. Er wirkt, aber mittelbar.`);
-  };
-  ziel.appendChild(schritt(6, "Stehen sie winkelhaft zum Zeichen des Jahres?",
-    [winkelZeile(fd, "Der Firdar"), winkelZeile(tb, "Der Teilhaber")]));
+  const winkelZeile = (b, rolle) => b
+    ? rt("sr.s6Zeile", rolle, b.name, b.vomJahrZeichen, b.winkelhaft)
+    : rt("sr.nichtPruefbar", rolle);
+  ziel.appendChild(schritt(6, rt("sr.s6"),
+    [winkelZeile(fd, rt("sr.rolleFirdar")), winkelZeile(tb, rt("sr.rolleTeilhaber"))]));
 
   /* --- 7. Mit dem Herrn des Jahres verbunden? --- */
   const sichtZeile = (b, rolle) => {
-    if (!b) return `${rolle}: nicht zu prüfen.`;
-    if (b.key === u.herrDesJahres) return `<b>${rolle} ${b.name}</b> <em>ist</em> der Herr des Jahres — die stärkste Verbindung, die es gibt.`;
-    return `<b>${rolle} ${b.name}</b> und der Herr des Jahres: ` +
-      (b.sichtZumHerrn
-        ? `<span class="srJa">${b.sichtZumHerrn}</span> — sie sehen einander, die Aussagen greifen ineinander.`
-        : `<span class="srNein">in Abwendung</span> — sie sehen einander nicht; jeder spricht für sich.`);
+    if (!b) return rt("sr.nichtPruefbar", rolle);
+    if (b.key === u.herrDesJahres) return rt("sr.s7Ist", rolle, b.name);
+    return rt("sr.s7Zeile", rolle, b.name, b.sichtZumHerrn ? aspektName(b.sichtZumHerrn) : null);
   };
-  ziel.appendChild(schritt(7, "Sind sie mit dem Herrn des Jahres verbunden?",
-    [sichtZeile(fd, "Der Firdar"), sichtZeile(tb, "Der Teilhaber")]));
+  ziel.appendChild(schritt(7, rt("sr.s7"),
+    [sichtZeile(fd, rt("sr.rolleFirdar")), sichtZeile(tb, rt("sr.rolleTeilhaber"))]));
 
   /* --- 8. Zustand in der Geburt --- */
   const natalZeile = b => b
-    ? `<b>${b.g} ${b.name}</b>: ${ZEICHEN[b.natal.zeichen].glyph} ${ZEICHEN[b.natal.zeichen].name}, ` +
-      `${b.natal.haus}. Haus — ${HAUS[b.natal.haus - 1]}; ${WUERDE_WORT[b.natal.wuerde.stufe]}.`
-    : "—";
-  ziel.appendChild(schritt(8, "Ihren Zustand im Geburtshoroskop prüfen",
-    [natalZeile(fd), natalZeile(tb)]));
+    ? rt("sr.s8Zeile", b.g, b.name, ZEICHEN[b.natal.zeichen].glyph, ZEICHEN[b.natal.zeichen].name,
+         b.natal.haus, HAUS[b.natal.haus - 1], wuerdeWort(b.natal.wuerde.stufe))
+    : rt("sr.leer");
+  ziel.appendChild(schritt(8, rt("sr.s8"), [natalZeile(fd), natalZeile(tb)]));
 
   /* --- 9. Zustand in der Umdrehung --- */
   const umZeile = b => (b && b.inUmdrehung)
-    ? `<b>${b.g} ${b.name}</b>: in der Umdrehung ${ZEICHEN[b.inUmdrehung.zeichen].glyph} ` +
-      `${ZEICHEN[b.inUmdrehung.zeichen].name} ${komma(b.inUmdrehung.grad)}°, ` +
-      `${b.inUmdrehung.haus}. Haus des Jahreshoroskops — ${HAUS[b.inUmdrehung.haus - 1]}.`
-    : "—";
-  ziel.appendChild(schritt(9, "Ihren Zustand in der Jahresumdrehung prüfen",
-    [`Der Aszendent der Umdrehung steht in ${ZEICHEN[u.umAscZeichen].glyph} ` +
-     `${ZEICHEN[u.umAscZeichen].name} — das fällt in dein <b>${u.umAscImNatal}. Geburtshaus</b>, ` +
-     `${HAUS[u.umAscImNatal - 1]}. Dort liegt in diesem Jahr der Schwerpunkt.`,
+    ? rt("sr.s9Zeile", b.g, b.name, ZEICHEN[b.inUmdrehung.zeichen].glyph,
+         ZEICHEN[b.inUmdrehung.zeichen].name, zahl(b.inUmdrehung.grad),
+         b.inUmdrehung.haus, HAUS[b.inUmdrehung.haus - 1])
+    : rt("sr.leer");
+  ziel.appendChild(schritt(9, rt("sr.s9"),
+    [rt("sr.s9Asc", rt("achse.asc"), ZEICHEN[u.umAscZeichen].glyph, ZEICHEN[u.umAscZeichen].name,
+        u.umAscImNatal, HAUS[u.umAscImNatal - 1]),
      umZeile(fd), umZeile(tb)]));
 
   /* --- 10. Die Deutung --- */
   const einig = [];
-  if (fd && fd.winkelhaft) einig.push("der Firdar steht winkelhaft");
-  if (tb && tb.winkelhaft) einig.push("der Teilhaber steht winkelhaft");
-  if (fd && (fd.sichtZumHerrn || fd.key === u.herrDesJahres)) einig.push("der Firdar sieht den Herrn des Jahres");
-  if (tb && (tb.sichtZumHerrn || tb.key === u.herrDesJahres)) einig.push("der Teilhaber sieht ihn");
+  if (fd && fd.winkelhaft) einig.push(rt("sr.einig.firdarWinkel"));
+  if (tb && tb.winkelhaft) einig.push(rt("sr.einig.teilhaberWinkel"));
+  if (fd && (fd.sichtZumHerrn || fd.key === u.herrDesJahres)) einig.push(rt("sr.einig.firdarSieht"));
+  if (tb && (tb.sichtZumHerrn || tb.key === u.herrDesJahres)) einig.push(rt("sr.einig.teilhaberSieht"));
 
   const schluss = el("div", "schlussKasten");
-  schluss.append(el("h3", null, "Und jetzt die Deutung"));
+  schluss.append(el("h3", null, rt("sr.deutung")));
   const s1 = el("p");
-  s1.innerHTML = `Das Jahr steht unter ${ZEICHEN[u.jahrZeichen].glyph} ` +
-    `${ZEICHEN[u.jahrZeichen].name} und damit über deinem ${u.jahrHaus}. Haus: ` +
-    `${HAUS[u.jahrHaus - 1]}. Sein Herr ist ${mitArtikel(u.herrDesJahres)}` +
-    (hj ? `, der in der Geburt ${HAUS[hj.natal.haus - 1]} steht — dort wird das Thema ausgetragen.` : ".");
+  s1.innerHTML = rt("sr.deutungSatz", ZEICHEN[u.jahrZeichen].glyph, ZEICHEN[u.jahrZeichen].name,
+    u.jahrHaus, HAUS[u.jahrHaus - 1], mitArtikel(u.herrDesJahres),
+    hj ? rt("sr.deutungNatal", HAUS[hj.natal.haus - 1]) : ".");
   schluss.appendChild(s1);
 
   const s2 = el("p");
-  s2.innerHTML = einig.length >= 2
-    ? `Die Zeichen stimmen überein: ${einig.join(", ")}. Wenn Firdar, Teilhaber und Herr des ` +
-      `Jahres einander sehen und winkelhaft stehen, gilt das Jahr in dieser Schule als ` +
-      `<b>sprechend</b> — was es bringt, kommt deutlich und ist zu erkennen.`
-    : einig.length === 1
-      ? `Nur eine Stütze: ${einig[0]}. Das Jahr spricht, aber halblaut — es braucht Aufmerksamkeit, ` +
-        `um bemerkt zu werden.`
-      : `Weder Firdar noch Teilhaber stehen winkelhaft zum Zeichen des Jahres, und keiner sieht ` +
-        `den Herrn des Jahres. Abū Maʿšar liest das als ein <b>stilles Jahr</b>: Es geschieht ` +
-        `etwas, aber unterhalb der Schwelle, und es zeigt sich erst später.`;
+  s2.innerHTML = einig.length >= 2 ? rt("sr.sprechend", einig.join(", "))
+    : einig.length === 1 ? rt("sr.halblaut", einig[0])
+    : rt("sr.still");
   schluss.appendChild(s2);
 
-  schluss.appendChild(el("p", "schlussWort",
-    "Die Reihenfolge ist die der persischen Schule: erst die Geburt, dann die Sekte, dann das " +
-    "Zeichen des Jahres und sein Herr, dann Firdar und Teilhaber, dann deren Stellung — und " +
-    "erst ganz zuletzt die Deutung. Wer sie umdreht und mit der Deutung anfängt, findet immer " +
-    "etwas, aber nicht das, was dasteht."));
+  schluss.appendChild(el("p", "schlussWort", rt("sr.schlusswort")));
   ziel.appendChild(schluss);
 }
+
+window.addEventListener("sprache-geaendert", ev => {
+  setzeRestSprache(ev.detail);
+  setTimeout(zeichne, 0);
+});
 
 $("#srBerechnen")?.addEventListener("click", zeichne);
 aufProfilAenderung(zeichne);
