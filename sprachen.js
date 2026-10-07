@@ -22,9 +22,9 @@ export const SPRACHEN = [
   { code: "ar", name: "العربية",   kurz: "AR", rtl: true }
 ];
 
-import { HTML_IT } from "./html-it.js?v=250";
-import { HTML_EN } from "./html-en.js?v=250";
-import { HTML_DE } from "./html-de.js?v=250";
+import { HTML_IT } from "./html-it.js?v=251";
+import { HTML_EN } from "./html-en.js?v=251";
+import { HTML_DE } from "./html-de.js?v=251";
 
 export const WORTE = {
   "kopf.unterzeile": {
@@ -220,11 +220,17 @@ export const WORTE = {
   "nav.bMenzil":       { de:"Der rechte Zeitpunkt", it:"Il momento giusto", en:"The right moment", tr:"Doğru vakit", es:"El momento justo", fr:"Le moment juste", ar:"الوقت المناسب" },
   "nav.bRamel":        { de:"ʿIlm al-Raml", it:"ʿIlm al-Raml", en:"ʿIlm al-Raml", tr:"Remil", es:"ʿIlm al-Raml", fr:"ʿIlm al-Raml", ar:"علم الرمل" },
 
+  /* Zwei verschiedene Lagen, darum zwei verschiedene Sätze. Für Sprachen
+     ohne eigene Fassung steht alles Deutende auf Deutsch. Für Italienisch
+     und Englisch ist das Meiste übersetzt — die Lesung, die Tafeln, die
+     Rahmentexte —, und deutsch bleiben nur die Hintergrundabsätze in den
+     einzelnen Abschnitten. Der alte Satz behauptete für beide dasselbe
+     und stimmte darum für keine von beiden mehr. */
   "hinweis.nurDeutsch": {
-    de:"", 
-    en:"The calculations run in every language; the long interpretive texts are still in German. They are written in images and fables, and a machine translation would destroy exactly what is worth having about them.",
+    de:"",
+    en:"Translated: the reading, all the tables, and the heading texts of every section. Still German: some of the background paragraphs inside the individual sections.",
+    it:"Tradotti: la lettura, tutte le tavole e i testi introduttivi di ogni sezione. Ancora in tedesco: alcuni paragrafi di contesto all'interno delle singole sezioni.",
     tr:"Hesaplar her dilde çalışır; uzun yorum metinleri şimdilik Almancadır. Bunlar imge ve masallarla yazılmıştır, makine çevirisi değerli olan şeyi tam olarak yok ederdi.",
-    it:"I calcoli funzionano in ogni lingua; i lunghi testi interpretativi sono ancora in tedesco. Sono scritti per immagini e favole, e una traduzione automatica distruggerebbe proprio ciò che vale.",
     es:"Los cálculos funcionan en todos los idiomas; los textos largos de interpretación siguen en alemán. Están escritos en imágenes y fábulas, y una traducción automática destruiría justo lo que vale la pena.",
     fr:"Les calculs fonctionnent dans toutes les langues ; les longs textes d'interprétation sont encore en allemand. Ils sont écrits en images et en fables, et une traduction automatique détruirait précisément ce qui en fait la valeur.",
     ar:"الحسابات تعمل بكل اللغات؛ أما نصوص التأويل الطويلة فما زالت بالألمانية. وهي مكتوبة بالصور والأمثال، والترجمة الآلية تُفسد ما فيها من قيمة." }
