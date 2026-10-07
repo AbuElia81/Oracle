@@ -14,12 +14,12 @@
    Herr beginnt — und wie viel von seiner Zeit schon verbraucht war.
    Gerechnet wird siderisch, nicht tropisch.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=268";
-import { berechneGeburt, norm360 } from "./astro.js?v=268";
-import { zustandVon, ZEICHEN } from "./horoskop.js?v=268";
-import { rt, zahl, ordnung, setzeRestSprache } from "./rest-texte.js?v=268";
-import { aktuelleSprache } from "./sprachen.js?v=268";
-import { PLANET } from "./horoskop.js?v=268";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=274";
+import { berechneGeburt, norm360 } from "./astro.js?v=274";
+import { zustandVon, ZEICHEN } from "./horoskop.js?v=274";
+import { rt, zahl, ordnung, setzeRestSprache } from "./rest-texte.js?v=274";
+import { aktuelleSprache } from "./sprachen.js?v=274";
+import { PLANET } from "./horoskop.js?v=274";
 setzeRestSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 
@@ -189,7 +189,7 @@ function amHoroskop(schluessel, rolle) {
   if (["kopf","schwanz","rahu","ketu"].includes(schluessel)) return null;
   const z = zustandVon(schluessel);
   if (!z) return null;
-  return rt("pd.amHoroskop", rolle, z.zeichenGlyph, z.zeichenName, ordnung(z.haus), z.hausOrt);
+  return rt("pd.amHoroskop", rolle, z.zeichenGlyph, z.zeichenName, ordnung(z.haus, true), z.hausOrt);
 }
 
 function leerHinweis(ziel) {
@@ -276,7 +276,7 @@ function zeichneVimshottari() {
   k.innerHTML =
     `<div class="kalanBaslik">${rt("pd.mondhaus")}</div>` +
     `<div class="buyukToplam">${v.nakshatra}</div>` +
-    `<div class="kucukNot">${rt("pd.mondhausNot", ordnung(v.nakshatraNr), v.startHerr.g,
+    `<div class="kucukNot">${rt("pd.mondhausNot", ordnung(v.nakshatraNr, true), v.startHerr.g,
        v.startHerr.name, zahl(v.restBeiGeburt))}</div>`;
   ziel.appendChild(k);
 

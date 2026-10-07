@@ -9,10 +9,10 @@
 
    Häuser im Ganzzeichen, wie überall auf dieser Seite.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=268";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=274";
 import { berechneGeburt, planetenPositionen, julianischesDatum,
          aszendent, medium, schiefeDerEkliptik, siderischeZeitGreenwich,
-         norm360 } from "./astro.js?v=268";
+         norm360 } from "./astro.js?v=274";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -303,28 +303,25 @@ export function progression() {
 
 /* ========================================================== Darstellung */
 
-const SEKT_TEXT = {
-  tag:  "Eine <b>Taggeburt</b>: Die Sonne stand über dem Horizont. Die Partei des Tages führt — " +
-        "Sonne, Jupiter und Saturn wirken hier gefälliger, Mond, Venus und Mars fordernder.",
-  nacht:"Eine <b>Nachtgeburt</b>: Die Sonne stand unter dem Horizont. Die Partei der Nacht führt — " +
-        "Mond, Venus und Mars wirken hier gefälliger, Sonne, Jupiter und Saturn fordernder."
-};
+/* Die Sektentexte stehen in der Sprachtafel. */
+const SEKT_TEXT = { get tag() { return rt("hk.sekt.tag"); },
+                    get nacht() { return rt("hk.sekt.nacht"); } };
 
 function planetSatz(pl) {
   /* Alle sieben "was"-Angaben sind Paare — der Satz steht im Plural.
      Die Würde wird nur genannt, wenn es eine gibt; sonst stünde bei fünf
      von sieben Planeten derselbe Satz. */
-  const kern = `${pl.was.charAt(0).toUpperCase() + pl.was.slice(1)} zeigen sich ${ART[pl.zeichen]}, ` +
-               `${HAUS[pl.haus - 1]}.`;
-  return pl.wuerde.stufe === "—" ? kern : `${kern} Der Planet steht ${pl.wuerde.text}.`;
+  const kern = rt("hk.planetSatz", pl.was.charAt(0).toUpperCase() + pl.was.slice(1),
+                  ART[pl.zeichen], HAUS[pl.haus - 1]);
+  return pl.wuerde.stufe === "—" ? kern : kern + rt("hk.planetWuerde", pl.wuerde.text);
 }
 
 function zeichneRadix(ziel) {
   const r = radix();
   ziel.innerHTML = "";
   if (!r) {
-    const w = el("p", "kucukNot", "Noch keine Geburtsangaben hinterlegt. ");
-    const b = el("button", "knopfKlein", "Zur Dateneingabe");
+    const w = el("p", "kucukNot", rt("keineAngaben"));
+    const b = el("button", "knopfKlein", rt("zurEingabe"));
     b.addEventListener("click", zurDateneingabe);
     w.appendChild(b);
     ziel.appendChild(w);
@@ -338,12 +335,13 @@ function zeichneRadix(ziel) {
   const kopf = el("div", "essenzKopf");
   const herrsch = r.planeten[r.herrscher];
   kopf.append(
-    el("div", "kalanBaslik", "Das Gerüst"),
+    el("div", "kalanBaslik", rt("hk.geruest")),
     el("div", "buyukToplam",
-      `${ZEICHEN[r.ascZeichen].glyph} ${ZEICHEN[r.ascZeichen].name} steigt auf`),
+      rt("hk.steigtAuf", ZEICHEN[r.ascZeichen].glyph, ZEICHEN[r.ascZeichen].name)),
     el("div", "kucukNot",
-      `Aszendent ${r.ascGrad.toFixed(1)}° · MC ${ZEICHEN[r.mcZeichen].glyph} ${ZEICHEN[r.mcZeichen].name}` +
-      (herrsch ? ` · Herr des Horoskops: ${PLANET[r.herrscher].g} ${PLANET[r.herrscher].name}` : ""))
+      rt("hk.geruestNot", rt("achse.asc"), zahl(r.ascGrad),
+         ZEICHEN[r.mcZeichen].glyph, ZEICHEN[r.mcZeichen].name,
+         herrsch ? `${PLANET[r.herrscher].g} ${PLANET[r.herrscher].name}` : null))
   );
   ziel.appendChild(kopf);
 
@@ -361,10 +359,11 @@ function zeichneRadix(ziel) {
   }
 
   /* Tafel */
-  ziel.appendChild(el("h3", null, "Die sieben Planeten"));
+  ziel.appendChild(el("h3", null, rt("hk.siebenPlaneten")));
   const kutu = el("div", "tabloKutu");
   const tab = el("table", "wuerdeTablo");
-  tab.innerHTML = "<thead><tr><th>Planet</th><th>Zeichen</th><th>Haus</th><th>Würde</th></tr></thead>";
+  tab.innerHTML = `<thead><tr><th>${rt("hk.tab.planet")}</th><th>${rt("hk.tab.zeichen")}</th>` +
+    `<th>${rt("hk.tab.haus")}</th><th>${rt("hk.tab.wuerde")}</th></tr></thead>`;
   const tb = el("tbody");
   REIHE.forEach(k => {
     const pl = r.planeten[k];
@@ -381,21 +380,21 @@ function zeichneRadix(ziel) {
   ziel.appendChild(kutu);
 
   /* Deutung je Planet */
-  ziel.appendChild(el("h3", null, "Was die Planeten sagen"));
+  ziel.appendChild(el("h3", null, rt("hk.wasSagen")));
   REIHE.forEach(k => {
     const pl = r.planeten[k];
     if (!pl) return;
     const blk = el("div", "planetBlock");
     const t = el("div", "planetKopf");
-    t.innerHTML = `<span class="glyph">${pl.g}</span> <b>${pl.name}</b> in ` +
-      `${ZEICHEN[pl.zeichen].glyph} ${ZEICHEN[pl.zeichen].name}, ${pl.haus}. Haus`;
+    t.innerHTML = rt("hk.planetKopf", pl.g, pl.name, ZEICHEN[pl.zeichen].glyph,
+      ZEICHEN[pl.zeichen].name, ordnung(pl.haus, true));
     blk.append(t, el("p", null, planetSatz(pl)));
     ziel.appendChild(blk);
   });
 
   /* Aspekte */
   if (r.aspekte.length) {
-    ziel.appendChild(el("h3", null, "Die engsten Aspekte"));
+    ziel.appendChild(el("h3", null, rt("hk.aspekte")));
     ziel.appendChild(el("p", null,
       "Aspekte sind die Gespräche der Planeten untereinander. Je enger der Winkel, " +
       "desto lauter — die engsten stehen oben."));
@@ -426,52 +425,42 @@ function zeichneZeit(ziel) {
     const ul0 = el("ul", "deutungListe");
     Object.entries(tr.stand).forEach(([k, st]) => {
       const li = el("li");
-      li.innerHTML = `<b>${PLANET[k].g} ${PLANET[k].name}</b> läuft durch ` +
-        `${ZEICHEN[st.zeichen].glyph} ${ZEICHEN[st.zeichen].name} — bei dir ` +
-        `${HAUS[st.haus - 1]}.`;
+      li.innerHTML = rt("hk.transitZeile", PLANET[k].g, PLANET[k].name,
+        ZEICHEN[st.zeichen].glyph, ZEICHEN[st.zeichen].name, HAUS[st.haus - 1]);
       ul0.appendChild(li);
     });
     ziel.appendChild(ul0);
   }
   if (tr && tr.treffer.length) {
-    ziel.appendChild(el("p", null, "Was davon dein Geburtshoroskop gerade berührt:"));
+    ziel.appendChild(el("p", null, rt("hk.beruehrt")));
     const ul = el("ul", "deutungListe");
     tr.treffer.slice(0, 5).forEach(t => {
       const li = el("li");
-      li.innerHTML = `<b>${t.transit.name} ${t.name} ${t.natal.name}</b> (${t.orbis.toFixed(1)}°) — ` +
-        (t.natal.achse
-          ? `die Achse selbst wird angesprochen, ${t.ton}.`
-          : `${t.natal.was} — ${t.ton} angesprochen.`);
+      li.innerHTML = t.natal.achse
+        ? rt("hk.trefferAchse", t.transit.name, t.name, t.natal.name, zahl(t.orbis), t.ton)
+        : rt("hk.treffer", t.transit.name, t.name, t.natal.name, zahl(t.orbis), t.natal.was, t.ton);
       ul.appendChild(li);
     });
     ziel.appendChild(ul);
   } else {
-    ziel.appendChild(el("p", "kucukNot",
-      "Zurzeit berührt keiner der drei dein Horoskop eng genug, um ihn zu nennen. " +
-      "Eine ruhige Strecke."));
+    ziel.appendChild(el("p", "kucukNot", rt("hk.keinTreffer")));
   }
 
   /* Progression */
   const pr = progression();
   if (pr) {
-    ziel.appendChild(el("h3", null, "Sekundäre Progression — der innere Kalender"));
-    ziel.appendChild(el("p", null,
-      "Ein Tag nach der Geburt gilt für ein Lebensjahr. Die progressierte Sonne rückt " +
-      "etwa ein Grad im Jahr und wechselt alle dreißig Jahre das Zeichen; der " +
-      "progressierte Mond braucht rund achtundzwanzig Jahre für den ganzen Kreis. " +
-      "Beide beschreiben keine Ereignisse, sondern das innere Wetter."));
+    ziel.appendChild(el("h3", null, rt("hk.progression")));
+    ziel.appendChild(el("p", null, rt("hk.progressionText")));
     const ul = el("ul", "deutungListe");
     const l1 = el("li");
-    l1.innerHTML = `<b>Progressierte Sonne</b> in ${ZEICHEN[pr.sonne.zeichen].glyph} ` +
-      `${ZEICHEN[pr.sonne.zeichen].name} ${pr.sonne.grad.toFixed(1)}°, ${pr.sonne.haus}. Haus — ` +
-      `worauf dein Wille in diesem Lebensabschnitt zielt: ${ART[pr.sonne.zeichen]}, ` +
-      `${HAUS[pr.sonne.haus - 1]}.`;
+    l1.innerHTML = rt("hk.progSonne", ZEICHEN[pr.sonne.zeichen].glyph,
+      ZEICHEN[pr.sonne.zeichen].name, zahl(pr.sonne.grad), ordnung(pr.sonne.haus, true),
+      ART[pr.sonne.zeichen], HAUS[pr.sonne.haus - 1]);
     const l2 = el("li");
-    l2.innerHTML = `<b>Progressierter Mond</b> in ${ZEICHEN[pr.mond.zeichen].glyph} ` +
-      `${ZEICHEN[pr.mond.zeichen].name}, ${pr.mond.haus}. Haus — woran du dich zurzeit ` +
-      `aufhältst: ${HAUS[pr.mond.haus - 1]}. Er bleibt gut zwei Jahre je Zeichen.`;
+    l2.innerHTML = rt("hk.progMond", ZEICHEN[pr.mond.zeichen].glyph,
+      ZEICHEN[pr.mond.zeichen].name, ordnung(pr.mond.haus, true), HAUS[pr.mond.haus - 1]);
     const l3 = el("li");
-    l3.innerHTML = `<b>Progressierte Mondphase</b>: ${pr.phaseText}.`;
+    l3.innerHTML = rt("hk.progPhase", pr.phaseText);
     ul.append(l1, l2, l3);
     ziel.appendChild(ul);
   }
@@ -497,10 +486,11 @@ if (document.readyState === "loading") {
    werden hier beim Sprachwechsel ausgetauscht, nicht neu importiert —
    die Objekte bleiben dieselben, nur ihre Namensfelder wechseln. */
 import { PLANET_NAME_IT, PLANET_ARTIKEL_IT, ZEICHEN_NAME_IT, HAUS_IT,
-         PLANET_WAS_IT, ART_IT, WUERDE_TEXT_IT, ASPEKT_TON_IT, PHASEN_IT } from "./namen-it.js?v=268";
+         PLANET_WAS_IT, ART_IT, WUERDE_TEXT_IT, ASPEKT_TON_IT, PHASEN_IT } from "./namen-it.js?v=274";
 import { PLANET_NAME_EN, PLANET_ARTIKEL_EN, ZEICHEN_NAME_EN, HAUS_EN,
-         PLANET_WAS_EN, ART_EN, WUERDE_TEXT_EN, ASPEKT_TON_EN, PHASEN_EN } from "./namen-en.js?v=268";
-import { aktuelleSprache } from "./sprachen.js?v=268";
+         PLANET_WAS_EN, ART_EN, WUERDE_TEXT_EN, ASPEKT_TON_EN, PHASEN_EN } from "./namen-en.js?v=274";
+import { aktuelleSprache } from "./sprachen.js?v=274";
+import { rt, zahl, ordnung, setzeRestSprache } from "./rest-texte.js?v=274";
 
 const PLANET_NAME_DE  = Object.fromEntries(REIHE.map(k => [k, PLANET[k].name]));
 const PLANET_WAS_DE   = Object.fromEntries(REIHE.map(k => [k, PLANET[k].was]));
@@ -522,6 +512,7 @@ export function setzeNamenSprache(code) {
   REIHE.forEach(k => { PLANET[k].name = n.planet[k]; PLANET[k].was = n.was[k]; });
   ART = n.art; WUERDE_TEXT = n.wuerde; ASPEKT_TON = n.ton; PHASEN = n.phasen;
   SATZ_WORT = n.satzwort;
+  setzeRestSprache(code);
   Object.keys(ARTIKEL).forEach(k => delete ARTIKEL[k]);
   Object.assign(ARTIKEL, n.artikel);
   ZEICHEN.forEach((z, i) => { z.name = n.zeichen[i]; });

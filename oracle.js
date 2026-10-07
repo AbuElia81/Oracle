@@ -1,13 +1,13 @@
 /* ------------------------------------------------------------------------
    oracle.js — die Bedienung.
    --------------------------------------------------------------------- */
-import { EBCED, HARFLER, cevir, dokum, toplam, kalan } from "./ebced.js?v=268";
-import { rt, setzeRestSprache } from "./rest-texte.js?v=268";
-import { aktuelleSprache } from "./sprachen.js?v=268";
+import { EBCED, HARFLER, cevir, dokum, toplam, kalan } from "./ebced.js?v=274";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=274";
+import { aktuelleSprache } from "./sprachen.js?v=274";
 setzeRestSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 import { UNSURLAR, GEZEGENLER, BURCLAR, MENZILLER, NIYET, UYUM,
-         UNSUR_UYUM, SAAT_SIRASI, GUN_SAHIBI, GUN_ADI } from "./korpus.js?v=268";
+         UNSUR_UYUM, SAAT_SIRASI, GUN_SAHIBI, GUN_ADI } from "./korpus.js?v=274";
 
 const $  = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];

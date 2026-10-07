@@ -6,27 +6,45 @@
    fertigen Tafeln und setzt seinen Text in einen eigenen Kasten daneben.
    Deshalb überlebt die Deutung auch ein Neurechnen.
    --------------------------------------------------------------------- */
-import { leseProfilRoh } from "./profil.js?v=268";
-import { profektionJetzt } from "./jahr.js?v=268";
-import { zustandVon, radix, transite, PLANET, ZEICHEN, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=268";
-import { zrStand } from "./zr.js?v=268";
+import { leseProfilRoh } from "./profil.js?v=274";
+import { profektionJetzt } from "./jahr.js?v=274";
+import { zustandVon, radix, transite, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=274";
+import { zrStand } from "./zr.js?v=274";
+import { rt, zahl, ordnung, setzeRestSprache } from "./rest-texte.js?v=274";
+import { aktuelleSprache } from "./sprachen.js?v=274";
+setzeRestSprache(aktuelleSprache());
 
 /* Ein Satz, der eine Zeitherrscher-Aussage am Geburtshoroskop festmacht.
    Genau darum geht es: Die Technik sagt wann, das Horoskop sagt was. */
-const WUERDE_SATZ = {
-  "Domizil":  "in eigenem Zeichen und damit stark",
-  "Erhöhung": "erhöht und damit über sein Maß hinaus geachtet",
-  "Exil":     "im Exil und damit gegen den Strich arbeitend",
-  "Fall":     "im Fall und damit schwer zu seinem Recht kommend",
-  "—":        "ohne besondere Würde"
-};
+/* Dieses Modul liest die fertig gezeichneten Tafeln und bekommt die Namen
+   daher in der gerade eingestellten Sprache. Nachgeschlagen wird aber über
+   sprachfeste Schlüssel — vorher stand im englischen Bogen "bei Ascendant"
+   statt des Satzes, weil der Nachschlag auf "Aszendent" nicht traf. */
+const ACHSEN_SCHLUESSEL = { mc:"mc", ic:"ic", asc:"asc", desc:"desc" };
+
+function schluesselVonAnzeige(text) {
+  const w = String(text || "").trim();
+  if (!w) return null;
+  for (const k of REIHE) if (PLANET[k] && gleich(PLANET[k].name, w)) return k;
+  const roh = w.toUpperCase().replace(/[^A-Z]/g, "");
+  if (roh === "MC") return "mc";
+  if (roh === "IC") return "ic";
+  if (roh === "ASC" || gleich(rt("achse.asc"), w)) return "asc";
+  if (roh === "DESC" || gleich(rt("achse.desc"), w)) return "desc";
+  if (gleich(rt("achse.mc"), w)) return "mc";
+  if (gleich(rt("achse.ic"), w)) return "ic";
+  return null;
+}
+function gleich(a, b) {
+  const n = x => String(x || "").toLowerCase().replace(/^(der|die|das|the|il|la|lo|l')\s*/, "").trim();
+  return n(a) === n(b);
+}
 
 function konkret(planetName, rolleSatz) {
   const z = zustandVon(planetName);
   if (!z) return null;
-  return `${rolleSatz} steht bei dir in ${z.zeichenGlyph} ${z.zeichenName}, im ${z.haus}. Haus — ` +
-         `${z.hausOrt} —, und zwar ${WUERDE_SATZ[z.wuerde.stufe] || "ohne besondere Würde"}. ` +
-         `Dort wird sich zeigen, was diese Zeit bringt.`;
+  return rt("dg.konkret", rolleSatz, z.zeichenGlyph, z.zeichenName,
+            ordnung(z.haus, true), z.hausOrt, rt("dg.wuerde." + z.wuerde.stufe));
 }
 
 const $ = s => document.querySelector(s);
@@ -41,39 +59,21 @@ function alterHeute(p) {
 
 /* ------------------------------------------------- Lebensbogen: Bedeutung */
 
-const PROMISSOR = {
-  "Sonne":   "Sichtbarkeit — Amt, Anerkennung, das Hervortreten vor anderen; und die Rechnung, die dafür kommt",
-  "Mond":    "das Häusliche und das Bewegliche — Wohnort, Familie, Gemüt, ein Wechsel, der von innen anfängt",
-  "Merkur":  "Papier und Wort — Verträge, Schrift, Handel, Lernen, Wege, die man mehrmals geht",
-  "Venus":   "Bindung und Wohlgefallen — Zuneigung, Kunst, Geld, das leicht kommt, Versöhnung",
-  "Mars":    "der Schnitt — Arbeit, Streit, Entschluss, Trennung; was nicht mehr wartet",
-  "Jupiter": "Erweiterung — Recht, Gönner, Reise, Ansehen; und die Gefahr, sich zu viel vorzunehmen",
-  "Saturn":  "Ernst — Verantwortung, Verzicht, Prüfung, das Bleibende; was Zeit verlangt und Zeit gibt",
-  "MC":      "die Achse des Amtes selbst rückt vor: die Stellung in der Welt ordnet sich neu",
-  "ASC":     "die Achse der Person selbst rückt vor: Leib, Auftritt und Selbstbild ordnen sich neu"
-};
-
-const SIGNIFIKATOR = {
-  "MC":          "im Beruf und im Ruf",
-  "IC":          "im Haus, in der Herkunft und bei den Wurzeln",
-  "Aszendent":   "am eigenen Leib und im Auftreten",
-  "ASC":         "am eigenen Leib und im Auftreten",
-  "Deszendent":  "beim Anderen — Ehe, Verträge, offene Gegner",
-  "DESC":        "beim Anderen — Ehe, Verträge, offene Gegner"
-};
-
-const ASPEKT_TON = {
-  "Konjunktion": "unvermittelt und ohne Umweg",
-  "Quadrat":     "unter Reibung, gegen einen Widerstand",
-  "Opposition":  "von außen, durch einen anderen Menschen",
-  "Trigon":      "leicht, fast von selbst",
-  "Sextil":      "als Gelegenheit, die man ergreifen muss"
-};
-
+/* Was ein Promissor bringt, wo ein Signifikator es trifft und in
+   welchem Ton — alles drei aus der Sprachtafel, nachgeschlagen über
+   sprachfeste Schlüssel. */
+function promissorText(key, anzeige) {
+  return key ? rt("dg.pr." + key) : rt("dg.pr.sonst", anzeige);
+}
+function signifikatorText(key, anzeige) {
+  const k = key === "asc" ? "asc" : key === "desc" ? "desc" : key === "mc" ? "mc" : key === "ic" ? "ic" : null;
+  return k ? rt("dg.sg." + k) : rt("dg.sg.sonst", anzeige);
+}
 function tonFuer(aspekt) {
   const a = (aspekt || "").replace(/\(.*\)/, "").trim();
-  for (const k in ASPEKT_TON) if (a.includes(k)) return ASPEKT_TON[k];
-  return "unvermittelt";
+  for (const k of ["Konjunktion","Quadrat","Opposition","Trigon","Sextil"])
+    if (a.includes(k)) return rt("dg.ton." + k);
+  return rt("dg.ton.Konjunktion");
 }
 
 function nennwort(zelle) {
@@ -93,63 +93,54 @@ function lebensbogenDeutung(kasten) {
 
   kasten.hidden = false;
   kasten.innerHTML = "";
-  kasten.append(el("h3", null, "Was das heißt"));
-  kasten.append(el("p", null,
-    "Primärdirektionen messen nicht, was geschieht, sondern wann etwas fällig wird. " +
-    "Der Himmel dreht sich nach der Geburt weiter; ein Grad dieser Drehung gilt für ein Lebensjahr. " +
-    "Wo ein Planet dabei auf eine Achse trifft, klopft sein Thema an — ob geöffnet wird, " +
-    "steht auf einem anderen Blatt."));
+  kasten.append(el("h3", null, rt("dg.wasHeisst")));
+  kasten.append(el("p", null, rt("dg.lbText")));
 
   const kommend = alter == null ? zeilen.slice(0, 3)
                                 : zeilen.filter(d => d.alter >= alter - 1).slice(0, 3);
   if (!kommend.length) {
-    kasten.append(el("p", "kucukNot", "Im gewählten Altersfenster liegt nichts mehr vor dir."));
+    kasten.append(el("p", "kucukNot", rt("dg.lbLeer")));
     return;
   }
 
-  kasten.append(el("h3", null, kommend.length > 1 ? "Die nächsten Fälligkeiten" : "Die nächste Fälligkeit"));
+  kasten.append(el("h3", null, rt(kommend.length > 1 ? "dg.lbTitelMehr" : "dg.lbTitelEine")));
   const liste = el("ul", "deutungListe");
   kommend.forEach(d => {
-    const was = PROMISSOR[d.promissor] || `das Thema von ${d.promissor}`;
-    const wo = SIGNIFIKATOR[d.signifikator] || `bei ${d.signifikator}`;
-    const wann = alter == null ? `mit ${d.alter.toFixed(0)} Jahren`
-      : d.alter <= alter ? "gerade jetzt"
-      : d.alter - alter < 1 ? `in etwa ${Math.max(1, Math.round((d.alter - alter) * 12))} Monaten`
-      : `in gut ${(d.alter - alter).toFixed(0)} Jahren`;
+    const was = promissorText(schluesselVonAnzeige(d.promissor), d.promissor);
+    const wo = signifikatorText(schluesselVonAnzeige(d.signifikator), d.signifikator);
+    const wann = alter == null ? rt("dg.wannJahre", d.alter.toFixed(0))
+      : d.alter <= alter ? rt("dg.wannJetzt")
+      : d.alter - alter < 1 ? rt("dg.wannMonate", Math.max(1, Math.round((d.alter - alter) * 12)))
+      : rt("dg.wannGut", (d.alter - alter).toFixed(0));
     const li = el("li");
-    li.innerHTML = `<b>${wann}</b> (mit ${d.alter.toFixed(1)}): ${was} — ${wo}, ${tonFuer(d.aspekt)}.`;
+    li.innerHTML = rt("dg.lbZeile", wann, zahl(d.alter), was, wo, tonFuer(d.aspekt));
     liste.appendChild(li);
   });
   kasten.append(liste);
 
   const erster = kommend[0];
-  const festP = erster && konkret(erster.promissor, `${grossMitArtikel(erster.promissor)} bringt die nächste Direktion und`);
+  const festP = erster && konkret(erster.promissor, rt("dg.lbRolle", grossMitArtikel(erster.promissor)));
   if (festP) {
-    kasten.append(el("h3", null, "Was da genau anklopft"));
+    kasten.append(el("h3", null, rt("dg.lbAnklopft")));
     kasten.append(el("p", null, festP));
   }
 
-  kasten.append(el("p", "kucukNot",
-    "Eine Direktion ist ein Termin, kein Urteil. Zwei Menschen mit demselben Termin erleben " +
-    "Verschiedenes — die Frage ist immer, was zu diesem Zeitpunkt schon vorbereitet war."));
+  kasten.append(el("p", "kucukNot", rt("dg.lbNote")));
 }
 
 /* -------------------------------------------- Zodiacal Releasing: Bedeutung */
 
-const KAPITEL = {
-  "Widder":      "ein Kapitel des Anfangens. Man wird geschoben, ehe man den Weg kennt; vieles beginnt, nicht alles bleibt.",
-  "Stier":       "ein Kapitel des Sammelns. Langsam, gegenständlich, auf Besitz und Sicherheit hin — und schwer wieder in Bewegung zu bringen.",
-  "Zwillinge":   "ein Kapitel der Wege und Worte. Viele Kontakte, viel Lernen, viel Hin und Her; die Kunst ist, etwas davon zu Ende zu bringen.",
-  "Krebs":       "ein Kapitel des Hauses. Herkunft, Familie, Wohnort und Gemüt stehen im Vordergrund; das Innere entscheidet über das Äußere.",
-  "Löwe":        "ein Kapitel des Hervortretens. Man wird gesehen, gefragt, gefordert — und muss lernen, die Aufmerksamkeit zu tragen.",
-  "Jungfrau":    "ein Kapitel der Arbeit und der Ordnung. Dienst, Gesundheit, Handwerk, das Kleinteilige; unspektakulär und tragend.",
-  "Waage":       "ein Kapitel der Anderen. Ehe, Verträge, Ausgleich, auch offene Gegnerschaft; wenig entscheidet sich allein.",
-  "Skorpion":    "ein Kapitel der Tiefe. Verborgenes kommt hoch, Bindungen werden ernst, Verluste und Erbschaften wiegen schwer.",
-  "Schütze":     "ein Kapitel der Weite. Fremde, Lehre, Glaube, Recht; der Horizont rückt hinaus, notfalls indem man selbst fortgeht.",
-  "Steinbock":   "ein Kapitel des Aufbaus. Amt, Verantwortung, Ausdauer; es geht langsam voran und bleibt dann stehen.",
-  "Wassermann":  "ein Kapitel der Bünde. Freundschaften, Gruppen, Vorhaben, die über einen selbst hinausgehen; man gehört dazu und steht doch daneben.",
-  "Fische":      "ein Kapitel des Auflösens. Rückzug, Mitleid, Traum, auch Verwirrung; Altes geht zu Ende, ehe Neues Gestalt hat."
-};
+/* Das Kapitel wird über den Zeichenindex nachgeschlagen, nicht über den
+   angezeigten Namen: Der wechselt mit der Sprache. */
+function zeichenIndex(anzeige) {
+  const n = x => String(x || "").toLowerCase().trim();
+  return ZEICHEN.findIndex(z => n(z.name) === n(anzeige));
+}
+function kapitelText(anzeige, kurz) {
+  const i = zeichenIndex(anzeige);
+  if (i < 0) return rt(kurz ? "dg.zrEigenKurz" : "dg.zrEigen");
+  return rt("dg.kapitel")[i];
+}
 
 function zrDeutung(kasten) {
   const tafel = $("#zrCikti");
@@ -167,32 +158,25 @@ function zrDeutung(kasten) {
 
   kasten.hidden = false;
   kasten.innerHTML = "";
-  kasten.append(el("h3", null, "Was das heißt"));
-  kasten.append(el("p", null,
-    "Zodiacal Releasing teilt das Leben in Kapitel, nicht in Ereignisse. Vom Los des Glücks aus " +
-    "werden Zeichen für Zeichen Perioden abgezählt, jede so lang wie die Jahre ihres Herrschers. " +
-    "Die erste Ebene sagt, worum es über Jahre hinweg geht; die zweite, in welcher Tonart es " +
-    "gerade gespielt wird; die dritte färbt die Monate."));
+  kasten.append(el("h3", null, rt("dg.wasHeisst")));
+  kasten.append(el("p", null, rt("dg.zrText")));
 
   const l1 = treffer.L1, l2 = treffer.L2;
   if (!l1) {
-    kasten.append(el("p", "kucukNot",
-      "Ohne Geburtsdatum lässt sich nicht sagen, wo du gerade stehst — die Tafel oben gilt trotzdem."));
+    kasten.append(el("p", "kucukNot", rt("dg.zrOhneDatum")));
     return;
   }
 
-  kasten.append(el("h3", null, "Wo du gerade stehst"));
+  kasten.append(el("h3", null, rt("dg.zrWoDuStehst")));
   const p1 = el("p");
-  p1.innerHTML = `<b>Das große Kapitel</b> läuft von deinem ${l1.von.toFixed(0)}. bis zum ` +
-    `${l1.bis.toFixed(0)}. Jahr unter ${l1.zeichen}, geführt von ${l1.herrscher}: ` +
-    `${KAPITEL[l1.zeichen] || "ein Kapitel eigener Art."}`;
+  p1.innerHTML = rt("dg.zrL1", ordnung(l1.von.toFixed(0)), ordnung(l1.bis.toFixed(0)),
+    l1.zeichen, l1.herrscher, kapitelText(l1.zeichen));
   kasten.append(p1);
 
   if (l2) {
     const p2 = el("p");
-    p2.innerHTML = `<b>Darin die kleinere Periode</b>, von ${l2.von.toFixed(1)} bis ${l2.bis.toFixed(1)} Jahren, ` +
-      `unter ${l2.zeichen} und ${l2.herrscher}: ${KAPITEL[l2.zeichen] || "eigener Art."} ` +
-      `Sie sagt nicht, worum es geht — das sagt das große Kapitel —, sondern woran man es gerade merkt.`;
+    p2.innerHTML = rt("dg.zrL2", zahl(l2.von), zahl(l2.bis), l2.zeichen, l2.herrscher,
+      kapitelText(l2.zeichen, true));
     kasten.append(p2);
   }
 
@@ -201,37 +185,27 @@ function zrDeutung(kasten) {
   try { const st = zrStand(alter); if (st && st.L3) l3 = st.L3; } catch (e) {}
   if (l3) {
     const p3 = el("p");
-    p3.innerHTML = `<b>Und darin die dritte Ebene</b>: ${l3.glyph} ${l3.zeichen} unter ` +
-      `${l3.herrscher}, noch bis ${l3.bis.toFixed(1).replace(".", ",")} Jahren. ` +
-      `${(KAPITEL[l3.zeichen] || "eigener Art.").replace(/^./, c => c.toUpperCase())} ` +
-      `Auf dieser Ebene geht es um Monate, nicht um Jahre — ` +
-      `sie färbt die Tage, ohne das Thema zu ändern.`;
+    p3.innerHTML = rt("dg.zrL3", l3.glyph, l3.zeichen, l3.herrscher, zahl(l3.bis),
+      kapitelText(l3.zeichen, true).replace(/^./, c => c.toUpperCase()));
     kasten.append(p3);
   }
 
-  const festL1 = l1 && konkret(l1.herrscher, `${grossMitArtikel(l1.herrscher)} führt das große Kapitel und`);
+  const festL1 = l1 && konkret(l1.herrscher, rt("dg.zrRolleL1", grossMitArtikel(l1.herrscher)));
   if (festL1) {
-    kasten.append(el("h3", null, "Woran du es merkst"));
+    kasten.append(el("h3", null, rt("dg.zrMerkst")));
     kasten.append(el("p", null, festL1));
     const festL2 = l2 && l2.herrscher !== l1.herrscher &&
-                   konkret(l2.herrscher, `${grossMitArtikel(l2.herrscher)} führt die kleinere Periode und`);
+                   konkret(l2.herrscher, rt("dg.zrRolleL2", grossMitArtikel(l2.herrscher)));
     if (festL2) kasten.append(el("p", null, festL2));
   }
 
-  kasten.append(el("p", "kucukNot",
-    "Die Übergänge sind die eigentlichen Stellen: Wo eine Periode endet und die nächste beginnt, " +
-    "ändert sich der Ton, oft binnen weniger Wochen. Schau in der Tafel nach, wann das als Nächstes ansteht."));
+  kasten.append(el("p", "kucukNot", rt("dg.zrNote")));
 }
 
 /* ------------------------------------------------- Antiszien: Bedeutung */
 
-const PLANET_KURZ = {
-  "Sonne":   "Selbstbild und Rang", "Mond":    "Gemüt und Herkunft",
-  "Merkur":  "Denken und Sprechen", "Venus":   "Zuneigung und Geschmack",
-  "Mars":    "Antrieb und Zorn",    "Jupiter": "Zuversicht und Maß",
-  "Saturn":  "Ernst und Grenze",    "ASC":     "Auftreten und Leib",
-  "Aszendent": "Auftreten und Leib","MC":      "Beruf und Ruf"
-};
+/* Die Kurzformel je Planet steht in der Sprachtafel. */
+const kurzText = key => key ? rt("dg.kurz." + key) : null;
 
 function antiszienDeutung(kasten) {
   const tafel = $("#azHoroskopCikti");
@@ -239,91 +213,51 @@ function antiszienDeutung(kasten) {
 
   kasten.hidden = false;
   kasten.innerHTML = "";
-  kasten.append(el("h3", null, "Was das heißt"));
-  kasten.append(el("p", null,
-    "Antiszien sind Schattenzwillinge. Spiegelt man einen Grad an der Sonnenwendachse — " +
-    "0° Krebs gegenüber 0° Steinbock —, so hat der gespiegelte Punkt dieselbe Deklination und " +
-    "denselben Tagbogen: Die Sonne stünde dort gleich hoch und gleich lang am Himmel. " +
-    "Zwei solche Punkte sind verbunden, ohne einander zu sehen — sie bilden keinen sichtbaren " +
-    "Aspekt und wirken doch aufeinander."));
-  kasten.append(el("p", null,
-    "Die alte Lesart: Das <b>Antiszion</b> ist die verborgene Freundschaft — zwei Kräfte arbeiten " +
-    "zusammen, ohne dass es von außen erkennbar wäre. Das <b>Kontra-Antiszion</b>, gespiegelt an der " +
-    "Tag-und-Nacht-Gleiche, gilt als die verdeckte Gegnerschaft: etwas hemmt sich gegenseitig, " +
-    "und niemand sieht, woran es liegt.".replace(/<\/?b>/g, "")));
+  kasten.append(el("h3", null, rt("dg.wasHeisst")));
+  kasten.append(el("p", null, rt("dg.azText1")));
+  kasten.append(el("p", null, rt("dg.azText2")));
 
   const funde = [...tafel.querySelectorAll(".naheDranItem")].map(x => x.innerText.trim());
   if (!funde.length) {
-    kasten.append(el("p", "kucukNot",
-      "In deinem Horoskop fällt kein Punkt auf den Schattenzwilling eines anderen — " +
-      "nichts arbeitet hier im Verborgenen mit- oder gegeneinander. Das ist der häufigere Fall."));
+    kasten.append(el("p", "kucukNot", rt("dg.azKeine")));
     return;
   }
 
-  kasten.append(el("h3", null, funde.length > 1 ? "Deine verborgenen Verbindungen" : "Deine verborgene Verbindung"));
+  kasten.append(el("h3", null, rt(funde.length > 1 ? "dg.azTitelMehr" : "dg.azTitelEine")));
   const liste = el("ul", "deutungListe");
   funde.forEach(f => {
     const kontra = /Kontra/i.test(f);
-    const namen = [...new Set((f.match(/(Sonne|Mond|Merkur|Venus|Mars|Jupiter|Saturn|Aszendent|ASC|MC)/g) || []))];
+    /* Die Namen im Fundtext stehen in der eingestellten Sprache, darum
+       wird die Liste aus den aktuellen Tafeln gebaut statt fest verdrahtet. */
+    const kandidaten = [...REIHE.map(k => PLANET[k].name),
+                        rt("achse.asc"), rt("achse.mc"), "ASC", "MC", "Aszendent"]
+      .filter(Boolean).sort((a, b) => b.length - a.length);
+    const namen = [];
+    for (const n of kandidaten) {
+      if (f.includes(n) && !namen.some(x => x.includes(n) || n.includes(x))) namen.push(n);
+    }
     const li = el("li");
     if (namen.length >= 2) {
       const [a, b] = namen;
-      li.innerHTML = `<b>${a} und ${b}</b> — ${PLANET_KURZ[a] || a} trifft auf ${PLANET_KURZ[b] || b}. ` +
-        (kontra
-          ? "Die beiden hemmen einander verdeckt: die Reibung ist da, aber sie zeigt sich nie dort, wo sie entsteht."
-          : "Die beiden arbeiten zusammen, ohne dass man es von außen sieht; was dem einen gelingt, nützt dem anderen still.");
+      li.innerHTML = rt("dg.azZeile", a, b,
+        kurzText(schluesselVonAnzeige(a)) || a, kurzText(schluesselVonAnzeige(b)) || b, kontra);
     } else {
       li.textContent = f;
     }
     liste.appendChild(li);
   });
   kasten.append(liste);
-  kasten.append(el("p", "kucukNot",
-    "Je enger der Gradabstand, desto deutlicher. Unter einem Grad gilt die Verbindung als eng."));
+  kasten.append(el("p", "kucukNot", rt("dg.azEng")));
 
-  kasten.append(el("h3", null, "Wie man damit umgeht"));
-  kasten.append(el("p", null,
-    "Antiszien erklären das Unerklärliche im Horoskop: eine Anziehung ohne Aspekt, " +
-    "eine Hemmung, für die sich kein Grund findet, zwei Lebensbereiche, die immer " +
-    "gemeinsam auftreten, obwohl sie nichts miteinander zu tun haben. Wer die Deutung " +
-    "eines Horoskops nicht rundbekommt, sieht klassisch als Erstes hier nach."));
-  kasten.append(el("p", null,
-    "Die Spiegelachse ist die der Sonnenwenden: 0° Krebs und 0° Steinbock, die längste " +
-    "und die kürzeste Nacht. Zwei gespiegelte Grade teilen sich denselben Tagbogen — " +
-    "deshalb heißt es in den alten Texten, sie hörten einander, ohne sich zu sehen. " +
-    "Das Kontra-Antiszion spiegelt stattdessen an 0° Widder und 0° Waage, der Achse " +
-    "der Tagundnachtgleiche; es gilt als die ungünstigere der beiden Spiegelungen."));
-  kasten.append(el("p", "kucukNot",
-    "Praktisch: Ein Planet auf dem Antiszion eines anderen wirkt wie eine stille " +
-    "Konjunktion — man merkt sie an den Folgen, nicht an der Konstellation."));
+  kasten.append(el("h3", null, rt("dg.azUmgang")));
+  kasten.append(el("p", null, rt("dg.azUmgang1")));
+  kasten.append(el("p", null, rt("dg.azUmgang2")));
+  kasten.append(el("p", "kucukNot", rt("dg.azPraktisch")));
 }
 
 /* --------------------------------------------- Profektionen: Bedeutung */
 
-/* Was ein Planet mitbringt, wenn er durch ein Haus zieht. */
-const TRANSIT_WIRKUNG = {
-  sonne:   "bringt Licht und Sichtbarkeit — was hier liegt, wird gesehen, auch von anderen",
-  mond:    "bringt Bewegung und Stimmung — es rührt sich etwas, hält aber nicht von selbst",
-  merkur:  "bringt Gespräche, Papiere und Wege — hier wird verhandelt und geschrieben",
-  venus:   "bringt Entgegenkommen und leichtere Umstände — hier geht etwas gütlich aus",
-  mars:    "bringt Hitze und Entschluss — hier wird etwas durchgeschnitten, im Guten wie im Schlechten",
-  jupiter: "bringt Zuwachs, Gönner und Spielraum — hier geht das Jahr auf",
-  saturn:  "bringt Ernst, Verzögerung und Gewicht — hier wird gearbeitet oder verzichtet"
-};
-const TRANSIT_DAUER = {
-  mond:"zweieinhalb Tage", merkur:"zwei bis drei Wochen", venus:"knapp einen Monat",
-  sonne:"einen Monat", mars:"anderthalb Monate", jupiter:"ein Jahr", saturn:"zweieinhalb Jahre"
-};
-
-const HERR_IM_JAHR = {
-  "Sonne":   "Es geht ums Gesehenwerden. Was du tust, geschieht dieses Jahr vor Zeugen — such dir die Zeugen aus.",
-  "Mond":    "Ein Jahr der Wechsel und des Gemüts. Wohnung, Familie, Stimmungen; wenig bleibt, wo es war.",
-  "Merkur":  "Ein Jahr der Verhandlungen. Papier, Wege, Gespräche; wer dieses Jahr schweigt, verliert.",
-  "Venus":   "Ein Jahr der Bindung und der Form. Beziehungen, Kunst, Geld, das über Menschen kommt.",
-  "Mars":    "Ein Jahr des Schnitts. Es wird entschieden, gestritten, gearbeitet; halbe Sachen halten nicht.",
-  "Jupiter": "Ein Jahr der Erweiterung. Gönner, Recht, Reise, Zuwachs — und die Versuchung, zu viel zu nehmen.",
-  "Saturn":  "Ein Jahr der Prüfung. Es geht langsam, es kostet, und was dabei entsteht, hält lange."
-};
+/* Wirkung, Dauer und Jahresthema stehen in der Sprachtafel. */
 
 function profektionenDeutung(kasten) {
   const tafel = $("#pfCikti");
@@ -331,40 +265,31 @@ function profektionenDeutung(kasten) {
 
   kasten.hidden = false;
   kasten.innerHTML = "";
-  kasten.append(el("h3", null, "Was das heißt"));
-  kasten.append(el("p", null,
-    "Profektion heißt Vorrücken. Mit jedem Geburtstag wandert der Aszendent ein ganzes " +
-    "Zeichen weiter — ein Jahr, ein Haus. Das Haus, auf das er fällt, gibt dem Jahr sein " +
-    "Thema; der Herrscher dieses Zeichens wird zum Herrn des Jahres. Nach zwölf Jahren ist " +
-    "der Kreis geschlossen und beginnt von vorn, eine Etage höher."));
-  kasten.append(el("p", null,
-    "Es ist die sparsamste Jahrestechnik, die es gibt: Sie braucht nur den Aszendenten und " +
-    "dein Alter. Gerade deshalb ist sie robust — sie irrt nicht an einer ungenauen Geburtszeit, " +
-    "solange das Zeichen des Aszendenten stimmt."));
+  kasten.append(el("h3", null, rt("dg.wasHeisst")));
+  kasten.append(el("p", null, rt("pf.text1")));
+  kasten.append(el("p", null, rt("pf.text2")));
 
   const pr = profektionJetzt();
   if (!pr) {
-    kasten.append(el("p", "kucukNot", "Ohne vollständige Geburtsangaben lässt sich das Jahreshaus nicht bestimmen."));
+    kasten.append(el("p", "kucukNot", rt("pf.ohneAngaben")));
     return;
   }
-  kasten.append(el("h3", null, "Dein laufendes Jahr"));
+  kasten.append(el("h3", null, rt("pf.laufend")));
   const p1 = el("p");
-  p1.innerHTML = `Mit ${pr.alter} Jahren steht dein <b>${pr.haus}. Haus</b> im Jahr, ` +
-    `${pr.glyph} ${pr.name}, und Herr des Jahres ist <b>${pr.herr}</b>. ` +
-    `Das Thema: ${pr.thema}.`;
+  p1.innerHTML = rt("pf.laufendSatz", pr.alter, ordnung(pr.haus, true), pr.glyph, pr.name, pr.herr, pr.thema);
   kasten.append(p1);
-  if (HERR_IM_JAHR[pr.herr]) kasten.append(el("p", null, HERR_IM_JAHR[pr.herr]));
+  const herrKeyJahr = schluesselVonAnzeige(pr.herr);
+  if (herrKeyJahr) kasten.append(el("p", null, rt("pf.jahr." + herrKeyJahr)));
 
-  const fest = konkret(pr.herr, `Herr des Jahres ist ${mitArtikel(pr.herr)}; er`);
+  const fest = konkret(pr.herr, rt("pf.rolle", mitArtikel(pr.herr)));
   if (fest) {
-    kasten.append(el("h3", null, "Wo das Jahr dich trifft"));
+    kasten.append(el("h3", null, rt("pf.wo")));
     kasten.append(el("p", null, fest));
     const r = radix();
     if (r && r.planeten[pr.herr.toLowerCase()]) {
       const hp = r.planeten[pr.herr.toLowerCase()];
       kasten.append(el("p", "kucukNot",
-        `Lies das zusammen: Das Thema des Jahres ist ${pr.thema}; ausgetragen wird es dort, ` +
-        `wo ${mitArtikel(pr.herr)} in deinem Horoskop steht — ${HAUS[hp.haus - 1]}.`));
+        rt("pf.zusammen", pr.thema, mitArtikel(pr.herr), HAUS[hp.haus - 1])));
     }
   }
   /* ------------------------------------------------- Wer gerade durchzieht */
@@ -375,25 +300,18 @@ function profektionenDeutung(kasten) {
     const herrKey = pr.herr.toLowerCase();
     const herrZieht = tr.alle[herrKey] || null;
 
-    kasten.append(el("h3", null, "Wer gerade durch das Haus des Jahres zieht"));
-    kasten.append(el("p", null,
-      `Das Zeichen des Jahres ist ${pr.glyph} ${pr.name}. Jeder Planet, der jetzt dort ` +
-      `hindurchläuft, rührt das Thema des Jahres unmittelbar an — die Profektion sagt, worum ` +
-      `es geht, der Transit sagt, wann es sich meldet.`));
+    kasten.append(el("h3", null, rt("pf.werZieht")));
+    kasten.append(el("p", null, rt("pf.werZiehtText", pr.glyph, pr.name)));
 
     if (!imHaus.length) {
-      kasten.append(el("p", null,
-        "Zurzeit zieht keiner der sieben durch dieses Zeichen. Das Jahresthema läuft im " +
-        "Hintergrund weiter, ohne dass es gerade angestoßen wird."));
+      kasten.append(el("p", null, rt("pf.keiner")));
     } else {
       const ul = el("ul", "deutungListe");
       imHaus.sort((a, b) => a.grad - b.grad).forEach(x => {
         const istHerr = x.key === herrKey;
         const li = el("li", istHerr ? "dafuer" : null);
-        li.innerHTML = `<b>${PLANET[x.key].g} ${PLANET[x.key].name}</b> auf ` +
-          `${x.grad.toFixed(1)}° — ${TRANSIT_WIRKUNG[x.key]}. ` +
-          `Er bleibt dort etwa ${TRANSIT_DAUER[x.key]}.` +
-          (istHerr ? ` <b>Und das ist zugleich der Herr des Jahres selbst.</b>` : "");
+        li.innerHTML = rt("pf.transitZeile", PLANET[x.key].g, PLANET[x.key].name,
+          zahl(x.grad), rt("pf.wirkung." + x.key), rt("pf.dauer." + x.key), istHerr);
         ul.appendChild(li);
       });
       kasten.append(ul);
@@ -402,26 +320,17 @@ function profektionenDeutung(kasten) {
     /* Der Sonderfall, nach dem ausdrücklich gefragt wird. */
     if (herrZieht && herrZieht.zeichen === pr.zeichen) {
       const p1 = el("p", "transitStark");
-      p1.innerHTML = `<b>Der Herr des Jahres zieht selbst durch das Haus des Jahres.</b> ` +
-        `Die Technik kennt kaum eine deutlichere Ansage: Was dieses Jahr bedeutet — ` +
-        `${pr.thema} —, kommt jetzt zur Sache und nicht irgendwann. ` +
-        `Was in dieser Zeit angefangen oder entschieden wird, trägt die Handschrift des Jahres.`;
+      p1.innerHTML = rt("pf.herrImHaus", pr.thema);
       kasten.append(p1);
     } else if (herrZieht) {
       const p2 = el("p");
-      p2.innerHTML = `Der Herr des Jahres, ${mitArtikel(pr.herr)}, läuft zurzeit nicht durch ` +
-        `das Zeichen des Jahres, sondern durch ${ZEICHEN[herrZieht.zeichen].glyph} ` +
-        `${ZEICHEN[herrZieht.zeichen].name} — bei dir ${HAUS[herrZieht.haus - 1]}. ` +
-        `Von dort aus wirkt er aufs Jahresthema, aber mittelbar: über diesen Bereich, ` +
-        `nicht unmittelbar.`;
+      p2.innerHTML = rt("pf.herrAnderswo", mitArtikel(pr.herr),
+        ZEICHEN[herrZieht.zeichen].glyph, ZEICHEN[herrZieht.zeichen].name, HAUS[herrZieht.haus - 1]);
       kasten.append(p2);
     }
   }
 
-  kasten.append(el("p", "kucukNot",
-    "Das Profektionsjahr läuft von Geburtstag zu Geburtstag. Wo der Herr des Jahres im " +
-    "Geburtshoroskop steht — gut oder schlecht gestellt, in welchem Haus —, entscheidet, " +
-    "wie leicht das Thema sich einlöst."));
+  kasten.append(el("p", "kucukNot", rt("pf.note")));
 }
 
 /* ------------------------------------------------------------ Verdrahtung */
@@ -438,8 +347,17 @@ function haenge(ciktiWahl, kastenId, zeichner) {
   }
   const neu = () => { try { zeichner(kasten); } catch (e) { kasten.hidden = true; } };
   new MutationObserver(neu).observe(cikti, { childList: true, subtree: true, attributes: true, attributeFilter: ["hidden"] });
+  neuzeichner.push(neu);
   neu();
 }
+
+/* Beim Sprachwechsel alles neu schreiben: Die Kästen stehen schon im
+   Baum, und die Rechner melden den Wechsel nicht an den Beobachter. */
+const neuzeichner = [];
+window.addEventListener("sprache-geaendert", ev => {
+  setzeRestSprache(ev.detail);
+  setTimeout(() => neuzeichner.forEach(f => { try { f(); } catch (e) {} }), 60);
+});
 
 haenge("#lbCikti", "lbDeutung", lebensbogenDeutung);
 haenge("#zrCikti", "zrDeutung", zrDeutung);

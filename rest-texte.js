@@ -8,6 +8,218 @@
 
 export const R = {
   de: {
+    /* ------------------------------------------ Das Horoskop */
+    "hk.sekt.tag":"Eine <b>Taggeburt</b>: Die Sonne stand über dem Horizont. Die Partei des Tages " +
+      "führt — Sonne, Jupiter und Saturn wirken hier gefälliger, Mond, Venus und Mars fordernder.",
+    "hk.sekt.nacht":"Eine <b>Nachtgeburt</b>: Die Sonne stand unter dem Horizont. Die Partei der " +
+      "Nacht führt — Mond, Venus und Mars wirken hier gefälliger, Sonne, Jupiter und Saturn fordernder.",
+    "hk.planetSatz": (was, art, ort) => `${was} zeigen sich ${art}, ${ort}.`,
+    "hk.planetWuerde": (text) => ` Der Planet steht ${text}.`,
+    "hk.geruest":"Das Gerüst",
+    "hk.steigtAuf": (glyph, zeichen) => `${glyph} ${zeichen} steigt auf`,
+    "hk.geruestNot": (asc, grad, mcGlyph, mc, herr) =>
+      `${asc} ${grad}° · MC ${mcGlyph} ${mc}` + (herr ? ` · Herr des Horoskops: ${herr}` : ""),
+    "hk.siebenPlaneten":"Die sieben Planeten",
+    "hk.tab.planet":"Planet", "hk.tab.zeichen":"Zeichen", "hk.tab.haus":"Haus", "hk.tab.wuerde":"Würde",
+    "hk.wasSagen":"Was die Planeten sagen",
+    "hk.planetKopf": (glyph, name, zGlyph, zeichen, haus) =>
+      `<span class="glyph">${glyph}</span> <b>${name}</b> in ${zGlyph} ${zeichen}, ${haus} Haus`,
+    "hk.aspekte":"Die engsten Aspekte",
+    "hk.transitText":"Wo die langsamen Planeten heute stehen und was sie in deinem Horoskop " +
+      "berühren. Mars bleibt Wochen, Jupiter Monate, Saturn Jahre — deshalb zählen hier nur diese drei.",
+    "hk.transitZeile": (g, name, zGlyph, zeichen, ort) =>
+      `<b>${g} ${name}</b> läuft durch ${zGlyph} ${zeichen} — bei dir ${ort}.`,
+    "hk.beruehrt":"Was davon dein Geburtshoroskop gerade berührt:",
+    "hk.trefferAchse": (transit, aspekt, natal, orbis, ton) =>
+      `<b>${transit} ${aspekt} ${natal}</b> (${orbis}°) — die Achse selbst wird angesprochen, ${ton}.`,
+    "hk.treffer": (transit, aspekt, natal, orbis, was, ton) =>
+      `<b>${transit} ${aspekt} ${natal}</b> (${orbis}°) — ${was} — ${ton} angesprochen.`,
+    "hk.keinTreffer":"Zurzeit berührt keiner der drei dein Horoskop eng genug, um ihn zu nennen. Eine ruhige Strecke.",
+    "hk.progression":"Sekundäre Progression — der innere Kalender",
+    "hk.progressionText":"Ein Tag nach der Geburt gilt für ein Lebensjahr. Die progressierte " +
+      "Sonne rückt etwa ein Grad im Jahr und wechselt alle dreißig Jahre das Zeichen; der " +
+      "progressierte Mond braucht rund achtundzwanzig Jahre für den ganzen Kreis. Beide " +
+      "beschreiben keine Ereignisse, sondern das innere Wetter.",
+    "hk.progSonne": (glyph, zeichen, grad, haus, art, ort) =>
+      `<b>Progressierte Sonne</b> in ${glyph} ${zeichen} ${grad}°, ${haus} Haus — worauf dein ` +
+      `Wille in diesem Lebensabschnitt zielt: ${art}, ${ort}.`,
+    "hk.progMond": (glyph, zeichen, haus, ort) =>
+      `<b>Progressierter Mond</b> in ${glyph} ${zeichen}, ${haus} Haus — woran du dich zurzeit ` +
+      `aufhältst: ${ort}. Er bleibt gut zwei Jahre je Zeichen.`,
+    "hk.progPhase": (phase) => `<b>Progressierte Mondphase</b>: ${phase}.`,
+    "pf.note":"Das Profektionsjahr läuft von Geburtstag zu Geburtstag. Wo der Herr des Jahres im Geburtshoroskop steht — gut oder schlecht gestellt, in welchem Haus —, entscheidet, wie leicht das Thema sich einlöst.",
+    "pf.wirkung.sonne":"bringt Licht und Sichtbarkeit — was hier liegt, wird gesehen, auch von anderen",
+    "pf.wirkung.mond":"bringt Bewegung und Stimmung — es rührt sich etwas, hält aber nicht von selbst",
+    "pf.wirkung.merkur":"bringt Gespräche, Papiere und Wege — hier wird verhandelt und geschrieben",
+    "pf.wirkung.venus":"bringt Entgegenkommen und leichtere Umstände — hier geht etwas gütlich aus",
+    "pf.wirkung.mars":"bringt Hitze und Entschluss — hier wird etwas durchgeschnitten, im Guten wie im Schlechten",
+    "pf.wirkung.jupiter":"bringt Zuwachs, Gönner und Spielraum — hier geht das Jahr auf",
+    "pf.wirkung.saturn":"bringt Ernst, Verzögerung und Gewicht — hier wird gearbeitet oder verzichtet",
+    "pf.dauer.mond":"zweieinhalb Tage", "pf.dauer.merkur":"zwei bis drei Wochen",
+    "pf.dauer.venus":"knapp einen Monat", "pf.dauer.sonne":"einen Monat",
+    "pf.dauer.mars":"anderthalb Monate", "pf.dauer.jupiter":"ein Jahr", "pf.dauer.saturn":"zweieinhalb Jahre",
+    "pf.jahr.sonne":"Es geht ums Gesehenwerden. Was du tust, geschieht dieses Jahr vor Zeugen — such dir die Zeugen aus.",
+    "pf.jahr.mond":"Ein Jahr der Wechsel und des Gemüts. Wohnung, Familie, Stimmungen; wenig bleibt, wo es war.",
+    "pf.jahr.merkur":"Ein Jahr der Verhandlungen. Papier, Wege, Gespräche; wer dieses Jahr schweigt, verliert.",
+    "pf.jahr.venus":"Ein Jahr der Bindung und der Form. Beziehungen, Kunst, Geld, das über Menschen kommt.",
+    "pf.jahr.mars":"Ein Jahr des Schnitts. Es wird entschieden, gestritten, gearbeitet; halbe Sachen halten nicht.",
+    "pf.jahr.jupiter":"Ein Jahr der Erweiterung. Gönner, Recht, Reise, Zuwachs — und die Versuchung, zu viel zu nehmen.",
+    "pf.jahr.saturn":"Ein Jahr der Prüfung. Es geht langsam, es kostet, und was dabei entsteht, hält lange.",
+    "pf.text1":"Profektion heißt Vorrücken. Mit jedem Geburtstag wandert der Aszendent ein " +
+      "ganzes Zeichen weiter — ein Jahr, ein Haus. Das Haus, auf das er fällt, gibt dem Jahr " +
+      "sein Thema; der Herrscher dieses Zeichens wird zum Herrn des Jahres. Nach zwölf Jahren " +
+      "ist der Kreis geschlossen und beginnt von vorn, eine Etage höher.",
+    "pf.text2":"Es ist die sparsamste Jahrestechnik, die es gibt: Sie braucht nur den " +
+      "Aszendenten und dein Alter. Gerade deshalb ist sie robust — sie irrt nicht an einer " +
+      "ungenauen Geburtszeit, solange das Zeichen des Aszendenten stimmt.",
+    "pf.ohneAngaben":"Ohne vollständige Geburtsangaben lässt sich das Jahreshaus nicht bestimmen.",
+    "pf.laufend":"Dein laufendes Jahr",
+    "pf.laufendSatz": (alter, haus, glyph, name, herr, thema) =>
+      `Mit ${alter} Jahren steht dein <b>${haus} Haus</b> im Jahr, ${glyph} ${name}, und Herr ` +
+      `des Jahres ist <b>${herr}</b>. Das Thema: ${thema}.`,
+    "pf.wo":"Wo das Jahr dich trifft",
+    "pf.rolle": (herr) => `Herr des Jahres ist ${herr}; er`,
+    "pf.zusammen": (thema, herr, ort) =>
+      `Lies das zusammen: Das Thema des Jahres ist ${thema}; ausgetragen wird es dort, wo ` +
+      `${herr} in deinem Horoskop steht — ${ort}.`,
+    "pf.werZieht":"Wer gerade durch das Haus des Jahres zieht",
+    "pf.werZiehtText": (glyph, name) =>
+      `Das Zeichen des Jahres ist ${glyph} ${name}. Jeder Planet, der jetzt dort hindurchläuft, ` +
+      `rührt das Thema des Jahres unmittelbar an — die Profektion sagt, worum es geht, der ` +
+      `Transit sagt, wann es sich meldet.`,
+    "pf.keiner":"Zurzeit zieht keiner der sieben durch dieses Zeichen. Das Jahresthema läuft im " +
+      "Hintergrund weiter, ohne dass es gerade angestoßen wird.",
+    "pf.transitZeile": (g, name, grad, wirkung, dauer, istHerr) =>
+      `<b>${g} ${name}</b> auf ${grad}° — ${wirkung}. Er bleibt dort etwa ${dauer}.` +
+      (istHerr ? ` <b>Und das ist zugleich der Herr des Jahres selbst.</b>` : ""),
+    "pf.herrImHaus": (thema) =>
+      `<b>Der Herr des Jahres zieht selbst durch das Haus des Jahres.</b> Die Technik kennt ` +
+      `kaum eine deutlichere Ansage: Was dieses Jahr bedeutet — ${thema} —, kommt jetzt zur ` +
+      `Sache und nicht irgendwann. Was in dieser Zeit angefangen oder entschieden wird, trägt ` +
+      `die Handschrift des Jahres.`,
+    "pf.herrAnderswo": (herr, glyph, zeichen, ort) =>
+      `Der Herr des Jahres, ${herr}, läuft zurzeit nicht durch das Zeichen des Jahres, sondern ` +
+      `durch ${glyph} ${zeichen} — bei dir ${ort}. Von dort aus wirkt er aufs Jahresthema, aber ` +
+      `mittelbar: über diesen Bereich, nicht unmittelbar.`,
+    /* Die zwölf Kapitel des Zodiacal Releasing, nach Zeichenindex. */
+    "dg.kapitel":[
+      "ein Kapitel des Anfangens. Man wird geschoben, ehe man den Weg kennt; vieles beginnt, nicht alles bleibt.",
+      "ein Kapitel des Sammelns. Langsam, gegenständlich, auf Besitz und Sicherheit hin — und schwer wieder in Bewegung zu bringen.",
+      "ein Kapitel der Wege und Worte. Viele Kontakte, viel Lernen, viel Hin und Her; die Kunst ist, etwas davon zu Ende zu bringen.",
+      "ein Kapitel des Hauses. Herkunft, Familie, Wohnort und Gemüt stehen im Vordergrund; das Innere entscheidet über das Äußere.",
+      "ein Kapitel des Hervortretens. Man wird gesehen, gefragt, gefordert — und muss lernen, die Aufmerksamkeit zu tragen.",
+      "ein Kapitel der Arbeit und der Ordnung. Dienst, Gesundheit, Handwerk, das Kleinteilige; unspektakulär und tragend.",
+      "ein Kapitel der Anderen. Ehe, Verträge, Ausgleich, auch offene Gegnerschaft; wenig entscheidet sich allein.",
+      "ein Kapitel der Tiefe. Verborgenes kommt hoch, Bindungen werden ernst, Verluste und Erbschaften wiegen schwer.",
+      "ein Kapitel der Weite. Fremde, Lehre, Glaube, Recht; der Horizont rückt hinaus, notfalls indem man selbst fortgeht.",
+      "ein Kapitel des Aufbaus. Amt, Verantwortung, Ausdauer; es geht langsam voran und bleibt dann stehen.",
+      "ein Kapitel der Bünde. Freundschaften, Gruppen, Vorhaben, die über einen selbst hinausgehen; man gehört dazu und steht doch daneben.",
+      "ein Kapitel des Auflösens. Rückzug, Mitleid, Traum, auch Verwirrung; Altes geht zu Ende, ehe Neues Gestalt hat."
+    ],
+    /* --------------------------- Deutungen neben Bogen, ZR, Antiszien */
+    "dg.wuerde.Domizil":"in eigenem Zeichen und damit stark",
+    "dg.wuerde.Erhöhung":"erhöht und damit über sein Maß hinaus geachtet",
+    "dg.wuerde.Exil":"im Exil und damit gegen den Strich arbeitend",
+    "dg.wuerde.Fall":"im Fall und damit schwer zu seinem Recht kommend",
+    "dg.wuerde.—":"ohne besondere Würde",
+    "dg.konkret": (rolle, glyph, zeichen, haus, ort, wuerde) =>
+      `${rolle} steht bei dir in ${glyph} ${zeichen}, im ${haus} Haus — ${ort} —, und zwar ` +
+      `${wuerde}. Dort wird sich zeigen, was diese Zeit bringt.`,
+    "dg.wasHeisst":"Was das heißt",
+    "dg.pr.sonne":"Sichtbarkeit — Amt, Anerkennung, das Hervortreten vor anderen; und die Rechnung, die dafür kommt",
+    "dg.pr.mond":"das Häusliche und das Bewegliche — Wohnort, Familie, Gemüt, ein Wechsel, der von innen anfängt",
+    "dg.pr.merkur":"Papier und Wort — Verträge, Schrift, Handel, Lernen, Wege, die man mehrmals geht",
+    "dg.pr.venus":"Bindung und Wohlgefallen — Zuneigung, Kunst, Geld, das leicht kommt, Versöhnung",
+    "dg.pr.mars":"der Schnitt — Arbeit, Streit, Entschluss, Trennung; was nicht mehr wartet",
+    "dg.pr.jupiter":"Erweiterung — Recht, Gönner, Reise, Ansehen; und die Gefahr, sich zu viel vorzunehmen",
+    "dg.pr.saturn":"Ernst — Verantwortung, Verzicht, Prüfung, das Bleibende; was Zeit verlangt und Zeit gibt",
+    "dg.pr.mc":"die Achse des Amtes selbst rückt vor: die Stellung in der Welt ordnet sich neu",
+    "dg.pr.asc":"die Achse der Person selbst rückt vor: Leib, Auftritt und Selbstbild ordnen sich neu",
+    "dg.pr.sonst": (name) => `das Thema von ${name}`,
+    "dg.sg.mc":"im Beruf und im Ruf",
+    "dg.sg.ic":"im Haus, in der Herkunft und bei den Wurzeln",
+    "dg.sg.asc":"am eigenen Leib und im Auftreten",
+    "dg.sg.desc":"beim Anderen — Ehe, Verträge, offene Gegner",
+    "dg.sg.sonst": (name) => `bei ${name}`,
+    "dg.ton.Konjunktion":"unvermittelt und ohne Umweg",
+    "dg.ton.Quadrat":"unter Reibung, gegen einen Widerstand",
+    "dg.ton.Opposition":"von außen, durch einen anderen Menschen",
+    "dg.ton.Trigon":"leicht, fast von selbst",
+    "dg.ton.Sextil":"als Gelegenheit, die man ergreifen muss",
+    "dg.lbText":"Primärdirektionen messen nicht, was geschieht, sondern wann etwas fällig wird. " +
+      "Der Himmel dreht sich nach der Geburt weiter; ein Grad dieser Drehung gilt für ein " +
+      "Lebensjahr. Wo ein Planet dabei auf eine Achse trifft, klopft sein Thema an — ob " +
+      "geöffnet wird, steht auf einem anderen Blatt.",
+    "dg.lbLeer":"Im gewählten Altersfenster liegt nichts mehr vor dir.",
+    "dg.lbTitelMehr":"Die nächsten Fälligkeiten", "dg.lbTitelEine":"Die nächste Fälligkeit",
+    "dg.wannJahre": (n) => `mit ${n} Jahren`,
+    "dg.wannJetzt":"gerade jetzt",
+    "dg.wannMonate": (n) => `in etwa ${n} Monaten`,
+    "dg.wannGut": (n) => `in gut ${n} Jahren`,
+    "dg.lbZeile": (wann, alter, was, wo, ton) => `<b>${wann}</b> (mit ${alter}): ${was} — ${wo}, ${ton}.`,
+    "dg.lbAnklopft":"Was da genau anklopft",
+    "dg.lbRolle": (name) => `${name} bringt die nächste Direktion und`,
+    "dg.lbNote":"Eine Direktion ist ein Termin, kein Urteil. Zwei Menschen mit demselben Termin " +
+      "erleben Verschiedenes — die Frage ist immer, was zu diesem Zeitpunkt schon vorbereitet war.",
+    "dg.zrText":"Zodiacal Releasing teilt das Leben in Kapitel, nicht in Ereignisse. Vom Los des " +
+      "Glücks aus werden Zeichen für Zeichen Perioden abgezählt, jede so lang wie die Jahre ihres " +
+      "Herrschers. Die erste Ebene sagt, worum es über Jahre hinweg geht; die zweite, in welcher " +
+      "Tonart es gerade gespielt wird; die dritte färbt die Monate.",
+    "dg.zrOhneDatum":"Ohne Geburtsdatum lässt sich nicht sagen, wo du gerade stehst — die Tafel oben gilt trotzdem.",
+    "dg.zrWoDuStehst":"Wo du gerade stehst",
+    "dg.zrL1": (von, bis, zeichen, herr, kapitel) =>
+      `<b>Das große Kapitel</b> läuft von deinem ${von} bis zum ${bis} Jahr unter ${zeichen}, ` +
+      `geführt von ${herr}: ${kapitel}`,
+    "dg.zrL2": (von, bis, zeichen, herr, kapitel) =>
+      `<b>Darin die kleinere Periode</b>, von ${von} bis ${bis} Jahren, unter ${zeichen} und ` +
+      `${herr}: ${kapitel} Sie sagt nicht, worum es geht — das sagt das große Kapitel —, sondern ` +
+      `woran man es gerade merkt.`,
+    "dg.zrL3": (glyph, zeichen, herr, bis, kapitel) =>
+      `<b>Und darin die dritte Ebene</b>: ${glyph} ${zeichen} unter ${herr}, noch bis ${bis} ` +
+      `Jahren. ${kapitel} Auf dieser Ebene geht es um Monate, nicht um Jahre — sie färbt die ` +
+      `Tage, ohne das Thema zu ändern.`,
+    "dg.zrEigen":"ein Kapitel eigener Art.", "dg.zrEigenKurz":"eigener Art.",
+    "dg.zrMerkst":"Woran du es merkst",
+    "dg.zrRolleL1": (name) => `${name} führt das große Kapitel und`,
+    "dg.zrRolleL2": (name) => `${name} führt die kleinere Periode und`,
+    "dg.zrNote":"Die Übergänge sind die eigentlichen Stellen: Wo eine Periode endet und die " +
+      "nächste beginnt, ändert sich der Ton, oft binnen weniger Wochen. Schau in der Tafel nach, " +
+      "wann das als Nächstes ansteht.",
+    "dg.kurz.sonne":"Selbstbild und Rang", "dg.kurz.mond":"Gemüt und Herkunft",
+    "dg.kurz.merkur":"Denken und Sprechen", "dg.kurz.venus":"Zuneigung und Geschmack",
+    "dg.kurz.mars":"Antrieb und Zorn", "dg.kurz.jupiter":"Zuversicht und Maß",
+    "dg.kurz.saturn":"Ernst und Grenze", "dg.kurz.asc":"Auftreten und Leib",
+    "dg.kurz.mc":"Beruf und Ruf",
+    "dg.azText1":"Antiszien sind Schattenzwillinge. Spiegelt man einen Grad an der " +
+      "Sonnenwendachse — 0° Krebs gegenüber 0° Steinbock —, so hat der gespiegelte Punkt " +
+      "dieselbe Deklination und denselben Tagbogen: Die Sonne stünde dort gleich hoch und gleich " +
+      "lang am Himmel. Zwei solche Punkte sind verbunden, ohne einander zu sehen — sie bilden " +
+      "keinen sichtbaren Aspekt und wirken doch aufeinander.",
+    "dg.azText2":"Die alte Lesart: Das Antiszion ist die verborgene Freundschaft — zwei Kräfte " +
+      "arbeiten zusammen, ohne dass es von außen erkennbar wäre. Das Kontra-Antiszion, " +
+      "gespiegelt an der Tag-und-Nacht-Gleiche, gilt als die verdeckte Gegnerschaft: etwas hemmt " +
+      "sich gegenseitig, und niemand sieht, woran es liegt.",
+    "dg.azKeine":"In deinem Horoskop fällt kein Punkt auf den Schattenzwilling eines anderen — " +
+      "nichts arbeitet hier im Verborgenen mit- oder gegeneinander. Das ist der häufigere Fall.",
+    "dg.azTitelMehr":"Deine verborgenen Verbindungen", "dg.azTitelEine":"Deine verborgene Verbindung",
+    "dg.azZeile": (a, b, wasA, wasB, kontra) =>
+      `<b>${a} und ${b}</b> — ${wasA} trifft auf ${wasB}. ` +
+      (kontra
+        ? "Die beiden hemmen einander verdeckt: die Reibung ist da, aber sie zeigt sich nie dort, wo sie entsteht."
+        : "Die beiden arbeiten zusammen, ohne dass man es von außen sieht; was dem einen gelingt, nützt dem anderen still."),
+    "dg.azEng":"Je enger der Gradabstand, desto deutlicher. Unter einem Grad gilt die Verbindung als eng.",
+    "dg.azUmgang":"Wie man damit umgeht",
+    "dg.azUmgang1":"Antiszien erklären das Unerklärliche im Horoskop: eine Anziehung ohne " +
+      "Aspekt, eine Hemmung, für die sich kein Grund findet, zwei Lebensbereiche, die immer " +
+      "gemeinsam auftreten, obwohl sie nichts miteinander zu tun haben. Wer die Deutung eines " +
+      "Horoskops nicht rundbekommt, sieht klassisch als Erstes hier nach.",
+    "dg.azUmgang2":"Die Spiegelachse ist die der Sonnenwenden: 0° Krebs und 0° Steinbock, die " +
+      "längste und die kürzeste Nacht. Zwei gespiegelte Grade teilen sich denselben Tagbogen — " +
+      "deshalb heißt es in den alten Texten, sie hörten einander, ohne sich zu sehen. Das " +
+      "Kontra-Antiszion spiegelt stattdessen an 0° Widder und 0° Waage, der Achse der " +
+      "Tagundnachtgleiche; es gilt als die ungünstigere der beiden Spiegelungen.",
+    "dg.azPraktisch":"Praktisch: Ein Planet auf dem Antiszion eines anderen wirkt wie eine " +
+      "stille Konjunktion — man merkt sie an den Folgen, nicht an der Konstellation.",
     "pd.kopf": (profil, sekte, erster) =>
       `Für: ${profil} · ${sekte} — darum beginnt die Reihe mit ${erster}.`,
     "pd.deinFirdar":"Dein Firdar",
@@ -24,13 +236,13 @@ export const R = {
       "Firdaria fragt weder nach Zeichen noch nach Häusern, nur danach, ob die Sonne bei der " +
       "Geburt über dem Horizont stand. Die beiden Mondknoten am Ende führen keine Unterperioden.",
     "pd.amHoroskop": (rolle, glyph, zeichen, haus, ort) =>
-      `${rolle} steht bei dir in ${glyph} ${zeichen}, im ${haus}. Haus — ${ort}. Dort spielt sich ab, was diese Zeit bringt.`,
+      `${rolle} steht bei dir in ${glyph} ${zeichen}, im ${haus} Haus — ${ort}. Dort spielt sich ab, was diese Zeit bringt.`,
     "pd.rolleFd": (name) => `${name}, der Herr dieser Jahre,`,
     "pd.vdKopf": (profil, glyph, grad, ayanamsa) =>
       `Für: ${profil} · Mond siderisch auf ${glyph} ${grad}° · Ayanamsa ${ayanamsa}°`,
     "pd.mondhaus":"Mondhaus der Geburt",
     "pd.mondhausNot": (nr, g, herr, rest) =>
-      `${nr}. von 27 · Herr ${g} ${herr} · bei der Geburt waren davon noch ${rest} Jahre übrig`,
+      `${nr} von 27 · Herr ${g} ${herr} · bei der Geburt waren davon noch ${rest} Jahre übrig`,
     "pd.maha": (g, name, was, von, bis, datum) =>
       `<b>Mahadasha:</b> ${g} ${name} — ${was}. Von ${von} bis ${bis} Jahren, also bis ${datum}.`,
     "pd.antar": (g, name, was, datum) =>
@@ -469,6 +681,216 @@ export const R = {
   },
 
   it: {
+    /* ------------------------------------------ Il tema */
+    "hk.sekt.tag":"Una <b>nascita diurna</b>: il sole stava sopra l'orizzonte. Guida la parte del " +
+      "giorno — Sole, Giove e Saturno agiscono qui più accomodanti, Luna, Venere e Marte più esigenti.",
+    "hk.sekt.nacht":"Una <b>nascita notturna</b>: il sole stava sotto l'orizzonte. Guida la parte " +
+      "della notte — Luna, Venere e Marte agiscono qui più accomodanti, Sole, Giove e Saturno più esigenti.",
+    "hk.planetSatz": (was, art, ort) => `${was} si mostrano ${art}, ${ort}.`,
+    "hk.planetWuerde": (text) => ` Il pianeta sta ${text}.`,
+    "hk.geruest":"L'impianto",
+    "hk.steigtAuf": (glyph, zeichen) => `sorge ${glyph} ${zeichen}`,
+    "hk.geruestNot": (asc, grad, mcGlyph, mc, herr) =>
+      `${asc} ${grad}° · MC ${mcGlyph} ${mc}` + (herr ? ` · signore del tema: ${herr}` : ""),
+    "hk.siebenPlaneten":"I sette pianeti",
+    "hk.tab.planet":"Pianeta", "hk.tab.zeichen":"Segno", "hk.tab.haus":"Casa", "hk.tab.wuerde":"Dignità",
+    "hk.wasSagen":"Che cosa dicono i pianeti",
+    "hk.planetKopf": (glyph, name, zGlyph, zeichen, haus) =>
+      `<span class="glyph">${glyph}</span> <b>${name}</b> in ${zGlyph} ${zeichen}, ${haus} casa`,
+    "hk.aspekte":"Gli aspetti più stretti",
+    "hk.transitText":"Dove stanno oggi i pianeti lenti e che cosa toccano nel tuo tema. Marte " +
+      "resta settimane, Giove mesi, Saturno anni — perciò qui contano solo questi tre.",
+    "hk.transitZeile": (g, name, zGlyph, zeichen, ort) =>
+      `<b>${g} ${name}</b> attraversa ${zGlyph} ${zeichen} — presso di te ${ort}.`,
+    "hk.beruehrt":"Che cosa di ciò tocca ora il tuo tema di nascita:",
+    "hk.trefferAchse": (transit, aspekt, natal, orbis, ton) =>
+      `<b>${transit} ${aspekt} ${natal}</b> (${orbis}°) — è l'asse stesso a essere chiamato in causa, ${ton}.`,
+    "hk.treffer": (transit, aspekt, natal, orbis, was, ton) =>
+      `<b>${transit} ${aspekt} ${natal}</b> (${orbis}°) — ${was} — chiamato in causa ${ton}.`,
+    "hk.keinTreffer":"In questo momento nessuno dei tre tocca il tuo tema abbastanza da vicino da meritare menzione. Un tratto quieto.",
+    "hk.progression":"Progressione secondaria — il calendario interiore",
+    "hk.progressionText":"Un giorno dopo la nascita vale per un anno di vita. Il sole progresso " +
+      "avanza circa un grado all'anno e cambia segno ogni trent'anni; la luna progressa impiega " +
+      "circa ventotto anni per l'intero cerchio. Entrambi non descrivono eventi, ma il tempo interiore.",
+    "hk.progSonne": (glyph, zeichen, grad, haus, art, ort) =>
+      `<b>Sole progresso</b> in ${glyph} ${zeichen} ${grad}°, ${haus} casa — a che cosa mira la ` +
+      `tua volontà in questo tratto di vita: ${art}, ${ort}.`,
+    "hk.progMond": (glyph, zeichen, haus, ort) =>
+      `<b>Luna progressa</b> in ${glyph} ${zeichen}, ${haus} casa — a che cosa ti attieni in ` +
+      `questo momento: ${ort}. Resta poco più di due anni per segno.`,
+    "hk.progPhase": (phase) => `<b>Fase lunare progressa</b>: ${phase}.`,
+    "pf.note":"L'anno di profezione corre di compleanno in compleanno. Come stia il signore dell'anno nel tema di nascita — ben o mal posto, in quale casa — decide quanto facilmente il tema si realizzi.",
+    "pf.wirkung.sonne":"porta luce e visibilità — ciò che sta qui viene visto, anche dagli altri",
+    "pf.wirkung.mond":"porta movimento e umore — qualcosa si muove, ma non si regge da sé",
+    "pf.wirkung.merkur":"porta colloqui, carte e strade — qui si tratta e si scrive",
+    "pf.wirkung.venus":"porta accondiscendenza e circostanze più facili — qui qualcosa si compone",
+    "pf.wirkung.mars":"porta calore e decisione — qui qualcosa viene tagliato, nel bene come nel male",
+    "pf.wirkung.jupiter":"porta accrescimento, protettori e margine — qui l'anno si apre",
+    "pf.wirkung.saturn":"porta serietà, ritardo e peso — qui si lavora o si rinuncia",
+    "pf.dauer.mond":"due giorni e mezzo", "pf.dauer.merkur":"due o tre settimane",
+    "pf.dauer.venus":"poco meno di un mese", "pf.dauer.sonne":"un mese",
+    "pf.dauer.mars":"un mese e mezzo", "pf.dauer.jupiter":"un anno", "pf.dauer.saturn":"due anni e mezzo",
+    "pf.jahr.sonne":"Si tratta dell'essere visti. Ciò che fai avviene quest'anno davanti a testimoni — sceglili tu.",
+    "pf.jahr.mond":"Un anno di mutamenti e di umori. Casa, famiglia, stati d'animo; poco resta dov'era.",
+    "pf.jahr.merkur":"Un anno di trattative. Carte, strade, conversazioni; chi quest'anno tace, perde.",
+    "pf.jahr.venus":"Un anno del legame e della forma. Relazioni, arte, denaro che viene tramite persone.",
+    "pf.jahr.mars":"Un anno del taglio. Si decide, si litiga, si lavora; le mezze misure non reggono.",
+    "pf.jahr.jupiter":"Un anno di ampliamento. Protettori, diritto, viaggio, accrescimento — e la tentazione di prendere troppo.",
+    "pf.jahr.saturn":"Un anno di prova. Va lentamente, costa, e ciò che ne nasce dura a lungo.",
+    "pf.text1":"Profezione significa avanzare. A ogni compleanno l'Ascendente avanza di un " +
+      "segno intero — un anno, una casa. La casa su cui cade dà all'anno il suo tema; il signore " +
+      "di quel segno diventa signore dell'anno. Dopo dodici anni il cerchio è chiuso e ricomincia " +
+      "da capo, un piano più in alto.",
+    "pf.text2":"È la tecnica annuale più parsimoniosa che esista: le bastano l'Ascendente e la " +
+      "tua età. Proprio per questo è robusta — non sbaglia per un'ora di nascita imprecisa, " +
+      "finché il segno dell'Ascendente è giusto.",
+    "pf.ohneAngaben":"Senza dati di nascita completi la casa dell'anno non si può determinare.",
+    "pf.laufend":"Il tuo anno in corso",
+    "pf.laufendSatz": (alter, haus, glyph, name, herr, thema) =>
+      `A ${alter} anni la tua <b>${haus} casa</b> è nell'anno, ${glyph} ${name}, e signore ` +
+      `dell'anno è <b>${herr}</b>. Il tema: ${thema}.`,
+    "pf.wo":"Dove l'anno ti tocca",
+    "pf.rolle": (herr) => `Signore dell'anno è ${herr}; egli`,
+    "pf.zusammen": (thema, herr, ort) =>
+      `Leggi insieme: il tema dell'anno è ${thema}; viene portato avanti là dove ${herr} sta nel ` +
+      `tuo tema — ${ort}.`,
+    "pf.werZieht":"Chi attraversa in questo momento la casa dell'anno",
+    "pf.werZiehtText": (glyph, name) =>
+      `Il segno dell'anno è ${glyph} ${name}. Ogni pianeta che ora vi passa tocca direttamente ` +
+      `il tema dell'anno — la profezione dice di che cosa si tratti, il transito dice quando si ` +
+      `fa sentire.`,
+    "pf.keiner":"In questo momento nessuno dei sette attraversa questo segno. Il tema dell'anno " +
+      "prosegue sullo sfondo, senza essere sollecitato.",
+    "pf.transitZeile": (g, name, grad, wirkung, dauer, istHerr) =>
+      `<b>${g} ${name}</b> a ${grad}° — ${wirkung}. Vi resta circa ${dauer}.` +
+      (istHerr ? ` <b>Ed è al tempo stesso il signore dell'anno in persona.</b>` : ""),
+    "pf.herrImHaus": (thema) =>
+      `<b>Il signore dell'anno attraversa esso stesso la casa dell'anno.</b> La tecnica non ` +
+      `conosce annuncio più netto: ciò che quest'anno significa — ${thema} — viene al dunque ` +
+      `adesso e non un giorno. Ciò che in questo tempo si comincia o si decide porta la firma ` +
+      `dell'anno.`,
+    "pf.herrAnderswo": (herr, glyph, zeichen, ort) =>
+      `Il signore dell'anno, ${herr}, in questo momento non attraversa il segno dell'anno ma ` +
+      `${glyph} ${zeichen} — presso di te ${ort}. Di là agisce sul tema dell'anno, ma per vie ` +
+      `indirette: attraverso quell'ambito, non immediatamente.`,
+    /* Die zwölf Kapitel des Zodiacal Releasing, nach Zeichenindex. */
+    "dg.kapitel":[
+      "un capitolo del cominciare. Si viene spinti prima di conoscere la strada; molto comincia, non tutto resta.",
+      "un capitolo del raccogliere. Lento, concreto, volto al possesso e alla sicurezza — e difficile da rimettere in moto.",
+      "un capitolo delle strade e delle parole. Molti contatti, molto apprendere, molto andirivieni; l'arte è portarne a termine qualcosa.",
+      "un capitolo della casa. Origine, famiglia, dimora e animo stanno in primo piano; l'interno decide dell'esterno.",
+      "un capitolo del farsi avanti. Si è visti, interpellati, richiesti — e si deve imparare a reggere l'attenzione.",
+      "un capitolo del lavoro e dell'ordine. Servizio, salute, artigianato, il minuto; senza clamore e portante.",
+      "un capitolo degli altri. Matrimonio, patti, compensazione, anche inimicizia dichiarata; poco si decide da soli.",
+      "un capitolo della profondità. Ciò che è nascosto viene a galla, i legami si fanno seri, perdite ed eredità pesano.",
+      "un capitolo dell'ampiezza. Terra straniera, dottrina, fede, diritto; l'orizzonte si allontana, se occorre andandosene.",
+      "un capitolo della costruzione. Carica, responsabilità, costanza; si avanza lentamente e poi si resta.",
+      "un capitolo delle alleanze. Amicizie, gruppi, imprese che vanno oltre se stessi; si appartiene e tuttavia si sta accanto.",
+      "un capitolo del dissolversi. Ritiro, compassione, sogno, anche confusione; il vecchio finisce prima che il nuovo abbia forma."
+    ],
+    /* --------------------------- Letture accanto ad arco, ZR e antiscia */
+    "dg.wuerde.Domizil":"nel proprio segno e dunque forte",
+    "dg.wuerde.Erhöhung":"esaltato e dunque stimato oltre la propria misura",
+    "dg.wuerde.Exil":"in esilio e dunque costretto a lavorare controcorrente",
+    "dg.wuerde.Fall":"in caduta e dunque a fatica riconosciuto",
+    "dg.wuerde.—":"senza dignità particolare",
+    "dg.konkret": (rolle, glyph, zeichen, haus, ort, wuerde) =>
+      `${rolle} sta presso di te in ${glyph} ${zeichen}, nella ${haus} casa — ${ort} —, e ` +
+      `precisamente ${wuerde}. Lì si mostrerà ciò che questo tempo porta.`,
+    "dg.wasHeisst":"Che cosa significa",
+    "dg.pr.sonne":"visibilità — carica, riconoscimento, il farsi avanti davanti agli altri; e il conto che ne viene",
+    "dg.pr.mond":"il domestico e il mobile — dimora, famiglia, animo, un mutamento che comincia da dentro",
+    "dg.pr.merkur":"carta e parola — contratti, scrittura, commercio, apprendere, strade percorse più volte",
+    "dg.pr.venus":"legame e compiacimento — affetto, arte, denaro che viene facile, riconciliazione",
+    "dg.pr.mars":"il taglio — lavoro, lite, decisione, separazione; ciò che non aspetta più",
+    "dg.pr.jupiter":"ampliamento — diritto, protettori, viaggio, considerazione; e il rischio di prendersi troppo",
+    "dg.pr.saturn":"serietà — responsabilità, rinuncia, prova, ciò che resta; ciò che chiede tempo e dà tempo",
+    "dg.pr.mc":"avanza l'asse della carica stessa: la posizione nel mondo si riordina",
+    "dg.pr.asc":"avanza l'asse della persona stessa: corpo, presenza e immagine di sé si riordinano",
+    "dg.pr.sonst": (name) => `il tema di ${name}`,
+    "dg.sg.mc":"nel mestiere e nella reputazione",
+    "dg.sg.ic":"nella casa, nell'origine e presso le radici",
+    "dg.sg.asc":"nel proprio corpo e nel modo di presentarsi",
+    "dg.sg.desc":"presso l'altro — matrimonio, patti, avversari dichiarati",
+    "dg.sg.sonst": (name) => `presso ${name}`,
+    "dg.ton.Konjunktion":"di colpo e senza giri",
+    "dg.ton.Quadrat":"con attrito, contro una resistenza",
+    "dg.ton.Opposition":"da fuori, tramite un'altra persona",
+    "dg.ton.Trigon":"con facilità, quasi da sé",
+    "dg.ton.Sextil":"come occasione che va colta",
+    "dg.lbText":"Le direzioni primarie non misurano che cosa accada, ma quando una cosa venga a " +
+      "scadenza. Il cielo continua a girare dopo la nascita; un grado di questa rotazione vale " +
+      "un anno di vita. Dove un pianeta incontra un asse, il suo tema bussa — se si apra, è un " +
+      "altro discorso.",
+    "dg.lbLeer":"Nella finestra d'età scelta non ti sta più nulla davanti.",
+    "dg.lbTitelMehr":"Le prossime scadenze", "dg.lbTitelEine":"La prossima scadenza",
+    "dg.wannJahre": (n) => `a ${n} anni`,
+    "dg.wannJetzt":"proprio adesso",
+    "dg.wannMonate": (n) => `fra circa ${n} mesi`,
+    "dg.wannGut": (n) => `fra circa ${n} anni`,
+    "dg.lbZeile": (wann, alter, was, wo, ton) => `<b>${wann}</b> (a ${alter}): ${was} — ${wo}, ${ton}.`,
+    "dg.lbAnklopft":"Che cosa bussa esattamente",
+    "dg.lbRolle": (name) => `${name} porta la prossima direzione e`,
+    "dg.lbNote":"Una direzione è una data, non un verdetto. Due persone con la stessa data " +
+      "vivono cose diverse — la domanda è sempre che cosa fosse già pronto a quel momento.",
+    "dg.zrText":"Lo Zodiacal Releasing divide la vita in capitoli, non in eventi. Dalla Sorte " +
+      "della Fortuna si contano periodi segno per segno, ciascuno lungo quanto gli anni del suo " +
+      "signore. Il primo livello dice di che cosa si tratti lungo gli anni; il secondo, in quale " +
+      "tonalità lo si stia suonando; il terzo colora i mesi.",
+    "dg.zrOhneDatum":"Senza data di nascita non si può dire dove tu stia adesso — la tavola sopra vale comunque.",
+    "dg.zrWoDuStehst":"Dove stai adesso",
+    "dg.zrL1": (von, bis, zeichen, herr, kapitel) =>
+      `<b>Il grande capitolo</b> corre dal tuo ${von} al ${bis} anno sotto ${zeichen}, ` +
+      `condotto da ${herr}: ${kapitel}`,
+    "dg.zrL2": (von, bis, zeichen, herr, kapitel) =>
+      `<b>Dentro, il periodo minore</b>, da ${von} a ${bis} anni, sotto ${zeichen} e ${herr}: ` +
+      `${kapitel} Non dice di che cosa si tratti — questo lo dice il grande capitolo — ma da che ` +
+      `cosa lo si noti adesso.`,
+    "dg.zrL3": (glyph, zeichen, herr, bis, kapitel) =>
+      `<b>E dentro, il terzo livello</b>: ${glyph} ${zeichen} sotto ${herr}, ancora fino ai ` +
+      `${bis} anni. ${kapitel} A questo livello si tratta di mesi, non di anni — colora i giorni ` +
+      `senza cambiare il tema.`,
+    "dg.zrEigen":"un capitolo di natura propria.", "dg.zrEigenKurz":"di natura propria.",
+    "dg.zrMerkst":"Da che cosa lo noti",
+    "dg.zrRolleL1": (name) => `${name} conduce il grande capitolo e`,
+    "dg.zrRolleL2": (name) => `${name} conduce il periodo minore e`,
+    "dg.zrNote":"I passaggi sono i punti veri: dove un periodo finisce e comincia il successivo, " +
+      "il tono cambia, spesso nel giro di poche settimane. Guarda nella tavola quando capita la " +
+      "prossima volta.",
+    "dg.kurz.sonne":"immagine di sé e rango", "dg.kurz.mond":"animo e origine",
+    "dg.kurz.merkur":"pensare e parlare", "dg.kurz.venus":"affetto e gusto",
+    "dg.kurz.mars":"impulso e collera", "dg.kurz.jupiter":"fiducia e misura",
+    "dg.kurz.saturn":"serietà e limite", "dg.kurz.asc":"presenza e corpo",
+    "dg.kurz.mc":"mestiere e reputazione",
+    "dg.azText1":"Gli antiscia sono gemelli d'ombra. Se si specchia un grado sull'asse dei " +
+      "solstizi — 0° Cancro contro 0° Capricorno —, il punto specchiato ha la stessa " +
+      "declinazione e lo stesso arco diurno: il sole vi starebbe ugualmente alto e ugualmente a " +
+      "lungo in cielo. Due punti simili sono legati senza vedersi — non formano alcun aspetto " +
+      "visibile e tuttavia agiscono l'uno sull'altro.",
+    "dg.azText2":"La lettura antica: l'antiscio è l'amicizia nascosta — due forze lavorano " +
+      "insieme senza che da fuori lo si riconosca. Il contrantiscio, specchiato sull'equinozio, " +
+      "vale come l'inimicizia coperta: qualcosa si ostacola, e nessuno vede da che cosa dipenda.",
+    "dg.azKeine":"Nel tuo tema nessun punto cade sul gemello d'ombra di un altro — qui nulla " +
+      "lavora con o contro altro nel nascosto. È il caso più frequente.",
+    "dg.azTitelMehr":"I tuoi legami nascosti", "dg.azTitelEine":"Il tuo legame nascosto",
+    "dg.azZeile": (a, b, wasA, wasB, kontra) =>
+      `<b>${a} e ${b}</b> — ${wasA} incontra ${wasB}. ` +
+      (kontra
+        ? "I due si ostacolano di nascosto: l'attrito c'è, ma non si mostra mai dove nasce."
+        : "I due lavorano insieme senza che da fuori lo si veda; ciò che riesce all'uno giova in silenzio all'altro."),
+    "dg.azEng":"Quanto più stretta la distanza in gradi, tanto più netto. Sotto un grado il legame vale come stretto.",
+    "dg.azUmgang":"Come comportarsi",
+    "dg.azUmgang1":"Gli antiscia spiegano l'inspiegabile nel tema: un'attrazione senza aspetto, " +
+      "un impedimento di cui non si trova la ragione, due ambiti di vita che compaiono sempre " +
+      "insieme pur non avendo nulla in comune. Chi non riesce a far tornare la lettura di un " +
+      "tema, classicamente guarda prima qui.",
+    "dg.azUmgang2":"L'asse specchio è quello dei solstizi: 0° Cancro e 0° Capricorno, la notte " +
+      "più lunga e la più corta. Due gradi specchiati condividono lo stesso arco diurno — per " +
+      "questo i testi antichi dicono che si odono senza vedersi. Il contrantiscio specchia " +
+      "invece su 0° Ariete e 0° Bilancia, l'asse dell'equinozio; vale come la meno favorevole " +
+      "delle due specchiature.",
+    "dg.azPraktisch":"In pratica: un pianeta sull'antiscio di un altro agisce come una " +
+      "congiunzione silenziosa — la si nota dalle conseguenze, non dalla configurazione.",
     "pd.kopf": (profil, sekte, erster) =>
       `Per: ${profil} · ${sekte} — perciò la serie comincia con ${erster}.`,
     "pd.deinFirdar":"Il tuo firdar",
@@ -485,13 +907,13 @@ export const R = {
       "non chiede né segni né case, solo se il sole alla nascita stesse sopra l'orizzonte. I due " +
       "nodi lunari alla fine non hanno sottoperiodi.",
     "pd.amHoroskop": (rolle, glyph, zeichen, haus, ort) =>
-      `${rolle} sta presso di te in ${glyph} ${zeichen}, nella ${haus}ª casa — ${ort}. Lì si svolge ciò che questo tempo porta.`,
+      `${rolle} sta presso di te in ${glyph} ${zeichen}, nella ${haus} casa — ${ort}. Lì si svolge ciò che questo tempo porta.`,
     "pd.rolleFd": (name) => `${name}, signore di questi anni,`,
     "pd.vdKopf": (profil, glyph, grad, ayanamsa) =>
       `Per: ${profil} · Luna siderale a ${glyph} ${grad}° · Ayanamsa ${ayanamsa}°`,
     "pd.mondhaus":"Casa lunare della nascita",
     "pd.mondhausNot": (nr, g, herr, rest) =>
-      `${nr}ª di 27 · signore ${g} ${herr} · alla nascita ne restavano ancora ${rest} anni`,
+      `${nr} di 27 · signore ${g} ${herr} · alla nascita ne restavano ancora ${rest} anni`,
     "pd.maha": (g, name, was, von, bis, datum) =>
       `<b>Mahadasha:</b> ${g} ${name} — ${was}. Da ${von} a ${bis} anni, dunque fino al ${datum}.`,
     "pd.antar": (g, name, was, datum) =>
@@ -919,6 +1341,216 @@ export const R = {
   },
 
   en: {
+    /* ------------------------------------------ The chart */
+    "hk.sekt.tag":"A <b>day birth</b>: the sun stood above the horizon. The party of the day leads " +
+      "— Sun, Jupiter and Saturn work here more agreeably, Moon, Venus and Mars more demandingly.",
+    "hk.sekt.nacht":"A <b>night birth</b>: the sun stood below the horizon. The party of the night " +
+      "leads — Moon, Venus and Mars work here more agreeably, Sun, Jupiter and Saturn more demandingly.",
+    "hk.planetSatz": (was, art, ort) => `${was} show themselves ${art}, ${ort}.`,
+    "hk.planetWuerde": (text) => ` The planet stands ${text}.`,
+    "hk.geruest":"The frame",
+    "hk.steigtAuf": (glyph, zeichen) => `${glyph} ${zeichen} is rising`,
+    "hk.geruestNot": (asc, grad, mcGlyph, mc, herr) =>
+      `${asc} ${grad}° · MC ${mcGlyph} ${mc}` + (herr ? ` · lord of the chart: ${herr}` : ""),
+    "hk.siebenPlaneten":"The seven planets",
+    "hk.tab.planet":"Planet", "hk.tab.zeichen":"Sign", "hk.tab.haus":"House", "hk.tab.wuerde":"Dignity",
+    "hk.wasSagen":"What the planets say",
+    "hk.planetKopf": (glyph, name, zGlyph, zeichen, haus) =>
+      `<span class="glyph">${glyph}</span> <b>${name}</b> in ${zGlyph} ${zeichen}, ${haus} house`,
+    "hk.aspekte":"The closest aspects",
+    "hk.transitText":"Where the slow planets stand today and what they touch in your chart. Mars " +
+      "stays for weeks, Jupiter for months, Saturn for years — which is why only these three count here.",
+    "hk.transitZeile": (g, name, zGlyph, zeichen, ort) =>
+      `<b>${g} ${name}</b> is running through ${zGlyph} ${zeichen} — with you ${ort}.`,
+    "hk.beruehrt":"What of that is touching your birth chart just now:",
+    "hk.trefferAchse": (transit, aspekt, natal, orbis, ton) =>
+      `<b>${transit} ${aspekt} ${natal}</b> (${orbis}°) — the axis itself is addressed, ${ton}.`,
+    "hk.treffer": (transit, aspekt, natal, orbis, was, ton) =>
+      `<b>${transit} ${aspekt} ${natal}</b> (${orbis}°) — ${was} — addressed ${ton}.`,
+    "hk.keinTreffer":"At present none of the three touches your chart closely enough to be worth naming. A quiet stretch.",
+    "hk.progression":"Secondary progression — the inner calendar",
+    "hk.progressionText":"One day after the birth counts for one year of life. The progressed sun " +
+      "moves on about one degree a year and changes sign every thirty years; the progressed moon " +
+      "needs some twenty-eight years for the whole circle. Neither describes events, but the inner weather.",
+    "hk.progSonne": (glyph, zeichen, grad, haus, art, ort) =>
+      `<b>Progressed sun</b> in ${glyph} ${zeichen} ${grad}°, ${haus} house — what your will is ` +
+      `aiming at in this stretch of life: ${art}, ${ort}.`,
+    "hk.progMond": (glyph, zeichen, haus, ort) =>
+      `<b>Progressed moon</b> in ${glyph} ${zeichen}, ${haus} house — what you are dwelling on ` +
+      `just now: ${ort}. It stays a good two years to a sign.`,
+    "hk.progPhase": (phase) => `<b>Progressed lunar phase</b>: ${phase}.`,
+    "pf.note":"The profection year runs from birthday to birthday. How the lord of the year stands in the birth chart — well or badly placed, in which house — decides how easily the theme comes good.",
+    "pf.wirkung.sonne":"brings light and visibility — what lies here is seen, by others too",
+    "pf.wirkung.mond":"brings movement and mood — something stirs, but does not hold of itself",
+    "pf.wirkung.merkur":"brings conversations, papers and roads — here things are negotiated and written",
+    "pf.wirkung.venus":"brings accommodation and easier circumstances — here something is settled amicably",
+    "pf.wirkung.mars":"brings heat and decision — here something is cut through, for good or ill",
+    "pf.wirkung.jupiter":"brings increase, patrons and room — here the year opens up",
+    "pf.wirkung.saturn":"brings seriousness, delay and weight — here one works or goes without",
+    "pf.dauer.mond":"two and a half days", "pf.dauer.merkur":"two to three weeks",
+    "pf.dauer.venus":"barely a month", "pf.dauer.sonne":"a month",
+    "pf.dauer.mars":"a month and a half", "pf.dauer.jupiter":"a year", "pf.dauer.saturn":"two and a half years",
+    "pf.jahr.sonne":"It is about being seen. What you do happens this year before witnesses — choose your witnesses.",
+    "pf.jahr.mond":"A year of changes and of temper. Dwelling, family, moods; little stays where it was.",
+    "pf.jahr.merkur":"A year of negotiations. Paper, roads, conversations; whoever keeps silent this year loses.",
+    "pf.jahr.venus":"A year of attachment and of form. Relationships, art, money that comes by way of people.",
+    "pf.jahr.mars":"A year of the cut. Things are decided, fought over, worked at; half measures do not hold.",
+    "pf.jahr.jupiter":"A year of widening. Patrons, law, travel, increase — and the temptation to take too much.",
+    "pf.jahr.saturn":"A year of testing. It goes slowly, it costs, and what comes of it lasts a long time.",
+    "pf.text1":"Profection means moving forward. With every birthday the Ascendant travels on by " +
+      "a whole sign — one year, one house. The house it falls on gives the year its theme; the " +
+      "ruler of that sign becomes the lord of the year. After twelve years the circle is closed " +
+      "and begins again, one storey higher.",
+    "pf.text2":"It is the most frugal annual technique there is: it needs only the Ascendant and " +
+      "your age. That is exactly why it is robust — it does not go wrong on an imprecise hour of " +
+      "birth, as long as the sign of the Ascendant is right.",
+    "pf.ohneAngaben":"Without complete birth data the house of the year cannot be determined.",
+    "pf.laufend":"Your current year",
+    "pf.laufendSatz": (alter, haus, glyph, name, herr, thema) =>
+      `At ${alter} your <b>${haus} house</b> is in the year, ${glyph} ${name}, and the lord of ` +
+      `the year is <b>${herr}</b>. The theme: ${thema}.`,
+    "pf.wo":"Where the year meets you",
+    "pf.rolle": (herr) => `The lord of the year is ${herr}; it`,
+    "pf.zusammen": (thema, herr, ort) =>
+      `Read the two together: the theme of the year is ${thema}; it is played out where ${herr} ` +
+      `stands in your chart — ${ort}.`,
+    "pf.werZieht":"Who is passing through the house of the year just now",
+    "pf.werZiehtText": (glyph, name) =>
+      `The sign of the year is ${glyph} ${name}. Every planet passing through it now touches the ` +
+      `theme of the year directly — the profection says what it is about, the transit says when ` +
+      `it makes itself heard.`,
+    "pf.keiner":"At present none of the seven is passing through this sign. The theme of the " +
+      "year runs on in the background without being prompted just now.",
+    "pf.transitZeile": (g, name, grad, wirkung, dauer, istHerr) =>
+      `<b>${g} ${name}</b> at ${grad}° — ${wirkung}. It stays there about ${dauer}.` +
+      (istHerr ? ` <b>And that is at the same time the lord of the year itself.</b>` : ""),
+    "pf.herrImHaus": (thema) =>
+      `<b>The lord of the year is itself passing through the house of the year.</b> The ` +
+      `technique knows hardly a plainer announcement: what this year means — ${thema} — comes to ` +
+      `the point now and not some day. Whatever is begun or decided in this time carries the ` +
+      `hand of the year.`,
+    "pf.herrAnderswo": (herr, glyph, zeichen, ort) =>
+      `The lord of the year, ${herr}, is at present not passing through the sign of the year but ` +
+      `through ${glyph} ${zeichen} — with you ${ort}. From there it works on the theme of the ` +
+      `year, but indirectly: by way of that area, not immediately.`,
+    /* Die zwölf Kapitel des Zodiacal Releasing, nach Zeichenindex. */
+    "dg.kapitel":[
+      "a chapter of beginning. One is pushed before one knows the way; much begins, not all of it stays.",
+      "a chapter of gathering. Slow, tangible, bent on property and security — and hard to set moving again.",
+      "a chapter of roads and words. Many contacts, much learning, much to and fro; the art is to finish something of it.",
+      "a chapter of the house. Origin, family, dwelling and temper come to the front; the inner decides the outer.",
+      "a chapter of coming forward. One is seen, asked for, demanded of — and has to learn to carry the attention.",
+      "a chapter of work and order. Service, health, craft, the small-scale; unspectacular and load-bearing.",
+      "a chapter of the others. Marriage, contracts, balancing, open enmity too; little is decided alone.",
+      "a chapter of depth. What is hidden comes up, bonds turn serious, losses and inheritances weigh heavily.",
+      "a chapter of breadth. Foreign parts, teaching, belief, law; the horizon moves out, if need be by going away oneself.",
+      "a chapter of building. Office, responsibility, endurance; it goes forward slowly and then stands.",
+      "a chapter of leagues. Friendships, groups, undertakings that go beyond oneself; one belongs and stands beside it all the same.",
+      "a chapter of dissolving. Withdrawal, compassion, dream, confusion too; the old ends before the new has shape."
+    ],
+    /* --------------------------- Readings beside arc, ZR and antiscia */
+    "dg.wuerde.Domizil":"in its own sign and so strong",
+    "dg.wuerde.Erhöhung":"exalted and so esteemed beyond its measure",
+    "dg.wuerde.Exil":"in exile and so working against the grain",
+    "dg.wuerde.Fall":"in fall and so coming into its own only with difficulty",
+    "dg.wuerde.—":"without particular dignity",
+    "dg.konkret": (rolle, glyph, zeichen, haus, ort, wuerde) =>
+      `${rolle} stands with you in ${glyph} ${zeichen}, in the ${haus} house — ${ort} —, and ` +
+      `${wuerde}. That is where what this time brings will show itself.`,
+    "dg.wasHeisst":"What that means",
+    "dg.pr.sonne":"visibility — office, recognition, coming forward before others; and the bill that follows",
+    "dg.pr.mond":"the domestic and the movable — dwelling, family, temper, a change that begins from within",
+    "dg.pr.merkur":"paper and word — contracts, writing, trade, learning, roads walked more than once",
+    "dg.pr.venus":"attachment and liking — affection, art, money that comes easily, reconciliation",
+    "dg.pr.mars":"the cut — work, strife, decision, parting; what will wait no longer",
+    "dg.pr.jupiter":"widening — law, patrons, travel, standing; and the danger of taking on too much",
+    "dg.pr.saturn":"seriousness — responsibility, renunciation, testing, what lasts; what asks for time and gives time",
+    "dg.pr.mc":"the axis of office itself moves on: your standing in the world is ordered anew",
+    "dg.pr.asc":"the axis of the person itself moves on: body, bearing and self-image are ordered anew",
+    "dg.pr.sonst": (name) => `the theme of ${name}`,
+    "dg.sg.mc":"in work and in reputation",
+    "dg.sg.ic":"in the house, in origin and at the roots",
+    "dg.sg.asc":"in your own body and bearing",
+    "dg.sg.desc":"with the other — marriage, contracts, declared opponents",
+    "dg.sg.sonst": (name) => `at ${name}`,
+    "dg.ton.Konjunktion":"directly and without detour",
+    "dg.ton.Quadrat":"under friction, against a resistance",
+    "dg.ton.Opposition":"from outside, through another person",
+    "dg.ton.Trigon":"easily, almost of itself",
+    "dg.ton.Sextil":"as an opportunity that has to be taken",
+    "dg.lbText":"Primary directions do not measure what happens but when something falls due. " +
+      "The sky goes on turning after the birth; one degree of that turning counts for one year " +
+      "of life. Where a planet meets an axis in the course of it, its theme knocks — whether the " +
+      "door opens is another matter.",
+    "dg.lbLeer":"Nothing further lies ahead of you within the chosen window of age.",
+    "dg.lbTitelMehr":"The next things falling due", "dg.lbTitelEine":"The next thing falling due",
+    "dg.wannJahre": (n) => `at ${n}`,
+    "dg.wannJetzt":"just now",
+    "dg.wannMonate": (n) => `in about ${n} months`,
+    "dg.wannGut": (n) => `in a good ${n} years`,
+    "dg.lbZeile": (wann, alter, was, wo, ton) => `<b>${wann}</b> (at ${alter}): ${was} — ${wo}, ${ton}.`,
+    "dg.lbAnklopft":"What exactly is knocking",
+    "dg.lbRolle": (name) => `${name} brings the next direction and`,
+    "dg.lbNote":"A direction is a date, not a verdict. Two people with the same date live " +
+      "through different things — the question is always what had already been prepared by then.",
+    "dg.zrText":"Zodiacal Releasing divides the life into chapters, not into events. From the " +
+      "Lot of Fortune, periods are counted off sign by sign, each as long as the years of its " +
+      "ruler. The first level says what it is about across years; the second, in which key it is " +
+      "being played just now; the third colours the months.",
+    "dg.zrOhneDatum":"Without a date of birth there is no saying where you stand just now — the table above holds all the same.",
+    "dg.zrWoDuStehst":"Where you stand now",
+    "dg.zrL1": (von, bis, zeichen, herr, kapitel) =>
+      `<b>The great chapter</b> runs from your ${von} to your ${bis} year under ${zeichen}, ` +
+      `led by ${herr}: ${kapitel}`,
+    "dg.zrL2": (von, bis, zeichen, herr, kapitel) =>
+      `<b>Within it the smaller period</b>, from ${von} to ${bis} years, under ${zeichen} and ` +
+      `${herr}: ${kapitel} It does not say what the matter is — the great chapter says that — ` +
+      `but what you notice it by just now.`,
+    "dg.zrL3": (glyph, zeichen, herr, bis, kapitel) =>
+      `<b>And within that the third level</b>: ${glyph} ${zeichen} under ${herr}, until ${bis} ` +
+      `years. ${kapitel} On this level it is a matter of months, not years — it colours the days ` +
+      `without changing the theme.`,
+    "dg.zrEigen":"a chapter of its own kind.", "dg.zrEigenKurz":"of its own kind.",
+    "dg.zrMerkst":"What you notice it by",
+    "dg.zrRolleL1": (name) => `${name} leads the great chapter and`,
+    "dg.zrRolleL2": (name) => `${name} leads the smaller period and`,
+    "dg.zrNote":"The transitions are the real places: where one period ends and the next begins, " +
+      "the tone changes, often within a few weeks. Look in the table to see when that comes next.",
+    "dg.kurz.sonne":"self-image and rank", "dg.kurz.mond":"temper and origin",
+    "dg.kurz.merkur":"thinking and speaking", "dg.kurz.venus":"affection and taste",
+    "dg.kurz.mars":"drive and anger", "dg.kurz.jupiter":"confidence and measure",
+    "dg.kurz.saturn":"seriousness and limit", "dg.kurz.asc":"bearing and body",
+    "dg.kurz.mc":"work and reputation",
+    "dg.azText1":"Antiscia are shadow twins. Mirror a degree about the solstice axis — 0° Cancer " +
+      "against 0° Capricorn — and the mirrored point has the same declination and the same " +
+      "diurnal arc: the sun would stand there equally high and equally long in the sky. Two such " +
+      "points are connected without seeing each other — they form no visible aspect and yet work " +
+      "upon one another.",
+    "dg.azText2":"The old reading: the antiscion is the hidden friendship — two forces work " +
+      "together without its being recognisable from outside. The contra-antiscion, mirrored " +
+      "about the equinox, counts as the covered enmity: something hinders itself, and nobody " +
+      "sees what it is down to.",
+    "dg.azKeine":"In your chart no point falls on the shadow twin of another — nothing here " +
+      "works with or against anything else in hiding. That is the commoner case.",
+    "dg.azTitelMehr":"Your hidden connections", "dg.azTitelEine":"Your hidden connection",
+    "dg.azZeile": (a, b, wasA, wasB, kontra) =>
+      `<b>${a} and ${b}</b> — ${wasA} meets ${wasB}. ` +
+      (kontra
+        ? "The two hinder each other covertly: the friction is there, but it never shows itself where it arises."
+        : "The two work together without its being seen from outside; what succeeds for the one quietly serves the other."),
+    "dg.azEng":"The closer the distance in degrees, the plainer. Under one degree the connection counts as close.",
+    "dg.azUmgang":"How to handle it",
+    "dg.azUmgang1":"Antiscia explain the inexplicable in a chart: an attraction without aspect, " +
+      "a hindrance for which no reason can be found, two areas of life that always appear " +
+      "together although they have nothing to do with each other. Whoever cannot get a reading " +
+      "to come out right looks here first, classically.",
+    "dg.azUmgang2":"The mirror axis is that of the solstices: 0° Cancer and 0° Capricorn, the " +
+      "longest and the shortest night. Two mirrored degrees share the same diurnal arc — which " +
+      "is why the old texts say they hear each other without seeing each other. The " +
+      "contra-antiscion mirrors instead about 0° Aries and 0° Libra, the axis of the equinox; it " +
+      "counts as the less favourable of the two mirrorings.",
+    "dg.azPraktisch":"In practice: a planet on the antiscion of another works like a silent " +
+      "conjunction — one notices it by its consequences, not by the configuration.",
     "pd.kopf": (profil, sekte, erster) =>
       `For: ${profil} · ${sekte} — so the series begins with ${erster}.`,
     "pd.deinFirdar":"Your firdar",
@@ -1405,9 +2037,10 @@ export function aspektName(deutsch) {
 /* Englische Ordnungszahl: 1st, 2nd, 3rd, 4th — und 11th bis 13th trotz
    der Endziffern. Deutsch und Italienisch brauchen keine Regel, darum
    steht dort nur das Suffix. */
-export function ordnung(n) {
+export function ordnung(n, weiblich) {
   const z = Math.abs(Math.round(Number(n)));
-  if (aktiv !== "en") return aktiv === "it" ? `${n}ª` : `${n}.`;
+  /* Das Italienische unterscheidet: 1º anno, 1ª casa. */
+  if (aktiv !== "en") return aktiv === "it" ? `${n}${weiblich ? "ª" : "º"}` : `${n}.`;
   const zehner = z % 100, einer = z % 10;
   const endung = (zehner >= 11 && zehner <= 13) ? "th"
     : einer === 1 ? "st" : einer === 2 ? "nd" : einer === 3 ? "rd" : "th";
