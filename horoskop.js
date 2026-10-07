@@ -9,10 +9,10 @@
 
    Häuser im Ganzzeichen, wie überall auf dieser Seite.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=251";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=253";
 import { berechneGeburt, planetenPositionen, julianischesDatum,
          aszendent, medium, schiefeDerEkliptik, siderischeZeitGreenwich,
-         norm360 } from "./astro.js?v=251";
+         norm360 } from "./astro.js?v=253";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -453,9 +453,9 @@ if (document.readyState === "loading") {
    Planeten-, Zeichen- und Feldernamen stecken in fast jedem Satz. Sie
    werden hier beim Sprachwechsel ausgetauscht, nicht neu importiert —
    die Objekte bleiben dieselben, nur ihre Namensfelder wechseln. */
-import { PLANET_NAME_IT, PLANET_ARTIKEL_IT, ZEICHEN_NAME_IT, HAUS_IT } from "./namen-it.js?v=251";
-import { PLANET_NAME_EN, PLANET_ARTIKEL_EN, ZEICHEN_NAME_EN, HAUS_EN } from "./namen-en.js?v=251";
-import { aktuelleSprache } from "./sprachen.js?v=251";
+import { PLANET_NAME_IT, PLANET_ARTIKEL_IT, ZEICHEN_NAME_IT, HAUS_IT } from "./namen-it.js?v=253";
+import { PLANET_NAME_EN, PLANET_ARTIKEL_EN, ZEICHEN_NAME_EN, HAUS_EN } from "./namen-en.js?v=253";
+import { aktuelleSprache } from "./sprachen.js?v=253";
 
 const PLANET_NAME_DE  = Object.fromEntries(REIHE.map(k => [k, PLANET[k].name]));
 const ARTIKEL_DE      = { ...ARTIKEL };

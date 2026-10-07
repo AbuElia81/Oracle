@@ -13,12 +13,12 @@
    dann ihr Zustand in der Geburt und in der Umdrehung — und erst danach
    die Deutung.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=251";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=253";
 import { berechneGeburt, planetenPositionen, julianischesDatum, sonnenLaenge,
          siderischeZeitGreenwich, schiefeDerEkliptik, aszendent, medium,
-         norm360 } from "./astro.js?v=251";
-import { radix, zustandVon, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel } from "./horoskop.js?v=251";
-import { firdaria } from "./perioden.js?v=251";
+         norm360 } from "./astro.js?v=253";
+import { radix, zustandVon, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel } from "./horoskop.js?v=253";
+import { firdaria } from "./perioden.js?v=253";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);

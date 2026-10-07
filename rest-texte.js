@@ -8,6 +8,64 @@
 
 export const R = {
   de: {
+    /* ------------------------------------------- Das Lebensmaß */
+    "lm.warnung":"<b>Vorab, damit es nicht missverstanden wird:</b> Diese Technik teilt eine " +
+      "Zahl von Jahren zu — sie sagt nicht, wann jemand stirbt, und kann es nicht. Schon in der " +
+      "Überlieferung war sie die umstrittenste von allen: Ptolemaios, die Perser und die Araber " +
+      "rechneten verschieden, und dieselbe Geburt ergab bei ihnen verschiedene Zahlen. Gemeint " +
+      "ist ein Maß an Lebenskraft, das einer Anlage mitgegeben ist — nicht ein Datum.",
+    "lm.erstens":"Erstens: der Hylech",
+    "lm.erstensText":"Gesucht wird die Stelle, von der das Leben ausgeht. Die Reihenfolge ist " +
+      "fest: bei einer Taggeburt zuerst die Sonne, bei einer Nachtgeburt zuerst der Mond — aber " +
+      "nur, wenn das Licht in einem der Örter des Lebens steht: im ersten, siebten, neunten, " +
+      "zehnten oder elften Haus. Sonst rückt der nächste Anwärter nach.",
+    "lm.tab.anwaerter":"Anwärter", "lm.tab.stellung":"Stellung", "lm.tab.haus":"Haus",
+    "lm.tab.ort":"Ort des Lebens?", "lm.ja":"ja", "lm.nein":"nein",
+    "lm.hylechIst": (art, glyph, zeichen, grad, haus) =>
+      `Hylech ist damit <b>${art}</b>, auf ${glyph} ${zeichen} ${grad}°, im ${haus}. Haus.`,
+    "lm.zweitens":"Zweitens: der Alkochoden",
+    "lm.drittens":"Drittens: die Jahre",
+    "lm.zweitensText":"Nun wird gefragt, wer über diesem Grad gebietet — wer dort die meiste " +
+      "Würde hat: durch Domizil, Erhöhung, Trigon, Term oder Gesicht. Und er muss den Hylech " +
+      "sehen; ein Planet, der ihn nicht erblickt, kann ihm auch nichts geben.",
+    "lm.tab.planet":"Planet", "lm.tab.wuerde":"Würde", "lm.tab.sieht":"sieht den Hylech",
+    "lm.alkoIst": (name) => `Alkochoden ist <b>${name}</b>`,
+    "lm.alkoSieht":", und er sieht den Hylech.",
+    "lm.alkoSiehtNicht":" — er hat zwar die meiste Würde, sieht den Hylech aber nicht. Die " +
+      "strenge Lesart lässt ihn dann nicht gelten; hier steht er trotzdem, damit die Rechnung " +
+      "sichtbar bleibt.",
+    "lm.stufe.gross":"in einem Winkelhaus — die stärkste Stellung, er gibt seine <b>größten</b> Jahre",
+    "lm.stufe.mittel":"in einem Folgehaus — die mittlere Stellung, er gibt seine <b>mittleren</b> Jahre",
+    "lm.stufe.klein":"in einem fallenden Haus — die schwächste Stellung, er gibt seine <b>kleinsten</b> Jahre",
+    "lm.jahreSatz": (name, haus, stufe, jahre, g, m, k) =>
+      `${name} steht im ${haus}. Haus, ${stufe}: <b>${jahre} Jahre</b>. ` +
+      `(Seine Zahlen sind ${g} / ${m} / ${k}.)`,
+    "lm.zuschlaege":"Dazu die Zu- und Abschläge: Wohltäter, die den Alkochoden sehen, legen zu; Übeltäter nehmen.",
+    "lm.zuschlagZeile": (planet, aspekt, vorzeichen, wert) =>
+      `${planet}, ${aspekt}: <b>${vorzeichen}${wert}</b> Jahre`,
+    "lm.keineZuschlaege":"Weder Wohltäter noch Übeltäter sehen den Alkochoden — es bleibt bei der Grundzahl.",
+    "lm.masz":"Das zugeteilte Maß",
+    "lm.jahre": (n) => `${n} Jahre`,
+    "lm.herkunft": (grund, aspekte) =>
+      `${grund} vom Alkochoden` + (aspekte ? `, ${aspekte} aus den Aspekten` : ""),
+    "lm.wieLesen":"Wie das zu lesen ist",
+    "lm.wieLesenText":"Die Alten selbst haben diese Zahl nie für ein Datum gehalten. Sie nannten " +
+      "sie das Maß, das der Anlage mitgegeben ist — und sie wussten, dass Lebensweise, Herkunft, " +
+      "Zeitläufte und Zufall darüber entscheiden, was daraus wird. Ptolemaios rechnete anders " +
+      "als die Perser, die Perser anders als die Araber, und dieselbe Geburt ergab bei ihnen " +
+      "verschiedene Zahlen. Wer diese Technik ernst nimmt, nimmt zuerst ihre Uneinigkeit ernst.",
+    "lm.schlusswort":"Was hier steht, ist eine historische Rechnung, kein Befund über dich. Es " +
+      "sagt nichts über deine Gesundheit und nichts über deine Lebenszeit. Wer sich Sorgen um " +
+      "beides macht, ist bei einem Arzt richtig und nicht bei einer Tafel aus dem neunten " +
+      "Jahrhundert.",
+    "lm.kandidat.sonne":"Sonne", "lm.kandidat.mond":"Mond",
+    "lm.kandidat.asc":"Aszendent",
+    "lm.kandidat.neumond":"Syzygie (Neumond)", "lm.kandidat.vollmond":"Syzygie (Vollmond)",
+    "keineAngaben":"Noch keine Geburtsangaben hinterlegt. ",
+    "zurEingabe":"Zur Dateneingabe",
+    "fuer":"Für: ",
+    "aspekt.Konjunktion":"Konjunktion", "aspekt.Opposition":"Opposition",
+    "aspekt.Quadrat":"Quadrat", "aspekt.Trigon":"Trigon", "aspekt.Sextil":"Sextil",
     /* ------------------------------------------------- Das Werk */
     "werk.merkur.kurz":"durch das Wort und die Zahl",
     "werk.merkur.feld":"Schreiben, Rechnen, Lehren, Handeln, Vermitteln, Deuten — alles, was " +
@@ -228,6 +286,63 @@ export const R = {
   },
 
   it: {
+    /* ------------------------------------------- La misura della vita */
+    "lm.warnung":"<b>Prima di tutto, perché non sia frainteso:</b> questa tecnica assegna un " +
+      "numero di anni — non dice quando qualcuno muoia, e non può dirlo. Già nella tradizione " +
+      "era la più controversa di tutte: Tolomeo, i persiani e gli arabi calcolavano in modo " +
+      "diverso, e la stessa nascita dava presso di loro cifre diverse. Si intende una misura di " +
+      "forza vitale data a una disposizione — non una data.",
+    "lm.erstens":"Primo: l'hyleg",
+    "lm.erstensText":"Si cerca il punto da cui la vita procede. L'ordine è fisso: in una " +
+      "nascita diurna prima il sole, in una notturna prima la luna — ma solo se la luce si " +
+      "trova in uno dei luoghi della vita: nella prima, settima, nona, decima o undicesima " +
+      "casa. Altrimenti subentra il candidato successivo.",
+    "lm.tab.anwaerter":"Candidato", "lm.tab.stellung":"Posizione", "lm.tab.haus":"Casa",
+    "lm.tab.ort":"Luogo della vita?", "lm.ja":"sì", "lm.nein":"no",
+    "lm.hylechIst": (art, glyph, zeichen, grad, haus) =>
+      `L'hyleg è dunque <b>${art}</b>, a ${glyph} ${zeichen} ${grad}°, nella ${haus}ª casa.`,
+    "lm.zweitens":"Secondo: l'alcocoden",
+    "lm.drittens":"Terzo: gli anni",
+    "lm.zweitensText":"Ora si chiede chi comandi su questo grado — chi vi abbia più dignità: " +
+      "per domicilio, esaltazione, triplicità, termine o faccia. E deve vedere l'hyleg; un " +
+      "pianeta che non lo scorge non può dargli nulla.",
+    "lm.tab.planet":"Pianeta", "lm.tab.wuerde":"Dignità", "lm.tab.sieht":"vede l'hyleg",
+    "lm.alkoIst": (name) => `L'alcocoden è <b>${name}</b>`,
+    "lm.alkoSieht":", e vede l'hyleg.",
+    "lm.alkoSiehtNicht":" — ha sì la maggiore dignità, ma non vede l'hyleg. La lettura severa " +
+      "non lo ammette allora; qui sta ugualmente, perché il calcolo resti visibile.",
+    "lm.stufe.gross":"in una casa angolare — la posizione più forte, dà i suoi anni <b>maggiori</b>",
+    "lm.stufe.mittel":"in una casa succedente — la posizione media, dà i suoi anni <b>medi</b>",
+    "lm.stufe.klein":"in una casa cadente — la posizione più debole, dà i suoi anni <b>minori</b>",
+    "lm.jahreSatz": (name, haus, stufe, jahre, g, m, k) =>
+      `${name} sta nella ${haus}ª casa, ${stufe}: <b>${jahre} anni</b>. ` +
+      `(Le sue cifre sono ${g} / ${m} / ${k}.)`,
+    "lm.zuschlaege":"Vi si aggiungono gli aumenti e le diminuzioni: i benefici che vedono l'alcocoden aggiungono; i malefici tolgono.",
+    "lm.zuschlagZeile": (planet, aspekt, vorzeichen, wert) =>
+      `${planet}, ${aspekt}: <b>${vorzeichen}${wert}</b> anni`,
+    "lm.keineZuschlaege":"Né benefici né malefici vedono l'alcocoden — resta la cifra di base.",
+    "lm.masz":"La misura assegnata",
+    "lm.jahre": (n) => `${n} anni`,
+    "lm.herkunft": (grund, aspekte) =>
+      `${grund} dall'alcocoden` + (aspekte ? `, ${aspekte} dagli aspetti` : ""),
+    "lm.wieLesen":"Come va letto",
+    "lm.wieLesenText":"Gli antichi stessi non hanno mai preso questa cifra per una data. La " +
+      "chiamavano la misura data alla disposizione — e sapevano che modo di vivere, origine, " +
+      "vicende del tempo e caso decidono che cosa ne venga. Tolomeo calcolava diversamente dai " +
+      "persiani, i persiani diversamente dagli arabi, e la stessa nascita dava presso di loro " +
+      "cifre diverse. Chi prende sul serio questa tecnica prende sul serio anzitutto il suo " +
+      "disaccordo.",
+    "lm.schlusswort":"Ciò che sta qui è un calcolo storico, non un referto su di te. Non dice " +
+      "nulla sulla tua salute e nulla sulla durata della tua vita. Chi si preoccupa dell'una o " +
+      "dell'altra si rivolga a un medico e non a una tavola del nono secolo.",
+    "lm.kandidat.sonne":"Sole", "lm.kandidat.mond":"Luna",
+    "lm.kandidat.asc":"Ascendente",
+    "lm.kandidat.neumond":"Sizigia (luna nuova)", "lm.kandidat.vollmond":"Sizigia (luna piena)",
+    "keineAngaben":"Nessun dato di nascita ancora registrato. ",
+    "zurEingabe":"Ai dati",
+    "fuer":"Per: ",
+    "aspekt.Konjunktion":"congiunzione", "aspekt.Opposition":"opposizione",
+    "aspekt.Quadrat":"quadrato", "aspekt.Trigon":"trigono", "aspekt.Sextil":"sestile",
     "werk.merkur.kurz":"per la parola e il numero",
     "werk.merkur.feld":"Scrivere, calcolare, insegnare, trattare, mediare, interpretare — tutto " +
       "ciò che passa fra le persone e deve nel farlo essere esatto. Tolomeo nomina scrivani, " +
@@ -440,6 +555,64 @@ export const R = {
   },
 
   en: {
+    /* ------------------------------------------- The measure of life */
+    "lm.warnung":"<b>First, so that it is not misunderstood:</b> this technique assigns a " +
+      "number of years — it does not say when anyone dies, and cannot. Even in the tradition it " +
+      "was the most disputed of all: Ptolemy, the Persians and the Arabs reckoned differently, " +
+      "and the same birth gave different numbers in their hands. What is meant is a measure of " +
+      "vital force given with a disposition — not a date.",
+    "lm.erstens":"First: the hyleg",
+    "lm.erstensText":"Sought is the place from which the life proceeds. The order is fixed: in " +
+      "a day birth the sun first, in a night birth the moon first — but only if the light " +
+      "stands in one of the places of life: in the first, seventh, ninth, tenth or eleventh " +
+      "house. Otherwise the next candidate moves up.",
+    "lm.tab.anwaerter":"Candidate", "lm.tab.stellung":"Position", "lm.tab.haus":"House",
+    "lm.tab.ort":"Place of life?", "lm.ja":"yes", "lm.nein":"no",
+    "lm.hylechIst": (art, glyph, zeichen, grad, haus) =>
+      `The hyleg is therefore <b>${art}</b>, at ${glyph} ${zeichen} ${grad}°, in the ${haus}th house.`,
+    "lm.zweitens":"Second: the alcocoden",
+    "lm.drittens":"Third: the years",
+    "lm.zweitensText":"Now it is asked who commands over this degree — who has the most dignity " +
+      "there: by domicile, exaltation, triplicity, bound or face. And it must see the hyleg; a " +
+      "planet that does not behold it can give it nothing either.",
+    "lm.tab.planet":"Planet", "lm.tab.wuerde":"Dignity", "lm.tab.sieht":"sees the hyleg",
+    "lm.alkoIst": (name) => `The alcocoden is <b>${name}</b>`,
+    "lm.alkoSieht":", and it sees the hyleg.",
+    "lm.alkoSiehtNicht":" — it has the most dignity, true, but does not see the hyleg. The " +
+      "strict reading then does not let it stand; here it stands all the same, so that the " +
+      "reckoning stays visible.",
+    "lm.stufe.gross":"in an angular house — the strongest position, it gives its <b>greatest</b> years",
+    "lm.stufe.mittel":"in a succedent house — the middle position, it gives its <b>middle</b> years",
+    "lm.stufe.klein":"in a cadent house — the weakest position, it gives its <b>least</b> years",
+    "lm.jahreSatz": (name, haus, stufe, jahre, g, m, k) =>
+      `${name} stands in the ${haus}th house, ${stufe}: <b>${jahre} years</b>. ` +
+      `(Its numbers are ${g} / ${m} / ${k}.)`,
+    "lm.zuschlaege":"Added to that are the increases and decreases: benefics that see the alcocoden add; malefics take away.",
+    "lm.zuschlagZeile": (planet, aspekt, vorzeichen, wert) =>
+      `${planet}, ${aspekt}: <b>${vorzeichen}${wert}</b> years`,
+    "lm.keineZuschlaege":"Neither benefics nor malefics see the alcocoden — the base number stands.",
+    "lm.masz":"The measure assigned",
+    "lm.jahre": (n) => `${n} years`,
+    "lm.herkunft": (grund, aspekte) =>
+      `${grund} from the alcocoden` + (aspekte ? `, ${aspekte} from the aspects` : ""),
+    "lm.wieLesen":"How to read this",
+    "lm.wieLesenText":"The old writers themselves never took this number for a date. They " +
+      "called it the measure given with the disposition — and they knew that manner of life, " +
+      "origin, the run of the times and chance decide what comes of it. Ptolemy reckoned " +
+      "differently from the Persians, the Persians differently from the Arabs, and the same " +
+      "birth gave different numbers in their hands. Whoever takes this technique seriously " +
+      "takes its disagreement seriously first.",
+    "lm.schlusswort":"What stands here is a historical calculation, not a finding about you. It " +
+      "says nothing about your health and nothing about your lifespan. Anyone worried about " +
+      "either belongs with a doctor and not with a table from the ninth century.",
+    "lm.kandidat.sonne":"Sun", "lm.kandidat.mond":"Moon",
+    "lm.kandidat.asc":"Ascendant",
+    "lm.kandidat.neumond":"Syzygy (new moon)", "lm.kandidat.vollmond":"Syzygy (full moon)",
+    "keineAngaben":"No birth data stored yet. ",
+    "zurEingabe":"To the data entry",
+    "fuer":"For: ",
+    "aspekt.Konjunktion":"conjunction", "aspekt.Opposition":"opposition",
+    "aspekt.Quadrat":"square", "aspekt.Trigon":"trine", "aspekt.Sextil":"sextile",
     /* ------------------------------------------------- The work */
     "werk.merkur.kurz":"by the word and the number",
     "werk.merkur.feld":"Writing, reckoning, teaching, trading, mediating, interpreting — " +
@@ -665,4 +838,20 @@ export function rt(schluessel, ...args) {
   const tafel = R[aktiv] || R.de;
   const w = tafel[schluessel] !== undefined ? tafel[schluessel] : R.de[schluessel];
   return typeof w === "function" ? w(...args) : w;
+}
+
+/* Das Dezimalzeichen hängt an der Sprache: 7,5 im Deutschen und
+   Italienischen, 7.5 im Englischen. Vorher stand überall ein Komma, auch
+   wo englischer Text darum herum lief. */
+export function zahl(n, stellen = 1) {
+  const z = (Math.round(n * 10 ** stellen) / 10 ** stellen).toString();
+  return aktiv === "en" ? z : z.replace(".", ",");
+}
+
+/* Aspektnamen kommen aus den Rechnern auf Deutsch; hier werden sie
+   übersetzt und fallen auf den deutschen Namen zurück, wenn es keinen
+   Eintrag gibt. */
+export function aspektName(deutsch) {
+  const w = rt("aspekt." + deutsch);
+  return w && w !== "aspekt." + deutsch ? w : deutsch;
 }

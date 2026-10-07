@@ -13,10 +13,13 @@
    gestritten wurde. Sie steht hier, weil sie zur Überlieferung gehört, und
    sie sagt nichts über den Tod eines Menschen.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=251";
-import { norm360, planetenPositionen, julianischesDatum, sonnenLaenge } from "./astro.js?v=251";
-import { radix, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel } from "./horoskop.js?v=251";
-import { wuerden, ermittleAlmuten } from "./geist.js?v=251";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=253";
+import { norm360, planetenPositionen, julianischesDatum, sonnenLaenge } from "./astro.js?v=253";
+import { radix, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel } from "./horoskop.js?v=253";
+import { wuerden, ermittleAlmuten } from "./geist.js?v=253";
+import { rt, zahl, aspektName, setzeRestSprache } from "./rest-texte.js?v=253";
+import { aktuelleSprache } from "./sprachen.js?v=253";
+setzeRestSprache(aktuelleSprache());
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -80,17 +83,17 @@ export function lebensmass() {
   const kandidaten = [];
   const sonne = r.planeten.sonne, mond = r.planeten.mond;
   if (r.tagGeburt) {
-    kandidaten.push({ art:"Sonne", lon:sonne.laenge, haus:sonne.haus, taugt:LEBENSORTE.includes(sonne.haus) });
-    kandidaten.push({ art:"Mond",  lon:mond.laenge,  haus:mond.haus,  taugt:LEBENSORTE.includes(mond.haus) });
+    kandidaten.push({ key:"sonne", lon:sonne.laenge, haus:sonne.haus, taugt:LEBENSORTE.includes(sonne.haus) });
+    kandidaten.push({ key:"mond",  lon:mond.laenge,  haus:mond.haus,  taugt:LEBENSORTE.includes(mond.haus) });
   } else {
-    kandidaten.push({ art:"Mond",  lon:mond.laenge,  haus:mond.haus,  taugt:LEBENSORTE.includes(mond.haus) });
-    kandidaten.push({ art:"Sonne", lon:sonne.laenge, haus:sonne.haus, taugt:LEBENSORTE.includes(sonne.haus) });
+    kandidaten.push({ key:"mond",  lon:mond.laenge,  haus:mond.haus,  taugt:LEBENSORTE.includes(mond.haus) });
+    kandidaten.push({ key:"sonne", lon:sonne.laenge, haus:sonne.haus, taugt:LEBENSORTE.includes(sonne.haus) });
   }
   const syz = letzteSyzygie(jd);
-  kandidaten.push({ art: syz.konjunktion ? "Syzygie (Neumond)" : "Syzygie (Vollmond)",
+  kandidaten.push({ key: syz.konjunktion ? "neumond" : "vollmond",
                     lon: syz.laenge, haus: hausVon(syz.laenge),
                     taugt: LEBENSORTE.includes(hausVon(syz.laenge)) });
-  kandidaten.push({ art:"Aszendent", lon:r.asc, haus:1, taugt:true });
+  kandidaten.push({ key:"asc", lon:r.asc, haus:1, taugt:true });
 
   const hylech = kandidaten.find(k => k.taugt) || kandidaten[kandidaten.length - 1];
   const hZeichen = Math.floor(norm360(hylech.lon) / 30);
@@ -148,12 +151,8 @@ export function lebensmass() {
 
 /* ========================================================== Darstellung */
 
-const STUFE_WORT = {
-  gross:  "in einem Winkelhaus — die stärkste Stellung, er gibt seine <b>größten</b> Jahre",
-  mittel: "in einem Folgehaus — die mittlere Stellung, er gibt seine <b>mittleren</b> Jahre",
-  klein:  "in einem fallenden Haus — die schwächste Stellung, er gibt seine <b>kleinsten</b> Jahre"
-};
-const komma = n => (Math.round(n * 10) / 10).toString().replace(".", ",");
+/* Die Stufenwörter und das Dezimalzeichen stehen in der Sprachtafel. */
+const komma = zahl;
 
 function zeichne() {
   const ziel = $("#lmCikti");
@@ -162,65 +161,56 @@ function zeichne() {
   ziel.innerHTML = "";
 
   if (!L) {
-    const w = el("p", "kucukNot", "Noch keine Geburtsangaben hinterlegt. ");
-    const b = el("button", "knopfKlein", "Zur Dateneingabe");
+    const w = el("p", "kucukNot", rt("keineAngaben"));
+    const b = el("button", "knopfKlein", rt("zurEingabe"));
     b.addEventListener("click", zurDateneingabe);
     w.appendChild(b);
     ziel.append(w); ziel.hidden = false;
     return;
   }
   ziel.hidden = false;
-  ziel.appendChild(el("p", "kucukNot", "Für: " + profilBeschriftung(L.profil)));
+  ziel.appendChild(el("p", "kucukNot", rt("fuer") + profilBeschriftung(L.profil)));
 
   /* Die Warnung steht vor dem Ergebnis, nicht dahinter. */
   const warnung = el("div", "lmWarnung");
-  warnung.innerHTML =
-    `<b>Vorab, damit es nicht missverstanden wird:</b> Diese Technik teilt eine Zahl von Jahren ` +
-    `zu — sie sagt nicht, wann jemand stirbt, und kann es nicht. Schon in der Überlieferung war ` +
-    `sie die umstrittenste von allen: Ptolemaios, die Perser und die Araber rechneten verschieden, ` +
-    `und dieselbe Geburt ergab bei ihnen verschiedene Zahlen. Gemeint ist ein Maß an ` +
-    `Lebenskraft, das einer Anlage mitgegeben ist — nicht ein Datum.`;
+  warnung.innerHTML = rt("lm.warnung");
   ziel.appendChild(warnung);
 
   /* 1. Der Hylech */
-  ziel.appendChild(el("h3", null, "Erstens: der Hylech"));
-  ziel.appendChild(el("p", null,
-    "Gesucht wird die Stelle, von der das Leben ausgeht. Die Reihenfolge ist fest: bei einer " +
-    "Taggeburt zuerst die Sonne, bei einer Nachtgeburt zuerst der Mond — aber nur, wenn das " +
-    "Licht in einem der Örter des Lebens steht: im ersten, siebten, neunten, zehnten oder " +
-    "elften Haus. Sonst rückt der nächste Anwärter nach."));
+  ziel.appendChild(el("h3", null, rt("lm.erstens")));
+  ziel.appendChild(el("p", null, rt("lm.erstensText")));
 
   const kutu = el("div", "tabloKutu");
   const tab = el("table", "wuerdeTablo hylechTablo");
-  tab.innerHTML = "<thead><tr><th>Anwärter</th><th>Stellung</th><th>Haus</th><th>Ort des Lebens?</th></tr></thead>";
+  tab.innerHTML = `<thead><tr><th>${rt("lm.tab.anwaerter")}</th><th>${rt("lm.tab.stellung")}</th>` +
+    `<th>${rt("lm.tab.haus")}</th><th>${rt("lm.tab.ort")}</th></tr></thead>`;
   const tb = el("tbody");
   L.kandidaten.forEach(k => {
     const z = Math.floor(norm360(k.lon) / 30);
     const tr = el("tr", k === L.hylech ? "sieger" : null);
-    tr.appendChild(el("td", null, k.art));
+    tr.appendChild(el("td", null, rt("lm.kandidat." + k.key)));
     tr.appendChild(el("td", null, `${ZEICHEN[z].glyph} ${(norm360(k.lon) - z * 30).toFixed(1)}°`));
     tr.appendChild(el("td", null, `${k.haus}.`));
-    tr.appendChild(el("td", k.taugt ? "treffer" : null, k.taugt ? "ja" : "nein"));
+    tr.appendChild(el("td", k.taugt ? "treffer" : null, rt(k.taugt ? "lm.ja" : "lm.nein")));
     tb.appendChild(tr);
   });
   tab.appendChild(tb); kutu.appendChild(tab);
   ziel.appendChild(kutu);
 
   const h = el("p");
-  h.innerHTML = `Hylech ist damit <b>${L.hylech.art}</b>, auf ${ZEICHEN[L.hZeichen].glyph} ` +
-    `${ZEICHEN[L.hZeichen].name} ${L.hGrad.toFixed(1)}°, im ${L.hylech.haus}. Haus.`;
+  h.innerHTML = rt("lm.hylechIst", rt("lm.kandidat." + L.hylech.key),
+    ZEICHEN[L.hZeichen].glyph, ZEICHEN[L.hZeichen].name, zahl(L.hGrad), L.hylech.haus);
   ziel.appendChild(h);
 
   /* 2. Der Alkochoden */
-  ziel.appendChild(el("h3", null, "Zweitens: der Alkochoden"));
+  ziel.appendChild(el("h3", null, rt("lm.zweitens")));
   ziel.appendChild(el("p", null,
-    "Nun wird gefragt, wer über diesem Grad gebietet — wer dort die meiste Würde hat: " +
-    "durch Domizil, Erhöhung, Trigon, Term oder Gesicht. Und er muss den Hylech sehen; " +
-    "ein Planet, der ihn nicht erblickt, kann ihm auch nichts geben."));
+    rt("lm.zweitensText")));
 
   const kutu2 = el("div", "tabloKutu");
   const tab2 = el("table", "wuerdeTablo");
-  tab2.innerHTML = "<thead><tr><th>Planet</th><th>Würde</th><th>sieht den Hylech</th></tr></thead>";
+  tab2.innerHTML = `<thead><tr><th>${rt("lm.tab.planet")}</th><th>${rt("lm.tab.wuerde")}</th>` +
+    `<th>${rt("lm.tab.sieht")}</th></tr></thead>`;
   const tb2 = el("tbody");
   REIHE.forEach(k => {
     const pl = L.radix.planeten[k];
@@ -236,59 +226,57 @@ function zeichne() {
   ziel.appendChild(kutu2);
 
   const a = el("p");
-  a.innerHTML = `Alkochoden ist <b>${mitArtikel(L.alkochoden)}</b>` +
-    (L.alkoSahHylech ? ", und er sieht den Hylech." :
-     " — er hat zwar die meiste Würde, sieht den Hylech aber nicht. Die strenge Lesart " +
-     "lässt ihn dann nicht gelten; hier steht er trotzdem, damit die Rechnung sichtbar bleibt.");
+  a.innerHTML = rt("lm.alkoIst", mitArtikel(L.alkochoden)) +
+    rt(L.alkoSahHylech ? "lm.alkoSieht" : "lm.alkoSiehtNicht");
   ziel.appendChild(a);
 
   /* 3. Die Jahre */
-  ziel.appendChild(el("h3", null, "Drittens: die Jahre"));
+  ziel.appendChild(el("h3", null, rt("lm.drittens")));
   const j = el("p");
-  j.innerHTML = `${mitArtikel(L.alkochoden).replace(/^./, c => c.toUpperCase())} steht im ` +
-    `${L.alkoHaus}. Haus, ${STUFE_WORT[L.wuerdeStufe]}: <b>${komma(L.grundJahre)} Jahre</b>. ` +
-    `(Seine Zahlen sind ${komma(L.jahreTabelle.gross)} / ${komma(L.jahreTabelle.mittel)} / ${komma(L.jahreTabelle.klein)}.)`;
+  j.innerHTML = rt("lm.jahreSatz",
+    mitArtikel(L.alkochoden).replace(/^./, c => c.toUpperCase()),
+    L.alkoHaus, rt("lm.stufe." + L.wuerdeStufe), zahl(L.grundJahre),
+    zahl(L.jahreTabelle.gross), zahl(L.jahreTabelle.mittel), zahl(L.jahreTabelle.klein));
   ziel.appendChild(j);
 
   if (L.zuschlaege.length) {
     ziel.appendChild(el("p", null,
-      "Dazu die Zu- und Abschläge: Wohltäter, die den Alkochoden sehen, legen zu; Übeltäter nehmen."));
+      rt("lm.zuschlaege")));
     const ul = el("ul", "deutungListe");
     L.zuschlaege.forEach(x => {
       const li = el("li");
-      li.innerHTML = `${PLANET[x.key].g} ${PLANET[x.key].name}, ${x.aspekt}: ` +
-        `<b>${x.wert > 0 ? "+" : "−"}${komma(Math.abs(x.wert))}</b> Jahre`;
+      li.innerHTML = rt("lm.zuschlagZeile",
+        `${PLANET[x.key].g} ${PLANET[x.key].name}`, aspektName(x.aspekt),
+        x.wert > 0 ? "+" : "−", zahl(Math.abs(x.wert)));
       ul.appendChild(li);
     });
     ziel.appendChild(ul);
   } else {
     ziel.appendChild(el("p", "kucukNot",
-      "Weder Wohltäter noch Übeltäter sehen den Alkochoden — es bleibt bei der Grundzahl."));
+      rt("lm.keineZuschlaege")));
   }
 
   const kasten = el("div", "geistName");
   kasten.innerHTML =
-    `<div class="kalanBaslik">Das zugeteilte Maß</div>` +
-    `<div class="buyukToplam">${komma(L.gesamt)} Jahre</div>` +
-    `<div class="kucukNot">${komma(L.grundJahre)} vom Alkochoden` +
-    (L.summe ? `, ${L.summe > 0 ? "+" : "−"}${komma(Math.abs(L.summe))} aus den Aspekten` : "") +
-    `</div>`;
+    `<div class="kalanBaslik">${rt("lm.masz")}</div>` +
+    `<div class="buyukToplam">${rt("lm.jahre", zahl(L.gesamt))}</div>` +
+    `<div class="kucukNot">${rt("lm.herkunft", zahl(L.grundJahre),
+       L.summe ? `${L.summe > 0 ? "+" : "−"}${zahl(Math.abs(L.summe))}` : null)}</div>`;
   ziel.appendChild(kasten);
 
   const schluss = el("div", "schlussKasten");
-  schluss.append(el("h3", null, "Wie das zu lesen ist"));
-  schluss.appendChild(el("p", null,
-    "Die Alten selbst haben diese Zahl nie für ein Datum gehalten. Sie nannten sie das Maß, " +
-    "das der Anlage mitgegeben ist — und sie wussten, dass Lebensweise, Herkunft, Zeitläufte " +
-    "und Zufall darüber entscheiden, was daraus wird. Ptolemaios rechnete anders als die " +
-    "Perser, die Perser anders als die Araber, und dieselbe Geburt ergab bei ihnen " +
-    "verschiedene Zahlen. Wer diese Technik ernst nimmt, nimmt zuerst ihre Uneinigkeit ernst."));
-  schluss.appendChild(el("p", "schlussWort",
-    "Was hier steht, ist eine historische Rechnung, kein Befund über dich. Es sagt nichts " +
-    "über deine Gesundheit und nichts über deine Lebenszeit. Wer sich Sorgen um beides macht, " +
-    "ist bei einem Arzt richtig und nicht bei einer Tafel aus dem neunten Jahrhundert."));
+  schluss.append(el("h3", null, rt("lm.wieLesen")));
+  schluss.appendChild(el("p", null, rt("lm.wieLesenText")));
+  schluss.appendChild(el("p", "schlussWort", rt("lm.schlusswort")));
   ziel.appendChild(schluss);
 }
+
+/* Beim Sprachwechsel neu schreiben: Die Sätze stehen in der Tafel, aber
+   das Gezeichnete steht schon im Baum. */
+window.addEventListener("sprache-geaendert", ev => {
+  setzeRestSprache(ev.detail);
+  setTimeout(zeichne, 0);
+});
 
 $("#lmBerechnen")?.addEventListener("click", zeichne);
 aufProfilAenderung(zeichne);
