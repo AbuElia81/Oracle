@@ -16,9 +16,9 @@
    Deutungen dieser Seite schneller als über jede Definition.
    ------------------------------------------------------------------------ */
 
-import { WANDELSTERNE_IT, PLANETEN_UI_IT } from "./planeten-it.js?v=253";
-import { WANDELSTERNE_EN, PLANETEN_UI_EN } from "./planeten-en.js?v=253";
-import { aktuelleSprache } from "./sprachen.js?v=253";
+import { WANDELSTERNE_IT, PLANETEN_UI_IT } from "./planeten-it.js?v=256";
+import { WANDELSTERNE_EN, PLANETEN_UI_EN } from "./planeten-en.js?v=256";
+import { aktuelleSprache } from "./sprachen.js?v=256";
 
 export const WANDELSTERNE = [
   { key: "saturn", name: "Saturn", glyph: "♄", tr: "Zühal",

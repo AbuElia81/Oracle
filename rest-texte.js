@@ -8,6 +8,51 @@
 
 export const R = {
   de: {
+    /* ----------------------------------------- Zodiacal Releasing */
+    "zr.los.fortuna":"Los des Glücks", "zr.los.geist":"Los des Geistes",
+    "zr.tag":"Taggeburt", "zr.nacht":"Nachtgeburt", "zr.keiner":"keiner",
+    "zr.kopf": (los, glyph, zeichen, grad, tag, verdoppelt, fGlyph, fZeichen) =>
+      `${los} auf ${glyph} ${zeichen} ${grad}° · ${tag} · ` +
+      `natal in eigenem Zeichen (Verdopplung): ${verdoppelt} · ` +
+      `Höhepunkte gemessen am Los des Glücks in ${fGlyph} ${fZeichen}`,
+    "zr.alter": (n) => `Alter ${n} Jahre`,
+    "zr.stand": (lvl, glyph, zeichen, herrGlyph, von, bis, zusatz) =>
+      `L${lvl}: ${glyph} ${zeichen} (${herrGlyph} ${von}–${bis} J.${zusatz})`,
+    "zr.verdoppelt":"verdoppelt", "zr.hoehepunkt":"Höhepunkt", "zr.loesung":"Lösung des Bandes",
+    "zr.tab.stufe":"Stufe", "zr.tab.zeichen":"Zeichen", "zr.tab.herrscher":"Herrscher",
+    "zr.tab.von":"Von", "zr.tab.bis":"Bis", "zr.tab.jahre":"Jahre", "zr.tab.besonderes":"Besonderes",
+    "zr.markeGipfel":"▲ Höhepunkt", "zr.markeLoesung":"⟲ Lösung des Bandes",
+    "zr.tabNote":"Die Tafel zeigt L1 und L2; L3 ist in der Zeitleiste sichtbar, aber hier aus Platzgründen nicht aufgeführt.",
+    "zr.gipfelTitel":"Höhepunkte der Lebenskapitel",
+    "zr.gipfelText":"Ein Kapitel läuft nicht gleichmäßig. Seine Gipfel sind die Perioden, deren " +
+      "Zeichen zum Los des Glücks winkelhaft steht — auf ihm selbst, im vierten, siebten oder " +
+      "zehnten Zeichen von ihm aus. Das sind die tätigen, sichtbaren Strecken, in denen sich " +
+      "Laufbahn und Ansehen entscheiden; die übrigen Zeichen stehen in Abwendung und sind die stillen.",
+    "zr.keinGipfel":"Im gewählten Altersfenster liegt keine solche Periode.",
+    "zr.gipfelNote":"Die zweite Ebene gibt die großen Gipfel, die dritte die kurzen darin — " +
+      "oft nur Monate, aber auf derselben winkelhaften Stellung.",
+    "zr.gipfelZeile": (von, bis, glyph, zeichen, herr, stellung) =>
+      `<b>L2 · ${von} – ${bis} Jahre</b>: ${glyph} ${zeichen} unter ${herr} — ${stellung}.`,
+    "zr.gipfelKurz": (anzahl, naechster) =>
+      `<b>L3</b>: dazu ${anzahl} kurze Gipfel auf der dritten Ebene, der nächste bei ${naechster} Jahren.`,
+    "zr.vomLos.0":"auf dem Los selbst", "zr.vomLos.3":"im vierten Zeichen vom Los",
+    "zr.vomLos.6":"im siebten Zeichen vom Los", "zr.vomLos.9":"im zehnten Zeichen vom Los",
+    "zr.bandTitel":"Lösung des Bandes",
+    "zr.bandText":"Hat eine Reihe alle zwölf Zeichen durchlaufen und ist noch Zeit übrig, kehrt " +
+      "sie nicht zum Anfang zurück: Sie springt in das gegenüberliegende Zeichen und läuft von " +
+      "dort weiter. Valens hält diesen Sprung — die <em>lysis tōn desmōn</em> — für einen der " +
+      "wichtigsten Augenblicke einer Biographie: Das Band, das bis dahin trug, löst sich, und " +
+      "das Leben setzt an anderer Stelle neu an.",
+    "zr.grosseLoesung": (liste) => `<b>Die große Lösung</b> auf der ersten Ebene fällt auf ${liste}.`,
+    "zr.keineGrosse":"<b>Die große Lösung</b> auf der ersten Ebene kommt in einem Menschenleben " +
+      "nicht vor: Ein voller Umlauf der zwölf Zeichen dauert dort 214 Jahre. Was man erlebt, " +
+      "sind die kleinen Lösungen auf den unteren Ebenen — und die sind deutlich genug.",
+    "zr.keineKleine":"Im gewählten Altersfenster liegt auch keine kleine Lösung.",
+    "zr.kleineTitel":"<b>Die kleinen Lösungen</b> im gewählten Fenster:",
+    "zr.kleineZeile": (alter, lvl, glyph, zeichen, auchGipfel) =>
+      `<b>mit ${alter} Jahren</b> auf Stufe L${lvl}: Sprung nach ${glyph} ${zeichen}` +
+      (auchGipfel ? " — und das ist zugleich ein Gipfel" : "") + ".",
+    "zr.jahreKurz": (n) => `${n} Jahre`,
     /* ------------------------------------------- Das Lebensmaß */
     "lm.warnung":"<b>Vorab, damit es nicht missverstanden wird:</b> Diese Technik teilt eine " +
       "Zahl von Jahren zu — sie sagt nicht, wann jemand stirbt, und kann es nicht. Schon in der " +
@@ -286,6 +331,50 @@ export const R = {
   },
 
   it: {
+    /* ----------------------------------------- Zodiacal Releasing */
+    "zr.los.fortuna":"Sorte della Fortuna", "zr.los.geist":"Sorte dello Spirito",
+    "zr.tag":"nascita diurna", "zr.nacht":"nascita notturna", "zr.keiner":"nessuno",
+    "zr.kopf": (los, glyph, zeichen, grad, tag, verdoppelt, fGlyph, fZeichen) =>
+      `${los} a ${glyph} ${zeichen} ${grad}° · ${tag} · ` +
+      `natale nel proprio segno (raddoppio): ${verdoppelt} · ` +
+      `culmini misurati sulla Sorte della Fortuna in ${fGlyph} ${fZeichen}`,
+    "zr.alter": (n) => `Età ${n} anni`,
+    "zr.stand": (lvl, glyph, zeichen, herrGlyph, von, bis, zusatz) =>
+      `L${lvl}: ${glyph} ${zeichen} (${herrGlyph} ${von}–${bis} a.${zusatz})`,
+    "zr.verdoppelt":"raddoppiato", "zr.hoehepunkt":"culmine", "zr.loesung":"scioglimento del legame",
+    "zr.tab.stufe":"Livello", "zr.tab.zeichen":"Segno", "zr.tab.herrscher":"Signore",
+    "zr.tab.von":"Da", "zr.tab.bis":"A", "zr.tab.jahre":"Anni", "zr.tab.besonderes":"Particolarità",
+    "zr.markeGipfel":"▲ culmine", "zr.markeLoesung":"⟲ scioglimento del legame",
+    "zr.tabNote":"La tavola mostra L1 e L2; L3 è visibile nella linea del tempo, ma qui non è riportata per ragioni di spazio.",
+    "zr.gipfelTitel":"I culmini dei capitoli della vita",
+    "zr.gipfelText":"Un capitolo non scorre uniforme. I suoi culmini sono i periodi il cui " +
+      "segno sta angolare rispetto alla Sorte della Fortuna — su di essa stessa, nel quarto, " +
+      "settimo o decimo segno a partire da essa. Sono i tratti attivi e visibili, in cui si " +
+      "decidono carriera e reputazione; gli altri segni stanno in avversione e sono i quieti.",
+    "zr.keinGipfel":"Nella finestra d'età scelta non cade alcun periodo di questo genere.",
+    "zr.gipfelNote":"Il secondo livello dà i grandi culmini, il terzo quelli brevi al loro " +
+      "interno — spesso solo mesi, ma sulla stessa posizione angolare.",
+    "zr.gipfelZeile": (von, bis, glyph, zeichen, herr, stellung) =>
+      `<b>L2 · ${von} – ${bis} anni</b>: ${glyph} ${zeichen} sotto ${herr} — ${stellung}.`,
+    "zr.gipfelKurz": (anzahl, naechster) =>
+      `<b>L3</b>: in più ${anzahl} culmini brevi sul terzo livello, il prossimo a ${naechster} anni.`,
+    "zr.vomLos.0":"sulla Sorte stessa", "zr.vomLos.3":"nel quarto segno dalla Sorte",
+    "zr.vomLos.6":"nel settimo segno dalla Sorte", "zr.vomLos.9":"nel decimo segno dalla Sorte",
+    "zr.bandTitel":"Lo scioglimento del legame",
+    "zr.bandText":"Se una serie ha percorso tutti e dodici i segni e resta ancora tempo, non " +
+      "torna all'inizio: salta nel segno opposto e prosegue di là. Valente tiene questo salto " +
+      "— la <em>lysis tōn desmōn</em> — per uno dei momenti più importanti di una biografia: " +
+      "il legame che fino allora reggeva si scioglie, e la vita riparte da un altro punto.",
+    "zr.grosseLoesung": (liste) => `<b>Il grande scioglimento</b> sul primo livello cade a ${liste}.`,
+    "zr.keineGrosse":"<b>Il grande scioglimento</b> sul primo livello non ricorre in una vita " +
+      "umana: un giro completo dei dodici segni dura là 214 anni. Ciò che si vive sono i piccoli " +
+      "scioglimenti sui livelli inferiori — e sono abbastanza netti.",
+    "zr.keineKleine":"Nella finestra d'età scelta non cade nemmeno un piccolo scioglimento.",
+    "zr.kleineTitel":"<b>I piccoli scioglimenti</b> nella finestra scelta:",
+    "zr.kleineZeile": (alter, lvl, glyph, zeichen, auchGipfel) =>
+      `<b>a ${alter} anni</b> sul livello L${lvl}: salto verso ${glyph} ${zeichen}` +
+      (auchGipfel ? " — ed è al tempo stesso un culmine" : "") + ".",
+    "zr.jahreKurz": (n) => `${n} anni`,
     /* ------------------------------------------- La misura della vita */
     "lm.warnung":"<b>Prima di tutto, perché non sia frainteso:</b> questa tecnica assegna un " +
       "numero di anni — non dice quando qualcuno muoia, e non può dirlo. Già nella tradizione " +
@@ -555,6 +644,51 @@ export const R = {
   },
 
   en: {
+    /* ----------------------------------------- Zodiacal Releasing */
+    "zr.los.fortuna":"Lot of Fortune", "zr.los.geist":"Lot of Spirit",
+    "zr.tag":"day birth", "zr.nacht":"night birth", "zr.keiner":"none",
+    "zr.kopf": (los, glyph, zeichen, grad, tag, verdoppelt, fGlyph, fZeichen) =>
+      `${los} at ${glyph} ${zeichen} ${grad}° · ${tag} · ` +
+      `natal in its own sign (doubling): ${verdoppelt} · ` +
+      `peaks measured from the Lot of Fortune in ${fGlyph} ${fZeichen}`,
+    "zr.alter": (n) => `Age ${n} years`,
+    "zr.stand": (lvl, glyph, zeichen, herrGlyph, von, bis, zusatz) =>
+      `L${lvl}: ${glyph} ${zeichen} (${herrGlyph} ${von}–${bis} yrs${zusatz})`,
+    "zr.verdoppelt":"doubled", "zr.hoehepunkt":"peak", "zr.loesung":"loosing of the bond",
+    "zr.tab.stufe":"Level", "zr.tab.zeichen":"Sign", "zr.tab.herrscher":"Ruler",
+    "zr.tab.von":"From", "zr.tab.bis":"To", "zr.tab.jahre":"Years", "zr.tab.besonderes":"Of note",
+    "zr.markeGipfel":"▲ peak", "zr.markeLoesung":"⟲ loosing of the bond",
+    "zr.tabNote":"The table shows L1 and L2; L3 is visible in the timeline but is not listed here for reasons of space.",
+    "zr.gipfelTitel":"The peaks of the chapters of life",
+    "zr.gipfelText":"A chapter does not run evenly. Its peaks are the periods whose sign stands " +
+      "angular to the Lot of Fortune — on the lot itself, or in the fourth, seventh or tenth " +
+      "sign counted from it. These are the active, visible stretches in which career and " +
+      "standing are decided; the remaining signs stand in aversion and are the quiet ones.",
+    "zr.keinGipfel":"No such period falls within the chosen window of age.",
+    "zr.gipfelNote":"The second level gives the great peaks, the third the short ones within " +
+      "them — often only months, but on the same angular position.",
+    "zr.gipfelZeile": (von, bis, glyph, zeichen, herr, stellung) =>
+      `<b>L2 · ${von} – ${bis} years</b>: ${glyph} ${zeichen} under ${herr} — ${stellung}.`,
+    "zr.gipfelKurz": (anzahl, naechster) =>
+      `<b>L3</b>: along with ${anzahl} short peaks on the third level, the next at ${naechster} years.`,
+    "zr.vomLos.0":"on the lot itself", "zr.vomLos.3":"in the fourth sign from the lot",
+    "zr.vomLos.6":"in the seventh sign from the lot", "zr.vomLos.9":"in the tenth sign from the lot",
+    "zr.bandTitel":"The loosing of the bond",
+    "zr.bandText":"If a series has run through all twelve signs and time is still left, it does " +
+      "not return to the beginning: it jumps into the opposite sign and runs on from there. " +
+      "Valens holds this jump — the <em>lysis tōn desmōn</em> — to be one of the most important " +
+      "moments in a life: the bond that carried until then comes loose, and the life starts " +
+      "again at another place.",
+    "zr.grosseLoesung": (liste) => `<b>The great loosing</b> on the first level falls at ${liste}.`,
+    "zr.keineGrosse":"<b>The great loosing</b> on the first level does not occur in a human " +
+      "lifetime: a full circuit of the twelve signs takes 214 years there. What one lives " +
+      "through are the small loosings on the lower levels — and those are plain enough.",
+    "zr.keineKleine":"No small loosing falls within the chosen window of age either.",
+    "zr.kleineTitel":"<b>The small loosings</b> in the chosen window:",
+    "zr.kleineZeile": (alter, lvl, glyph, zeichen, auchGipfel) =>
+      `<b>at ${alter} years</b> on level L${lvl}: a jump to ${glyph} ${zeichen}` +
+      (auchGipfel ? " — and that is at the same time a peak" : "") + ".",
+    "zr.jahreKurz": (n) => `${n} years`,
     /* ------------------------------------------- The measure of life */
     "lm.warnung":"<b>First, so that it is not misunderstood:</b> this technique assigns a " +
       "number of years — it does not say when anyone dies, and cannot. Even in the tradition it " +

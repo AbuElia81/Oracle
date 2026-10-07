@@ -11,24 +11,23 @@
    das gegenüberliegende Zeichen und läuft von dort weiter. Valens hält
    diesen Sprung für einen der wichtigsten Augenblicke einer Biographie.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=253";
-import { berechneGeburt, norm360 } from "./astro.js?v=253";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=256";
+import { berechneGeburt, norm360 } from "./astro.js?v=256";
+import { ZEICHEN, PLANET } from "./horoskop.js?v=256";
+import { rt, zahl, setzeRestSprache } from "./rest-texte.js?v=256";
+import { aktuelleSprache } from "./sprachen.js?v=256";
+setzeRestSprache(aktuelleSprache());
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
   if (c) n.className = c; if (txt !== undefined) n.textContent = txt; return n; };
 
-const ZEICHEN = [
-  { name:"Widder", glyph:"♈" }, { name:"Stier", glyph:"♉" }, { name:"Zwillinge", glyph:"♊" },
-  { name:"Krebs", glyph:"♋" }, { name:"Löwe", glyph:"♌" }, { name:"Jungfrau", glyph:"♍" },
-  { name:"Waage", glyph:"♎" }, { name:"Skorpion", glyph:"♏" }, { name:"Schütze", glyph:"♐" },
-  { name:"Steinbock", glyph:"♑" }, { name:"Wassermann", glyph:"♒" }, { name:"Fische", glyph:"♓" }
-];
+/* Zeichen- und Planetennamen kommen aus horoskop.js, nicht aus einer
+   eigenen Kopie: Dort werden sie beim Sprachwechsel umgehängt, und eine
+   Kopie hier bliebe für immer deutsch — im englischen Satz stand sonst
+   "Lot of Fortune at ♒ Wassermann". */
 const DOMIZIL = ["mars","venus","merkur","mond","sonne","merkur","venus","mars","jupiter","saturn","saturn","jupiter"];
-const PLANETEN = {
-  sonne:{name:"Sonne", g:"☉"}, mond:{name:"Mond", g:"☽"}, merkur:{name:"Merkur", g:"☿"},
-  venus:{name:"Venus", g:"♀"}, mars:{name:"Mars", g:"♂"}, jupiter:{name:"Jupiter", g:"♃"}, saturn:{name:"Saturn", g:"♄"}
-};
+const PLANETEN = PLANET;
 const KLEINE_JAHRE = { mond:25, sonne:19, merkur:20, venus:8, mars:15, jupiter:12, saturn:30 };
 const FARBEN = { sonne:"#e7c65c", mond:"#cfd6e6", merkur:"#9fbfa8", venus:"#e0a6c2", mars:"#c96a4a", jupiter:"#7fa6d6", saturn:"#8b8471" };
 
@@ -205,8 +204,7 @@ function berechneUndZeige() {
                                geburt.planeten.mond.laenge, geburt.tagGeburt);
   const fortunaSign = Math.floor(fortuna / 30);
   const winkelhaft = idx => [0, 3, 6, 9].includes(((idx - fortunaSign) % 12 + 12) % 12);
-  const HAUSNAME_VOM_LOS = { 0:"auf dem Los selbst", 3:"im vierten Zeichen vom Los",
-                             6:"im siebten Zeichen vom Los", 9:"im zehnten Zeichen vom Los" };
+  const vomLos = stellung => rt("zr.vomLos." + stellung);
 
   const maxAlter = Math.max(10, parseInt($("#zrMaxAlter").value, 10) || 90);
   const verdoppelt = ermittleVerdopplung(geburt);
@@ -220,11 +218,14 @@ function berechneUndZeige() {
   cikti.hidden = false;
   cikti.innerHTML = "";
 
+  const verdopplungsListe = DOMIZIL.filter((_, i) => verdoppelt[i]).length
+    ? [...new Set(DOMIZIL.filter((_, i) => verdoppelt[i]))].map(k => PLANETEN[k].name).join(", ")
+    : rt("zr.keiner");
   cikti.appendChild(el("p", "kucukNot",
-    `${losArt === "fortuna" ? "Los des Glücks" : "Los des Geistes"} auf ${ZEICHEN[losSign].glyph} ${ZEICHEN[losSign].name} ` +
-    `${(los - losSign * 30).toFixed(1)}° · ${geburt.tagGeburt ? "Taggeburt" : "Nachtgeburt"} · ` +
-    `natal in eigenem Zeichen (Verdopplung): ${DOMIZIL.filter((_, i) => verdoppelt[i]).length ? [...new Set(DOMIZIL.filter((_, i) => verdoppelt[i]))].map(k => PLANETEN[k].name).join(", ") : "keiner"} · ` +
-    `Höhepunkte gemessen am Los des Glücks in ${ZEICHEN[fortunaSign].glyph} ${ZEICHEN[fortunaSign].name}`));
+    rt("zr.kopf", rt(losArt === "fortuna" ? "zr.los.fortuna" : "zr.los.geist"),
+       ZEICHEN[losSign].glyph, ZEICHEN[losSign].name, zahl(los - losSign * 30),
+       rt(geburt.tagGeburt ? "zr.tag" : "zr.nacht"), verdopplungsListe,
+       ZEICHEN[fortunaSign].glyph, ZEICHEN[fortunaSign].name)));
 
   const baenderKutu = el("div", "zeitleisteKutu");
   const baenderDiv = el("div"); baenderDiv.id = "zrBaender";
@@ -234,9 +235,13 @@ function berechneUndZeige() {
 
   function zeigeStand(alter) {
     const aktive = [1, 2, 3].map(lvl => perioden.find(pr => pr.level === lvl && alter >= pr.startAlter && alter < pr.endAlter));
-    ablesung.innerHTML = `<b>Alter ${alter.toFixed(1)} Jahre</b><br>` + aktive.filter(Boolean).map(pr =>
-      `L${pr.level}: ${ZEICHEN[pr.signIdx].glyph} ${ZEICHEN[pr.signIdx].name} (${PLANETEN[DOMIZIL[pr.signIdx]].g} ${pr.startAlter.toFixed(1)}–${pr.endAlter.toFixed(1)} J.${pr.verdoppelt ? ", verdoppelt" : ""}${pr.hoehepunkt ? ", Höhepunkt" : ""}${pr.loesung ? ", Lösung des Bandes" : ""})`
-    ).join(" · ");
+    ablesung.innerHTML = `<b>${rt("zr.alter", zahl(alter))}</b><br>` + aktive.filter(Boolean).map(pr => {
+      const zusatz = (pr.verdoppelt ? ", " + rt("zr.verdoppelt") : "") +
+                     (pr.hoehepunkt ? ", " + rt("zr.hoehepunkt") : "") +
+                     (pr.loesung ? ", " + rt("zr.loesung") : "");
+      return rt("zr.stand", pr.level, ZEICHEN[pr.signIdx].glyph, ZEICHEN[pr.signIdx].name,
+                PLANETEN[DOMIZIL[pr.signIdx]].g, zahl(pr.startAlter), zahl(pr.endAlter), zusatz);
+    }).join(" · ");
   }
 
   zeichnenBaender(baenderDiv, perioden, maxAlter, maxLevel, zeigeStand);
@@ -244,7 +249,9 @@ function berechneUndZeige() {
 
   const tablo = el("div", "tabloKutu");
   const tab = el("table");
-  tab.innerHTML = "<thead><tr><th>Stufe</th><th>Zeichen</th><th>Herrscher</th><th>Von</th><th>Bis</th><th>Jahre</th><th>Besonderes</th></tr></thead>";
+  tab.innerHTML = `<thead><tr><th>${rt("zr.tab.stufe")}</th><th>${rt("zr.tab.zeichen")}</th>` +
+    `<th>${rt("zr.tab.herrscher")}</th><th>${rt("zr.tab.von")}</th><th>${rt("zr.tab.bis")}</th>` +
+    `<th>${rt("zr.tab.jahre")}</th><th>${rt("zr.tab.besonderes")}</th></tr></thead>`;
   const tbody = el("tbody");
   perioden.filter(pr => pr.level <= 2).sort((a, b) => a.startAlter - b.startAlter || a.level - b.level).forEach(pr => {
     const tr = el("tr", pr.level === 1 ? "sieger" : null);
@@ -255,8 +262,8 @@ function berechneUndZeige() {
     tr.appendChild(el("td", null, pr.endAlter.toFixed(1)));
     tr.appendChild(el("td", null, pr.laenge.toFixed(2) + (pr.verdoppelt ? " (×2)" : "")));
     const bes = [];
-    if (pr.hoehepunkt) bes.push("▲ Höhepunkt");
-    if (pr.loesung) bes.push("⟲ Lösung des Bandes");
+    if (pr.hoehepunkt) bes.push(rt("zr.markeGipfel"));
+    if (pr.loesung) bes.push(rt("zr.markeLoesung"));
     const tdBes = el("td", bes.length ? "treffer" : null, bes.join(" · ") || "—");
     tr.appendChild(tdBes);
     if (pr.hoehepunkt || pr.loesung) tr.classList.add("gipfel");
@@ -265,7 +272,7 @@ function berechneUndZeige() {
   tab.appendChild(tbody);
   tablo.appendChild(tab);
   cikti.appendChild(tablo);
-  cikti.appendChild(el("p", "kucukNot", "Die Tafel zeigt L1 und L2; L3 ist in der Zeitleiste sichtbar, aber hier aus Platzgründen nicht aufgeführt."));
+  cikti.appendChild(el("p", "kucukNot", rt("zr.tabNote")));
 
   /* ----------------------------------------- Gipfel und Bandlösungen */
   const gipfel = perioden.filter(pr => (pr.level === 2 || pr.level === 3) &&
@@ -273,72 +280,62 @@ function berechneUndZeige() {
   const loesungenGross = perioden.filter(pr => pr.loesung && pr.level === 1);
   const loesungenKlein = perioden.filter(pr => pr.loesung && pr.level > 1 && pr.startAlter < maxAlter);
 
-  cikti.appendChild(el("h3", null, "Höhepunkte der Lebenskapitel"));
-  cikti.appendChild(el("p", null,
-    `Ein Kapitel läuft nicht gleichmäßig. Seine Gipfel sind die Perioden, deren Zeichen ` +
-    `zum Los des Glücks winkelhaft steht — auf ihm selbst, im vierten, siebten oder zehnten ` +
-    `Zeichen von ihm aus. Das sind die tätigen, sichtbaren Strecken, in denen sich Laufbahn ` +
-    `und Ansehen entscheiden; die übrigen Zeichen stehen in Abwendung und sind die stillen.`));
+  cikti.appendChild(el("h3", null, rt("zr.gipfelTitel")));
+  cikti.appendChild(el("p", null, rt("zr.gipfelText")));
   if (!gipfel.length) {
-    cikti.appendChild(el("p", "kucukNot", "Im gewählten Altersfenster liegt keine solche Periode."));
+    cikti.appendChild(el("p", "kucukNot", rt("zr.keinGipfel")));
   } else {
     cikti.appendChild(el("p", "kucukNot",
-      "Die zweite Ebene gibt die großen Gipfel, die dritte die kurzen darin — " +
-      "oft nur Monate, aber auf derselben winkelhaften Stellung."));
+      rt("zr.gipfelNote")));
     const ul = el("ul", "deutungListe");
     gipfel.filter(pr => pr.level === 2).forEach(pr => {
       const stellung = ((pr.signIdx - fortunaSign) % 12 + 12) % 12;
       const li = el("li");
-      li.innerHTML = `<b>L2 · ${pr.startAlter.toFixed(1)} – ${pr.endAlter.toFixed(1)} Jahre</b>: ` +
-        `${ZEICHEN[pr.signIdx].glyph} ${ZEICHEN[pr.signIdx].name} unter ` +
-        `${PLANETEN[DOMIZIL[pr.signIdx]].name} — ${HAUSNAME_VOM_LOS[stellung]}.`;
+      li.innerHTML = rt("zr.gipfelZeile", zahl(pr.startAlter), zahl(pr.endAlter),
+        ZEICHEN[pr.signIdx].glyph, ZEICHEN[pr.signIdx].name,
+        PLANETEN[DOMIZIL[pr.signIdx]].name, vomLos(stellung));
       ul.appendChild(li);
     });
     const kurz = gipfel.filter(pr => pr.level === 3);
     if (kurz.length) {
       const li = el("li");
-      li.innerHTML = `<b>L3</b>: dazu ${kurz.length} kurze Gipfel auf der dritten Ebene, ` +
-        `der nächste bei ${kurz.map(x => x.startAlter).filter(a => a >= 0).sort((a,b)=>a-b)[0].toFixed(1)} Jahren.`;
+      li.innerHTML = rt("zr.gipfelKurz", kurz.length,
+        zahl(kurz.map(x => x.startAlter).filter(a => a >= 0).sort((a,b)=>a-b)[0]));
       ul.appendChild(li);
     }
     cikti.appendChild(ul);
   }
 
-  cikti.appendChild(el("h3", null, "Lösung des Bandes"));
-  cikti.appendChild(el("p", null,
-    `Hat eine Reihe alle zwölf Zeichen durchlaufen und ist noch Zeit übrig, kehrt sie nicht ` +
-    `zum Anfang zurück: Sie springt in das gegenüberliegende Zeichen und läuft von dort weiter. ` +
-    `Valens hält diesen Sprung — die <em>lysis tōn desmōn</em> — für einen der wichtigsten ` +
-    `Augenblicke einer Biographie: Das Band, das bis dahin trug, löst sich, und das Leben ` +
-    `setzt an anderer Stelle neu an.`));
+  cikti.appendChild(el("h3", null, rt("zr.bandTitel")));
+  cikti.appendChild(el("p", null, rt("zr.bandText")));
 
   const gross = el("p");
   gross.innerHTML = loesungenGross.length
-    ? `<b>Die große Lösung</b> auf der ersten Ebene fällt auf ` +
-      loesungenGross.map(x => `${x.startAlter.toFixed(1)} Jahre`).join(", ") + `.`
-    : `<b>Die große Lösung</b> auf der ersten Ebene kommt in einem Menschenleben nicht vor: ` +
-      `Ein voller Umlauf der zwölf Zeichen dauert dort 214 Jahre. Was man erlebt, sind die ` +
-      `kleinen Lösungen auf den unteren Ebenen — und die sind deutlich genug.`;
+    ? rt("zr.grosseLoesung", loesungenGross.map(x => rt("zr.jahreKurz", zahl(x.startAlter))).join(", "))
+    : rt("zr.keineGrosse");
   cikti.appendChild(gross);
 
   if (!loesungenKlein.length) {
-    cikti.appendChild(el("p", "kucukNot",
-      "Im gewählten Altersfenster liegt auch keine kleine Lösung."));
+    cikti.appendChild(el("p", "kucukNot", rt("zr.keineKleine")));
   } else {
     const kl = el("p");
-    kl.innerHTML = "<b>Die kleinen Lösungen</b> im gewählten Fenster:";
+    kl.innerHTML = rt("zr.kleineTitel");
     cikti.appendChild(kl);
     const ul2 = el("ul", "deutungListe");
     loesungenKlein.sort((a, b) => a.startAlter - b.startAlter).forEach(pr => {
       const li = el("li");
-      li.innerHTML = `<b>mit ${pr.startAlter.toFixed(1)} Jahren</b> auf Stufe L${pr.level}: ` +
-        `Sprung nach ${ZEICHEN[pr.signIdx].glyph} ${ZEICHEN[pr.signIdx].name}` +
-        (pr.hoehepunkt ? " — und das ist zugleich ein Gipfel" : "") + `.`;
+      li.innerHTML = rt("zr.kleineZeile", zahl(pr.startAlter), pr.level,
+        ZEICHEN[pr.signIdx].glyph, ZEICHEN[pr.signIdx].name, pr.hoehepunkt);
       ul2.appendChild(li);
     });
     cikti.appendChild(ul2);
   }
 }
+
+window.addEventListener("sprache-geaendert", ev => {
+  setzeRestSprache(ev.detail);
+  if (letzteRechnung) setTimeout(berechneUndZeige, 0);
+});
 
 $("#zrBerechnen").addEventListener("click", berechneUndZeige);
 
