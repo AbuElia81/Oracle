@@ -21,10 +21,10 @@ const el = (t, c, txt) => { const n = document.createElement(t);
    Rubeus, Fortuna maior und minor, Acquisitio und Amissio, Laetitia und
    Tristitia, Caput und Cauda. Nur Via, Populus, Carcer und Coniunctio
    spiegeln sich selbst. */
-import { FIGUR_IT, RAMEL_ELEMENT_IT, RAMEL_JA_IT, RAMEL_PLANET_IT } from "./ramel-it.js?v=280";
-import { FIGUR_EN, RAMEL_ELEMENT_EN, RAMEL_JA_EN, RAMEL_PLANET_EN } from "./ramel-en.js?v=280";
-import { aktuelleSprache } from "./sprachen.js?v=280";
-import { rt, setzeRestSprache } from "./rest-texte.js?v=280";
+import { FIGUR_IT, RAMEL_ELEMENT_IT, RAMEL_JA_IT, RAMEL_PLANET_IT } from "./ramel-it.js?v=288";
+import { FIGUR_EN, RAMEL_ELEMENT_EN, RAMEL_JA_EN, RAMEL_PLANET_EN } from "./ramel-en.js?v=288";
+import { aktuelleSprache } from "./sprachen.js?v=288";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=288";
 setzeRestSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 
@@ -383,9 +383,10 @@ $("#rmWerfen")?.addEventListener("click", werfen);
 $("#rmFrage")?.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); werfen(); } });
 
 /* Die Tafel der sechzehn Figuren zum Nachschlagen. */
-(function tafel() {
+function tafel() {
   const ziel = $("#rmTafel");
   if (!ziel) return;
+  ziel.innerHTML = "";       /* beim Sprachwechsel neu füllen */
   FIGUREN.forEach(f => {
     const tr = el("tr");
     const td0 = el("td"); td0.innerHTML = figurSvg(f);
@@ -397,7 +398,8 @@ $("#rmFrage")?.addEventListener("keydown", e => { if (e.key === "Enter") { e.pre
     tr.appendChild(el("td", null, f.text));
     ziel.appendChild(tr);
   });
-})();
+}
+tafel();
 
 /* ------------------------------------------------------- die Sprachschalter
    Die Figuren bleiben dieselben Objekte; nur ihre Texte wechseln. */
@@ -421,4 +423,7 @@ export function setzeRamelSprache(code) {
 }
 
 setzeRamelSprache(aktuelleSprache());
-window.addEventListener("sprache-geaendert", e => setzeRamelSprache(e.detail));
+window.addEventListener("sprache-geaendert", e => {
+  setzeRamelSprache(e.detail);
+  setTimeout(() => { try { tafel(); } catch (err) {} }, 60);
+});

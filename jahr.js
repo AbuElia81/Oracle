@@ -6,11 +6,15 @@
    fertigen Ausgaben der anderen Rechner und schreibt in eigene Kästen
    daneben — an fremden Rechnungen wird nichts geändert.
    --------------------------------------------------------------------- */
-import { leseProfilRoh } from "./profil.js?v=280";
-import { cevir, toplam, kalan } from "./ebced.js?v=280";
-import { BURCLAR } from "./korpus.js?v=280";
-import { sonnenLaenge, julianischesDatum, norm360, berechneGeburt } from "./astro.js?v=280";
-import { ZEICHEN as ZEICHEN_BASIS, PLANET } from "./horoskop.js?v=280";
+import { leseProfilRoh } from "./profil.js?v=288";
+import { cevir, toplam, kalan } from "./ebced.js?v=288";
+import { BURCLAR } from "./korpus.js?v=288";
+import { sonnenLaenge, julianischesDatum, norm360, berechneGeburt } from "./astro.js?v=288";
+import { ZEICHEN as ZEICHEN_BASIS, PLANET } from "./horoskop.js?v=288";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=288";
+import { aktuelleSprache } from "./sprachen.js?v=288";
+setzeRestSprache(aktuelleSprache());
+window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -67,7 +71,7 @@ function yildizJahr(kasten) {
 
   kasten.hidden = false;
   kasten.innerHTML = "";
-  kasten.append(el("h3", null, `Dieses Jahr — ${JAHR}`));
+  kasten.append(el("h3", null, rt("jr.diesesJahr", JAHR)));
   const p1 = el("p");
   p1.innerHTML = `Namenssumme ${summe} und Jahreszahl ${JAHR} ergeben ${summe + JAHR}; ` +
     `durch zwölf geteilt bleibt ${kalan(summe + JAHR, 12)}. Regent des Jahres ist damit ` +
@@ -78,8 +82,7 @@ function yildizJahr(kasten) {
     `Günstig in diesem Jahr: ${regent.is} Guter Tag der Woche: ${regent.gun}; ` +
     `schwerer Tag: ${regent.kotugun}. Anrufung des Jahres: ${regent.esma}.`));
   kasten.append(el("p", "kucukNot",
-    "Der Jahresregent ist eine Anwendung der Ebced-Rechnung auf die Jahreszahl, " +
-    "wie sie die Falnâme-Praxis kennt — nicht aus einer einzelnen Handschrift belegt."));
+    rt("jr.regentNote")));
 }
 
 /* ------------------------------------------------ Profektion des Jahres
@@ -133,7 +136,7 @@ function pfJahr(kasten) {
   if (!pr) { kasten.hidden = true; return; }
   kasten.hidden = false;
   kasten.innerHTML = "";
-  kasten.append(el("h3", null, `Dieses Jahr — ${JAHR}`));
+  kasten.append(el("h3", null, rt("jr.diesesJahr", JAHR)));
   const p1 = el("p");
   p1.innerHTML = `Du bist ${pr.alter} Jahre alt; der Aszendent ist seit der Geburt ${pr.alter} Zeichen ` +
     `weitergerückt, von ${pr.ascName} auf <b>${pr.glyph} ${pr.name}</b>. Damit steht dein ` +
@@ -141,9 +144,7 @@ function pfJahr(kasten) {
   kasten.append(p1);
   kasten.append(el("p", null, `Thema des Jahres: ${pr.thema}.`));
   kasten.append(el("p", "kucukNot",
-    "Das Jahr läuft von Geburtstag zu Geburtstag, nicht von Januar zu Januar. " +
-    "Wo der Herr des Jahres im Geburtshoroskop steht und wie er dasteht, entscheidet, " +
-    "ob das Thema leicht oder schwer wird."));
+    rt("jr.profNote")));
 }
 
 /* ------------------------------------------- Lebensbogen: was heuer fällt */
@@ -159,28 +160,24 @@ function lbJahr(kasten) {
 
   kasten.hidden = false;
   kasten.innerHTML = "";
-  kasten.append(el("h3", null, `Dieses Jahr — ${JAHR}`));
+  kasten.append(el("h3", null, rt("jr.diesesJahr", JAHR)));
   if (!treffer.length) {
     kasten.append(el("p", null,
-      `Im Jahr ${JAHR} bist du zwischen ${komma(f.alterAnfang)} und ${komma(f.alterEnde)} Jahre alt. ` +
-      `In dieser Spanne wird keine Direktion fällig. Ein ruhiges Jahr in dieser Technik; ` +
-      `was wirkt, wirkt aus den Jahren davor nach.`));
+      rt("jr.spanne", JAHR, komma(f.alterAnfang), komma(f.alterEnde)) + rt("jr.keineDirektion")));
   } else {
     kasten.append(el("p", null,
-      `Im Jahr ${JAHR} bist du zwischen ${komma(f.alterAnfang)} und ${komma(f.alterEnde)} Jahre alt. ` +
-      `Darin wird fällig:`));
+      rt("jr.spanne", JAHR, komma(f.alterAnfang), komma(f.alterEnde)) + rt("jr.darinFaellig")));
     const liste = el("ul", "deutungListe");
     treffer.forEach(d => {
       const wann = datumBeiAlter(p, d.alter);
       const li = el("li");
-      li.innerHTML = `<b>um den ${tagMonat(wann)}</b> (mit ${komma(d.alter)} Jahren): ` +
-        `${d.promissor} ${d.aspekt} ${d.signifikator}`;
+      li.innerHTML = rt("jr.direktionZeile", tagMonat(wann), komma(d.alter),
+        d.promissor, d.aspekt, d.signifikator);
       liste.appendChild(li);
     });
     kasten.append(liste);
     kasten.append(el("p", "kucukNot",
-      "Die Tage sind gerundet — Primärdirektionen reagieren empfindlich auf die Geburtszeit. " +
-      "Rechne mit einem Fenster von Wochen, nicht von Tagen."));
+      rt("jr.tageNote")));
   }
 }
 
@@ -201,7 +198,7 @@ function zrJahr(kasten) {
 
   kasten.hidden = false;
   kasten.innerHTML = "";
-  kasten.append(el("h3", null, `Dieses Jahr — ${JAHR}`));
+  kasten.append(el("h3", null, rt("jr.diesesJahr", JAHR)));
 
   const l1 = laufend("L1"), l2 = laufend("L2");
   if (l1) {
@@ -225,8 +222,7 @@ function zrJahr(kasten) {
     });
     kasten.append(liste);
     kasten.append(el("p", "kucukNot",
-      "Übergänge sind in dieser Technik die eigentlichen Stellen: Der Ton ändert sich " +
-      "oft binnen weniger Wochen um das Datum herum."));
+      rt("jr.uebergaenge")));
   } else {
     kasten.append(el("p", null,
       `Im Jahr ${JAHR} steht kein Wechsel auf den beiden oberen Ebenen an — das Jahr läuft ` +
@@ -266,11 +262,9 @@ function azJahr(kasten) {
 
   kasten.hidden = false;
   kasten.innerHTML = "";
-  kasten.append(el("h3", null, `Dieses Jahr — ${JAHR}`));
+  kasten.append(el("h3", null, rt("jr.diesesJahr", JAHR)));
   kasten.append(el("p", null,
-    `Einmal im Jahr läuft die Sonne über jeden deiner Schattenzwillinge. An diesen Tagen ` +
-    `wird das sonst Verborgene für kurze Zeit beleuchtet — die alte Lesart nennt sie gute ` +
-    `Tage, um etwas anzusprechen, das lange unausgesprochen war.`));
+    rt("jr.schattentage")));
   if (!funde.length) {
     kasten.append(el("p", "kucukNot", "Für dieses Jahr ließ sich kein solcher Tag bestimmen."));
     return;

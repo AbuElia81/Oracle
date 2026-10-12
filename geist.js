@@ -9,9 +9,9 @@
    folgt der Ganzzeichen-Vereinfachung (zehn Zeichen nach dem Aszendenten).
    --------------------------------------------------------------------- */
 
-import { ZEICHEN as ZEICHEN_BASIS, PLANET } from "./horoskop.js?v=280";
-import { rt, setzeRestSprache } from "./rest-texte.js?v=280";
-import { aktuelleSprache } from "./sprachen.js?v=280";
+import { ZEICHEN as ZEICHEN_BASIS, PLANET } from "./horoskop.js?v=288";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=288";
+import { aktuelleSprache } from "./sprachen.js?v=288";
 setzeRestSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 
@@ -498,7 +498,8 @@ $("#gBerechnen").addEventListener("click", () => {
   cikti.appendChild(el("h3", null, "Die fünf hylegischen Örter"));
   const tablo = el("div", "tabloKutu");
   const tab = el("table", "wuerdeTablo oerterTablo");
-  tab.innerHTML = "<thead><tr><th>Ort</th><th>Länge</th><th>im Zeichen</th><th>Sektor</th><th>Buchstabe</th></tr></thead>";
+  tab.innerHTML = `<thead><tr><th>${rt("g.tab.ort")}</th><th>${rt("g.tab.laenge")}</th>` +
+    `<th>${rt("g.tab.imZeichen")}</th><th>${rt("g.tab.sektor")}</th><th>${rt("g.tab.buchstabe")}</th></tr></thead>`;
   const tbody = el("tbody");
   oerter.forEach(o => {
     const tr = el("tr");

@@ -1,18 +1,18 @@
 /* ------------------------------------------------------------------------
    oracle.js — die Bedienung.
    --------------------------------------------------------------------- */
-import { EBCED, HARFLER, cevir, dokum, toplam, kalan } from "./ebced.js?v=280";
-import { rt, setzeRestSprache } from "./rest-texte.js?v=280";
-import { aktuelleSprache } from "./sprachen.js?v=280";
+import { EBCED, HARFLER, cevir, dokum, toplam, kalan } from "./ebced.js?v=288";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=288";
+import { aktuelleSprache } from "./sprachen.js?v=288";
 setzeRestSprache(aktuelleSprache());
 /* Beim Sprachwechsel neu zeichnen: korpus.js hängt seine Tafeln um, aber
    das bereits Gezeichnete steht schon im Baum. */
 window.addEventListener("sprache-geaendert", ev => {
   setzeRestSprache(ev.detail);
-  setTimeout(() => { try { yildizname(); } catch (e) {} }, 60);
+  setTimeout(() => { try { yildizname(); menzilTablosu(); } catch (e) {} }, 60);
 });
 import { UNSURLAR, GEZEGENLER, BURCLAR, MENZILLER, NIYET, UYUM,
-         UNSUR_UYUM, SAAT_SIRASI, GUN_SAHIBI, GUN_ADI } from "./korpus.js?v=280";
+         UNSUR_UYUM, SAAT_SIRASI, GUN_SAHIBI, GUN_ADI } from "./korpus.js?v=288";
 
 const $  = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
@@ -231,8 +231,10 @@ $("#uyumHesapla").addEventListener("click", () => {
 });
 
 /* --------------------------------------------------- IV. Die Herbergen */
-(function menzilTablosu() {
+function menzilTablosu() {
   const t = $("#menzilTablo");
+  if (!t) return;
+  t.innerHTML = "";          /* beim Sprachwechsel neu füllen */
   MENZILLER.forEach(m => {
     const r = el("tr");
     [String(m.no), m.tr, m.ar, m.hukum, m.iyi, m.kacin].forEach((v, i) => {
@@ -241,4 +243,5 @@ $("#uyumHesapla").addEventListener("click", () => {
     });
     t.appendChild(r);
   });
-})();
+}
+menzilTablosu();

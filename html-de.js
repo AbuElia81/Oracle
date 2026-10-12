@@ -164,5 +164,7 @@ export const HTML_DE = {
   "x.bNasil.44": "Zum Gebrauch: Dies ist ein Nachbau historischer Denktechniken, kein Ratgeber. Ärztliche, rechtliche und geldliche Entscheidungen gehören zu Menschen, nicht zu Tafeln.",
   "x.bRadixdeutung.1": "Dieselben Zahlen lassen sich auf zwei Weisen lesen, und die beiden widersprechen einander. Wähle, durch welche Brille du schauen willst — du kannst jederzeit wechseln.",
   "x.bAlmutem.1": "Gerechnet wird in drei Lagen: die Würden über fünf Stellen — Sonne, Mond, Aszendent, Glückspunkt und die Syzygie vor der Geburt —, dann der Ort, an dem der Planet selbst steht, und zuletzt der Herr des Wochentages und der Herr der Geburtsstunde.",
-  "x.bVerteilung.1": "Der <b>Verteiler</b> ist der Herr der Grenze, in der der Punkt gerade steht: Er gibt das Hauptthema. Der <b>Teilhaber</b> ist der Planet, dessen Körper oder Strahl der Punkt zuletzt überschritten hat: Er gibt die Menschen, die Ereignisse, das Getane. Ein Abschnitt heißt also immer mit zwei Namen."
+  "x.bVerteilung.1": "Der <b>Verteiler</b> ist der Herr der Grenze, in der der Punkt gerade steht: Er gibt das Hauptthema. Der <b>Teilhaber</b> ist der Planet, dessen Körper oder Strahl der Punkt zuletzt überschritten hat: Er gibt die Menschen, die Ereignisse, das Getane. Ein Abschnitt heißt also immer mit zwei Namen.",
+  "x.bRadixdeutung.2": "Was objektiv der Fall ist: Sekte, Temperament, der Herr des Aufsteigenden, wer stark steht und wer schwach. Bonattis Reihenfolge, nüchtern und nachrechenbar.",
+  "x.bRadixdeutung.3": "Wovon die Rede ist: dieselben Zahlen als Gestalten, Fabeln und Bilder. Die alte Schule lehnt diese Lesart ab — aber ein Bild merkt man sich, und eine Tabelle nicht."
 };

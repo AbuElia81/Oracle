@@ -8,6 +8,36 @@
 
 export const R = {
   de: {
+    /* Die zwölf Felder des Lebens, einzeln befragt. */
+    "th.felder":[
+      { titel:"Leib und Auftreten", frage:"Wie stehe ich selbst da — Gesundheit, Erscheinung, Wirkung auf andere?" },
+      { titel:"Geld und Besitz", frage:"Wie steht es um meine finanzielle Lage?" },
+      { titel:"Geschwister und nahe Wege", frage:"Wie steht es um Geschwister, Nachbarn, kurze Reisen, Nachrichten?" },
+      { titel:"Herkunft und Zuhause", frage:"Wie steht es um Eltern, Haus, Grund und Boden, das Ende der Dinge?" },
+      { titel:"Kinder und Freude", frage:"Bekomme ich Kinder — und wie steht es um Lust, Spiel, alles Hervorgebrachte?" },
+      { titel:"Arbeit und Gesundheit", frage:"Welche Arbeit tue ich, wie geht es mir dabei, und wie steht es um den Körper?" },
+      { titel:"Ehe und der Andere", frage:"Wie steht es um Ehe und Bindung — und um offene Gegner?" },
+      { titel:"Das Geliehene", frage:"Wie steht es um Erbe, Schulden, Anvertrautes, das Vermögen des Anderen?" },
+      { titel:"Fremde, Lehre, Glaube", frage:"Wie steht es um weite Reisen, Studium, Glauben, Lehrer?" },
+      { titel:"Amt und Ruf", frage:"Welchen Rang erreiche ich — Beruf, Ansehen, Bekanntheit?" },
+      { titel:"Freunde und Hoffnungen", frage:"Wie steht es um Freundschaften, Bünde, Gönner, das Erhoffte?" },
+      { titel:"Das Verborgene", frage:"Was läuft gegen mich, ohne dass ich es sehe — und was steht mir selbst im Weg?" }
+    ],
+    "jr.diesesJahr": (jahr) => `Dieses Jahr — ${jahr}`,
+    "jr.spanne": (jahr, von, bis) => `Im Jahr ${jahr} bist du zwischen ${von} und ${bis} Jahre alt. `,
+    "jr.keineDirektion":"In dieser Spanne wird keine Direktion fällig. Ein ruhiges Jahr in dieser Technik; was wirkt, wirkt aus den Jahren davor nach.",
+    "jr.darinFaellig":"Darin wird fällig:",
+    "jr.direktionZeile": (datum, alter, promissor, aspekt, signifikator) =>
+      `<b>um den ${datum}</b> (mit ${alter} Jahren): ${promissor} ${aspekt} ${signifikator}`,
+    "jr.tageNote":"Die Tage sind gerundet — Primärdirektionen reagieren empfindlich auf die Geburtszeit. Rechne mit einem Fenster von Wochen, nicht von Tagen.",
+    "g.tab.ort":"Ort", "g.tab.laenge":"Länge", "g.tab.imZeichen":"im Zeichen",
+    "g.tab.sektor":"Sektor", "g.tab.buchstabe":"Buchstabe",
+    "hk.transite":"Transite — der Himmel gerade jetzt",
+    "jr.regentNote":"Der Jahresregent ist eine Anwendung der Ebced-Rechnung auf die Jahreszahl, wie sie die Falnâme-Praxis kennt — nicht aus einer einzelnen Handschrift belegt.",
+    "jr.profNote":"Das Jahr läuft von Geburtstag zu Geburtstag, nicht von Januar zu Januar. Wo der Herr des Jahres im Geburtshoroskop steht und wie er dasteht, entscheidet, ob das Thema leicht oder schwer wird.",
+    "jr.uebergaenge":"Übergänge sind in dieser Technik die eigentlichen Stellen: Der Ton ändert sich oft binnen weniger Wochen um das Datum herum.",
+    "jr.schattentage":"Einmal im Jahr läuft die Sonne über jeden deiner Schattenzwillinge. An diesen Tagen wird das sonst Verborgene für kurze Zeit beleuchtet — die alte Lesart nennt sie gute Tage, um etwas anzusprechen, das lange unausgesprochen war.",
+    "pu.gespeichertNote":"Die Angaben liegen im Speicher deines Browsers. Beim nächsten Besuch stehen sie wieder da, auch ohne Netz. Auf ein anderes Gerät kommen sie nur über eine Sicherung — es gibt keinen Server, der sie abgleichen könnte.",
     "pf.ablesung": (jahr, monat, tag) => `<b>Alter ${jahr} Jahre, Monat ${monat}, Abschnitt ${tag}</b>`,
     "pf.ableseJahr": (glyph, zeichen, hg, herr) => `Jahr: ${glyph} ${zeichen} — Herr des Jahres ${hg} ${herr}`,
     "pf.ableseMonat": (glyph, zeichen, hg, herr) => `Monat: ${glyph} ${zeichen} (${hg} ${herr})`,
@@ -700,6 +730,36 @@ export const R = {
   },
 
   it: {
+    /* Die zwölf Felder des Lebens, einzeln befragt. */
+    "th.felder":[
+      { titel:"Corpo e presenza", frage:"Come sto io stesso — salute, aspetto, effetto sugli altri?" },
+      { titel:"Denaro e averi", frage:"Come sta la mia situazione finanziaria?" },
+      { titel:"Fratelli e strade vicine", frage:"Come stanno fratelli, vicini, brevi viaggi, notizie?" },
+      { titel:"Origine e casa", frage:"Come stanno genitori, casa, terra e la fine delle cose?" },
+      { titel:"Figli e gioia", frage:"Avrò figli — e come stanno piacere, gioco, tutto ciò che si produce?" },
+      { titel:"Lavoro e salute", frage:"Che lavoro faccio, come ci sto, e come sta il corpo?" },
+      { titel:"Matrimonio e l'altro", frage:"Come stanno matrimonio e legame — e gli avversari dichiarati?" },
+      { titel:"Ciò che è preso a prestito", frage:"Come stanno eredità, debiti, ciò che è affidato, i beni dell'altro?" },
+      { titel:"Terra straniera, dottrina, fede", frage:"Come stanno viaggi lunghi, studio, fede, maestri?" },
+      { titel:"Carica e reputazione", frage:"Quale rango raggiungo — mestiere, considerazione, notorietà?" },
+      { titel:"Amici e speranze", frage:"Come stanno amicizie, alleanze, protettori, ciò che si spera?" },
+      { titel:"Il nascosto", frage:"Che cosa agisce contro di me senza che io lo veda — e che cosa mi sta sulla strada?" }
+    ],
+    "jr.diesesJahr": (jahr) => `Quest'anno — ${jahr}`,
+    "jr.spanne": (jahr, von, bis) => `Nell'anno ${jahr} hai fra i ${von} e i ${bis} anni. `,
+    "jr.keineDirektion":"In questo intervallo non viene a scadenza alcuna direzione. Un anno quieto in questa tecnica; ciò che agisce, agisce ancora dagli anni precedenti.",
+    "jr.darinFaellig":"Vi viene a scadenza:",
+    "jr.direktionZeile": (datum, alter, promissor, aspekt, signifikator) =>
+      `<b>attorno al ${datum}</b> (a ${alter} anni): ${promissor} ${aspekt} ${signifikator}`,
+    "jr.tageNote":"I giorni sono arrotondati — le direzioni primarie reagiscono con sensibilità all'ora di nascita. Conta su una finestra di settimane, non di giorni.",
+    "g.tab.ort":"Luogo", "g.tab.laenge":"Longitudine", "g.tab.imZeichen":"nel segno",
+    "g.tab.sektor":"Settore", "g.tab.buchstabe":"Lettera",
+    "hk.transite":"Transiti — il cielo proprio adesso",
+    "jr.regentNote":"Il reggente dell'anno è un'applicazione del calcolo ebced al numero dell'anno, come la conosce la pratica dei falnâme — non attestata da un singolo manoscritto.",
+    "jr.profNote":"L'anno corre di compleanno in compleanno, non da gennaio a gennaio. Come e dove stia il signore dell'anno nel tema di nascita decide se il tema riesca facile o difficile.",
+    "jr.uebergaenge":"In questa tecnica i passaggi sono i punti veri: il tono cambia spesso nel giro di poche settimane attorno alla data.",
+    "jr.schattentage":"Una volta l'anno il sole passa su ciascuno dei tuoi gemelli d'ombra. In quei giorni ciò che altrimenti resta nascosto viene illuminato per poco — la lettura antica li chiama buoni giorni per dire qualcosa che a lungo è rimasto non detto.",
+    "pu.gespeichertNote":"I dati stanno nella memoria del tuo browser. Alla prossima visita saranno di nuovo lì, anche senza rete. Su un altro apparecchio arrivano solo tramite un salvataggio — non c'è alcun server che possa allinearli.",
     "pf.ablesung": (jahr, monat, tag) => `<b>Età ${jahr} anni, mese ${monat}, sezione ${tag}</b>`,
     "pf.ableseJahr": (glyph, zeichen, hg, herr) => `Anno: ${glyph} ${zeichen} — signore dell'anno ${hg} ${herr}`,
     "pf.ableseMonat": (glyph, zeichen, hg, herr) => `Mese: ${glyph} ${zeichen} (${hg} ${herr})`,
@@ -1379,6 +1439,36 @@ export const R = {
   },
 
   en: {
+    /* Die zwölf Felder des Lebens, einzeln befragt. */
+    "th.felder":[
+      { titel:"Body and bearing", frage:"How do I myself stand — health, appearance, effect on others?" },
+      { titel:"Money and property", frage:"How do my finances stand?" },
+      { titel:"Siblings and near roads", frage:"How do siblings, neighbours, short journeys, messages stand?" },
+      { titel:"Origin and home", frage:"How do parents, house, land and the end of things stand?" },
+      { titel:"Children and joy", frage:"Will I have children — and how do pleasure, play and everything brought forth stand?" },
+      { titel:"Work and health", frage:"What work do I do, how do I fare at it, and how does the body stand?" },
+      { titel:"Marriage and the other", frage:"How do marriage and attachment stand — and declared opponents?" },
+      { titel:"What is borrowed", frage:"How do inheritance, debts, what is entrusted, the other's property stand?" },
+      { titel:"Abroad, learning, belief", frage:"How do long journeys, study, belief and teachers stand?" },
+      { titel:"Office and reputation", frage:"What rank do I reach — work, standing, being known?" },
+      { titel:"Friends and hopes", frage:"How do friendships, alliances, patrons and what is hoped for stand?" },
+      { titel:"The hidden", frage:"What runs against me without my seeing it — and what stands in my own way?" }
+    ],
+    "jr.diesesJahr": (jahr) => `This year — ${jahr}`,
+    "jr.spanne": (jahr, von, bis) => `In the year ${jahr} you are between ${von} and ${bis} years old. `,
+    "jr.keineDirektion":"No direction falls due within that span. A quiet year in this technique; what is at work is still at work from the years before.",
+    "jr.darinFaellig":"Within it there falls due:",
+    "jr.direktionZeile": (datum, alter, promissor, aspekt, signifikator) =>
+      `<b>around ${datum}</b> (at ${alter}): ${promissor} ${aspekt} ${signifikator}`,
+    "jr.tageNote":"The days are rounded — primary directions react sensitively to the hour of birth. Reckon with a window of weeks, not of days.",
+    "g.tab.ort":"Place", "g.tab.laenge":"Longitude", "g.tab.imZeichen":"in sign",
+    "g.tab.sektor":"Sector", "g.tab.buchstabe":"Letter",
+    "hk.transite":"Transits — the sky right now",
+    "jr.regentNote":"The regent of the year is an application of the abjad reckoning to the number of the year, as the falnâme practice knows it — not attested from any single manuscript.",
+    "jr.profNote":"The year runs from birthday to birthday, not from January to January. Where the lord of the year stands in the birth chart, and how it stands, decides whether the theme comes easily or hard.",
+    "jr.uebergaenge":"In this technique the transitions are the real places: the tone often changes within a few weeks around the date.",
+    "jr.schattentage":"Once a year the sun passes over each of your shadow twins. On those days what is otherwise hidden is lit for a short while — the old reading calls them good days for saying something that has long gone unsaid.",
+    "pu.gespeichertNote":"The details lie in your browser's storage. At your next visit they will be there again, even without a network. They reach another device only by way of a backup — there is no server that could match them up.",
     "pf.ablesung": (jahr, monat, tag) => `<b>Age ${jahr} years, month ${monat}, section ${tag}</b>`,
     "pf.ableseJahr": (glyph, zeichen, hg, herr) => `Year: ${glyph} ${zeichen} — lord of the year ${hg} ${herr}`,
     "pf.ableseMonat": (glyph, zeichen, hg, herr) => `Month: ${glyph} ${zeichen} (${hg} ${herr})`,

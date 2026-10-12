@@ -10,9 +10,9 @@
    Dann steht die eigene Lesung an seiner Stelle, und zwei Eröffnungen
    übereinander wären eine zu viel.
    ------------------------------------------------------------------------ */
-import { mondHeute } from "./elektion.js?v=280";
-import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=280";
-import { t } from "./sprachen.js?v=280";
+import { mondHeute } from "./elektion.js?v=288";
+import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=288";
+import { t } from "./sprachen.js?v=288";
 
 const el = (art, klasse, text) => {
   const k = document.createElement(art);

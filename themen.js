@@ -19,7 +19,11 @@
    IV.3 — die Doryphorie, die Leibwache der Lichter).
    ------------------------------------------------------------------------ */
 
-import { radix, ZEICHEN, PLANET, REIHE, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=280";
+import { radix, ZEICHEN, PLANET, REIHE, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=288";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=288";
+import { aktuelleSprache } from "./sprachen.js?v=288";
+setzeRestSprache(aktuelleSprache());
+window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 
 const DOMIZIL = ["mars","venus","merkur","mond","sonne","merkur",
                  "venus","mars","jupiter","saturn","saturn","jupiter"];
@@ -49,41 +53,41 @@ function sekteRolle(key, tagGeburt) {
 
 /* ------------------------------------------------------- die zwölf Felder */
 export const THEMEN = [
-  { nr: 1,  titel: "Leib und Auftreten",
-    frage: "Wie stehe ich selbst da — Gesundheit, Erscheinung, Wirkung auf andere?",
+  { nr: 1, get titel() { return rt("th.felder")[0].titel; },
+    get frage() { return rt("th.felder")[0].frage; },
     anzeiger: ["sonne", "mond"] },
-  { nr: 2,  titel: "Geld und Besitz",
-    frage: "Wie steht es um meine finanzielle Lage?",
+  { nr: 2, get titel() { return rt("th.felder")[1].titel; },
+    get frage() { return rt("th.felder")[1].frage; },
     anzeiger: ["jupiter", "venus"] },
-  { nr: 3,  titel: "Geschwister und nahe Wege",
-    frage: "Wie steht es um Geschwister, Nachbarn, kurze Reisen, Nachrichten?",
+  { nr: 3, get titel() { return rt("th.felder")[2].titel; },
+    get frage() { return rt("th.felder")[2].frage; },
     anzeiger: ["merkur", "mars"] },
-  { nr: 4,  titel: "Herkunft und Zuhause",
-    frage: "Wie steht es um Eltern, Haus, Grund und Boden, das Ende der Dinge?",
+  { nr: 4, get titel() { return rt("th.felder")[3].titel; },
+    get frage() { return rt("th.felder")[3].frage; },
     anzeiger: ["saturn", "mond"] },
-  { nr: 5,  titel: "Kinder und Freude",
-    frage: "Bekomme ich Kinder — und wie steht es um Lust, Spiel, alles Hervorgebrachte?",
+  { nr: 5, get titel() { return rt("th.felder")[4].titel; },
+    get frage() { return rt("th.felder")[4].frage; },
     anzeiger: ["jupiter", "venus"] },
-  { nr: 6,  titel: "Arbeit und Gesundheit",
-    frage: "Welche Arbeit tue ich, wie geht es mir dabei, und wie steht es um den Körper?",
+  { nr: 6, get titel() { return rt("th.felder")[5].titel; },
+    get frage() { return rt("th.felder")[5].frage; },
     anzeiger: ["mars", "saturn"] },
-  { nr: 7,  titel: "Ehe und der Andere",
-    frage: "Wie steht es um Ehe und Bindung — und um offene Gegner?",
+  { nr: 7, get titel() { return rt("th.felder")[6].titel; },
+    get frage() { return rt("th.felder")[6].frage; },
     anzeiger: ["venus", "mond"] },
-  { nr: 8,  titel: "Das Geliehene",
-    frage: "Wie steht es um Erbe, Schulden, Anvertrautes, das Vermögen des Anderen?",
+  { nr: 8, get titel() { return rt("th.felder")[7].titel; },
+    get frage() { return rt("th.felder")[7].frage; },
     anzeiger: ["saturn", "mars"] },
-  { nr: 9,  titel: "Fremde, Lehre, Glaube",
-    frage: "Wie steht es um weite Reisen, Studium, Glauben, Lehrer?",
+  { nr: 9, get titel() { return rt("th.felder")[8].titel; },
+    get frage() { return rt("th.felder")[8].frage; },
     anzeiger: ["jupiter", "sonne"] },
-  { nr: 10, titel: "Amt und Ruf",
-    frage: "Welchen Rang erreiche ich — Beruf, Ansehen, Bekanntheit?",
+  { nr: 10, get titel() { return rt("th.felder")[9].titel; },
+    get frage() { return rt("th.felder")[9].frage; },
     anzeiger: ["sonne", "jupiter"] },
-  { nr: 11, titel: "Freunde und Hoffnungen",
-    frage: "Wie steht es um Freundschaften, Bünde, Gönner, das Erhoffte?",
+  { nr: 11, get titel() { return rt("th.felder")[10].titel; },
+    get frage() { return rt("th.felder")[10].frage; },
     anzeiger: ["jupiter", "sonne"] },
-  { nr: 12, titel: "Das Verborgene",
-    frage: "Was läuft gegen mich, ohne dass ich es sehe — und was steht mir selbst im Weg?",
+  { nr: 12, get titel() { return rt("th.felder")[11].titel; },
+    get frage() { return rt("th.felder")[11].frage; },
     anzeiger: ["saturn", "mars"] }
 ];
 

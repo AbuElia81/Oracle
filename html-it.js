@@ -213,5 +213,7 @@ export const HTML_IT = {
   "worum.bPunkte": "Luoghi calcolati, non corpi celesti: dove cadono nell'oroscopo la Fortuna, lo Spirito, l'Amore, il Padre, la Madre e gli altri.",
   "worum.bVerteilung": "La distribuzione di Doroteo per i termini: l'Ascendente avanza con la rotazione del cielo, e ogni termine dura quanto impiega a sorgere nel tuo luogo.",
   "worum.bLebensmass": "L'antica domanda sulla misura della vita: hyleg e alcocoden, il datore e il custode.",
-  "worum.bEssenz": "Tutto insieme, in immagini invece che in termini tecnici — ciò che le singole arti dicono concordemente."
+  "worum.bEssenz": "Tutto insieme, in immagini invece che in termini tecnici — ciò che le singole arti dicono concordemente.",
+  "x.bRadixdeutung.2": "Ciò che oggettivamente è il caso: setta, temperamento, il signore dell'Ascendente, chi sta forte e chi debole. L'ordine di Bonatti, sobrio e verificabile.",
+  "x.bRadixdeutung.3": "Di che cosa si parla: gli stessi numeri come figure, favole e immagini. La scuola antica rifiuta questa lettura — ma un'immagine la si ricorda, una tavola no."
 };

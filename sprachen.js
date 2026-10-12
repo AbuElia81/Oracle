@@ -22,9 +22,9 @@ export const SPRACHEN = [
   { code: "ar", name: "العربية",   kurz: "AR", rtl: true }
 ];
 
-import { HTML_IT } from "./html-it.js?v=280";
-import { HTML_EN } from "./html-en.js?v=280";
-import { HTML_DE } from "./html-de.js?v=280";
+import { HTML_IT } from "./html-it.js?v=288";
+import { HTML_EN } from "./html-en.js?v=288";
+import { HTML_DE } from "./html-de.js?v=288";
 
 export const WORTE = {
   "kopf.unterzeile": {
@@ -182,6 +182,10 @@ export const WORTE = {
     it:"Non conosco la mia ora di nascita", en:"I don't know my birth time",
     tr:"Doğum saatimi bilmiyorum", es:"No sé mi hora de nacimiento",
     fr:"Je ne connais pas mon heure de naissance", ar:"لا أعرف ساعة ميلادي" },
+  "g.feld.name": { de:"Name (nur für die Überschrift)", it:"Nome (solo per l'intestazione)",
+    en:"Name (for the heading only)", tr:"Ad (yalnızca başlık için)",
+    es:"Nombre (solo para el encabezado)", fr:"Nom (pour le titre seulement)",
+    ar:"الاسم (للعنوان فقط)" },
   "feld.vonHand": { de:"Koordinaten und Zeitzone von Hand",
     it:"Coordinate e fuso orario a mano", en:"Coordinates and time zone by hand",
     tr:"Koordinat ve saat dilimini elle", es:"Coordenadas y zona horaria a mano",

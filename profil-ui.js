@@ -1,8 +1,12 @@
 /* ------------------------------------------------------------------------
    profil-ui.js — Bedienung des Reiters "Meine Daten".
    --------------------------------------------------------------------- */
-import { leseProfilRoh, schreibeProfil, loescheProfil } from "./profil.js?v=280";
-import { offsetVon } from "./zeitzone.js?v=280";
+import { leseProfilRoh, schreibeProfil, loescheProfil } from "./profil.js?v=288";
+import { offsetVon } from "./zeitzone.js?v=288";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=288";
+import { aktuelleSprache } from "./sprachen.js?v=288";
+setzeRestSprache(aktuelleSprache());
+window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 
 const $ = s => document.querySelector(s);
 
@@ -173,9 +177,7 @@ function zeigeGespeichert() {
   kasten.innerHTML =
     `<div class="gespeichertZeile"><span class="haken">✓</span> ` +
     `<b>Auf diesem Gerät gespeichert</b>${wann ? " — " + wann : ""}</div>` +
-    `<p class="kucukNot">Die Angaben liegen im Speicher deines Browsers. Beim nächsten Besuch ` +
-    `stehen sie wieder da, auch ohne Netz. Auf ein anderes Gerät kommen sie nur über eine ` +
-    `Sicherung — es gibt keinen Server, der sie abgleichen könnte.</p>`;
+    `<p class="kucukNot">${rt("pu.gespeichertNote")}</p>`;
 }
 
 function speichern(still) {
