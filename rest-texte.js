@@ -8,6 +8,25 @@
 
 export const R = {
   de: {
+    "pf.ablesung": (jahr, monat, tag) => `<b>Alter ${jahr} Jahre, Monat ${monat}, Abschnitt ${tag}</b>`,
+    "pf.ableseJahr": (glyph, zeichen, hg, herr) => `Jahr: ${glyph} ${zeichen} — Herr des Jahres ${hg} ${herr}`,
+    "pf.ableseMonat": (glyph, zeichen, hg, herr) => `Monat: ${glyph} ${zeichen} (${hg} ${herr})`,
+    "pf.ableseTage": (glyph, zeichen, hg, herr) => `Tage: ${glyph} ${zeichen} (${hg} ${herr})`,
+    "pf.ableseNot":"Ein solcher Tagesabschnitt dauert gut zweieinhalb Tage — ein Zwölftel des profizierten Monats.",
+    "hk.aspekteText":"Aspekte sind die Gespräche der Planeten untereinander. Je enger der Winkel, desto lauter — die engsten stehen oben.",
+    "lh.note":"Die Farbe ist der Herr, auf den die meisten Systeme gerade zeigen; Helligkeit und " +
+      "Weite sagen, wie einig sie sich sind. Vier Stimmen in derselben Farbe heißen: eine Zeit " +
+      "mit einem klaren Thema. Vier verschiedene Farben heißen: eine Zeit, in der mehreres " +
+      "nebeneinander läuft — das ist keine schwächere Aussage, nur eine andere.",
+    "g.regent":"Der Regent des 11. Hauses",
+    "g.regentNot": (glyph, zeichen, grad) =>
+      `Eine zweite, vom Namen unabhängige Aussage: wer über das Haus des guten Geistes gebietet. ` +
+      `Spitze XI nach Ganzzeichen: ${glyph} ${zeichen} ${grad}°.`,
+    "g.almuten11":"Almuten des 11. Hauses",
+    "pf.haus":["I. Leib und Leben","II. Habe","III. Geschwister und Wege","IV. Haus und Wurzel",
+      "V. Kinder und Freude","VI. Krankheit und Dienst","VII. Partner und offene Gegner",
+      "VIII. Tod und das Fremde","IX. Fernes und Glaube","X. Amt und Ruf",
+      "XI. Freunde und Hoffnung","XII. Verborgenes und Kummer"],
     /* ------------------------------------------ Das Horoskop */
     "hk.sekt.tag":"Eine <b>Taggeburt</b>: Die Sonne stand über dem Horizont. Die Partei des Tages " +
       "führt — Sonne, Jupiter und Saturn wirken hier gefälliger, Mond, Venus und Mars fordernder.",
@@ -681,6 +700,25 @@ export const R = {
   },
 
   it: {
+    "pf.ablesung": (jahr, monat, tag) => `<b>Età ${jahr} anni, mese ${monat}, sezione ${tag}</b>`,
+    "pf.ableseJahr": (glyph, zeichen, hg, herr) => `Anno: ${glyph} ${zeichen} — signore dell'anno ${hg} ${herr}`,
+    "pf.ableseMonat": (glyph, zeichen, hg, herr) => `Mese: ${glyph} ${zeichen} (${hg} ${herr})`,
+    "pf.ableseTage": (glyph, zeichen, hg, herr) => `Giorni: ${glyph} ${zeichen} (${hg} ${herr})`,
+    "pf.ableseNot":"Una tale sezione di giorni dura poco più di due giorni e mezzo — un dodicesimo del mese profetto.",
+    "hk.aspekteText":"Gli aspetti sono i discorsi dei pianeti fra loro. Quanto più stretto l'angolo, tanto più forte — i più stretti stanno in alto.",
+    "lh.note":"Il colore è il signore su cui la maggior parte dei sistemi punta in questo " +
+      "momento; luminosità e ampiezza dicono quanto siano d'accordo. Quattro voci dello stesso " +
+      "colore significano: un tempo con un tema chiaro. Quattro colori diversi significano: un " +
+      "tempo in cui più cose corrono accanto — non è un'indicazione più debole, solo un'altra.",
+    "g.regent":"Il reggente dell'undicesima casa",
+    "g.regentNot": (glyph, zeichen, grad) =>
+      `Una seconda indicazione, indipendente dal nome: chi comandi sulla casa del buon genio. ` +
+      `Cuspide XI a segno intero: ${glyph} ${zeichen} ${grad}°.`,
+    "g.almuten11":"Almuten dell'undicesima casa",
+    "pf.haus":["I. Corpo e vita","II. Averi","III. Fratelli e strade","IV. Casa e radice",
+      "V. Figli e gioia","VI. Malattia e servizio","VII. Partner e avversari dichiarati",
+      "VIII. Morte e ciò che è altrui","IX. Lontananza e fede","X. Carica e reputazione",
+      "XI. Amici e speranza","XII. Il nascosto e l'affanno"],
     /* ------------------------------------------ Il tema */
     "hk.sekt.tag":"Una <b>nascita diurna</b>: il sole stava sopra l'orizzonte. Guida la parte del " +
       "giorno — Sole, Giove e Saturno agiscono qui più accomodanti, Luna, Venere e Marte più esigenti.",
@@ -1341,6 +1379,25 @@ export const R = {
   },
 
   en: {
+    "pf.ablesung": (jahr, monat, tag) => `<b>Age ${jahr} years, month ${monat}, section ${tag}</b>`,
+    "pf.ableseJahr": (glyph, zeichen, hg, herr) => `Year: ${glyph} ${zeichen} — lord of the year ${hg} ${herr}`,
+    "pf.ableseMonat": (glyph, zeichen, hg, herr) => `Month: ${glyph} ${zeichen} (${hg} ${herr})`,
+    "pf.ableseTage": (glyph, zeichen, hg, herr) => `Days: ${glyph} ${zeichen} (${hg} ${herr})`,
+    "pf.ableseNot":"Such a section of days lasts a good two and a half days — a twelfth of the profected month.",
+    "hk.aspekteText":"Aspects are the conversations of the planets with one another. The closer the angle, the louder — the closest stand at the top.",
+    "lh.note":"The colour is the lord most of the systems are pointing to just now; brightness " +
+      "and breadth say how far they agree. Four voices in the same colour mean: a time with one " +
+      "clear theme. Four different colours mean: a time in which several things run alongside " +
+      "each other — that is no weaker statement, only a different one.",
+    "g.regent":"The regent of the 11th house",
+    "g.regentNot": (glyph, zeichen, grad) =>
+      `A second statement, independent of the name: who commands over the house of the good ` +
+      `spirit. Cusp XI by whole sign: ${glyph} ${zeichen} ${grad}°.`,
+    "g.almuten11":"Almuten of the 11th house",
+    "pf.haus":["I. Body and life","II. Goods","III. Siblings and roads","IV. House and root",
+      "V. Children and joy","VI. Illness and service","VII. Partner and declared opponents",
+      "VIII. Death and what belongs to others","IX. Distance and faith","X. Office and reputation",
+      "XI. Friends and hope","XII. The hidden and sorrow"],
     /* ------------------------------------------ The chart */
     "hk.sekt.tag":"A <b>day birth</b>: the sun stood above the horizon. The party of the day leads " +
       "— Sun, Jupiter and Saturn work here more agreeably, Moon, Venus and Mars more demandingly.",

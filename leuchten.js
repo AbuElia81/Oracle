@@ -9,10 +9,13 @@
    zieht. Wo viele dasselbe sagen, brennt es hell; wo jedes etwas anderes
    sagt, bleibt es matt und vielfarbig.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=274";
-import { radix, PLANET, mitArtikel, ZEICHEN } from "./horoskop.js?v=274";
-import { firdaria, vimshottari } from "./perioden.js?v=274";
-import { zrStand } from "./zr.js?v=274";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=279";
+import { radix, PLANET, mitArtikel, ZEICHEN } from "./horoskop.js?v=279";
+import { firdaria, vimshottari } from "./perioden.js?v=279";
+import { zrStand } from "./zr.js?v=279";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=279";
+import { aktuelleSprache } from "./sprachen.js?v=279";
+setzeRestSprache(aktuelleSprache());
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -230,11 +233,7 @@ function zeichne() {
   const chips = el("div", "lhStimmen"); chips.id = "lhStimmen";
   ziel.appendChild(chips);
 
-  ziel.appendChild(el("p", "kucukNot",
-    "Die Farbe ist der Herr, auf den die meisten Systeme gerade zeigen; Helligkeit und " +
-    "Weite sagen, wie einig sie sich sind. Vier Stimmen in derselben Farbe heißen: eine " +
-    "Zeit mit einem klaren Thema. Vier verschiedene Farben heißen: eine Zeit, in der " +
-    "mehreres nebeneinander läuft — das ist keine schwächere Aussage, nur eine andere."));
+  ziel.appendChild(el("p", "kucukNot", rt("lh.note")));
 
   schieber.addEventListener("input", () => male(parseFloat(schieber.value)));
   male(parseFloat(schieber.value));

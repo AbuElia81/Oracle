@@ -9,9 +9,9 @@
    folgt der Ganzzeichen-Vereinfachung (zehn Zeichen nach dem Aszendenten).
    --------------------------------------------------------------------- */
 
-import { ZEICHEN as ZEICHEN_BASIS, PLANET } from "./horoskop.js?v=274";
-import { rt, setzeRestSprache } from "./rest-texte.js?v=274";
-import { aktuelleSprache } from "./sprachen.js?v=274";
+import { ZEICHEN as ZEICHEN_BASIS, PLANET } from "./horoskop.js?v=279";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=279";
+import { aktuelleSprache } from "./sprachen.js?v=279";
 setzeRestSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 
@@ -526,14 +526,13 @@ $("#gBerechnen").addEventListener("click", () => {
   cikti.appendChild(radKutu);
 
   /* -------------------------------------------- der Regent des Hauses */
-  cikti.appendChild(el("h3", null, "Der Regent des 11. Hauses"));
+  cikti.appendChild(el("h3", null, rt("g.regent")));
   cikti.appendChild(el("p", "kucukNot",
-    "Eine zweite, vom Namen unabhängige Aussage: wer über das Haus des guten Geistes gebietet. " +
-    `Spitze XI nach Ganzzeichen: ${ZEICHEN[c11Sign].glyph} ${ZEICHEN[c11Sign].name} ${ascGrad.toFixed(1)}°.`));
+    rt("g.regentNot", ZEICHEN[c11Sign].glyph, ZEICHEN[c11Sign].name, ascGrad.toFixed(1))));
 
   const karte = el("div", "almutenKarte");
   karte.append(
-    el("div", "kalanBaslik", "Almuten des 11. Hauses"),
+    el("div", "kalanBaslik", rt("g.almuten11")),
     (() => { const d = el("div", "almutenPlanet");
       d.innerHTML = `<span class="glyph">${almuten.g}</span>${almuten.name}`; return d; })(),
     el("div", "kucukNot", `${scores[almutenKey].total} Würdepunkte auf ${ZEICHEN[c11Sign].glyph} ${ZEICHEN[c11Sign].name} ${ascGrad.toFixed(1)}°`)

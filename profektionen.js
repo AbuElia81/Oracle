@@ -10,11 +10,11 @@
    Innerhalb eines Jahres profizieren die zwölf Monate auf dieselbe Weise
    weiter, beim Zeichen des Jahres beginnend.
    --------------------------------------------------------------------- */
-import { berechneGeburt, norm360 } from "./astro.js?v=274";
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=274";
-import { ZEICHEN, PLANET } from "./horoskop.js?v=274";
-import { rt, setzeRestSprache } from "./rest-texte.js?v=274";
-import { aktuelleSprache } from "./sprachen.js?v=274";
+import { berechneGeburt, norm360 } from "./astro.js?v=279";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=279";
+import { ZEICHEN, PLANET } from "./horoskop.js?v=279";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=279";
+import { aktuelleSprache } from "./sprachen.js?v=279";
 setzeRestSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 
@@ -28,9 +28,8 @@ const rad = d => d * Math.PI / 180;
 const DOMIZIL = ["mars","venus","merkur","mond","sonne","merkur","venus","mars","jupiter","saturn","saturn","jupiter"];
 const PLANETEN = PLANET;
 const FARBEN = { sonne:"#e7c65c", mond:"#cfd6e6", merkur:"#9fbfa8", venus:"#e0a6c2", mars:"#c96a4a", jupiter:"#7fa6d6", saturn:"#8b8471" };
-const HAUSNAMEN = ["I. Leib und Leben","II. Habe","III. Geschwister und Wege","IV. Haus und Wurzel",
-  "V. Kinder und Freude","VI. Krankheit und Dienst","VII. Partner und offene Gegner","VIII. Tod und das Fremde",
-  "IX. Fernes und Glaube","X. Amt und Ruf","XI. Freunde und Hoffnung","XII. Verborgenes und Kummer"];
+/* Die Hausnamen stehen in der Sprachtafel. */
+const HAUSNAMEN = { get: i => rt("pf.haus")[i] };
 const ROEMISCH = ["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII"];
 
 function polar(deg, r, cx, cy) {
@@ -104,12 +103,14 @@ function zeigeAlter(alterJahre) {
   const herrTag = DOMIZIL[profTagSign];
 
   $("#pfAblesung").innerHTML =
-    `<b>Alter ${jahr} Jahre, Monat ${monat + 1}, Abschnitt ${tag + 1}</b><br>` +
-    `Jahr: ${ZEICHEN[profSign].glyph} ${ZEICHEN[profSign].name} — Herr des Jahres ${PLANETEN[herr].g} ${PLANETEN[herr].name} · ` +
-    `Monat: ${ZEICHEN[profMonatSign].glyph} ${ZEICHEN[profMonatSign].name} (${PLANETEN[herrMonat].g} ${PLANETEN[herrMonat].name}) · ` +
-    `Tage: ${ZEICHEN[profTagSign].glyph} ${ZEICHEN[profTagSign].name} (${PLANETEN[herrTag].g} ${PLANETEN[herrTag].name})` +
-    `<br><span class="kucukNot">Ein solcher Tagesabschnitt dauert gut zweieinhalb Tage — ` +
-    `ein Zwölftel des profizierten Monats.</span>`;
+    rt("pf.ablesung", jahr, monat + 1, tag + 1) + "<br>" +
+    rt("pf.ableseJahr", ZEICHEN[profSign].glyph, ZEICHEN[profSign].name,
+       PLANETEN[herr].g, PLANETEN[herr].name) + " · " +
+    rt("pf.ableseMonat", ZEICHEN[profMonatSign].glyph, ZEICHEN[profMonatSign].name,
+       PLANETEN[herrMonat].g, PLANETEN[herrMonat].name) + " · " +
+    rt("pf.ableseTage", ZEICHEN[profTagSign].glyph, ZEICHEN[profTagSign].name,
+       PLANETEN[herrTag].g, PLANETEN[herrTag].name) +
+    `<br><span class="kucukNot">${rt("pf.ableseNot")}</span>`;
 
   $("#pfRad").innerHTML = baueRad(ASC_SIGN, profSign);
 
@@ -130,7 +131,7 @@ function zeigeAlter(alterJahre) {
     const zeile = el("div", "kalanKutu");
     zeile.style.borderColor = FARBEN[DOMIZIL[s]];
     zeile.append(
-      el("div", "kalanBaslik", HAUSNAMEN[h]),
+      el("div", "kalanBaslik", HAUSNAMEN.get(h)),
       el("div", "kalanDeger", `${ZEICHEN[s].glyph} ${ZEICHEN[s].name}`),
       el("div", "kalanAd", `${PLANETEN[DOMIZIL[s]].g} ${PLANETEN[DOMIZIL[s]].name}`)
     );
@@ -213,6 +214,8 @@ function berechne() {
   zeichneZeitleiste(maxAlter);
   zeigeAlter(0);
 }
+
+window.addEventListener("sprache-geaendert", () => setTimeout(berechne, 0));
 
 $("#pfBerechnen").addEventListener("click", berechne);
 aufProfilAenderung(() => renderProfilAnzeige($("#pfProfilAnzeige")));
