@@ -9,10 +9,10 @@
 
    Häuser im Ganzzeichen, wie überall auf dieser Seite.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=279";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=280";
 import { berechneGeburt, planetenPositionen, julianischesDatum,
          aszendent, medium, schiefeDerEkliptik, siderischeZeitGreenwich,
-         norm360 } from "./astro.js?v=279";
+         norm360 } from "./astro.js?v=280";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -484,11 +484,11 @@ if (document.readyState === "loading") {
    werden hier beim Sprachwechsel ausgetauscht, nicht neu importiert —
    die Objekte bleiben dieselben, nur ihre Namensfelder wechseln. */
 import { PLANET_NAME_IT, PLANET_ARTIKEL_IT, ZEICHEN_NAME_IT, HAUS_IT,
-         PLANET_WAS_IT, ART_IT, WUERDE_TEXT_IT, ASPEKT_TON_IT, PHASEN_IT } from "./namen-it.js?v=279";
+         PLANET_WAS_IT, ART_IT, WUERDE_TEXT_IT, ASPEKT_TON_IT, PHASEN_IT } from "./namen-it.js?v=280";
 import { PLANET_NAME_EN, PLANET_ARTIKEL_EN, ZEICHEN_NAME_EN, HAUS_EN,
-         PLANET_WAS_EN, ART_EN, WUERDE_TEXT_EN, ASPEKT_TON_EN, PHASEN_EN } from "./namen-en.js?v=279";
-import { aktuelleSprache } from "./sprachen.js?v=279";
-import { rt, zahl, ordnung, setzeRestSprache } from "./rest-texte.js?v=279";
+         PLANET_WAS_EN, ART_EN, WUERDE_TEXT_EN, ASPEKT_TON_EN, PHASEN_EN } from "./namen-en.js?v=280";
+import { aktuelleSprache } from "./sprachen.js?v=280";
+import { rt, zahl, ordnung, setzeRestSprache } from "./rest-texte.js?v=280";
 
 const PLANET_NAME_DE  = Object.fromEntries(REIHE.map(k => [k, PLANET[k].name]));
 const PLANET_WAS_DE   = Object.fromEntries(REIHE.map(k => [k, PLANET[k].was]));

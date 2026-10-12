@@ -13,14 +13,14 @@
    dann ihr Zustand in der Geburt und in der Umdrehung — und erst danach
    die Deutung.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=279";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=280";
 import { berechneGeburt, planetenPositionen, julianischesDatum, sonnenLaenge,
          siderischeZeitGreenwich, schiefeDerEkliptik, aszendent, medium,
-         norm360 } from "./astro.js?v=279";
-import { radix, zustandVon, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel } from "./horoskop.js?v=279";
-import { firdaria } from "./perioden.js?v=279";
-import { rt, zahl, aspektName, setzeRestSprache } from "./rest-texte.js?v=279";
-import { aktuelleSprache } from "./sprachen.js?v=279";
+         norm360 } from "./astro.js?v=280";
+import { radix, zustandVon, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel } from "./horoskop.js?v=280";
+import { firdaria } from "./perioden.js?v=280";
+import { rt, zahl, aspektName, setzeRestSprache } from "./rest-texte.js?v=280";
+import { aktuelleSprache } from "./sprachen.js?v=280";
 setzeRestSprache(aktuelleSprache());
 
 const $ = s => document.querySelector(s);

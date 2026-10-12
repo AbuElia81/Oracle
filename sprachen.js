@@ -22,9 +22,9 @@ export const SPRACHEN = [
   { code: "ar", name: "العربية",   kurz: "AR", rtl: true }
 ];
 
-import { HTML_IT } from "./html-it.js?v=279";
-import { HTML_EN } from "./html-en.js?v=279";
-import { HTML_DE } from "./html-de.js?v=279";
+import { HTML_IT } from "./html-it.js?v=280";
+import { HTML_EN } from "./html-en.js?v=280";
+import { HTML_DE } from "./html-de.js?v=280";
 
 export const WORTE = {
   "kopf.unterzeile": {
@@ -279,6 +279,12 @@ export function anwenden(code) {
   document.querySelectorAll("[data-t]").forEach(e => {
     const w = t(e.dataset.t, s);
     if (w) e.textContent = w;
+  });
+  /* data-th statt data-t, wo der Text Markup enthält: <b>, <em>, Links.
+     Mit textContent gingen die verloren. */
+  document.querySelectorAll("[data-th]").forEach(e => {
+    const w = t(e.dataset.th, s);
+    if (w) e.innerHTML = w;
   });
   document.querySelectorAll("[data-t-ph]").forEach(e => {
     const w = t(e.dataset.tPh, s);

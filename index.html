@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Oracle</title>
 <meta name="description" content="Oracle — Orakelrechner nach alten Büchern: das osmanische Yıldıznâme aus Name und Muttername, der Geist des 11. Hauses nach Agrippa, Primärdirektionen, Zodiacal Releasing und Antiszien.">
-<link rel="stylesheet" href="stil.css?v=279">
+<link rel="stylesheet" href="stil.css?v=280">
 </head>
 <body>
 
@@ -82,7 +82,7 @@
   <div id="thWahl" class="themaWahl"></div>
   <div id="thCikti" hidden></div>
 
-  <p class="kucukNot">Häuser im Ganzzeichen — dasselbe Verfahren wie bei
+  <p class="kucukNot" data-th="x.bHoroskop.1">Häuser im Ganzzeichen — dasselbe Verfahren wie bei
   Profektionen und Zodiacal Releasing, damit die Abschnitte zueinander passen.
   Planetenpositionen aus der gemeinsamen Astronomie dieser Seite; für die
   Deutung genau genug, für nautische Zwecke nicht.</p>
@@ -119,7 +119,7 @@
     </fieldset>
   </div>
 
-  <p class="kucukNot">Die arabische Schreibung ist ein Vorschlag. Jeder Buchstabe
+  <p class="kucukNot" data-th="x.bYildiz.1">Die arabische Schreibung ist ein Vorschlag. Jeder Buchstabe
   lässt sich austauschen, streichen oder anfügen — bei arabischstämmigen Namen
   entscheidet die Herkunft, nicht der türkische Klang.</p>
 
@@ -177,7 +177,7 @@
   <details id="uyumGeburt" class="wasIst">
     <summary>Und was sagt der Himmel dazu? (Geburtstage, freiwillig)</summary>
     <div class="gedanke">
-      <p>Der Namensvergleich rechnet mit Buchstaben. Ob zwei Menschen zueinander
+      <p data-th="x.bUyum.1">Der Namensvergleich rechnet mit Buchstaben. Ob zwei Menschen zueinander
       passen, fragten die alten Bücher aber auch am Himmel — und dort nach wenigen,
       immer denselben Berührungen: Mond zu Mond, Sonne zu Mond, Venus zu Mars.
       Trag die beiden Geburtstage ein, und der Vergleich bekommt eine zweite,
@@ -224,14 +224,14 @@
   <div id="ekCikti" hidden></div>
 
   <h3>Die achtundzwanzig Stationen</h3>
-  <p class="kucukNot">Zum Nachschlagen — die Tafel, aus der oben geurteilt wird.</p>
+  <p class="kucukNot" data-th="x.bMenzil.1">Zum Nachschlagen — die Tafel, aus der oben geurteilt wird.</p>
   <div class="tabloKutu">
     <table>
       <thead><tr><th>#</th><th>Herberge</th><th>Arabisch</th><th>Hüküm</th><th>Günstig für</th><th>Meide</th></tr></thead>
       <tbody id="menzilTablo"></tbody>
     </table>
   </div>
-  <p class="kucukNot">In welcher Herberge der Mond steht, rechnet der Abschnitt
+  <p class="kucukNot" data-th="x.bMenzil.2">In welcher Herberge der Mond steht, rechnet der Abschnitt
   oben aus dem wirklichen Mondstand. Die Tafel selbst sagt das nicht — dafür
   braucht es den Mond, nicht die Buchstaben eines Namens.</p>
 </section>
@@ -270,7 +270,7 @@
       <tbody id="rmTafel"></tbody>
     </table>
   </div>
-  <p class="kucukNot">Die vier Reihen jeder Figur stehen für Feuer, Luft,
+  <p class="kucukNot" data-th="x.bRamel.1">Die vier Reihen jeder Figur stehen für Feuer, Luft,
   Wasser und Erde. Je zwei Figuren sind Umkehrungen voneinander — Puer und
   Puella, Albus und Rubeus, Fortuna maior und minor, Acquisitio und Amissio,
   Laetitia und Tristitia, Caput und Cauda. Nur Via, Populus, Carcer und
@@ -315,7 +315,7 @@
     </div>
 
     <h3>Ein zweiter Mensch — für İsim uyumu</h3>
-    <p class="kucukNot">Nur nötig, wenn du zwei Namen gegeneinander rechnen willst.</p>
+    <p class="kucukNot" data-th="x.bProfil.1">Nur nötig, wenn du zwei Namen gegeneinander rechnen willst.</p>
     <div class="alanlar">
       <div class="geoZeile">
         <label class="alan"><span>Sein oder ihr Name</span>
@@ -388,11 +388,11 @@
   </div>
 
   <div id="torHinweis" class="torHinweis" hidden>
-    <p>Sobald das ausgefüllt ist, stehen die Techniken dieses Weges darunter —
+    <p data-th="x.bProfil.2">Sobald das ausgefüllt ist, stehen die Techniken dieses Weges darunter —
     und sie rechnen alle von selbst mit diesen Angaben.</p>
   </div>
 
-  <p class="kucukNot">Die Ortssuche fragt einmalig, auf Knopfdruck, den freien
+  <p class="kucukNot" data-th="x.bProfil.3">Die Ortssuche fragt einmalig, auf Knopfdruck, den freien
   Dienst <a href="https://nominatim.openstreetmap.org" target="_blank" rel="noopener">Nominatim (OpenStreetMap)</a>
   — sonst bleibt alles hier im Browser (<code>localStorage</code>), nichts
   wird an einen Server dieser Seite geschickt, es gibt keinen.</p>
@@ -516,11 +516,11 @@
   <button id="gBerechnen" class="buyukDugme">Geist berechnen</button>
 
   <div id="torHinweis" class="torHinweis" hidden>
-    <p>Sobald die Maske ausgefüllt ist, öffnen sich die Abschnitte dieses Weges
+    <p data-th="x.bGeist.1">Sobald die Maske ausgefüllt ist, öffnen sich die Abschnitte dieses Weges
     oben in der Leiste — und sie rechnen alle von selbst mit diesen Angaben.</p>
   </div>
 
-  <p class="kucukNot">Die Ortssuche fragt einmalig, auf Knopfdruck, den freien
+  <p class="kucukNot" data-th="x.bGeist.2">Die Ortssuche fragt einmalig, auf Knopfdruck, den freien
   Dienst <a href="https://nominatim.openstreetmap.org" target="_blank" rel="noopener">Nominatim (OpenStreetMap)</a>
   — sonst verlässt nichts diesen Browser. Wer das nicht möchte, trägt Breite
   und Länge direkt ein.</p>
@@ -528,7 +528,7 @@
   <div id="gCikti" hidden></div>
 
   <h3>Wie dieser Teil rechnet</h3>
-  <p>Aus Datum, Uhrzeit, UTC-Offset, Breite und Länge: julianisches Datum →
+  <p data-th="x.bGeist.3">Aus Datum, Uhrzeit, UTC-Offset, Breite und Länge: julianisches Datum →
   Greenwich-Sternzeit → Ortssternzeit (RAMC) → Aszendent, mit der Schiefe der
   Ekliptik nach dem Datum und den Standardformeln der sphärischen Astronomie
   (Meeus). Die Sonnenposition nach Meeus Kap. 25, die Mondlänge nach Kap. 47 in
@@ -538,16 +538,16 @@
   Syzygie vor der Geburt wird gesucht, indem die Elongation der Lichter
   rückwärts auf 0° oder 180° gebracht wird; bei einer Opposition wird die Länge
   des Mondes genommen.</p>
-  <p>Der Buchstabenkreis teilt die vollen 360° in gleiche Sektoren, beginnend
+  <p data-th="x.bGeist.4">Der Buchstabenkreis teilt die vollen 360° in gleiche Sektoren, beginnend
   bei 0° Widder mit Aleph. Der 22er-Modus ist Agrippas Zahl; der 27er-Modus
   (22 Buchstaben plus die fünf Schlussformen) ist eine plausible eigene
   Rekonstruktion, keine belegte historische Tabelle. Auch die Reihenfolge der
   fünf Örter im Namen und die Endung <em>-El</em> oder <em>-Jah</em> weichen
   von Handschrift zu Handschrift ab.</p>
-  <p>Die Spitze des 11. Hauses folgt der Ganzzeichen-Vereinfachung: zehn Zeichen
+  <p data-th="x.bGeist.5">Die Spitze des 11. Hauses folgt der Ganzzeichen-Vereinfachung: zehn Zeichen
   nach dem Aszendenten, gleicher Grad. Sie geht nur in den Almuten ein, nicht in
   den Namen.</p>
-  <p class="kucukNot">Auch dies: ein Nachbau einer historischen Denktechnik,
+  <p class="kucukNot" data-th="x.bGeist.6">Auch dies: ein Nachbau einer historischen Denktechnik,
   kein Ratgeber und keine Aussage über tatsächliche geistige Entitäten.
   Ärztliche, rechtliche und geldliche Entscheidungen gehören zu Menschen, nicht
   zu Tafeln.</p>
@@ -608,7 +608,7 @@
   <div id="lbCikti" hidden></div>
 
   <h3>Wie dieser Teil rechnet</h3>
-  <p>Direktionen zu den vier Achsen sind geschlossen lösbar über die schiefe
+  <p data-th="x.bLebensbogen.1">Direktionen zu den vier Achsen sind geschlossen lösbar über die schiefe
   Auf- bzw. Untergangsrektaszension jedes Promissors (Ptolemäus' eigenes
   Verfahren, mit der wirklichen Deklination — schon die volle "mundane"
   Fassung dieses Teils, kein Häusersystem nötig). Direktionen zwischen zwei
@@ -624,7 +624,7 @@
   Polrechnung ist die historisch richtige. Als konvers zeigt diese Seite 360° minus den direkten
   Bogen — die gebräuchliche praktische Umsetzung, nicht in jeder Nuance jede
   historische Definition.</p>
-  <p class="kucukNot">Ein Nachbau einer historischen Rechentechnik zum
+  <p class="kucukNot" data-th="x.bLebensbogen.2">Ein Nachbau einer historischen Rechentechnik zum
   eigenen Nachvollziehen — keine Vorhersage. Ärztliche, rechtliche und
   geldliche Entscheidungen gehören zu Menschen, nicht zu Bögen.</p>
 </section>
@@ -658,7 +658,7 @@
   <div id="zrCikti" hidden></div>
 
   <h3>Wie dieser Teil rechnet</h3>
-  <p><b>Los des Glücks</b>: bei Tag Asz + Mond − Sonne, bei Nacht Asz + Sonne
+  <p data-th="x.bZR.1"><b>Los des Glücks</b>: bei Tag Asz + Mond − Sonne, bei Nacht Asz + Sonne
   − Mond. <b>Los des Geistes</b>: bei Tag Asz + Sonne − Mond, bei Nacht
   Asz + Mond − Sonne. Die erste Stufe (L1) durchläuft, beim Zeichen des Loses
   beginnend, alle zwölf Zeichen der Reihe nach — jedes so viele Jahre lang,
@@ -669,7 +669,7 @@
   der übergeordneten Stufe berechnet (Summe der Zeichen-Jahre einer vollen
   Runde: 214). Steht der Herrscher eines Zeichens bei der Geburt selbst in
   einem seiner eigenen Zeichen, wird die Stufe verdoppelt.</p>
-  <p class="kucukNot">Nicht umgesetzt: die "Lösung des Bandes" (die
+  <p class="kucukNot" data-th="x.bZR.2">Nicht umgesetzt: die "Lösung des Bandes" (die
   Umkehrregel bei bestimmten Spannungswinkeln zum Ausgangszeichen) — eine
   weitere klassische Regel, hier bewusst ausgelassen, weil sich ihre genaue
   Bedingung aus dem verfügbaren Material nicht mit Sicherheit rekonstruieren
@@ -690,7 +690,7 @@
   Tag und Nacht vertauscht.</p>
 
   <h3>Der Schattenzwilling-Kalender</h3>
-  <p>Rein kalendarisch-astronomisch, ganz ohne Horoskop: ein Datum eintragen
+  <p data-th="x.bAntiszien.1">Rein kalendarisch-astronomisch, ganz ohne Horoskop: ein Datum eintragen
   und sehen, welcher andere Tag im Jahr dieselbe Sonnendeklination trägt.</p>
 
   <div class="alanlar">
@@ -700,7 +700,7 @@
   <div id="azKalenderCikti" hidden></div>
 
   <h3>Antiszien im Horoskop</h3>
-  <p>Die Vertiefung: aus den Geburtsdaten (Reiter „Meine Daten") das
+  <p data-th="x.bAntiszien.2">Die Vertiefung: aus den Geburtsdaten (Reiter „Meine Daten") das
   Antiszion und Kontra-Antiszion jedes Planeten, des Aszendenten und des MC
   — und die Prüfung, ob ein Punkt auf das Antiszion eines anderen fällt: eine
   Verbindung, die im gewöhnlichen Aspektbild unsichtbar bleibt.</p>
@@ -710,7 +710,7 @@
   <div id="azHoroskopCikti" hidden></div>
 
   <h3>Wie dieser Teil rechnet</h3>
-  <p>Antiszion(λ) = 180° − λ; Kontra-Antiszion(λ) = 360° − λ. Der
+  <p data-th="x.bAntiszien.3">Antiszion(λ) = 180° − λ; Kontra-Antiszion(λ) = 360° − λ. Der
   Schattenzwilling-Tag wird gefunden, indem die julianische Tageszahl so
   lange nachgeführt wird (mittlere Sonnenbewegung ≈ 0,9856°/Tag), bis die
   Sonnenlänge genau die Zielposition erreicht — nicht durch bloßes Spiegeln
@@ -719,7 +719,7 @@
   deshalb nicht exakt symmetrisch um die Sonnwende (z. B. 5. Mai und
   7./8. August um die Sommersonnenwende). Für „verborgene Verbindungen" im
   Horoskop gilt ein Orbis von 2,5°.</p>
-  <p class="kucukNot">Ein Nachbau einer historischen Rechentechnik zum
+  <p class="kucukNot" data-th="x.bAntiszien.4">Ein Nachbau einer historischen Rechentechnik zum
   eigenen Nachvollziehen — keine Vorhersage. Ärztliche, rechtliche und
   geldliche Entscheidungen gehören zu Menschen, nicht zu Schatten.</p>
 </section>
@@ -749,12 +749,12 @@
   <div id="pfCikti" hidden></div>
 
   <h3>Wie dieser Teil rechnet</h3>
-  <p>Profiziertes I. Haus im Alter N: Zeichen des Aszendenten + N Zeichen,
+  <p data-th="x.bProfektionen.1">Profiziertes I. Haus im Alter N: Zeichen des Aszendenten + N Zeichen,
   in Ganzzeichen gezählt. Die übrigen elf Häuser folgen in derselben
   Reihenfolge wie natal. Der Herr des Jahres ist der Herrscher (Domizil)
   dieses Zeichens. Für die Monate desselben Jahres läuft dieselbe Zählung
   ein zweites Mal, beim Zeichen des Jahres beginnend statt beim Aszendenten.</p>
-  <p class="kucukNot">Ein Nachbau einer historischen Rechentechnik zum
+  <p class="kucukNot" data-th="x.bProfektionen.2">Ein Nachbau einer historischen Rechentechnik zum
   eigenen Nachvollziehen — keine Vorhersage. Ärztliche, rechtliche und
   geldliche Entscheidungen gehören zu Menschen, nicht zu Häusern.</p>
 </section>
@@ -806,13 +806,13 @@
   </div>
 
   <div class="gedanke">
-      <p><b>Oracle</b> sammelt Wahrsagekünste aus der ganzen Welt — solche, die
+      <p data-th="x.bNasil.1"><b>Oracle</b> sammelt Wahrsagekünste aus der ganzen Welt — solche, die
     mit dem Himmel zu tun haben und mit dem Kosmos, in dem wir leben. Mit
     Zyklen und Rhythmen: dem Umlauf der Planeten, den Herbergen des Mondes,
     den Jahren, die von Geburtstag zu Geburtstag weiterrücken, dem Atemzug und
     dem Herzschlag.</p>
 
-      <p>Und mit <b>Sprache und Klang</b>. Denn nicht alle diese Künste befragen
+      <p data-th="x.bNasil.2">Und mit <b>Sprache und Klang</b>. Denn nicht alle diese Künste befragen
     den Himmel über die Zeit. Das Yıldıznâme befragt ihn über den <em>Namen</em>:
     Buchstaben sind dort Zahlen, ein Name ist eine Summe, und diese Summe fällt
     in ein Fach des Himmels. Agrippas Geistname kommt aus dem hebräischen
@@ -820,7 +820,7 @@
     und ungerade. Zahl, Laut und Umlauf sind in diesen Büchern dasselbe in
     verschiedener Gestalt.</p>
 
-      <p>Sie widersprechen einander in vielem — hellenistisch, arabisch-osmanisch,
+      <p data-th="x.bNasil.3">Sie widersprechen einander in vielem — hellenistisch, arabisch-osmanisch,
     ägyptisch, lateinisch. Was sie teilen, ist eine Annahme: Ein Zeitpunkt oder
     ein Name ist kein leerer Behälter, sondern hat eine Gestalt, und diese
     Gestalt lässt sich abzählen.</p>
@@ -832,7 +832,7 @@
   teilen, ist eine Annahme: Ein Zeitpunkt oder ein Name ist kein leerer Behälter,
   sondern hat eine Gestalt, und diese Gestalt lässt sich abzählen.</p>
 
-  <p>Keine dieser Techniken sagt die Zukunft voraus, und keine wird hier so
+  <p data-th="x.bNasil.4">Keine dieser Techniken sagt die Zukunft voraus, und keine wird hier so
   benutzt. Sie geben Themen, Fälligkeiten und Tonarten. Was daraus wird, steht
   in keiner Tafel.</p>
 
@@ -844,51 +844,51 @@
   in der <em>Occulta Philosophia</em>. Diese Bücher geben jedem Planeten eine
   Gestalt, ein Metall, einen Tag, eine Farbe und eine lange Liste dessen, was
   er bedeutet.</p>
-  <p>Die Gestalten unten sind die des Picatrix. Er beschreibt sie so genau,
+  <p data-th="x.bNasil.5">Die Gestalten unten sind die des Picatrix. Er beschreibt sie so genau,
   weil man sie in Stein schneiden können sollte — das war ihr Zweck. Hier
   stehen sie aus einem anderen Grund: Wer die Gestalt vor Augen hat, versteht
   die Deutungen dieser Seite schneller als über jede Definition.</p>
 
   <div id="wandelsterne" class="sternKarten"></div>
 
-  <p class="kucukNot">Die Bilder sind nach den Beschreibungen des Picatrix
+  <p class="kucukNot" data-th="x.bNasil.6">Die Bilder sind nach den Beschreibungen des Picatrix
   angefertigt, nicht aus einer Handschrift abgezeichnet — die mittelalterlichen
   Abschriften enthalten die Gestalten als Text, nicht als Bild.</p>
 
   <h2>Die Techniken</h2>
 
   <h3>Das Horoskop — Radix, Transite, Progression</h3>
-  <p>Die Grundlage aller Zeittechniken auf dieser Seite. Gerechnet werden
+  <p data-th="x.bNasil.7">Die Grundlage aller Zeittechniken auf dieser Seite. Gerechnet werden
   Aszendent, MC, die sieben klassischen Planeten in Zeichen und Häusern
   (Ganzzeichen), die <b>essentiellen Würden</b> — Domizil, Erhöhung, Exil,
   Fall — und die Aspekte untereinander. Dazu die <b>Sekte</b>: ob die Sonne
   bei der Geburt über oder unter dem Horizont stand, was darüber entscheidet,
   welche Planeten gefälliger und welche fordernder auftreten.</p>
-  <p><b>Transite</b> zeigen, wo die langsamen Läufer — Mars, Jupiter, Saturn —
+  <p data-th="x.bNasil.8"><b>Transite</b> zeigen, wo die langsamen Läufer — Mars, Jupiter, Saturn —
   heute stehen und was sie im Geburtshoroskop berühren. Die schnellen bleiben
   außen vor; sie sind in Tagen vorbei. <b>Sekundäre Progressionen</b> rechnen
   einen Tag nach der Geburt für ein Lebensjahr: Die progressierte Sonne rückt
   etwa ein Grad im Jahr, der progressierte Mond braucht achtundzwanzig Jahre
   für den Kreis. Sie beschreiben kein Ereignis, sondern das innere Wetter.</p>
-  <p>Warum das hier steht: Profektionen, Zodiacal Releasing und der Lebensbogen
+  <p data-th="x.bNasil.9">Warum das hier steht: Profektionen, Zodiacal Releasing und der Lebensbogen
   nennen einen <em>Herrn der Zeit</em> — aber ein Herr des Jahres sagt für sich
   genommen wenig. Erst wo er im Geburtshoroskop steht, in welchem Zeichen, in
   welchem Haus, mit welcher Würde, wird daraus eine Aussage. Deshalb greifen
   die Deutungen jener Abschnitte auf diese Rechnung zurück.</p>
 
   <h3>Yıldıznâme — das osmanische Sternbuch</h3>
-  <p>Ein Horoskop ohne Geburtsdatum. Die meisten Menschen kannten ihren
+  <p data-th="x.bNasil.10">Ein Horoskop ohne Geburtsdatum. Die meisten Menschen kannten ihren
   Geburtstag nicht, geschweige denn die Stunde — also wird der Himmel nicht
   über die Zeit befragt, sondern über den <b>Namen</b>: den eigenen und den der
   Mutter, denn die Mutter ist zweifelsfrei. Beide werden arabisch geschrieben,
   ihre Buchstaben im Ebced addiert, die Summe geteilt.</p>
-  <p>Das Genre wird Cafer-i Sâdık zugeschrieben — eine Autoritätszuschreibung,
+  <p data-th="x.bNasil.11">Das Genre wird Cafer-i Sâdık zugeschrieben — eine Autoritätszuschreibung,
   keine Autorschaft. Die erhaltenen Handschriften sind osmanisch (Süleymaniye,
   Millet Yazma Eser, Milli Kütüphane Ankara) und weichen voneinander ab; ein
   kanonisches Yıldıznâme gibt es nicht.</p>
 
   <h4>Ebced-i kebîr</h4>
-  <p>Jeder der 28 arabischen Buchstaben trägt einen Zahlwert, gemerkt in acht
+  <p data-th="x.bNasil.12">Jeder der 28 arabischen Buchstaben trägt einen Zahlwert, gemerkt in acht
   Kunstwörtern: <em>ebced · hevvez · huttî · kelemen · sa'fes · karaşet ·
   sehaz · dazağ</em>.</p>
   <div class="tabloKutu">
@@ -899,23 +899,23 @@
       <tr><td>ت 400</td><td>ث 500</td><td>خ 600</td><td>ذ 700</td><td>ض 800</td><td>ظ 900</td><td>غ 1000</td></tr>
     </table>
   </div>
-  <p>Die persisch-osmanischen Zusatzbuchstaben zählen wie ihre Nachbarn:
+  <p data-th="x.bNasil.13">Die persisch-osmanischen Zusatzbuchstaben zählen wie ihre Nachbarn:
   پ = 2, چ = 3, ژ = 7, گ = 20. Das ة gilt hier als 400 — manche Handschriften
   setzen 5.</p>
   <ul class="teilungen">
-    <li><b>÷ 12</b> — das Zeichen (burç). Rest null zählt als das zwölfte.</li>
-    <li><b>÷ 7</b> — der Wandelstern, chaldäisch von der Sonne abwärts:
+    <li data-th="x.bNasil.14"><b>÷ 12</b> — das Zeichen (burç). Rest null zählt als das zwölfte.</li>
+    <li data-th="x.bNasil.15"><b>÷ 7</b> — der Wandelstern, chaldäisch von der Sonne abwärts:
         Şems, Zühre, Utarit, Kamer, Zühal, Müşteri, Merih.</li>
     <li><b>÷ 4</b> — das Element: Ateş, Toprak, Hava, Su.</li>
     <li><b>÷ 28</b> — die Mondherberge.</li>
   </ul>
-  <p class="kucukNot">Dass Zeichen und Element dasselbe Element nennen, ist kein
+  <p class="kucukNot" data-th="x.bNasil.16">Dass Zeichen und Element dasselbe Element nennen, ist kein
   Zufall: zwölf ist durch vier teilbar. Der <b>Jahresregent</b> im Jahreskasten
   verbindet die Namenssumme mit der Jahreszahl — eine Falnâme-Praxis, nicht aus
   einer einzelnen Handschrift belegt.</p>
 
-  <h3>Niyet — die Tafel der Absicht</h3>
-  <p>Nicht das Wesen, sondern die eine Frage. Gerechnet wird aus den Buchstaben
+  <h3 data-th="x.bNasil.17">Niyet — die Tafel der Absicht</h3>
+  <p data-th="x.bNasil.18">Nicht das Wesen, sondern die eine Frage. Gerechnet wird aus den Buchstaben
   der Frage, dem Namen des Fragenden und der <b>Planetenstunde</b>: Die erste
   Stunde nach Sonnenaufgang gehört dem Herrn des Wochentages, danach läuft die
   chaldäische Ordnung weiter. Dieselbe Frage bekommt zu anderer Stunde eine
@@ -923,16 +923,16 @@
   die Sache, sondern der Augenblick.</p>
 
   <h3>İsim uyumu — zwei Namen gegeneinander</h3>
-  <p>Beide Namenssummen werden addiert und der Rest gelesen; dazu tritt die alte
+  <p data-th="x.bNasil.19">Beide Namenssummen werden addiert und der Rest gelesen; dazu tritt die alte
   Regel der Elemente — Feuer und Luft nähren einander, Erde und Wasser tragen
   einander. Eine Verträglichkeitsrechnung, wie sie im Ehe-Kapitel der
   Handschriften steht.</p>
 
   <h3>Der rechte Zeitpunkt — Elektion</h3>
-  <p>Die <em>menâzil-i kamer</em>: Herbergen, in denen der Mond auf seinem Umlauf
+  <p data-th="x.bNasil.20">Die <em>menâzil-i kamer</em>: Herbergen, in denen der Mond auf seinem Umlauf
   je eine Nacht wohnt. Achtundzwanzig Stationen für achtundzwanzig Buchstaben —
   in den Handschriften ist das kein Zufall, sondern der Grund.</p>
-  <p>Benutzt werden sie in der <b>Wahlastrologie</b>, die nicht fragt, wer du
+  <p data-th="x.bNasil.21">Benutzt werden sie in der <b>Wahlastrologie</b>, die nicht fragt, wer du
   bist, sondern wann etwas beginnen soll. Der Abschnitt nimmt dein Vorhaben,
   ordnet es einer von zehn Arten zu und prüft den wirklichen Mondstand gegen
   drei Regeln: was die heutige Station empfiehlt und wovor sie warnt, ob der
@@ -944,91 +944,91 @@
   schlechtes Vorhaben gut.</p>
 
   <h3>Spirit Name — der Geist des 11. Hauses</h3>
-  <p>Aus Agrippas <em>De Occulta Philosophia</em> (Buch III, Kap. 26). Hier wird
+  <p data-th="x.bNasil.22">Aus Agrippas <em>De Occulta Philosophia</em> (Buch III, Kap. 26). Hier wird
   der wirkliche Himmel der Geburtsstunde befragt. Über den Tierkreis legt Agrippa
   den Kreis der 22 hebräischen Buchstaben; an den <b>fünf hylegischen Örtern</b> —
   Aszendent, Sonne, Mond, Glückspunkt und der Syzygie vor der Geburt — wird je ein
   Buchstabe abgelesen, und die fünf ergeben den Namen, mit <em>-El</em> oder
   <em>-Jah</em> am Ende.</p>
-  <p>Das elfte Haus heißt in der alten Häuserlehre <em>bonus daemon</em>, das Haus
+  <p data-th="x.bNasil.23">Das elfte Haus heißt in der alten Häuserlehre <em>bonus daemon</em>, das Haus
   des guten Geistes. Der Name ist nicht der eines Fremden, der über einen wacht,
   sondern der Name dessen, was in einem selbst für einen ist.</p>
-  <p class="kucukNot">Gerechnet mit den Standardformeln der sphärischen Astronomie
+  <p class="kucukNot" data-th="x.bNasil.24">Gerechnet mit den Standardformeln der sphärischen Astronomie
   nach Meeus: julianisches Datum, Greenwich-Sternzeit, Ortssternzeit, Aszendent;
   Sonne nach Kap. 25, Mond nach Kap. 47 in gekürzter Reihe (gegen Meeus' eigenes
   Beispiel 47.a auf 19 Bogensekunden geprüft). Die Syzygie wird gesucht, indem die
   Elongation der Lichter rückwärts auf 0° oder 180° gebracht wird.</p>
 
   <h3>Der Lebensbogen — Primärdirektionen</h3>
-  <p>Die älteste Prognosetechnik überhaupt und die einzige, die mit der
+  <p data-th="x.bNasil.25">Die älteste Prognosetechnik überhaupt und die einzige, die mit der
   tatsächlichen Erddrehung rechnet. Der Himmel dreht sich nach der Geburt weiter;
   <b>ein Grad dieser Drehung gilt für ein Lebensjahr</b> (Ptolemäus' Schlüssel).
   Wo dabei ein Planet auf eine Achse trifft, wird sein Thema fällig.</p>
-  <p>Primärdirektionen sagen <em>wann</em>, nicht <em>was</em>. Sie reagieren
+  <p data-th="x.bNasil.26">Primärdirektionen sagen <em>wann</em>, nicht <em>was</em>. Sie reagieren
   empfindlich auf die Geburtszeit — vier Minuten Fehler verschieben ein Ereignis
   um ein Jahr. Deshalb stehen die Daten hier bewusst als Fenster von Wochen.</p>
 
   <h3>Zodiacal Releasing</h3>
-  <p>Aus Vettius Valens' <em>Anthologien</em> (2. Jh.). Vom <b>Los des Glücks</b>
+  <p data-th="x.bNasil.27">Aus Vettius Valens' <em>Anthologien</em> (2. Jh.). Vom <b>Los des Glücks</b>
   aus werden Zeichen für Zeichen Perioden abgezählt, jede so lang wie die Jahre
   ihres Herrschers (Mars 15, Venus 8, Merkur 20, Mond 25, Sonne 19, Jupiter 12,
   Saturn 30). So entstehen ineinandergeschachtelte Kapitel: L1 gibt die großen
   Abschnitte, L2 die Jahre darin, L3 die Monate.</p>
-  <p>Die Technik ist wiederentdeckt worden, nicht überliefert — sie lag bis ins
+  <p data-th="x.bNasil.28">Die Technik ist wiederentdeckt worden, nicht überliefert — sie lag bis ins
   20. Jahrhundert unbenutzt in den Handschriften. Ihre Stärke sind die
   <b>Übergänge</b>: Wo eine Periode endet, ändert sich der Ton oft binnen Wochen.</p>
 
   <h3>Antiszien — die Schattenzwillinge</h3>
-  <p>Spiegelt man einen Grad an der Achse der Sonnenwenden (0° Krebs gegenüber
+  <p data-th="x.bNasil.29">Spiegelt man einen Grad an der Achse der Sonnenwenden (0° Krebs gegenüber
   0° Steinbock), so hat der gespiegelte Punkt <b>dieselbe Deklination und
   denselben Tagbogen</b>: Die Sonne stünde dort gleich hoch und gleich lang am
   Himmel. Zwei solche Punkte sind verbunden, ohne einander zu sehen.</p>
-  <p>Das <b>Antiszion</b> gilt als verborgene Freundschaft, das
+  <p data-th="x.bNasil.30">Das <b>Antiszion</b> gilt als verborgene Freundschaft, das
   <b>Kontra-Antiszion</b> — gespiegelt an der Tagundnachtgleiche — als verdeckte
   Gegnerschaft. Klassisch sieht man hier nach, wenn eine Deutung nicht aufgeht:
   eine Anziehung ohne Aspekt, eine Hemmung ohne Grund.</p>
 
   <h3>Profektionen</h3>
-  <p><em>Profectio</em> heißt Vorrücken. Mit jedem Geburtstag wandert der
+  <p data-th="x.bNasil.31"><em>Profectio</em> heißt Vorrücken. Mit jedem Geburtstag wandert der
   Aszendent ein ganzes Zeichen weiter — <b>ein Jahr, ein Haus</b>. Das Haus gibt
   dem Jahr sein Thema, sein Herrscher wird zum Herrn des Jahres. Nach zwölf
   Jahren ist der Kreis geschlossen.</p>
-  <p>Die sparsamste Jahrestechnik, die es gibt: Sie braucht nur den Aszendenten
+  <p data-th="x.bNasil.32">Die sparsamste Jahrestechnik, die es gibt: Sie braucht nur den Aszendenten
   und das Alter. Gerade deshalb ist sie robust — sie irrt nicht an einer
   ungenauen Geburtszeit, solange das Zeichen des Aszendenten stimmt.</p>
 
   <h3>Firdaria</h3>
-  <p>Aus dem persisch-arabischen Zweig, bei <b>Abū Maʿšar</b> und den Seinen.
+  <p data-th="x.bNasil.33">Aus dem persisch-arabischen Zweig, bei <b>Abū Maʿšar</b> und den Seinen.
   Fünfundsiebzig Jahre werden in feste Mengen zerlegt und der Reihe nach
   vergeben: Sonne zehn, Venus acht, Merkur dreizehn, Mond neun, Saturn elf,
   Jupiter zwölf, Mars sieben, dazu die Mondknoten mit drei und zwei. Die
   Reihenfolge hängt allein daran, ob die Sonne bei der Geburt über oder unter
   dem Horizont stand. Jede große Periode zerfällt in sieben gleiche
   Unterperioden, beginnend beim eigenen Herrn.</p>
-  <p>Das Verfahren fragt weder nach Zeichen noch nach Häusern — es ist reine
+  <p data-th="x.bNasil.34">Das Verfahren fragt weder nach Zeichen noch nach Häusern — es ist reine
   Abzählung. Seine Schärfe bekommt es erst dadurch, wo der jeweilige Herr im
   Geburtshoroskop steht.</p>
 
   <h3>Vimshottari Dasha</h3>
-  <p>Das verbreitetste Zeitsystem der indischen Astrologie. Hundertzwanzig
+  <p data-th="x.bNasil.35">Das verbreitetste Zeitsystem der indischen Astrologie. Hundertzwanzig
   Jahre auf neun Herren: Ketu sieben, Venus zwanzig, Sonne sechs, Mond zehn,
   Mars sieben, Rahu achtzehn, Jupiter sechzehn, Saturn neunzehn, Merkur
   siebzehn. Welcher beginnt, entscheidet der Mond — genauer: in welchem seiner
   <b>siebenundzwanzig Häuser</b> er bei der Geburt stand und wie weit er darin
   schon gekommen war. Dieser Rest ist die erste Periode.</p>
-  <p>Gerechnet wird <b>siderisch</b>: Der indische Tierkreis hängt an den
+  <p data-th="x.bNasil.36">Gerechnet wird <b>siderisch</b>: Der indische Tierkreis hängt an den
   Sternen, nicht am Frühlingspunkt, und läuft dem tropischen inzwischen um gut
   vierundzwanzig Grad hinterher. Diese Differenz heißt Ayanamsa; hier nach
   Lahiri, genähert auf wenige Bogenminuten — bei einem Mondhaus von 13°20′
   fällt das nicht ins Gewicht.</p>
 
   <h3>Die Jahresumdrehung</h3>
-  <p>Einmal im Jahr kehrt die Sonne auf den Grad zurück, auf dem sie bei der
+  <p data-th="x.bNasil.37">Einmal im Jahr kehrt die Sonne auf den Grad zurück, auf dem sie bei der
   Geburt stand; für diesen Augenblick wird ein Horoskop gestellt. <b>Abū Maʿšar</b>
   hat das Verfahren in „Über die Umdrehungen der Jahre der Geburten“ ausgearbeitet
   — bis heute die ausführlichste Darstellung, die wir haben (auf Deutsch über
   Benjamin Dykes’ Übersetzung zugänglich).</p>
-  <p>Entscheidend ist bei ihm nicht das Jahreshoroskop allein, sondern die
+  <p data-th="x.bNasil.38">Entscheidend ist bei ihm nicht das Jahreshoroskop allein, sondern die
   <b>Reihenfolge der Befragung</b>: erst die Geburt, dann ihre Sekte, dann das
   Zeichen des Jahres und sein Herr, dann Firdar und Teilhaber, dann deren Stellung
   zum Zeichen des Jahres und zum Herrn des Jahres, dann ihr Zustand in der Geburt
@@ -1037,7 +1037,7 @@
   etwas, aber nicht das, was dasteht.</p>
 
   <h3>Das Lebensmaß — Hylech und Alkochoden</h3>
-  <p>Die älteste und umstrittenste Technik der Überlieferung. Gesucht wird erst
+  <p data-th="x.bNasil.39">Die älteste und umstrittenste Technik der Überlieferung. Gesucht wird erst
   der <b>Hylech</b> (<em>haylāj</em>, griechisch <em>aphetes</em>, „der
   Loslassende“): die Stelle, von der das Leben ausgeht — bei Tag zuerst die Sonne,
   bei Nacht zuerst der Mond, aber nur in einem der Örter des Lebens; sonst die
@@ -1046,27 +1046,27 @@
   und ihn zugleich sieht. Er gibt seine Jahre — die größten, mittleren oder
   kleinsten, je nachdem, wie er selbst steht —, und Wohltäter wie Übeltäter
   schlagen zu oder ab.</p>
-  <p class="kucukNot">Diese Zahl ist kein Datum und keine Aussage über einen
+  <p class="kucukNot" data-th="x.bNasil.40">Diese Zahl ist kein Datum und keine Aussage über einen
   Menschen. Ptolemaios rechnete anders als die Perser, die Perser anders als die
   Araber; dieselbe Geburt ergab bei ihnen verschiedene Zahlen. Sie steht hier,
   weil sie zur Überlieferung gehört — mit ihrer Uneinigkeit als Teil der Sache.</p>
 
   <h3>Die Essenz</h3>
-  <p>Rechnet nichts Eigenes. Sie liest zusammen, was die anderen Abschnitte
+  <p data-th="x.bNasil.41">Rechnet nichts Eigenes. Sie liest zusammen, was die anderen Abschnitte
   gefunden haben, und fügt es zu einem Text — das Wesen aus den Namen, den
   Geistnamen aus der Geburtsstunde, das laufende Kapitel, die nächste
   Fälligkeit, das Verborgene und das laufende Jahr.</p>
 
   <h2>Was hier ehrlich gesagt sein muss</h2>
-  <p>Die Deutungen sind im Ton der Vorlagen neu gefasst, nicht aus einzelnen
+  <p data-th="x.bNasil.42">Die Deutungen sind im Ton der Vorlagen neu gefasst, nicht aus einzelnen
   Handschriften abgeschrieben. Wo eine Rekonstruktion vorliegt und keine
   belegte Tabelle — der 27-Einheiten-Modus beim Spirit Name, der Jahresregent
   im Yıldıznâme —, steht es an Ort und Stelle dabei.</p>
-  <p>Alles rechnet in deinem Browser. Nichts geht an einen Server dieser Seite,
+  <p data-th="x.bNasil.43">Alles rechnet in deinem Browser. Nichts geht an einen Server dieser Seite,
   es gibt keinen; die Angaben liegen im <code>localStorage</code> und bleiben
   dort. Nur die Ortssuche fragt auf Knopfdruck einmalig Nominatim
   (OpenStreetMap).</p>
-  <p class="kucukNot">Zum Gebrauch: Dies ist ein Nachbau historischer
+  <p class="kucukNot" data-th="x.bNasil.44">Zum Gebrauch: Dies ist ein Nachbau historischer
   Denktechniken, kein Ratgeber. Ärztliche, rechtliche und geldliche
   Entscheidungen gehören zu Menschen, nicht zu Tafeln.</p>
 </section>
@@ -1105,7 +1105,7 @@
   keine Vorhersage. Wer das Geburtsbild nicht zuerst als Ganzes gelesen hat,
   bekommt aus den Zeitherren nur einen Kalender ohne Inhalt.</p>
 
-  <p>Dieselben Zahlen lassen sich auf zwei Weisen lesen, und die beiden
+  <p data-th="x.bRadixdeutung.1">Dieselben Zahlen lassen sich auf zwei Weisen lesen, und die beiden
   widersprechen einander. Wähle, durch welche Brille du schauen willst — du
   kannst jederzeit wechseln.</p>
 
@@ -1145,7 +1145,7 @@
   auf. In der mittelalterlichen Schule gilt er als der Schlüssel zur ganzen
   Deutung: Wer ihn nicht kennt, deutet Einzelheiten ohne Mitte.</p>
 
-  <p>Gerechnet wird in drei Lagen: die Würden über fünf Stellen — Sonne, Mond,
+  <p data-th="x.bAlmutem.1">Gerechnet wird in drei Lagen: die Würden über fünf Stellen — Sonne, Mond,
   Aszendent, Glückspunkt und die Syzygie vor der Geburt —, dann der Ort, an dem
   der Planet selbst steht, und zuletzt der Herr des Wochentages und der Herr
   der Geburtsstunde.</p>
@@ -1213,7 +1213,7 @@
   Zeichens, und jede Grenze dauert so lange, wie sie an deinem Geburtsort
   wirklich zum Aufgehen braucht.</p>
 
-  <p>Der <b>Verteiler</b> ist der Herr der Grenze, in der der Punkt gerade steht:
+  <p data-th="x.bVerteilung.1">Der <b>Verteiler</b> ist der Herr der Grenze, in der der Punkt gerade steht:
   Er gibt das Hauptthema. Der <b>Teilhaber</b> ist der Planet, dessen Körper oder
   Strahl der Punkt zuletzt überschritten hat: Er gibt die Menschen, die
   Ereignisse, das Getane. Ein Abschnitt heißt also immer mit zwei Namen.</p>
@@ -1257,39 +1257,39 @@
   osmanisch, hellenistisch, arabisch, ägyptisch, lateinisch</p>
 </footer>
 
-<script type="module" src="sprachen.js?v=279"></script>
-<script type="module" src="oracle.js?v=279"></script>
-<script type="module" src="profil.js?v=279"></script>
-<script type="module" src="profil-ui.js?v=279"></script>
-<script type="module" src="heute.js?v=279"></script>
-<script type="module" src="zugang.js?v=279"></script>
-<script type="module" src="horoskop.js?v=279"></script>
-<script type="module" src="perioden.js?v=279"></script>
-<script type="module" src="solar.js?v=279"></script>
-<script type="module" src="lebensmass.js?v=279"></script>
-<script type="module" src="leuchten.js?v=279"></script>
-<script type="module" src="elektion.js?v=279"></script>
-<script type="module" src="ramel.js?v=279"></script>
-<script type="module" src="spende.js?v=279"></script>
-<script type="module" src="geist.js?v=279"></script>
-<script type="module" src="geist-profil.js?v=279"></script>
-<script type="module" src="yildiz-profil.js?v=279"></script>
-<script type="module" src="essenz.js?v=279"></script>
-<script type="module" src="auto-rechnen.js?v=279"></script>
-<script type="module" src="deutung.js?v=279"></script>
-<script type="module" src="jahr.js?v=279"></script>
-<script type="module" src="lebensbogen.js?v=279"></script>
-<script type="module" src="zr.js?v=279"></script>
-<script type="module" src="antiszien.js?v=279"></script>
-<script type="module" src="profektionen.js?v=279"></script>
-<script type="module" src="themen.js?v=279"></script>
-<script type="module" src="crosscheck.js?v=279"></script>
-<script type="module" src="planeten.js?v=279"></script>
-<script type="module" src="verteilung.js?v=279"></script>
-<script type="module" src="almutem.js?v=279"></script>
-<script type="module" src="radixdeutung.js?v=279"></script>
-<script type="module" src="werk.js?v=279"></script>
-<script type="module" src="punkte.js?v=279"></script>
-<script type="module" src="haeuser.js?v=279"></script>
+<script type="module" src="sprachen.js?v=280"></script>
+<script type="module" src="oracle.js?v=280"></script>
+<script type="module" src="profil.js?v=280"></script>
+<script type="module" src="profil-ui.js?v=280"></script>
+<script type="module" src="heute.js?v=280"></script>
+<script type="module" src="zugang.js?v=280"></script>
+<script type="module" src="horoskop.js?v=280"></script>
+<script type="module" src="perioden.js?v=280"></script>
+<script type="module" src="solar.js?v=280"></script>
+<script type="module" src="lebensmass.js?v=280"></script>
+<script type="module" src="leuchten.js?v=280"></script>
+<script type="module" src="elektion.js?v=280"></script>
+<script type="module" src="ramel.js?v=280"></script>
+<script type="module" src="spende.js?v=280"></script>
+<script type="module" src="geist.js?v=280"></script>
+<script type="module" src="geist-profil.js?v=280"></script>
+<script type="module" src="yildiz-profil.js?v=280"></script>
+<script type="module" src="essenz.js?v=280"></script>
+<script type="module" src="auto-rechnen.js?v=280"></script>
+<script type="module" src="deutung.js?v=280"></script>
+<script type="module" src="jahr.js?v=280"></script>
+<script type="module" src="lebensbogen.js?v=280"></script>
+<script type="module" src="zr.js?v=280"></script>
+<script type="module" src="antiszien.js?v=280"></script>
+<script type="module" src="profektionen.js?v=280"></script>
+<script type="module" src="themen.js?v=280"></script>
+<script type="module" src="crosscheck.js?v=280"></script>
+<script type="module" src="planeten.js?v=280"></script>
+<script type="module" src="verteilung.js?v=280"></script>
+<script type="module" src="almutem.js?v=280"></script>
+<script type="module" src="radixdeutung.js?v=280"></script>
+<script type="module" src="werk.js?v=280"></script>
+<script type="module" src="punkte.js?v=280"></script>
+<script type="module" src="haeuser.js?v=280"></script>
 </body>
 </html>
