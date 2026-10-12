@@ -26,7 +26,7 @@
    ------------------------------------------------------------------------ */
 
 import { norm360, schiefeDerEkliptik, julianischesDatum, aufsteigungsdifferenz }
-  from "./astro.js?v=288";
+  from "./astro.js?v=289";
 
 const rad = d => d * Math.PI / 180;
 const grd = r => r * 180 / Math.PI;

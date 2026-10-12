@@ -6,24 +6,24 @@
    alles Übrige liest sie aus dem, was die anderen Abschnitte bereits
    ausgegeben haben, und fügt es zu einem Text.
    --------------------------------------------------------------------- */
-import { cevir, toplam, kalan } from "./ebced.js?v=288";
-import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=288";
-import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=288";
-import { JAHR, profektionJetzt } from "./jahr.js?v=288";
-import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=288";
-import { mondHeute } from "./elektion.js?v=288";
-import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=288";
-import { zrStand } from "./zr.js?v=288";
-import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=288";
-import { e, setzeEssenzSprache } from "./essenz-texte.js?v=288";
-import { aktuelleSprache, t } from "./sprachen.js?v=288";
-import { herkunftVon, hUi, setzeHerkunftSprache, HERKUNFT } from "./herkunft.js?v=288";
+import { cevir, toplam, kalan } from "./ebced.js?v=289";
+import { BURCLAR, UNSURLAR, GEZEGENLER, MENZILLER } from "./korpus.js?v=289";
+import { leseProfilRoh, profilBeschriftung, zurDateneingabe, aufProfilAenderung } from "./profil.js?v=289";
+import { JAHR, profektionJetzt } from "./jahr.js?v=289";
+import { radix, transite, progression, zustandVon, ZEICHEN, PLANET, HAUS, mitArtikel } from "./horoskop.js?v=289";
+import { mondHeute } from "./elektion.js?v=289";
+import { firdariaJetzt, vimshottariJetzt } from "./perioden.js?v=289";
+import { zrStand } from "./zr.js?v=289";
+import { FIGUR, BILD, ORT, NAEHE, STAND, figurVon, bildDat } from "./sprache.js?v=289";
+import { e, setzeEssenzSprache } from "./essenz-texte.js?v=289";
+import { aktuelleSprache, t } from "./sprachen.js?v=289";
+import { herkunftVon, hUi, setzeHerkunftSprache, HERKUNFT } from "./herkunft.js?v=289";
 setzeEssenzSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => { setzeEssenzSprache(ev.detail); setzeHerkunftSprache(ev.detail); });
 setzeHerkunftSprache(aktuelleSprache());
-import { jahresUmdrehung } from "./solar.js?v=288";
-import { lebensmass } from "./lebensmass.js?v=288";
-import { verteilungBei } from "./verteilung.js?v=288";
+import { jahresUmdrehung } from "./solar.js?v=289";
+import { lebensmass } from "./lebensmass.js?v=289";
+import { verteilungBei } from "./verteilung.js?v=289";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
