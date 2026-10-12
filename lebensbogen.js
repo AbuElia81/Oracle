@@ -3,9 +3,9 @@
    Nutzt das gemeinsame Geburtsprofil (profil.js) und die Himmelsmechanik aus
    astro.js; die Bogen-Mathematik selbst steht in direktionen.js.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=289";
-import { berechneGeburt } from "./astro.js?v=289";
-import { berechneDirektionen, PLANETEN, PLANETEN_REIHE, ACHSEN } from "./direktionen.js?v=289";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=290";
+import { berechneGeburt } from "./astro.js?v=290";
+import { berechneDirektionen, PLANETEN, PLANETEN_REIHE, ACHSEN } from "./direktionen.js?v=290";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);

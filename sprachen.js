@@ -22,9 +22,9 @@ export const SPRACHEN = [
   { code: "ar", name: "العربية",   kurz: "AR", rtl: true }
 ];
 
-import { HTML_IT } from "./html-it.js?v=289";
-import { HTML_EN } from "./html-en.js?v=289";
-import { HTML_DE } from "./html-de.js?v=289";
+import { HTML_IT } from "./html-it.js?v=290";
+import { HTML_EN } from "./html-en.js?v=290";
+import { HTML_DE } from "./html-de.js?v=290";
 
 export const WORTE = {
   "kopf.unterzeile": {
@@ -232,8 +232,10 @@ export const WORTE = {
      und stimmte darum für keine von beiden mehr. */
   "hinweis.nurDeutsch": {
     de:"",
-    en:"Translated: the reading, all the tables, and the heading texts of every section. Still German: some of the background paragraphs inside the individual sections.",
-    it:"Tradotti: la lettura, tutte le tavole e i testi introduttivi di ogni sezione. Ancora in tedesco: alcuni paragrafi di contesto all'interno delle singole sezioni.",
+    /* Englisch und Italienisch sind vollständig — kein Hinweis nötig.
+       Für die übrigen vier Sprachen trifft der alte Satz weiter zu. */
+    en:"",
+    it:"",
     tr:"Hesaplar her dilde çalışır; uzun yorum metinleri şimdilik Almancadır. Bunlar imge ve masallarla yazılmıştır, makine çevirisi değerli olan şeyi tam olarak yok ederdi.",
     es:"Los cálculos funcionan en todos los idiomas; los textos largos de interpretación siguen en alemán. Están escritos en imágenes y fábulas, y una traducción automática destruiría justo lo que vale la pena.",
     fr:"Les calculs fonctionnent dans toutes les langues ; les longs textes d'interprétation sont encore en allemand. Ils sont écrits en images et en fables, et une traduction automatique détruirait précisément ce qui en fait la valeur.",

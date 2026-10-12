@@ -13,12 +13,12 @@
    gestritten wurde. Sie steht hier, weil sie zur Überlieferung gehört, und
    sie sagt nichts über den Tod eines Menschen.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=289";
-import { norm360, planetenPositionen, julianischesDatum, sonnenLaenge } from "./astro.js?v=289";
-import { radix, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel } from "./horoskop.js?v=289";
-import { wuerden, ermittleAlmuten } from "./geist.js?v=289";
-import { rt, zahl, aspektName, setzeRestSprache } from "./rest-texte.js?v=289";
-import { aktuelleSprache } from "./sprachen.js?v=289";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=290";
+import { norm360, planetenPositionen, julianischesDatum, sonnenLaenge } from "./astro.js?v=290";
+import { radix, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel } from "./horoskop.js?v=290";
+import { wuerden, ermittleAlmuten } from "./geist.js?v=290";
+import { rt, zahl, aspektName, setzeRestSprache } from "./rest-texte.js?v=290";
+import { aktuelleSprache } from "./sprachen.js?v=290";
 setzeRestSprache(aktuelleSprache());
 
 const $ = s => document.querySelector(s);

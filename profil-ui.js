@@ -1,10 +1,10 @@
 /* ------------------------------------------------------------------------
    profil-ui.js — Bedienung des Reiters "Meine Daten".
    --------------------------------------------------------------------- */
-import { leseProfilRoh, schreibeProfil, loescheProfil } from "./profil.js?v=289";
-import { offsetVon } from "./zeitzone.js?v=289";
-import { rt, setzeRestSprache } from "./rest-texte.js?v=289";
-import { aktuelleSprache } from "./sprachen.js?v=289";
+import { leseProfilRoh, schreibeProfil, loescheProfil } from "./profil.js?v=290";
+import { offsetVon } from "./zeitzone.js?v=290";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=290";
+import { aktuelleSprache } from "./sprachen.js?v=290";
 setzeRestSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 

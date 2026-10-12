@@ -29,12 +29,12 @@
    Wort hat, wenn die anderen sich widersprechen.
    ------------------------------------------------------------------------ */
 
-import { norm360, julianischesDatum } from "./astro.js?v=289";
-import { radix, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=289";
-import { wuerden } from "./geist.js?v=289";
-import { leseProfil } from "./profil.js?v=289";
-import { rt, setzeRestSprache } from "./rest-texte.js?v=289";
-import { aktuelleSprache } from "./sprachen.js?v=289";
+import { norm360, julianischesDatum } from "./astro.js?v=290";
+import { radix, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=290";
+import { wuerden } from "./geist.js?v=290";
+import { leseProfil } from "./profil.js?v=290";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=290";
+import { aktuelleSprache } from "./sprachen.js?v=290";
 setzeRestSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 
