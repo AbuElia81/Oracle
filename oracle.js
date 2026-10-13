@@ -1,9 +1,9 @@
 /* ------------------------------------------------------------------------
    oracle.js — die Bedienung.
    --------------------------------------------------------------------- */
-import { EBCED, HARFLER, cevir, dokum, toplam, kalan } from "./ebced.js?v=290";
-import { rt, setzeRestSprache } from "./rest-texte.js?v=290";
-import { aktuelleSprache } from "./sprachen.js?v=290";
+import { EBCED, HARFLER, cevir, dokum, toplam, kalan } from "./ebced.js?v=291";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=291";
+import { aktuelleSprache } from "./sprachen.js?v=291";
 setzeRestSprache(aktuelleSprache());
 /* Beim Sprachwechsel neu zeichnen: korpus.js hängt seine Tafeln um, aber
    das bereits Gezeichnete steht schon im Baum. */
@@ -12,7 +12,7 @@ window.addEventListener("sprache-geaendert", ev => {
   setTimeout(() => { try { yildizname(); menzilTablosu(); } catch (e) {} }, 60);
 });
 import { UNSURLAR, GEZEGENLER, BURCLAR, MENZILLER, NIYET, UYUM,
-         UNSUR_UYUM, SAAT_SIRASI, GUN_SAHIBI, GUN_ADI } from "./korpus.js?v=290";
+         UNSUR_UYUM, SAAT_SIRASI, GUN_SAHIBI, GUN_ADI } from "./korpus.js?v=291";
 
 const $  = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];

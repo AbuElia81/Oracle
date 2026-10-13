@@ -7,8 +7,8 @@
    Maske erscheint — und erst eine ausgefüllte Maske öffnet die Reiter
    des jeweiligen Weges.
    --------------------------------------------------------------------- */
-import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=290";
-import { t } from "./sprachen.js?v=290";
+import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=291";
+import { t } from "./sprachen.js?v=291";
 
 const HEIM = "bProfil";
 const SPEICHER = "oracle-weg";
@@ -101,11 +101,21 @@ document.querySelectorAll("#wahl .wahlKarte").forEach(karte => {
     const rahmen = document.getElementById("maskeRahmen");
     if (rahmen && !genug(karte.dataset.weg, leseProfilRoh())) rahmen.open = true;
     schalte();
-    /* Nicht gleich in die erste Technik springen: Erst zeigen, was es gibt. */
-    const ziel = lies() && genug(lies(), leseProfilRoh())
-      ? document.getElementById("wegListe")
-      : document.getElementById("maskeRahmen");
-    if (lies()) ziel?.scrollIntoView({ block: "start", behavior: "smooth" });
+    /* Nicht gleich in die erste Technik springen: Erst zeigen, was es gibt.
+       Seit die Techniken in einem zugeklappten Fach liegen, muss das Fach
+       dabei aufgehen — sonst drückt man auf "Die Sterne" und es geschieht
+       sichtbar nichts: Die Liste ist zwar gebaut, steht aber hinter einer
+       geschlossenen Klappe, und dorthin kann auch nicht gescrollt werden. */
+    const bereit = lies() && genug(lies(), leseProfilRoh());
+    const fach = document.getElementById("technikFach");
+    if (bereit && fach) fach.open = true;
+    const ziel = bereit ? (fach || document.getElementById("wegListe"))
+                        : document.getElementById("maskeRahmen");
+    if (lies()) {
+      /* Erst nach dem Aufklappen scrollen, sonst zielt es ins Leere. */
+      requestAnimationFrame(() =>
+        ziel?.scrollIntoView({ block: "start", behavior: "smooth" }));
+    }
   });
 });
 
