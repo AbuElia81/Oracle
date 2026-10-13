@@ -7,8 +7,8 @@
    Maske erscheint — und erst eine ausgefüllte Maske öffnet die Reiter
    des jeweiligen Weges.
    --------------------------------------------------------------------- */
-import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=292";
-import { t } from "./sprachen.js?v=292";
+import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=293";
+import { t } from "./sprachen.js?v=293";
 
 const HEIM = "bProfil";
 const SPEICHER = "oracle-weg";
@@ -80,11 +80,15 @@ function schalte() {
      Datum, Stunde und Ort dastehen. Sonst sähe sie, wer die Seite frisch
      öffnet, erst nach einem Klick auf "Die Sterne" — und dann wäre sie
      wieder eine Technik unter anderen statt das Erste, was da ist. */
-  zeig("#lesungHeim", genug("sterne", p));
+  /* Beides liest die Geburt und gehört darum zu den Sternen. Wer das
+     Orakel gewählt hat, fragt nach einem Namen oder einem Augenblick —
+     dort hat weder die Lesung noch das Leuchten etwas verloren. */
+  const sternSachen = genug("sterne", p) && weg !== "orakel";
+  zeig("#lesungHeim", sternSachen);
   zeig("#technikFach", bereit);
   /* Das Leuchten steht nicht in der Liste, sondern unten auf der
      Startseite — es ist kein Rechner, sondern ein Blick aufs Ganze. */
-  zeig("#leuchtenHeim", genug("sterne", p));
+  zeig("#leuchtenHeim", sternSachen);
 
   const aktiv = document.querySelector("nav#reiter button.etkin");
   if (aktiv && aktiv.hidden) {
@@ -140,10 +144,11 @@ function zeichneWege() {
      Ordnung. Darum in Gruppen, und zwar in der Reihenfolge der alten
      Schule: erst das Geburtsbild, dann was darin angelegt ist, dann die
      Zeitherren, zuletzt die Zusammenschau. */
+  /* Die Essenz liest die Geburt zusammen — sie gehört zu den Sternen und
+     nicht zum Orakel, wo nach Namen und nach dem Augenblick gefragt wird. */
   const GRUPPEN = weg === "orakel" ? [
     [t("gruppe.augenblick"), ["bNiyet","bRamel","bMenzil"]],
-    [t("gruppe.namen"),      ["bYildiz","bUyum"]],
-    [t("gruppe.zusammen"),   ["bEssenz"]]
+    [t("gruppe.namen"),      ["bYildiz","bUyum"]]
   ] : [
     [t("gruppe.geburtsbild"), ["bHoroskop","bRadixdeutung","bAlmutem","bPunkte","bGeist"]],
     [t("gruppe.angelegt"),    ["bWerk","bLebensmass","bAntiszien"]],

@@ -22,9 +22,9 @@ export const SPRACHEN = [
   { code: "ar", name: "العربية",   kurz: "AR", rtl: true }
 ];
 
-import { HTML_IT } from "./html-it.js?v=292";
-import { HTML_EN } from "./html-en.js?v=292";
-import { HTML_DE } from "./html-de.js?v=292";
+import { HTML_IT } from "./html-it.js?v=293";
+import { HTML_EN } from "./html-en.js?v=293";
+import { HTML_DE } from "./html-de.js?v=293";
 
 export const WORTE = {
   "kopf.unterzeile": {
