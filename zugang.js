@@ -7,8 +7,8 @@
    Maske erscheint — und erst eine ausgefüllte Maske öffnet die Reiter
    des jeweiligen Weges.
    --------------------------------------------------------------------- */
-import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=291";
-import { t } from "./sprachen.js?v=291";
+import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=292";
+import { t } from "./sprachen.js?v=292";
 
 const HEIM = "bProfil";
 const SPEICHER = "oracle-weg";
@@ -57,11 +57,12 @@ function schalte() {
   zeig("#speicherBlock", true);
   zeig("#torHinweis", !!weg && !bereit);
 
-  /* Die Reiterleiste gehört zu den Abschnitten, nicht zum Anfang. Auf der
-     Startseite bleibt sie weg: Dort stehen nur die beiden Wege. */
+  /* Die Reiterleiste bleibt ganz weg. Sie zeigte in jedem Abschnitt noch
+     einmal alle siebzehn Techniken — genau das, wovon man gerade eine
+     ausgewählt hat. Die Knöpfe bleiben im Baum, weil die Wegeliste und
+     der Zurückweg sie anklicken; nur sichtbar sind sie nicht mehr. */
   const leiste = document.querySelector("nav#reiter");
-  const daheim = !document.getElementById(HEIM)?.hidden;
-  if (leiste) leiste.hidden = !bereit || daheim;
+  if (leiste) leiste.hidden = true;
 
   document.querySelectorAll("nav#reiter button").forEach(b => {
     const g = b.dataset.gruppe;
@@ -215,6 +216,18 @@ function geheZu(id) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
+/* Aus einer Technik führt der Weg zurück zur Liste des Weges, nicht
+   ganz an den Anfang: Man hat eben erst gewählt, welchen Weg man geht.
+   Der Titel oben bleibt der Weg an den wirklichen Anfang. */
+function zurueckZurUebersicht() {
+  geheZu(HEIM);
+  const fach = document.getElementById("technikFach");
+  if (!fach || fach.hidden) return;
+  fach.open = true;
+  requestAnimationFrame(() =>
+    fach.scrollIntoView({ block: "start", behavior: "smooth" }));
+}
+
 document.getElementById("heimKnopf")?.addEventListener("click", () => geheZu(HEIM));
 document.getElementById("zurIdee")?.addEventListener("click", () => geheZu("bNasil"));
 document.querySelectorAll("[data-heim]").forEach(b =>
@@ -231,9 +244,9 @@ document.querySelectorAll("section.bolum").forEach(ab => {
   const k = document.createElement("button");
   k.type = "button";
   k.className = "zurueckKnopf";
-  k.textContent = t("knopf.zurueck");
-  k.dataset.t = "knopf.zurueck";
-  k.addEventListener("click", () => geheZu(HEIM));
+  k.textContent = t("knopf.zurueckListe");
+  k.dataset.t = "knopf.zurueckListe";
+  k.addEventListener("click", zurueckZurUebersicht);
   ab.prepend(k);
 });
 

@@ -22,9 +22,9 @@ export const SPRACHEN = [
   { code: "ar", name: "العربية",   kurz: "AR", rtl: true }
 ];
 
-import { HTML_IT } from "./html-it.js?v=291";
-import { HTML_EN } from "./html-en.js?v=291";
-import { HTML_DE } from "./html-de.js?v=291";
+import { HTML_IT } from "./html-it.js?v=292";
+import { HTML_EN } from "./html-en.js?v=292";
+import { HTML_DE } from "./html-de.js?v=292";
 
 export const WORTE = {
   "kopf.unterzeile": {
@@ -93,6 +93,10 @@ export const WORTE = {
   "knopf.rechnen": {
     de:"Neu rechnen", en:"Recalculate", tr:"Yeniden hesapla", it:"Ricalcola",
     es:"Recalcular", fr:"Recalculer", ar:"أعد الحساب" },
+  "knopf.zurueckListe": {
+    de:"← Zurück zur Übersicht", en:"← Back to the techniques", tr:"← Tekniklere dön",
+    it:"← Torna all'elenco", es:"← Volver a las técnicas", fr:"← Retour aux techniques",
+    ar:"→ العودة إلى الطرق" },
   "knopf.zurueck": {
     de:"← Zurück zum Anfang", en:"← Back to the start", tr:"← Başa dön",
     it:"← Torna all'inizio", es:"← Volver al inicio", fr:"← Retour au début",

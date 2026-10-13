@@ -11,11 +11,11 @@
    das gegenüberliegende Zeichen und läuft von dort weiter. Valens hält
    diesen Sprung für einen der wichtigsten Augenblicke einer Biographie.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=291";
-import { berechneGeburt, norm360 } from "./astro.js?v=291";
-import { ZEICHEN, PLANET } from "./horoskop.js?v=291";
-import { rt, zahl, setzeRestSprache } from "./rest-texte.js?v=291";
-import { aktuelleSprache } from "./sprachen.js?v=291";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=292";
+import { berechneGeburt, norm360 } from "./astro.js?v=292";
+import { ZEICHEN, PLANET } from "./horoskop.js?v=292";
+import { rt, zahl, setzeRestSprache } from "./rest-texte.js?v=292";
+import { aktuelleSprache } from "./sprachen.js?v=292";
 setzeRestSprache(aktuelleSprache());
 
 const $ = s => document.querySelector(s);
