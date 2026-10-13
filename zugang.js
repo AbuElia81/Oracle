@@ -7,8 +7,8 @@
    Maske erscheint — und erst eine ausgefüllte Maske öffnet die Reiter
    des jeweiligen Weges.
    --------------------------------------------------------------------- */
-import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=293";
-import { t } from "./sprachen.js?v=293";
+import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=295";
+import { t } from "./sprachen.js?v=295";
 
 const HEIM = "bProfil";
 const SPEICHER = "oracle-weg";
@@ -80,11 +80,19 @@ function schalte() {
      Datum, Stunde und Ort dastehen. Sonst sähe sie, wer die Seite frisch
      öffnet, erst nach einem Klick auf "Die Sterne" — und dann wäre sie
      wieder eine Technik unter anderen statt das Erste, was da ist. */
-  /* Beides liest die Geburt und gehört darum zu den Sternen. Wer das
-     Orakel gewählt hat, fragt nach einem Namen oder einem Augenblick —
-     dort hat weder die Lesung noch das Leuchten etwas verloren. */
-  const sternSachen = genug("sterne", p) && weg !== "orakel";
+  /* Beides liest die Geburt und gehört darum zu den Sternen — und zwar
+     erst, nachdem man sie gewählt hat. Die Startseite selbst zeigt nur
+     die Angaben und die beiden Wege; alles andere kommt dahinter. */
+  const sternSachen = genug("sterne", p) && weg === "sterne";
+  const lesungWarVersteckt = document.getElementById("lesungHeim")?.hidden;
   zeig("#lesungHeim", sternSachen);
+  /* Die Lesung wird nur geschrieben, solange ihr Rahmen sichtbar ist.
+     Seit sie erst hinter "Die Sterne" erscheint, war sie beim Laden noch
+     versteckt — und stand dann leer da. Also Bescheid geben, sobald sie
+     aufgeht. */
+  if (sternSachen && lesungWarVersteckt) {
+    window.dispatchEvent(new CustomEvent("lesung-sichtbar"));
+  }
   zeig("#technikFach", bereit);
   /* Das Leuchten steht nicht in der Liste, sondern unten auf der
      Startseite — es ist kein Rechner, sondern ein Blick aufs Ganze. */

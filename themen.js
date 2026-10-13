@@ -19,9 +19,9 @@
    IV.3 — die Doryphorie, die Leibwache der Lichter).
    ------------------------------------------------------------------------ */
 
-import { radix, ZEICHEN, PLANET, REIHE, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=293";
-import { rt, setzeRestSprache } from "./rest-texte.js?v=293";
-import { aktuelleSprache } from "./sprachen.js?v=293";
+import { radix, ZEICHEN, PLANET, REIHE, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=295";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=295";
+import { aktuelleSprache } from "./sprachen.js?v=295";
 setzeRestSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 

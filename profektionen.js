@@ -10,11 +10,11 @@
    Innerhalb eines Jahres profizieren die zwölf Monate auf dieselbe Weise
    weiter, beim Zeichen des Jahres beginnend.
    --------------------------------------------------------------------- */
-import { berechneGeburt, norm360 } from "./astro.js?v=293";
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=293";
-import { ZEICHEN, PLANET } from "./horoskop.js?v=293";
-import { rt, setzeRestSprache } from "./rest-texte.js?v=293";
-import { aktuelleSprache } from "./sprachen.js?v=293";
+import { berechneGeburt, norm360 } from "./astro.js?v=295";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=295";
+import { ZEICHEN, PLANET } from "./horoskop.js?v=295";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=295";
+import { aktuelleSprache } from "./sprachen.js?v=295";
 setzeRestSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 
