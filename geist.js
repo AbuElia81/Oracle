@@ -9,9 +9,9 @@
    folgt der Ganzzeichen-Vereinfachung (zehn Zeichen nach dem Aszendenten).
    --------------------------------------------------------------------- */
 
-import { ZEICHEN as ZEICHEN_BASIS, PLANET } from "./horoskop.js?v=295";
-import { rt, setzeRestSprache } from "./rest-texte.js?v=295";
-import { aktuelleSprache } from "./sprachen.js?v=295";
+import { ZEICHEN as ZEICHEN_BASIS, PLANET } from "./horoskop.js?v=298";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=298";
+import { aktuelleSprache } from "./sprachen.js?v=298";
 setzeRestSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 

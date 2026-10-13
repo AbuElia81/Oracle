@@ -189,5 +189,6 @@ export const HTML_EN = {
   "x.bAlmutem.1": "The reckoning goes in three layers: the dignities over five places — Sun, Moon, Ascendant, Lot of Fortune and the syzygy before the birth —, then the place where the planet itself stands, and last the lord of the weekday and the lord of the hour of birth.",
   "x.bVerteilung.1": "The <b>distributor</b> is the lord of the bound in which the point currently stands: it gives the main theme. The <b>partner</b> is the planet whose body or ray the point last crossed: it gives the people, the events, what is done. A stretch therefore always goes by two names.",
   "x.bRadixdeutung.2": "What is objectively the case: sect, temperament, the lord of the rising sign, who stands strong and who weak. Bonatti's order, sober and checkable.",
-  "x.bRadixdeutung.3": "What is being talked about: the same numbers as figures, fables and images. The old school rejects this reading — but an image is remembered, and a table is not."
+  "x.bRadixdeutung.3": "What is being talked about: the same numbers as figures, fables and images. The old school rejects this reading — but an image is remembered, and a table is not.",
+  "worum.bLeuchten": "Four time-lords side by side on one slider: draw it through your life and see what they point to together."
 };

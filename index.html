@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Oracle</title>
 <meta name="description" content="Oracle — Orakelrechner nach alten Büchern: das osmanische Yıldıznâme aus Name und Muttername, der Geist des 11. Hauses nach Agrippa, Primärdirektionen, Zodiacal Releasing und Antiszien.">
-<link rel="stylesheet" href="stil.css?v=295">
+<link rel="stylesheet" href="stil.css?v=298">
 </head>
 <body>
 
@@ -45,6 +45,7 @@
   <button data-bolum="bVerteilung" data-gruppe="sterne">Die Verteilung</button>
   <button data-bolum="bLebensmass" data-gruppe="sterne">Das Lebensmaß</button>
   <button data-bolum="bEssenz" data-gruppe="sterne">Die Essenz</button>
+  <button data-bolum="bLeuchten" data-gruppe="sterne">Das Leuchten</button>
 </nav>
 
 <p id="spracheHinweis" class="kucukNot" hidden></p>
@@ -433,7 +434,18 @@
     <div id="wegListe" class="wegListe"></div>
   </details>
 
-  <div id="leuchtenHeim" hidden>
+  
+
+  <div id="heimFuss">
+    <button type="button" id="zurIdee" class="wasIstKnopf" data-t="knopf.idee">Was ist Oracle? — die Idee dahinter</button>
+  </div>
+
+</section>
+
+<!-- ------------------------------------------------- Das Leuchten
+     Steht seit jeher auf der Startseite; jetzt ein eigener Abschnitt
+     mit eigenem Knopf in der Wegeliste, wie jede andere Technik. -->
+<section class="bolum" id="bLeuchten" hidden>
   <div class="appKopf">
     <h2 data-t="bProfil.titel">Das Leuchten</h2>
     <p class="unterzeile" data-t="bProfil.unter">Ein Leben, vor- und zurückgespult</p>
@@ -448,13 +460,7 @@
 
   <button id="lhBerechnen" class="buyukDugme" data-t="knopf.rechnen">Neu rechnen</button>
   <div id="lhCikti" hidden></div>
-  </div>
-
-  <div id="heimFuss">
-    <button type="button" id="zurIdee" class="wasIstKnopf" data-t="knopf.idee">Was ist Oracle? — die Idee dahinter</button>
-  </div>
-
-</section>
+  </section>
 
 <!-- ---------------------------------------- VI. Der Geist des 11. Hauses -->
 <section class="bolum" id="bGeist" hidden>
@@ -1257,39 +1263,39 @@
   osmanisch, hellenistisch, arabisch, ägyptisch, lateinisch</p>
 </footer>
 
-<script type="module" src="sprachen.js?v=295"></script>
-<script type="module" src="oracle.js?v=295"></script>
-<script type="module" src="profil.js?v=295"></script>
-<script type="module" src="profil-ui.js?v=295"></script>
-<script type="module" src="heute.js?v=295"></script>
-<script type="module" src="zugang.js?v=295"></script>
-<script type="module" src="horoskop.js?v=295"></script>
-<script type="module" src="perioden.js?v=295"></script>
-<script type="module" src="solar.js?v=295"></script>
-<script type="module" src="lebensmass.js?v=295"></script>
-<script type="module" src="leuchten.js?v=295"></script>
-<script type="module" src="elektion.js?v=295"></script>
-<script type="module" src="ramel.js?v=295"></script>
-<script type="module" src="spende.js?v=295"></script>
-<script type="module" src="geist.js?v=295"></script>
-<script type="module" src="geist-profil.js?v=295"></script>
-<script type="module" src="yildiz-profil.js?v=295"></script>
-<script type="module" src="essenz.js?v=295"></script>
-<script type="module" src="auto-rechnen.js?v=295"></script>
-<script type="module" src="deutung.js?v=295"></script>
-<script type="module" src="jahr.js?v=295"></script>
-<script type="module" src="lebensbogen.js?v=295"></script>
-<script type="module" src="zr.js?v=295"></script>
-<script type="module" src="antiszien.js?v=295"></script>
-<script type="module" src="profektionen.js?v=295"></script>
-<script type="module" src="themen.js?v=295"></script>
-<script type="module" src="crosscheck.js?v=295"></script>
-<script type="module" src="planeten.js?v=295"></script>
-<script type="module" src="verteilung.js?v=295"></script>
-<script type="module" src="almutem.js?v=295"></script>
-<script type="module" src="radixdeutung.js?v=295"></script>
-<script type="module" src="werk.js?v=295"></script>
-<script type="module" src="punkte.js?v=295"></script>
-<script type="module" src="haeuser.js?v=295"></script>
+<script type="module" src="sprachen.js?v=298"></script>
+<script type="module" src="oracle.js?v=298"></script>
+<script type="module" src="profil.js?v=298"></script>
+<script type="module" src="profil-ui.js?v=298"></script>
+<script type="module" src="heute.js?v=298"></script>
+<script type="module" src="zugang.js?v=298"></script>
+<script type="module" src="horoskop.js?v=298"></script>
+<script type="module" src="perioden.js?v=298"></script>
+<script type="module" src="solar.js?v=298"></script>
+<script type="module" src="lebensmass.js?v=298"></script>
+<script type="module" src="leuchten.js?v=298"></script>
+<script type="module" src="elektion.js?v=298"></script>
+<script type="module" src="ramel.js?v=298"></script>
+<script type="module" src="spende.js?v=298"></script>
+<script type="module" src="geist.js?v=298"></script>
+<script type="module" src="geist-profil.js?v=298"></script>
+<script type="module" src="yildiz-profil.js?v=298"></script>
+<script type="module" src="essenz.js?v=298"></script>
+<script type="module" src="auto-rechnen.js?v=298"></script>
+<script type="module" src="deutung.js?v=298"></script>
+<script type="module" src="jahr.js?v=298"></script>
+<script type="module" src="lebensbogen.js?v=298"></script>
+<script type="module" src="zr.js?v=298"></script>
+<script type="module" src="antiszien.js?v=298"></script>
+<script type="module" src="profektionen.js?v=298"></script>
+<script type="module" src="themen.js?v=298"></script>
+<script type="module" src="crosscheck.js?v=298"></script>
+<script type="module" src="planeten.js?v=298"></script>
+<script type="module" src="verteilung.js?v=298"></script>
+<script type="module" src="almutem.js?v=298"></script>
+<script type="module" src="radixdeutung.js?v=298"></script>
+<script type="module" src="werk.js?v=298"></script>
+<script type="module" src="punkte.js?v=298"></script>
+<script type="module" src="haeuser.js?v=298"></script>
 </body>
 </html>

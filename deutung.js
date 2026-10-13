@@ -6,12 +6,12 @@
    fertigen Tafeln und setzt seinen Text in einen eigenen Kasten daneben.
    Deshalb überlebt die Deutung auch ein Neurechnen.
    --------------------------------------------------------------------- */
-import { leseProfilRoh } from "./profil.js?v=295";
-import { profektionJetzt } from "./jahr.js?v=295";
-import { zustandVon, radix, transite, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=295";
-import { zrStand } from "./zr.js?v=295";
-import { rt, zahl, ordnung, setzeRestSprache } from "./rest-texte.js?v=295";
-import { aktuelleSprache } from "./sprachen.js?v=295";
+import { leseProfilRoh } from "./profil.js?v=298";
+import { profektionJetzt } from "./jahr.js?v=298";
+import { zustandVon, radix, transite, PLANET, REIHE, ZEICHEN, HAUS, mitArtikel, grossMitArtikel } from "./horoskop.js?v=298";
+import { zrStand } from "./zr.js?v=298";
+import { rt, zahl, ordnung, setzeRestSprache } from "./rest-texte.js?v=298";
+import { aktuelleSprache } from "./sprachen.js?v=298";
 setzeRestSprache(aktuelleSprache());
 
 /* Ein Satz, der eine Zeitherrscher-Aussage am Geburtshoroskop festmacht.

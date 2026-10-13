@@ -14,12 +14,12 @@
    Herr beginnt — und wie viel von seiner Zeit schon verbraucht war.
    Gerechnet wird siderisch, nicht tropisch.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=295";
-import { berechneGeburt, norm360 } from "./astro.js?v=295";
-import { zustandVon, ZEICHEN } from "./horoskop.js?v=295";
-import { rt, zahl, ordnung, setzeRestSprache } from "./rest-texte.js?v=295";
-import { aktuelleSprache } from "./sprachen.js?v=295";
-import { PLANET } from "./horoskop.js?v=295";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=298";
+import { berechneGeburt, norm360 } from "./astro.js?v=298";
+import { zustandVon, ZEICHEN } from "./horoskop.js?v=298";
+import { rt, zahl, ordnung, setzeRestSprache } from "./rest-texte.js?v=298";
+import { aktuelleSprache } from "./sprachen.js?v=298";
+import { PLANET } from "./horoskop.js?v=298";
 setzeRestSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 

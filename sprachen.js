@@ -22,9 +22,9 @@ export const SPRACHEN = [
   { code: "ar", name: "العربية",   kurz: "AR", rtl: true }
 ];
 
-import { HTML_IT } from "./html-it.js?v=295";
-import { HTML_EN } from "./html-en.js?v=295";
-import { HTML_DE } from "./html-de.js?v=295";
+import { HTML_IT } from "./html-it.js?v=298";
+import { HTML_EN } from "./html-en.js?v=298";
+import { HTML_DE } from "./html-de.js?v=298";
 
 export const WORTE = {
   "kopf.unterzeile": {
@@ -222,6 +222,7 @@ export const WORTE = {
   "nav.bLebensbogen":  { de:"Der Lebensbogen", it:"L'arco della vita", en:"The arc of life", tr:"Ömür yayı", es:"El arco de la vida", fr:"L'arc de la vie", ar:"قوس الحياة" },
   "nav.bSolar":        { de:"Jahresumdrehung", it:"La rivoluzione solare", en:"Solar revolution", tr:"Yıl dönümü", es:"Revolución solar", fr:"Révolution solaire", ar:"تحويل السنة" },
   "nav.bEssenz":       { de:"Die Essenz", it:"L'essenza", en:"The essence", tr:"Öz", es:"La esencia", fr:"L'essence", ar:"الخلاصة" },
+  "nav.bLeuchten":    { de:"Das Leuchten", it:"Il bagliore", en:"The glow", tr:"Parıltı", es:"El resplandor", fr:"La lueur", ar:"التوهج" },
   "nav.bYildiz":       { de:"Yıldıznâme", it:"Yıldıznâme", en:"Yıldıznâme", tr:"Yıldıznâme", es:"Yıldıznâme", fr:"Yıldıznâme", ar:"يلدزنامه" },
   "nav.bNiyet":        { de:"Niyet — die Frage", it:"Niyet — la domanda", en:"Niyet — the question", tr:"Niyet — soru", es:"Niyet — la pregunta", fr:"Niyet — la question", ar:"النية — السؤال" },
   "nav.bUyum":         { de:"İsim uyumu", it:"İsim uyumu", en:"İsim uyumu", tr:"İsim uyumu", es:"İsim uyumu", fr:"İsim uyumu", ar:"توافق الأسماء" },

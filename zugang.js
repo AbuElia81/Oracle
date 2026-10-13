@@ -7,8 +7,8 @@
    Maske erscheint — und erst eine ausgefüllte Maske öffnet die Reiter
    des jeweiligen Weges.
    --------------------------------------------------------------------- */
-import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=295";
-import { t } from "./sprachen.js?v=295";
+import { leseProfilRoh, aufProfilAenderung } from "./profil.js?v=298";
+import { t } from "./sprachen.js?v=298";
 
 const HEIM = "bProfil";
 const SPEICHER = "oracle-weg";
@@ -94,9 +94,8 @@ function schalte() {
     window.dispatchEvent(new CustomEvent("lesung-sichtbar"));
   }
   zeig("#technikFach", bereit);
-  /* Das Leuchten steht nicht in der Liste, sondern unten auf der
-     Startseite — es ist kein Rechner, sondern ein Blick aufs Ganze. */
-  zeig("#leuchtenHeim", sternSachen);
+  /* Das Leuchten ist jetzt ein eigener Abschnitt mit eigenem Knopf in
+     der Wegeliste — es braucht hier keine eigene Sichtbarkeit mehr. */
 
   const aktiv = document.querySelector("nav#reiter button.etkin");
   if (aktiv && aktiv.hidden) {
@@ -162,7 +161,7 @@ function zeichneWege() {
     [t("gruppe.angelegt"),    ["bWerk","bLebensmass","bAntiszien"]],
     [t("gruppe.zeit"),        ["bProfektionen","bVerteilung","bZR","bFirdaria",
                                "bVimshottari","bLebensalter","bLebensbogen","bSolar"]],
-    [t("gruppe.zusammen"),    ["bEssenz"]]
+    [t("gruppe.zusammen"),    ["bEssenz","bLeuchten"]]
   ];
 
   const knopfVon = id => document.querySelector(`nav#reiter button[data-bolum="${id}"]`);
@@ -251,16 +250,22 @@ document.querySelectorAll("[data-heim]").forEach(b =>
 document.querySelectorAll("nav#reiter button").forEach(b =>
   b.addEventListener("click", () => setTimeout(schalte, 0)));
 
-/* In jedem Abschnitt oben ein Weg zurück — der Kopf allein ist zu leise. */
+/* In jedem Abschnitt ein Weg zurück — oben und unten. Manche Abschnitte
+   sind mehrere Bildschirme lang; wer unten angekommen ist, soll nicht
+   erst wieder hochscrollen müssen. */
 document.querySelectorAll("section.bolum").forEach(ab => {
   if (ab.id === HEIM || ab.querySelector(":scope > .zurueckKnopf")) return;
-  const k = document.createElement("button");
-  k.type = "button";
-  k.className = "zurueckKnopf";
-  k.textContent = t("knopf.zurueckListe");
-  k.dataset.t = "knopf.zurueckListe";
-  k.addEventListener("click", zurueckZurUebersicht);
-  ab.prepend(k);
+  const mache = unten => {
+    const k = document.createElement("button");
+    k.type = "button";
+    k.className = unten ? "zurueckKnopf zurueckUnten" : "zurueckKnopf";
+    k.textContent = t("knopf.zurueckListe");
+    k.dataset.t = "knopf.zurueckListe";
+    k.addEventListener("click", zurueckZurUebersicht);
+    return k;
+  };
+  ab.prepend(mache(false));
+  ab.append(mache(true));
 });
 
 /* Erst ganz zum Schluss loslegen: schalte() greift auf WORUM und

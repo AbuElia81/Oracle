@@ -166,5 +166,6 @@ export const HTML_DE = {
   "x.bAlmutem.1": "Gerechnet wird in drei Lagen: die Würden über fünf Stellen — Sonne, Mond, Aszendent, Glückspunkt und die Syzygie vor der Geburt —, dann der Ort, an dem der Planet selbst steht, und zuletzt der Herr des Wochentages und der Herr der Geburtsstunde.",
   "x.bVerteilung.1": "Der <b>Verteiler</b> ist der Herr der Grenze, in der der Punkt gerade steht: Er gibt das Hauptthema. Der <b>Teilhaber</b> ist der Planet, dessen Körper oder Strahl der Punkt zuletzt überschritten hat: Er gibt die Menschen, die Ereignisse, das Getane. Ein Abschnitt heißt also immer mit zwei Namen.",
   "x.bRadixdeutung.2": "Was objektiv der Fall ist: Sekte, Temperament, der Herr des Aufsteigenden, wer stark steht und wer schwach. Bonattis Reihenfolge, nüchtern und nachrechenbar.",
-  "x.bRadixdeutung.3": "Wovon die Rede ist: dieselben Zahlen als Gestalten, Fabeln und Bilder. Die alte Schule lehnt diese Lesart ab — aber ein Bild merkt man sich, und eine Tabelle nicht."
+  "x.bRadixdeutung.3": "Wovon die Rede ist: dieselben Zahlen als Gestalten, Fabeln und Bilder. Die alte Schule lehnt diese Lesart ab — aber ein Bild merkt man sich, und eine Tabelle nicht.",
+  "worum.bLeuchten": "Vier Zeitherrscher nebeneinander auf einer Leiste: Zieh sie durch dein Leben und sieh, worauf sie gemeinsam zeigen."
 };

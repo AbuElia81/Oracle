@@ -290,5 +290,6 @@ export const HTML_IT = {
   "x.bNasil.44": "Sull'uso: questa è una ricostruzione di tecniche di pensiero storiche, non un consiglio. Le decisioni mediche, legali e finanziarie spettano a persone, non a tavole.",
   "x.bRadixdeutung.1": "Gli stessi numeri si lasciano leggere in due modi, e i due si contraddicono. Scegli attraverso quale lente vuoi guardare — puoi cambiare in qualsiasi momento.",
   "x.bAlmutem.1": "Il calcolo procede in tre strati: le dignità su cinque luoghi — Sole, Luna, Ascendente, Sorte della Fortuna e la sizigia precedente la nascita —, poi il luogo in cui sta il pianeta stesso, e infine il signore del giorno della settimana e il signore dell'ora di nascita.",
-  "x.bVerteilung.1": "Il <b>distributore</b> è il signore del termine in cui il punto sta in quel momento: dà il tema principale. Il <b>compagno</b> è il pianeta il cui corpo o raggio il punto ha attraversato per ultimo: dà le persone, gli eventi, il fatto. Un periodo porta dunque sempre due nomi."
+  "x.bVerteilung.1": "Il <b>distributore</b> è il signore del termine in cui il punto sta in quel momento: dà il tema principale. Il <b>compagno</b> è il pianeta il cui corpo o raggio il punto ha attraversato per ultimo: dà le persone, gli eventi, il fatto. Un periodo porta dunque sempre due nomi.",
+  "worum.bLeuchten": "Quattro signori del tempo affiancati su un cursore: tiralo attraverso la tua vita e guarda su che cosa puntano insieme."
 };

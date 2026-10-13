@@ -1542,3 +1542,12 @@ body.rtl .ohneStundeInhalt {
   #heuteHeim { padding: 1.1rem 1rem 1rem; }
   .heuteRat .heuteTrenner { display: block; height: 0; margin: .4rem 0; overflow: hidden; }
 }
+
+/* Der zweite Weg zurück, am Fuß eines Abschnitts. Er steht abgesetzt:
+   oben ist er eine Rückfahrkarte, unten ein Schlussstrich. */
+.zurueckUnten {
+  margin-top: 2.6rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid rgba(201,162,39,.18);
+  width: 100%;
+}
