@@ -9,10 +9,10 @@
 
    Häuser im Ganzzeichen, wie überall auf dieser Seite.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=298";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=300";
 import { berechneGeburt, planetenPositionen, julianischesDatum,
          aszendent, medium, schiefeDerEkliptik, siderischeZeitGreenwich,
-         norm360 } from "./astro.js?v=298";
+         norm360 } from "./astro.js?v=300";
 
 const $ = s => document.querySelector(s);
 const el = (t, c, txt) => { const n = document.createElement(t);
@@ -316,6 +316,79 @@ function planetSatz(pl) {
   return pl.wuerde.stufe === "—" ? kern : kern + rt("hk.planetWuerde", pl.wuerde.text);
 }
 
+/* ------------------------------------------------------- das Radixrad
+   Ganzzeichenhäuser, darum ist das Rad regelmäßig: Der Aszendent liegt
+   links, und von dort laufen die zwölf Zeichen gegen den Uhrzeigersinn.
+   Gezeichnet werden Zeichenring, Häuserring, die sieben Wandelsterne
+   auf ihrem Grad und die beiden Achsen. */
+const ROEMISCH_RAD = ["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII"];
+
+function polarRad(deg, r, cx, cy) {
+  const a = (deg - 90) * Math.PI / 180;
+  return { x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) };
+}
+
+function baueRadix(r) {
+  const cx = 180, cy = 180, rAussen = 150, rZeichen = 124, rHaus = 96, rPlanet = 78;
+  /* Der Aszendent gehört nach links, und von dort laufen die Zeichen
+     im Gegensinn des Zodiaks nach unten — so steht es in jedem Buch.
+     270° ist in polarRad die linke Seite. */
+  const dreh = lon => 270 - (lon - r.asc);
+  const t = [`<svg viewBox="0 0 360 360" class="radixRad" role="img" aria-label="${rt("hk.radAlt")}">`];
+
+  t.push(`<circle cx="${cx}" cy="${cy}" r="${rAussen}" fill="none" stroke="var(--linie)"/>`);
+  t.push(`<circle cx="${cx}" cy="${cy}" r="${rZeichen}" fill="none" stroke="var(--linie)"/>`);
+  t.push(`<circle cx="${cx}" cy="${cy}" r="${rHaus}" fill="none" stroke="var(--linie)"/>`);
+
+  for (let i = 0; i < 12; i++) {
+    const grenze = dreh(i * 30);
+    const a = polarRad(grenze, rHaus, cx, cy), b = polarRad(grenze, rAussen, cx, cy);
+    t.push(`<line x1="${a.x.toFixed(1)}" y1="${a.y.toFixed(1)}" x2="${b.x.toFixed(1)}" y2="${b.y.toFixed(1)}" stroke="var(--linie)"/>`);
+    const mitte = dreh(i * 30 + 15);
+    const z = polarRad(mitte, (rAussen + rZeichen) / 2, cx, cy);
+    t.push(`<text x="${z.x.toFixed(1)}" y="${z.y.toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-size="15" fill="var(--ton)">${ZEICHEN[i].glyph}</text>`);
+    const hausNr = ((i - r.ascZeichen + 12) % 12);
+    const h = polarRad(mitte, (rZeichen + rHaus) / 2, cx, cy);
+    t.push(`<text x="${h.x.toFixed(1)}" y="${h.y.toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-size="11" fill="var(--gedaempft)">${ROEMISCH_RAD[hausNr]}</text>`);
+  }
+
+  /* Achsen: der Aszendent waagerecht, das MC dort, wo es wirklich steht. */
+  const achse = (lon, kuerzel) => {
+    const g = dreh(lon);
+    const i1 = polarRad(g, 0, cx, cy), a1 = polarRad(g, rAussen, cx, cy);
+    t.push(`<line x1="${i1.x.toFixed(1)}" y1="${i1.y.toFixed(1)}" x2="${a1.x.toFixed(1)}" y2="${a1.y.toFixed(1)}" stroke="var(--ton)" stroke-width="1.5" opacity=".75"/>`);
+    const l = polarRad(g, rAussen + 12, cx, cy);
+    t.push(`<text x="${l.x.toFixed(1)}" y="${l.y.toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-size="10" fill="var(--ton)">${kuerzel}</text>`);
+  };
+  achse(r.asc, "ASC");
+  achse(r.mc, "MC");
+
+  /* Die sieben auf ihrem Grad. Wer einem schon gesetzten zu nah kommt,
+     rückt eine Stufe nach innen — sonst liegen die Glyphen übereinander,
+     wie es Jupiter und Saturn bei einem Grad Abstand sofort tun. */
+  const gesetzt = [];
+  REIHE.forEach(k => {
+    const pl = r.planeten[k];
+    if (!pl) return;
+    const g = dreh(pl.laenge);
+    const abstand = (a, b) => Math.abs(((a - b + 540) % 360) - 180);
+    let radius = rPlanet;
+    while (gesetzt.some(x => abstand(x.g, g) < 11 && Math.abs(x.r - radius) < 16)) radius -= 20;
+    gesetzt.push({ g, r: radius });
+    const pp = polarRad(g, radius, cx, cy);
+    t.push(`<text x="${pp.x.toFixed(1)}" y="${pp.y.toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-size="15" fill="var(--schrift)">${pl.g}</text>`);
+    const gp = polarRad(g, radius - 13, cx, cy);
+    t.push(`<text x="${gp.x.toFixed(1)}" y="${gp.y.toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-size="8.5" fill="var(--gedaempft)">${Math.floor(pl.grad)}°</text>`);
+    /* Ein Strich an den Häuserring: Er zeigt den wirklichen Grad, auch
+       wenn die Glyphe nach innen ausweichen musste. */
+    const s1 = polarRad(g, rHaus, cx, cy), s2 = polarRad(g, rHaus - 7, cx, cy);
+    t.push(`<line x1="${s1.x.toFixed(1)}" y1="${s1.y.toFixed(1)}" x2="${s2.x.toFixed(1)}" y2="${s2.y.toFixed(1)}" stroke="var(--schrift)" stroke-width="1" opacity=".6"/>`);
+  });
+
+  t.push("</svg>");
+  return t.join("");
+}
+
 function zeichneRadix(ziel) {
   const r = radix();
   ziel.innerHTML = "";
@@ -329,7 +402,12 @@ function zeichneRadix(ziel) {
     return;
   }
   ziel.hidden = false;
-  ziel.appendChild(el("p", "kucukNot", "Für: " + profilBeschriftung(r.profil)));
+  ziel.appendChild(el("p", "kucukNot", rt("fuer") + profilBeschriftung(r.profil)));
+
+  /* Das Rad zuerst: Wer das Horoskop aufschlägt, will es sehen. */
+  const radKutu = el("div", "radixKutu");
+  radKutu.innerHTML = baueRadix(r);
+  ziel.appendChild(radKutu);
 
   /* Gerüst */
   const kopf = el("div", "essenzKopf");
@@ -482,11 +560,11 @@ if (document.readyState === "loading") {
    werden hier beim Sprachwechsel ausgetauscht, nicht neu importiert —
    die Objekte bleiben dieselben, nur ihre Namensfelder wechseln. */
 import { PLANET_NAME_IT, PLANET_ARTIKEL_IT, ZEICHEN_NAME_IT, HAUS_IT,
-         PLANET_WAS_IT, ART_IT, WUERDE_TEXT_IT, ASPEKT_TON_IT, PHASEN_IT } from "./namen-it.js?v=298";
+         PLANET_WAS_IT, ART_IT, WUERDE_TEXT_IT, ASPEKT_TON_IT, PHASEN_IT } from "./namen-it.js?v=300";
 import { PLANET_NAME_EN, PLANET_ARTIKEL_EN, ZEICHEN_NAME_EN, HAUS_EN,
-         PLANET_WAS_EN, ART_EN, WUERDE_TEXT_EN, ASPEKT_TON_EN, PHASEN_EN } from "./namen-en.js?v=298";
-import { aktuelleSprache } from "./sprachen.js?v=298";
-import { rt, zahl, ordnung, setzeRestSprache } from "./rest-texte.js?v=298";
+         PLANET_WAS_EN, ART_EN, WUERDE_TEXT_EN, ASPEKT_TON_EN, PHASEN_EN } from "./namen-en.js?v=300";
+import { aktuelleSprache } from "./sprachen.js?v=300";
+import { rt, zahl, ordnung, setzeRestSprache } from "./rest-texte.js?v=300";
 
 const PLANET_NAME_DE  = Object.fromEntries(REIHE.map(k => [k, PLANET[k].name]));
 const PLANET_WAS_DE   = Object.fromEntries(REIHE.map(k => [k, PLANET[k].was]));

@@ -8,6 +8,7 @@
 
 export const R = {
   de: {
+    "hk.radAlt":"Das Geburtshoroskop als Rad",
     /* Die zwölf Felder des Lebens, einzeln befragt. */
     "th.felder":[
       { titel:"Leib und Auftreten", frage:"Wie stehe ich selbst da — Gesundheit, Erscheinung, Wirkung auf andere?" },
@@ -730,6 +731,7 @@ export const R = {
   },
 
   it: {
+    "hk.radAlt":"Il tema di nascita come ruota",
     /* Die zwölf Felder des Lebens, einzeln befragt. */
     "th.felder":[
       { titel:"Corpo e presenza", frage:"Come sto io stesso — salute, aspetto, effetto sugli altri?" },
@@ -1439,6 +1441,7 @@ export const R = {
   },
 
   en: {
+    "hk.radAlt":"The birth chart as a wheel",
     /* Die zwölf Felder des Lebens, einzeln befragt. */
     "th.felder":[
       { titel:"Body and bearing", frage:"How do I myself stand — health, appearance, effect on others?" },

@@ -9,12 +9,12 @@
    zieht. Wo viele dasselbe sagen, brennt es hell; wo jedes etwas anderes
    sagt, bleibt es matt und vielfarbig.
    --------------------------------------------------------------------- */
-import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=298";
-import { radix, PLANET, mitArtikel, ZEICHEN } from "./horoskop.js?v=298";
-import { firdaria, vimshottari } from "./perioden.js?v=298";
-import { zrStand } from "./zr.js?v=298";
-import { rt, setzeRestSprache } from "./rest-texte.js?v=298";
-import { aktuelleSprache } from "./sprachen.js?v=298";
+import { leseProfil, aufProfilAenderung, profilBeschriftung, zurDateneingabe } from "./profil.js?v=300";
+import { radix, PLANET, mitArtikel, ZEICHEN } from "./horoskop.js?v=300";
+import { firdaria, vimshottari } from "./perioden.js?v=300";
+import { zrStand } from "./zr.js?v=300";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=300";
+import { aktuelleSprache } from "./sprachen.js?v=300";
 setzeRestSprache(aktuelleSprache());
 
 const $ = s => document.querySelector(s);

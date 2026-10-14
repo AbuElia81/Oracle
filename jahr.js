@@ -6,13 +6,13 @@
    fertigen Ausgaben der anderen Rechner und schreibt in eigene Kästen
    daneben — an fremden Rechnungen wird nichts geändert.
    --------------------------------------------------------------------- */
-import { leseProfilRoh } from "./profil.js?v=298";
-import { cevir, toplam, kalan } from "./ebced.js?v=298";
-import { BURCLAR } from "./korpus.js?v=298";
-import { sonnenLaenge, julianischesDatum, norm360, berechneGeburt } from "./astro.js?v=298";
-import { ZEICHEN as ZEICHEN_BASIS, PLANET } from "./horoskop.js?v=298";
-import { rt, setzeRestSprache } from "./rest-texte.js?v=298";
-import { aktuelleSprache } from "./sprachen.js?v=298";
+import { leseProfilRoh } from "./profil.js?v=300";
+import { cevir, toplam, kalan } from "./ebced.js?v=300";
+import { BURCLAR } from "./korpus.js?v=300";
+import { sonnenLaenge, julianischesDatum, norm360, berechneGeburt } from "./astro.js?v=300";
+import { ZEICHEN as ZEICHEN_BASIS, PLANET } from "./horoskop.js?v=300";
+import { rt, setzeRestSprache } from "./rest-texte.js?v=300";
+import { aktuelleSprache } from "./sprachen.js?v=300";
 setzeRestSprache(aktuelleSprache());
 window.addEventListener("sprache-geaendert", ev => setzeRestSprache(ev.detail));
 
